@@ -3,7 +3,6 @@
     "usingComponents":
     {
         "w-button": "../../component/button/index",
-        "w-currency": "../../component/currency/index",
         "transition": "../../component/transition/index"
     }
 }

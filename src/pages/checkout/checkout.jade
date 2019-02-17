@@ -327,7 +327,7 @@ w-page(
                   text {{item.subTitle}}
                   text(decode) {{item.color}} &nbsp; {{item.size}}
                 view.quantity
-                  w-currency(
+                  money(
                     value="{{item.marketPrice}}"
                   )
                   text x{{item.quantity}}
@@ -335,7 +335,7 @@ w-page(
         view.footer-information
           view.field
             text 订单总金额:
-            w-currency(
+            money(
               value="{{totalPrice}}"
             )
           w-field(

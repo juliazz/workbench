@@ -1,3 +1,6 @@
+import utils from '../../../utils/utils'
+
+const { formatMoney } = utils
 export default Component({
   properties: {
     value: {
@@ -5,7 +8,7 @@ export default Component({
       value: 0,
       observer(value) {
         this.setData({
-          text: value.$currency()
+          text: formatMoney(value, '$', 2, ',', '.')
         })
       }
     }

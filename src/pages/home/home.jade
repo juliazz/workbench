@@ -21,6 +21,25 @@ w-page(
         wx:key="{{index}}"
       )
         view {{item}}
+    button(
+      id="grataStartChatButton"
+      open-type="contact"
+      bindcontact="sendContact"
+    ) 客服
+    button(
+      bindtap="bindtap"
+    ) 点击
+    button(
+      open-type="getUserInfo"
+      bindgetuserinfo="getUserInfoEventer"
+    ) 授权用户信息1
 w-loading(
   show="{{$show}}"
+)
+w-sheet(
+  visible="{{ visible }}"
+  actions="{{ actions }}"
+  show-cancel
+  bind:cancel="handleCancel"
+  bind:click="handleClickItem" 
 )

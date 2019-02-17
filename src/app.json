@@ -39,6 +39,7 @@
   },
   "usingComponents": {
     "w-page": "./component/page/index",
-    "w-loading": "./component/loading/index"
+    "w-loading": "./component/loading/index",
+    "money": "./component/module/money/index"
   }
 }

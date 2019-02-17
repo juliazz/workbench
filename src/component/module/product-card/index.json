@@ -1,6 +1,5 @@
 {
     "usingComponents": {
-    	"w-currency": "../../currency/index",
     	"w-product-fav": "../product-fav/index"
     },
     "component": true
