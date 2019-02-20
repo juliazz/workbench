@@ -10,10 +10,10 @@
     "pages/order/order"
   ],
   "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#000000",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "D1M",
-    "navigationBarTextStyle": "white"
+    "navigationBarTextStyle": "black"
   },
   "networkTimeout": {
     "request": 100000
@@ -27,13 +27,10 @@
         "pagePath": "pages/home/home"
       },
       {
-        "pagePath": "pages/category/category"
-      },
-      {
         "pagePath": "pages/cart/cart"
       },
       {
-        "pagePath": "pages/user/user"
+        "pagePath": "pages/order/order"
       }
     ]
   },

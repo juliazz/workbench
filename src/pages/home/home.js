@@ -8,13 +8,19 @@ Page({
   data: {
     visible: false,
     actions: [{
-      name: '选项1'
-    },
-    {
-      name: '客服',
-      openType: 'contact'
-    }
-    ]
+        name: '选项1'
+      },
+      {
+        name: '客服',
+        openType: 'contact'
+      }
+    ],
+    swiper_current: 0,
+    sub_swiper_current: 0,
+    // 产品详细
+    shoes_info: null,
+    // 鞋子列表
+    shoesList: []
   },
   /**
    * 生命周期函数--监听页面加载
@@ -59,6 +65,7 @@ Page({
             openId: openIdStr
           },
           success: function (res) {
+            console.log(res);
             console.log('-----')
           }
         })
@@ -116,5 +123,18 @@ Page({
    */
   onUnload() {
 
-  }
+  },
+  // 轮播图切换
+  swiperChangeEventer: function (event) {
+    let current = event.detail.current
+    console.log(current);
+    this.setData({
+      swiper_current: current
+    })
+  },
+  // 轮播图动画完成方法
+  swiperAnimationEventer: function (event) {
+    let current = event.detail.current
+    console.log(current);
+  },
 });
