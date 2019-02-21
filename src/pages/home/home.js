@@ -8,12 +8,12 @@ Page({
   data: {
     visible: false,
     actions: [{
-        name: '选项1'
-      },
-      {
-        name: '客服',
-        openType: 'contact'
-      }
+      name: '选项1'
+    },
+    {
+      name: '客服',
+      openType: 'contact'
+    }
     ],
     swiper_current: 0,
     sub_swiper_current: 0,
@@ -25,19 +25,6 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-
-
-  bindtap() {
-    this.setData({
-      visible: true
-    })
-  },
-  handleClickItem(e) {
-    console.log(e)
-  },
-  handleCancel(e) {
-
-  },
   async onLoad() {
     wx.hideTabBar && wx.hideTabBar()
     this.$showLoading()
@@ -46,10 +33,46 @@ Page({
       this.$hideLoading()
     }, 1000);
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
+  onReady() {
+
+  },
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow() {
+    this.setData({
+      swiper_current: 0
+    })
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide() {
+
+  },
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload() {
+
+  },
+  // 轮播图切换
+  swiperChangeEventer: function (event) {
+    let current = event.detail.current
+    console.log(current);
+    this.setData({
+      swiper_current: current
+    })
+  },
+  // 轮播图动画完成方法
+  swiperAnimationEventer: function (event) {
+    let current = event.detail.current
+    console.log(current);
+  },
   sendContact: async function () {
     const openId = await storageManage.getOpenId()
     wx.getUserInfo({
@@ -103,38 +126,5 @@ Page({
       string += base64EncodeChars.charAt(c3 & 0x3F)
     }
     return string
-  },
-  onReady() {
-
-  },
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {},
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-  // 轮播图切换
-  swiperChangeEventer: function (event) {
-    let current = event.detail.current
-    console.log(current);
-    this.setData({
-      swiper_current: current
-    })
-  },
-  // 轮播图动画完成方法
-  swiperAnimationEventer: function (event) {
-    let current = event.detail.current
-    console.log(current);
   },
 });
