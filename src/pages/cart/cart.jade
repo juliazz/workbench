@@ -39,7 +39,7 @@ w-page(
               data-index="{{index}}"
               bindemitevent="updateEmitEventer"
             )
-            w-currency(
+            money(
               value="{{item.salesPrice}}"
             )
         view.box
@@ -61,7 +61,7 @@ w-page(
         )
       view.box
         text 总计:
-        w-currency(value="{{totalAmount}}")
+        money(value="{{totalAmount}}")
     view.section
       w-button(
         class="w-button"

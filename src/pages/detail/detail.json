@@ -6,7 +6,7 @@
       "w-page": "../../component/page/index",
 		  "w-loading": "../../component/loading/index",
       "w-button": "../../component/button/index",
-      "w-currency": "../../component/currency/index",
+      "money": "../../component/currency/index",
       "w-product-sku": "../../component/module/product-sku/index",
       "w-product-fav": "../../component/module/product-fav/index",
       "w-product-card": "../../component/module/product-card/index",

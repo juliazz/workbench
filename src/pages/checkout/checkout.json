@@ -1,7 +1,7 @@
 {
   "navigationBarTitleText": "CHECKOUT",
   "usingComponents": {
-    "w-currency": "../../component/currency/index",
+    "money": "../../component/currency/index",
     "w-input": "../../component/input/index",
     "w-field": "../../component/field/index",
     "w-picker": "../../component/picker/index",
