@@ -22,6 +22,10 @@ export default Component({
   attached() {},
   methods: {
     async submitEventer(event) {
+
+      // 函数回调
+      this.triggerEvent('emiteventer', {})
+
       const openId = await storageManage.getOpenId()
       const wechatId = config.wechatId
       const { formId } = event.detail
@@ -34,9 +38,6 @@ export default Component({
       if (result.resultCode == 1) {
         console.info(`FormId Report Successful: ${formId}`)
       }
-
-      // 函数回调
-      this.triggerEvent('emiteventer', {})
     },
     // - contact
     contactEventer({ detail = {} } = {}) {
