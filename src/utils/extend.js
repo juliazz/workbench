@@ -77,7 +77,7 @@ Page = function (options) {
 
   // add preload lifecycle
   opts.$route = normalizeUrl(opts.$route)
-  preload.init(opts.$route, opts.onPreload)
+  preload.init(opts.$route, opts.onPreLoad)
   return _Page(opts)
 }
 
