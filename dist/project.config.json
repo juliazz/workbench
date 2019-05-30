@@ -18,6 +18,8 @@
 		"beforePreview": "../bin/beforePreview.sh",
 		"beforeUpload": "../bin/beforeUpload.sh"
 	},
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -36,12 +38,14 @@
 		},
 		"miniprogram": {
 			"current": 0,
-			"list": [{
-				"id": -1,
-				"name": "index",
-				"pathName": "pages/index/index",
-				"query": ""
-			}]
+			"list": [
+				{
+					"id": -1,
+					"name": "index",
+					"pathName": "pages/index/index",
+					"query": ""
+				}
+			]
 		}
 	}
 }

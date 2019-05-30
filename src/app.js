@@ -1,17 +1,42 @@
 import {
   logger,
   tokenManage,
+  storageManage,
+  request,
   utils
 } from './utils/index';
-import storageManage from './utils/storage-manage'
 import config from './config'
+
+//
+const initTracking = async () => {
+  const openId = await storageManage.getOpenId();
+  if (openId) {
+    wx.setOpenid(openId);
+    wx.init();
+  }
+}
+tokenManage.config({
+  request,
+  async getter() {
+    return storageManage.getAccessToken();
+  },
+  async setter(val) {
+    console.log(val)
+    await storageManage.setAccessToken(val, 2);
+    // 初始化追踪
+    await initTracking()
+  },
+  async cleaner() {
+    await storageManage.clearAccessToken();
+  }
+});
 
 const {
   compareVersion
 } = utils
 
 App({
-  onLaunch() {
+  async onLaunch() {
     // 注意: 须告知PM小程序公众号后台要配置相应版本控制
     // 具体提示文案或者提示逻辑根据PM定
     const v1 = wx.getSystemInfoSync().SDKVersion
@@ -25,6 +50,10 @@ App({
         success: function () {}
       })
     }
+
+
+    // 初始化追踪
+    await initTracking()
   },
   async onShow() {
     // session验证
