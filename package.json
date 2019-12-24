@@ -46,7 +46,7 @@
     "gulp-util": "^3.0.7",
     "gulp-watch": "^5.0.1",
     "os": "^0.1.1",
-    "prettier": "1.15.3",
+    "prettier": "^1.15.3",
     "run-sequence": "^2.2.1",
     "shelljs": "^0.8.3",
     "through2": "^3.0.0"
