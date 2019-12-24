@@ -1,27 +1,25 @@
-
+/* eslint-disable  import/order */
 import {
-  tokenManage
-} from './utils/index';
+  logger,
+  tokenManage,
+  storageManage
+} from './utils/index'
 
 App({
-  onLaunch() {
-
+  async onLaunch() {
+    await tokenManage.get()
   },
-  onShow() {
-    // session验证
-    wx.checkSession({
-      success: function() {
-        console.log('session_key: 有效')
-      },
-      fail: function() {
-        console.log('session_key: 失效')
-        if (wx.getStorageSync('token')) {
-          tokenManage.get()
-        }
+  async onShow() {
+    try {
+      await wx.$checkSession();
+      logger.info('session_key 未过期');
+    } catch (error) {
+      logger.warn('session_key 已经失效');
+      if (storageManage.getAccessToken()) {
+        await tokenManage.clear();
+        await tokenManage.get()
       }
-    })
+    }
   },
-  data: {
-    checkoutParams: []
-  }
+  data: {}
 });

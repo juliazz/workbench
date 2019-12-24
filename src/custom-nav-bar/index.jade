@@ -1,0 +1,33 @@
+view(class="nav-bar" id="nav-bar" style='{{_navStyle}}')
+	view(class="nav-bar-inner")
+		view(class="nav-icon")
+			//- 
+			view(wx:if="{{_showCaps}}" class="nav-caps")
+				view(class="nav-back" bindtap="_back")
+					text(class="icon icon-back")
+				view(class="nav-split")
+				view(class="nav-func")
+					view(class="nav-home" wx:if="{{showHome}}" data-type="home" bindtap="$switchTab")
+						text(class="icon icon-home")
+					view(class="nav-serv" wx:if="{{showServ}}" bindtap="showContactBox")
+						text(class="icon icon-serv")
+			//- 
+			view(wx:else class="nav-circ")
+				view(class="nav-back" wx:if="{{showBack}}" bindtap="_back")
+					text(class="icon icon-back")
+				view(class="nav-func")
+					view(class="nav-home" wx:if="{{showHome}}" data-type="home" bindtap="$switchTab")
+						text(class="icon icon-home")
+					view(class="nav-serv" wx:if="{{showServ}}" bindtap="showContactBox")
+						text(class="icon icon-serv")
+		view(class='nav-title')
+			view(class='nav-loading' wx:if="{{showLoading}}")
+			block(wx:if="{{!slot}}")
+				text(class="text" style='{{_navTitleStyle}}') {{title}}		
+			block(wx:else)
+				slot
+view(
+	class="nav-bar-placeholder"
+	style='{{_navStyle}}'
+	wx:if="{{showPlaceholder}}"
+)

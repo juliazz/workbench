@@ -13,6 +13,7 @@
     "sourceType": "module"
   },
   "globals": {
+    "__wxConfig": true,
     "wx": true,
     "App": true,
     "Page": true,
@@ -42,12 +43,7 @@
       }
     ],
     "no-unused-expressions": 0,
-    "no-plusplus": [
-      "error",
-      {
-        "allowForLoopAfterthoughts": true
-      }
-    ],
+    "no-plusplus": 0,
     "consistent-return": 0,
     "comma-dangle": [
       "error",
@@ -82,6 +78,14 @@
     "no-console": "off",
     "func-names": "off",
     "no-multi-assign": "off",
-    "prefer-rest-params": "off"
+    "prefer-rest-params": "off",
+    "array-callback-return": 0,
+    "prefer-template": 0,
+    "no-inner-declarations": "warn",
+    "operator-assignment": 0,
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0,
+    "import/first": 0
   }
 }
+

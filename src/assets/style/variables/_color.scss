@@ -1,0 +1,65 @@
+/**
+ * 主色
+ * @primary-color         主色
+ * @light-primary-color   亮主色
+ * $dark-primary-color    暗主色
+*/
+$primary-color: #BF2F37;
+$light-primary-color: #5cadff;
+$dark-primary-color: #AC1F30;
+// 缩写
+$pc: $primary-color;
+$lpc: $light-primary-color;
+$dpc: $dark-primary-color;
+
+
+
+/**
+ * 辅助色
+ * @success-color         success 
+ * @warning-color         warning
+ * @error-color           error
+ * @info-color            info
+*/
+$success-color: #13ce66;
+$warning-color: #ffc82c;
+$error-color: #ff4949;
+$info-color: #78a4fa;
+
+// 缩写
+$sc: $success-color;
+$wc: $warning-color;
+$ec: $error-color;
+
+
+/**
+ * 文本/边框/背景色
+ * $black-${n}-color        黑色
+ * $gray-${n}-color         灰色
+*/
+// 黑色
+$black-1-color: #000;
+$black-2-color: #333;
+$black-3-color: #666;
+$black-4-color: #999;
+$black-5-color: #181818;
+$black-6-color: #777;
+// 灰色
+$gray-1-color: #ccc;
+$gray-2-color: #e5e5e5;
+$gray-3-color: #f0f0f0;
+$gray-6-color: #BFBFBF;
+
+// 缩写
+$b1c: $black-1-color;
+$b2c: $black-2-color;
+$b3c: $black-3-color;
+$b4c: $black-4-color;
+$b5c: $black-5-color;
+$b6c: $black-6-color;
+
+$g1c: $gray-1-color;
+$g2c: $gray-2-color;
+$g3c: $gray-3-color;
+$g6c: $gray-6-color;
+

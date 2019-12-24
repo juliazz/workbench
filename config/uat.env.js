@@ -1,4 +1,6 @@
-module.exports = {
-  baseUrl: 'https://uat.estore.d1m.cn/api/v4/',
-  cdnUrl: 'http://uat.wechat.d1m.cn/attached/'
+module.exports =  {
+  baseUrl: '',
+  cdnUrl: '',
+  appid: 'wx7fc9a5b3b12834dd'
 }
+

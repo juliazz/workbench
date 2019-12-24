@@ -1,27 +1,27 @@
-```
-### 前端branch规范 commit规范  release规范
-1. branch
-    1. feature/{{品牌名}}-{{ticketId}}
-2. commit
-    1. A  新增xxx
-    2. F  修复xxx
-    3. U  更新xxx
-3. release
-    1. release-v1.0.0(版本和小程序上传版本一致,上传一次打一次tag)
-4. 小程序提交体验版命名  {{品牌名字}}-{{日期}}-{{环境}}
+# MINIAPP_BASE
 
-```
+**Preview MarkDown: Vscode Install `Markdown Preview Enhanced`**
 
 
+### Usage
+>[使用方法](./doc/usage.md)
 
-``` bash
 
-# 测试环境
-npm run dev
+### Directory
+>[目录结构](./doc/directory-tree.md)
 
-# UAT环境
-npm run uat
 
-# 生产环境
-npm run prod
-```
+### Coding standards
+
+### Git work flow
+>[GIT-工作流](./doc/git-work-flow.md)
+
+
+### Interface documentation
+>[westore-接口描述](./doc/api-westore.md)
+>[website-接口描述](./doc/api-website.md)
+
+### Vant Weapp
+> https://youzan.github.io/vant-weapp/#/intro
+
+

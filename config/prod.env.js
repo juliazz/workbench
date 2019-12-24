@@ -1,4 +1,5 @@
 module.exports = {
   baseUrl: '',
-  cdnUrl: ''
+  cdnUrl: '',
+  appid: ''
 }

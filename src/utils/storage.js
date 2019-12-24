@@ -5,7 +5,7 @@ const storage = {
   set(key, value, timer = 24) {
     const data = {
       value,
-      timer: timer * 60 * 1000,
+      timer: timer * 60 * 60 * 1000,
       createAt: new Date().getTime()
     };
     wx.setStorageSync(key, data);

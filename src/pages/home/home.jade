@@ -1,26 +1,12 @@
+
+w-loading(id="w-loading")
 w-page(
-  isTabbar="true"
-  class="w-page"
-  show="{{$show}}"
+    class="w-page"
 )
-  view(
-    slot="main"
-    class="page-main"
-  )
-    swiper(
-      class="swiper"
-      duration="500"
-      circular="{{true}}"
-      indicator-dots="{{true}}"
-      indicator-color="rgba(0, 0, 0, .3)"
-      indicator-active-color="rgba(0, 0, 0, .6)"
-    )
-      swiper-item(
-        class="swiper-item"
-        wx:for="{{[1,2,3,4,5]}}"
-        wx:key="{{index}}"
-      )
-        view {{item}}
-w-loading(
-  show="{{$show}}"
-)
+    view(slot="header" class="header")
+    view(slot="content" class="content")
+        text {{title}}
+    view(slot="footer" class="footer")
+
+//- 微信小程序无需引入tabbar组件，企业微信小程序需手动引入
+//- w-tabbar
