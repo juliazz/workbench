@@ -1,14 +1,13 @@
 view(
-  class="w-page"
-  class="{{isTabBar ? 'w-page-tabbar' : ''}}"
-  class="{{showPage ? 'showPage' : ''}}"
+  class="components-page"
+  class="{{showTabBar ? 'components-page-tabbar' : ''}}"
+  class="{{showPage ? 'components-show-page' : ''}}"
 )
-  view(
-    catchtouchmove="noop"
-    class="w-page-header"
-  )
+  view(catchtouchmove="noop" class="components-page-header")
     slot(name="header")
-  view(class="w-page-content")
+
+  view(class="components-page-content")
     slot(name="content")
-  view(class="w-page-footer" wx:if="{{isFooter}}")
+
+  view(class="components-page-footer" wx:if="{{showFooter}}")
     slot(name="footer")

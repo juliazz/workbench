@@ -1,11 +1,20 @@
 @import '../../assets/style/index';
 
-.w-page {
-  .w-page-content {
+.components-page {
+  will-change: opacity;
+  opacity: 0;
+  transition: opacity .5s;
+  &.components-show-page {
+    opacity: 1;
+  }
+
+  .components-page-header {}
+
+  .components-page-content {
     @include safe-padding-bottom(0rpx);
   }
 
-  .w-page-footer {
+  .components-page-footer {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -15,20 +24,13 @@
     @include safe-padding-bottom(0rpx);
   }
 
-  &.w-page-tabbar {
-    .w-page-content {
+  &.components-page-tabbar {
+    .components-page-content {
       @include safe-padding-bottom(114rpx);
     }
 
-    .w-page-footer {
+    .components-page-footer {
       @include safe-padding-bottom(114rpx);
     }
-  }
-
-  will-change: opacity;
-  opacity: 0;
-  transition: .5s;
-  &.showPage {
-    opacity: 1;
   }
 }

@@ -3,17 +3,18 @@ export default Component({
     multipleSlots: true
   },
   properties: {
-    // 是否显示
+    // 是否显示Page
     showPage: {
       type: Boolean,
       value: true
     },
-    // 是否有tabbar
-    isTabBar: {
+    // 是否显示Tabbar
+    showTabBar: {
       type: Boolean,
       value: false
     },
-    isFooter: {
+    // 是否显示Footer
+    showFooter: {
       type: Boolean,
       value: false
     }
