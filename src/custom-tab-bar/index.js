@@ -28,7 +28,6 @@ Component({
       const {
         url, index
       } = event.currentTarget.dataset
-      console.log(index)
       if (url) {
         const routes = getCurrentPages()
         const route = routes[routes.length - 1].route

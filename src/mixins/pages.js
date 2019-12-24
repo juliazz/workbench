@@ -137,7 +137,6 @@ export default {
     // 使手机发生较短时间的振动
     // wx.vibrateShort()
     const routes = getCurrentPages();
-    console.log(path)
     let [route, query] = path.split('?')
     if (query) {
       query = query.replace(/\//g, '%2F')
