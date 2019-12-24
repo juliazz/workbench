@@ -1,11 +1,13 @@
 import utils from '../utils/utils';
 import preload from '../utils/preload';
+import tabs from '../custom-tab-bar/config'
+import components from '../components/index'
 
 const {
   normalizeUrl,
   debounce,
   isFunction,
-  isIpx
+  convertQuery
 } = utils;
 
 const routeHooks = [
@@ -13,52 +15,82 @@ const routeHooks = [
   '$reLaunch', '$redirectTo'
 ];
 
-const _debounce = debounce((type, option) => {
-  wx[type](option).then(() => {
-    console.log(`<---------- ${type} to '${option.url}' success---------->`);
-  }).catch(() => {
-    console.log(`<---------- ${type} to '${option.url}' fail---------->`);
-  });
-}, 300, false);
+// 跳转->防抖
+const _debounce = debounce((callback) => {
+  callback()
+}, 500, true);
+
+// 按钮->防抖
+const $debounce = debounce((callback) => {
+  callback()
+}, 500, true);
+
 
 export default {
-
   data: {
-
-    // loading status
-    $show: false,
-
-    $text: '',
-
-    $isIpx: isIpx()
+    $loading: {}
   },
-  onLoad() {
+  async onLoad() {
+    /**
+     * 注册组件
+     */
+    Object.keys(components).forEach(name => {
+      this[name] = components[name]()
+    })
   },
-  onShow() {
-
+  async onShow() {
+    /**
+     * switch tab
+     */
+    const path = this.route
+    const index = tabs.findIndex(item => item.pagePath == path)
+    const isTab = index >= 0
+    if (isTab && typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({
+        activeIndex: index
+      })
+    }
   },
   // 非生命周期方法
-  $showLoading(value = '') {
+  showLoading(options = {}) {
     this.setData({
-      $text: value,
-      $show: true
+      $loading: { ...options, show: true }
     })
   },
-  $hideLoading() {
+  hideLoading() {
     this.setData({
-      $show: false
+      $loading: { show: false }
     })
   },
-  $showToast(value, timer = 2000) {
-    wx.showToast({
-      title: value,
+  $showToast(options) {
+    let params = {
+      title: '',
       icon: 'none',
-      duration: timer
-    })
+      image: '',
+      duration: 2000,
+      mask: false
+    }
+    if (typeof options == 'string') {
+      params.title = options
+    } else {
+      params = Object.assign(params, options)
+    }
+    wx.showToast(params)
+  },
+  $hideToast() {
+    wx.hideToast()
   },
   // 获取预加载数据
   $getPreload(fn, ...args) {
-    const arr = [this.$route];
+    const {
+      options,
+      $route
+    } = this
+    const query = convertQuery(options)
+    const route = normalizeUrl($route)
+    let path = route
+    if (query) path = `${route}?${query}`
+    const arr = [path];
     if (isFunction(fn)) {
       arr.push(fn.bind(null, ...args));
     }
@@ -82,9 +114,11 @@ export default {
   },
   // $navigateBack
   $navigateBack(delta) {
-    debounce('$navigateBack', {
-      delta
-    });
+    _debounce(() => {
+      wx.$navigateBack({
+        delta
+      })
+    })
   },
   // navigateToMiniProgram
   $navigateToMiniProgram() {},
@@ -100,7 +134,19 @@ export default {
   },
   // Be used to controller
   $routeTo(path, type = '$navigateTo') {
+    // 使手机发生较短时间的振动
+    // wx.vibrateShort()
     const routes = getCurrentPages();
+    console.log(path)
+    let [route, query] = path.split('?')
+    if (query) {
+      query = query.replace(/\//g, '%2F')
+      path = `${route}?${query}`
+    }
+    if (path.split('/').length == 1) {
+      path = `${route}/${route}`
+      if (query) path = `${path}?${query}`
+    }
 
     if (type[0] !== '$') {
       type = `$${type}`;
@@ -114,9 +160,22 @@ export default {
     preload.set(path);
 
     // 页面深度高于10
-    if (routes.length >= 10) type = '$redirectTo';
-    _debounce(type, {
-      url: path
-    });
-  }
+    if (routes.length >= 10 && type != '$switchTab') type = '$redirectTo';
+
+    _debounce(() => {
+      wx[type]({
+        url: path
+      }).then(() => {
+        console.log(`<-------- ${type} to '${path}' success-------->`);
+      }).catch(() => {
+        console.log(`<-------- ${type} to '${path}' fail-------->`);
+      });
+    })
+  },
+
+  // 防双击
+  $debounce,
+
+  // 延时
+  $delay: (timer) => new Promise(resolve => setTimeout(resolve, timer))
 };

@@ -18,16 +18,17 @@ if (wx.getUpdateManager) {
    * 客户端主动触发下载（无需开发者触发），下载成功后回调
    */
   updateManager.onUpdateReady(() => {
-    wx.showModal({
-      title: '更新提示',
-      content: '新版本已经准备好，是否重启应用？',
-      success(res) {
-        if (res.confirm) {
-          // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
-          updateManager.applyUpdate();
-        }
-      }
-    });
+    console.log('版本未更新');
+    // wx.showModal({
+    //   title: '更新提示',
+    //   content: '新版本已经准备好，是否重启应用？',
+    //   success(res) {
+    //     if (res.confirm) {
+    //       // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+    //       updateManager.applyUpdate();
+    //     }
+    //   }
+    // });
   });
   /**
    * 监听小程序更新失败事件。

@@ -1,15 +1,5 @@
-import track from './trackAPI.js'
-import product from './productAPI.js'
-import fav from './favAPI.js'
-import cart from './cartAPI.js'
-import member from './memberAPI.js'
-import order from './orderAPI.js'
+import base from './baseAPI'
 
 export default {
-  ...track,
-  ...product,
-  ...fav,
-  ...cart,
-  ...member,
-  ...order
+  ...base
 }

@@ -1,0 +1,29 @@
+view(class="tab-bar")
+  view(
+    class="tab-bar-border"
+  )
+  view(
+    wx:for="{{list}}"
+    wx:key="index"
+    class="tab-bar-item {{activeIndex == index ? 'active' : ''}}"
+    data-index="{{index}}"
+    data-url="{{item.pagePath}}"
+    bindtap="switchTab"
+  )
+    view(
+      class="tab-bar-icon"
+    )
+      image(
+        hidden="{{activeIndex == index}}"
+        src="{{item.iconPath}}"
+      )
+      image(
+        hidden="{{activeIndex != index}}"
+        src="{{item.selectedIconPath}}"
+      )
+      view.addCount(
+        style!="opacity:{{count>0 && item.icon == 'icon-cart'? 1:0}}"
+      ) {{count>9?'9+':count}}
+    view(
+      class="tab-bar-text"
+    ) {{item.text}}

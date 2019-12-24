@@ -10,6 +10,7 @@ const watch = require('gulp-watch')
 const jeditor = require('gulp-json-editor')
 const utils = require('./utils')
 const env = `${process.env.NODE_ENV || 'dev'}`
+const config = require('../config/index')
 
 const {
   getPlatform,
@@ -17,8 +18,10 @@ const {
   getOsPath
 } = utils
 
-// 是否是生产环境
-const isProd = () => env === 'pro'
+
+
+// 是否进行压缩编译
+const isProd = () => process.env.npm_config_argv.indexOf('--build') >= 0
 
 // 输入路径
 const entry = '../src'
@@ -30,6 +33,7 @@ gulp.task('clean', () => {
   shell.rm('-rf', `${output}/`)
 })
 
+
 // 处理小程序配置文件
 gulp.task('compile:project', () => {
   gulp.src('../project.config.json')
@@ -40,15 +44,25 @@ gulp.task('compile:project', () => {
           scripts[k] = getWin32Path(scripts[k])
         }
       }
+      json.appid = config.appid
       json.scripts = scripts
       return json
     }))
     .pipe(gulp.dest('../dist'))
 })
 
+const importVariable = () => through.obj(function (file, encode, cb) {
+  let fileContent = file.contents.toString()
+  fileContent = fileContent.replace(/@{cdnUrl}/g, config.cdnUrl)
+  file.contents = new Buffer(`${fileContent}`)
+  this.push(file)
+  cb()
+})
+
 // 编译WXML
 const compileTemplete = src => src
   .pipe(plugins.plumber())
+  .pipe(importVariable())
   .pipe(plugins.changed(output))
   .pipe(plugins.pug({
     pretty: !isProd()
@@ -61,19 +75,20 @@ const compileTemplete = src => src
 // 编译WXSS
 const compileStyle = src => src
   .pipe(plugins.plumber())
+  .pipe(importVariable())
   .pipe(plugins.changed(output))
   .pipe(plugins.sass())
   .pipe(plugins.rename({
     extname: '.wxss'
   }))
-  .pipe(plugins.if(isProd(), plugins.cleanCss()))
   .pipe(plugins.if(file => file.contents, plugins.base64({
     extensions: ['svg', 'png', /\.jpg#datauri$/i],
     exclude: [/\.server\.(com|net)\/dynamic\//, '--live.jpg'],
-    maxImageSize: 15 * 1024,
+    maxImageSize: 20 * 1024,
     deleteAfterEncoding: false,
-    debug: !isProd(),
+    debug: isProd(),
   })))
+  .pipe(plugins.cleanCss())
   .pipe(gulp.dest(output))
 
 // 编译WXS
@@ -96,7 +111,6 @@ const importRuntime = () => through.obj(function (file, encode, cb) {
 const compileScript = src => src
   .pipe(plugins.plumber())
   .pipe(importRuntime())
-  .pipe(gulp.dest(output))
   .pipe(plugins.changed(output))
   .pipe(plugins.replace('process.env.NODE_ENV', `'${env}'`))
   .pipe(plugins.if(isProd(), plugins.babel({
@@ -105,11 +119,12 @@ const compileScript = src => src
   .pipe(plugins.if(isProd(), plugins.uglifyEs.default()))
   .pipe(gulp.dest(output))
 
+
 // 编译JSON
 const compileConfig = src => src
   .pipe(plugins.plumber())
   .pipe(plugins.changed(output))
-  .pipe(plugins.if(isProd(), plugins.jsonminify()))
+  //.pipe(plugins.if(isProd(), plugins.jsonminify()))
   .pipe(gulp.dest(output))
 
 // handle jade,pug,scss,js,json
@@ -189,20 +204,27 @@ const workerEventer = (worker) => {
   })
 }
 gulp.task('watch', () => {
-  gulp.watch(['../project.config.json'], ['compile:project'])
-  gulp.watch([`${entry}/**/*.jade`], ['compile:jade'])
-  gulp.watch([`${entry}/**/*.pug`], ['compile:pug'])
-  gulp.watch([`${entry}/**/*.scss`], ['compile:scss'])
-  gulp.watch([`${entry}/**/*.json`], ['compile:json'])
-  gulp.watch([`${entry}/**/*.{jpg,jpeg,png,gif,svg}`], ['compress:img'])
-  workerEventer(gulp.watch([`${entry}/**/*.vue`], ['compile:mina']))
-  workerEventer(gulp.watch([`${entry}/**/*.js`], ['compile:js']))
+  gulp.watch([`${entry}/**/*.scss`], { interval: 750 },['compile:scss'])
+  gulp.watch(['../project.config.json'], { interval: 750 }, ['compile:project'])
+  gulp.watch([`${entry}/**/*.jade`], { interval: 750 }, ['compile:jade'])
+  gulp.watch([`${entry}/**/*.pug`], { interval: 750 },['compile:pug'])
+  gulp.watch([`${entry}/**/*.json`], { interval: 750 },['compile:json'])
+  gulp.watch([`${entry}/**/*.{jpg,jpeg,png,gif,svg}`], { interval: 750 },['compress:img'])
+  workerEventer(gulp.watch([`${entry}/**/*.vue`], { interval: 750 }, ['compile:mina']))
+  workerEventer(gulp.watch([`${entry}/**/*.js`], { interval: 750 }, ['compile:js']))
+
+  // 监听配置文件
+  gulp.watch([`../config/*.js`], function() {
+    const env = `${process.env.NODE_ENV || 'dev'}`
+    shell.exec(`cross-env NODE_ENV=${env} npm run lint && gulp build --gulpfile ./build/build.js`)
+  })
 })
 
 gulp.task('compile:copy', [], () => gulp.src([
     `${entry}/**/*.wxml`,
     `${entry}/**/*.wxss`,
-    `${entry}/**/*.wxs`
+    `${entry}/**/*.wxs`,
+    `${entry}/**/*.{eot,otf,ttf,woff,svg}`
   ])
   .pipe(gulp.dest(output)))
 

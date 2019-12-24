@@ -1,6 +1,5 @@
+
 {
-  "navigationBarTitleText": "D1M",
-  "usingComponents": {
-    "w-sheet": "../../component/action-sheet/index"
-  }
+  "navigationBarTitleText": "",
+  "usingComponents": {}
 }

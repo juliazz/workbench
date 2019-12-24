@@ -14,9 +14,9 @@
 	"projectname": "miniapp-base-estore",
 	"miniprogramRoot": "app/",
 	"scripts": {
-		"beforeCompile": "../bin/beforeCompile.sh",
-		"beforePreview": "../bin/beforePreview.sh",
-		"beforeUpload": "../bin/beforeUpload.sh"
+		"beforeCompile": "..\\bin\\beforeCompile.sh",
+		"beforePreview": "..\\bin\\beforePreview.sh",
+		"beforeUpload": "..\\bin\\beforeUpload.sh"
 	},
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
@@ -38,14 +38,7 @@
 		},
 		"miniprogram": {
 			"current": 0,
-			"list": [
-				{
-					"id": -1,
-					"name": "index",
-					"pathName": "pages/index/index",
-					"query": ""
-				}
-			]
+			"list": []
 		}
 	}
 }

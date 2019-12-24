@@ -1,5 +1,7 @@
+/* eslint-disable */
 import lodash from './lodash';
 import accounting from '../vendor/accounting'
+import validator from '../vendor/validator'
 /**
  * 格式化时间
  * @param time
@@ -133,15 +135,18 @@ const combinUrl = (baseUrl, pathUrl) => {
 
 
 /**
- * 清除抖动
+ * 防抖
  * @param {*} func
  * @param {*} wait
  * @param {*} immediate
  */
 const debounce = (func, wait, immediate) => {
   /** 调用debounce声明一下变量 * */
-  let timeout; let args; let context; let timestamp; let
-    resullt;
+  let timeout;
+  let args;
+  let context;
+  let timestamp;
+  let resullt;
   /** 初次由return函数调用, 后面自己递归调用 * */
   const later = function () {
     const now = new Date().getTime();
@@ -174,15 +179,51 @@ const debounce = (func, wait, immediate) => {
     return resullt;
   };
 };
+
 /**
- *判断是否是Ipx
+ * 防抖
+ * @param   {function}  func        传入函数
+ * @param   {number}    wait        表示时间窗口的间隔
+ * @param   {object}    options     如果想忽略开始边界上的调用，传入{leading: false}。
+ *                                  如果想忽略结尾边界上的调用，传入{trailing: false}
+ * @returns {function}              返回客户调用函数   返回客户调用函数
  */
-const isIpx = () => {
-  const model = wx.getSystemInfoSync().model;
-  const ipx = 'iPhone X';
-  const ipxs = 'iPhone 11';
-  return model.indexOf(ipx) > -1 || model.indexOf(ipxs) > -1;
-};
+function throttle(func, wait, options) {
+  let timeout; let context; let args; let
+    result
+  let previous = 0;
+  options = options || {}
+  // 延时执行函数
+  let later = function () {
+    let now = new Date().getTime()
+    // 首次执行时，如果设定了开始边界不执行选项，将上次执行时间设定为当前时间。
+    previous = options.leading === false ? 0 : now
+    timeout = null
+    result = func.apply(context, args)
+    if (!timeout) context = args = null
+  }
+  return function () {
+    context = this
+    args = arguments
+    let now = new Date().getTime()
+    if (!previous && options.leading === false) previous = now
+    let remaining = wait - (now - previous)
+    // 延迟时间间隔remaining小于等于0，表示上次执行至此所间隔时间已经超过一个时间窗口
+    // remaining大于时间窗口wait，表示客户端系统时间被调整过
+    if (remaining <= 0 || remaining > wait) {
+      clearTimeout(timeout)
+      timeout = null
+      previous = now
+      result = func.apply(context, args)
+      if (!timeout) context = args = null
+      // 如果延迟执行不存在，且没有设定结尾边界不执行选项
+    } else if (!timeout && options.trailing !== false) {
+      timeout = setTimeout(later, remaining)
+    }
+    return result
+  }
+}
+
 /**
  * 生成随机ID
  */
@@ -219,25 +260,67 @@ const compareVersion = (v1, v2) => {
 
     if (num1 > num2) {
       return 1
-    } if (num1 < num2) {
+    }
+    if (num1 < num2) {
       return -1
     }
   }
   return 0
 }
 
+const convertQuery = (value) => {
+  let result = ''
+  Object.keys(value).forEach((key) => {
+    result += `${key}=${value[key]}&`
+  })
+  result = result.substring(0, result.length - 1)
+  return result
+}
+
+const convertParams = (value) => {
+  value = decodeURIComponent(value)
+  let result = {}
+  value.split('&').forEach(item => {
+    const [key, value] = item.split('=')
+    result[key] = value
+  })
+  return result
+}
+
+
+
+// 正则去掉字符串两边空格
+const spaceTrim = (value) => {
+  return value.replace(/(^\s*)|(\s*$)/g, '');
+}
+
+/**
+ * 判断是否是Android
+ */
+const checkAndroid = () => {
+  const systemInfo = wx.getSystemInfoSync()
+  const {
+    platform, system
+  } = systemInfo
+  return !!~platform.indexOf('android') || !!~system.indexOf('Android')
+};
 
 export default {
   ...lodash,
   ...accounting,
+  ...validator,
   formatTime,
   normalizeUrl,
   parseUrl,
   debounce,
+  throttle,
   formatDate,
   combinUrl,
-  isIpx,
   randomId,
   getPlatform,
-  compareVersion
+  compareVersion,
+  convertQuery,
+  convertParams,
+  spaceTrim,
+  checkAndroid
 };

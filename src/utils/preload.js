@@ -5,7 +5,6 @@ const { parseUrl, isFunction } = utils;
 
 const _fns = {};
 const _obj = {};
-
 const preload = {
   init(key, fn) {
     if (key) _fns[key] = fn;

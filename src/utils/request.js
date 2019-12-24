@@ -3,7 +3,7 @@ import config from '../config';
 import utils from './utils';
 import logger from './logger';
 import tokenManage from './token-manage';
-import httpStatusCode from './httpStatusCode';
+import httpCode from './http-code';
 
 const {
   isObject,
@@ -21,7 +21,7 @@ const interceptors = {
     async setToken(options) {
       const token = await tokenManage.get();
       options.header = options.header || {};
-      options.header.token = token;
+      options.header.token = `${token}`;
       return options;
     },
     // 检查网络
@@ -62,13 +62,16 @@ const interceptors = {
     // 处理HttpError
     async handleHttpError(options, result) {
       if (result.statusCode === 200) {
-        const {
-          code
-        } = result.data;
-        if (code === -1) {
-          await tokenManage.clear();
-          result = await request.send(options);
-        }
+
+        // todo 处理鉴权失败
+        // const {
+        //   code
+        // } = result.data;
+        // if (code === -1) {
+        //   await tokenManage.clear();
+        //   result = await request.send(options);
+        // }
+
       } else if (result.statusCode >= 400 && result.statusCode < 500) {
         throw new Error('Bad Request.', result.data);
       } else if (result.statusCode >= 500) {
@@ -78,7 +81,7 @@ const interceptors = {
     },
     // 记录返回日志
     async recordLog(options, result) {
-      logger.debug(`${options.method.toUpperCase()} ${options.url} ${result.statusCode} (${httpStatusCode[result.statusCode]})`, result);
+      logger.debug(`${options.method.toUpperCase()} ${options.url} ${result.statusCode} (${httpCode[result.statusCode]})`, result);
       return result;
     }
   }
@@ -92,13 +95,25 @@ const request = {
     const baseUrl = config.baseUrl;
     _opts.url = combinUrl(baseUrl, _opts.url);
     _opts = await this.execBeforeHook(_opts);
-    let result = await wx.$request(_opts);
+
+    let result = {};
+    try {
+      result = await wx.$request(_opts);
+    } catch (err) {
+      console.log('网络请求超时', err);
+      if (err.errMsg == 'request:fail timeout' || err.errMsg == 'request:fail request unknow host error' || err.errMsg == 'request:fail request connect error') {
+        wx.showToast({
+          title: '网络请求超时，请稍后再试~',
+          icon: 'none'
+        });
+      }
+    }
     result = await this.execAfterHook(_opts, result);
     return result;
   },
   async execBeforeHook(options) {
     options = await interceptors.request.checkNetwork(options);
-    if (!options.ignore) {
+    if (!options.auth) {
       options = await interceptors.request.setToken(options);
     }
     options = await interceptors.request.recordLog(options);
@@ -144,6 +159,7 @@ methods.forEach((method) => {
         _opts.data = arguments[1];
       }
     }
+
     const result = await request.send(_opts);
     return result.data;
   };

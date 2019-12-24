@@ -2,10 +2,6 @@ import logger from './logger.js';
 import config from '../config';
 import storageManage from './storage-manage';
 
-const {
-  wechatId
-} = config;
-
 let request;
 
 const store = {
@@ -27,17 +23,11 @@ const token = {
   status: false,
   queueCallbacks: [],
   config(options) {
-    if (options.request) {
-      request = options.request;
-    }
-    Object.assign(store, {
-      getter: options.getter,
-      setter: options.setter,
-      cleaner: options.cleaner
-    });
+    request = options.request;
   },
   async get() {
     const _token = await store.getter();
+
     if (_token) return _token;
     if (this.status) {
       const result = await new Promise((resolve, reject) => {
@@ -51,8 +41,9 @@ const token = {
     this.status = true;
     try {
       const result = await this.refresh();
+      const { data } = result
       this.complete('success', result);
-      return result.data.token;
+      return data.token;
     } catch (err) {
       logger.warn(`failed to get token: ${err}`);
       this.complete('fail', err);
@@ -70,6 +61,7 @@ const token = {
     await store.setter(val);
   },
   async refresh() {
+    console.log(this.count, this.maxCount);
     if (this.count > this.maxCount) {
       throw new Error('Token retrieval failed');
     } else if (this.count === 0) {
@@ -82,22 +74,17 @@ const token = {
     const {
       code
     } = await wx.$login();
-    const result = await request.get({
-      url: `/estore/member/onLogin/${code}/${wechatId}`,
-      ignore: true
-    });
-    if (result.resultCode != 1) {
-      throw new Error('Token fetch failed');
-    }
-    const {
-      token,
-      openId,
-      phone
-    } = result.data
-    storageManage.setOpenId(openId);
-    storageManage.setPhone(phone);
-    await this.set(token);
-    return result;
+
+    // todo 用户静默登录
+    // const result = await request.get({
+    //   url: `/login`,
+    //   auth: true
+    // });
+    // const { data, code } = result
+    // if (resultCode != '1') throw new Error('Token fetch failed');
+    // const { token } = data
+    // await this.set(token);
+    // return result;
   },
   complete(type, result) {
     this.status = false;
