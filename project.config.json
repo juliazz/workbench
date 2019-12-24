@@ -11,7 +11,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.6.0",
 	"appid": "wx7fc9a5b3b12834dd",
-	"projectname": "miniapp-base-estore",
+	"projectname": "miniapp-base-code",
 	"miniprogramRoot": "app/",
 	"scripts": {
 		"beforeCompile": "..\\bin\\beforeCompile.sh",
