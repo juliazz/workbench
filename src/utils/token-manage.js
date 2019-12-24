@@ -61,7 +61,6 @@ const token = {
     await store.setter(val);
   },
   async refresh() {
-    console.log(this.count, this.maxCount);
     if (this.count > this.maxCount) {
       throw new Error('Token retrieval failed');
     } else if (this.count === 0) {

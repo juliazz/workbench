@@ -23,7 +23,7 @@ view(class="nav-bar" id="nav-bar" style='{{_navStyle}}')
 		view(class='nav-title')
 			view(class='nav-loading' wx:if="{{showLoading}}")
 			block(wx:if="{{!slot}}")
-				text(style='{{_navTitleStyle}}') {{title}}		
+				text(class="text" style='{{_navTitleStyle}}') {{title}}		
 			block(wx:else)
 				slot
 view(

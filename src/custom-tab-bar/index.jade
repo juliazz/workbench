@@ -14,16 +14,15 @@ view(class="tab-bar")
       class="tab-bar-icon"
     )
       image(
+        class="image"
         hidden="{{activeIndex == index}}"
         src="{{item.iconPath}}"
       )
       image(
+        class="image"
         hidden="{{activeIndex != index}}"
         src="{{item.selectedIconPath}}"
       )
-      view.addCount(
-        style!="opacity:{{count>0 && item.icon == 'icon-cart'? 1:0}}"
-      ) {{count>9?'9+':count}}
     view(
       class="tab-bar-text"
     ) {{item.text}}
