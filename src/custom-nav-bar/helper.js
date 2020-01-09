@@ -21,7 +21,7 @@ const getWindowStyle = () => {
     return {
       navigationBarBackgroundColor: '#000000',
       navigationBarTextStyle: 'white',
-      navigationBarTitleText: '标题'
+      navigationBarTitleText: ''
     }
   }
 }
