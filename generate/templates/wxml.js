@@ -10,13 +10,13 @@ module.exports = options => {
   </view>
   <view class="footer" slot="footer"></view>
 </w-page>
-  `
+`
  
   // 功能组件 | 业务组件
   if(options.type == 'components' || options.type == 'module') {
     string =  `
 <view class="${options.type}-${options.name}">
-    `
+`
   }
   return string
 }

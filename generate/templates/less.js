@@ -1,1 +1,3 @@
-module.exports = options => `.${options.type}-${options.name} {}`
+module.exports = options => `
+.${options.type}-${options.name} {}
+`

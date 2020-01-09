@@ -4,6 +4,7 @@
   will-change: opacity;
   opacity: 0;
   transition: opacity .5s;
+
   &.components-show-page {
     opacity: 1;
   }

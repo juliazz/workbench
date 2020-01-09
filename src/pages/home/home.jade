@@ -1,12 +1,9 @@
 
 w-loading(id="w-loading")
 w-page(
-    class="w-page"
+  class="w-page pages-home"
 )
-    view(slot="header" class="header")
-    view(slot="content" class="content")
-        text {{title}}
-    view(slot="footer" class="footer")
-
-//- 微信小程序无需引入tabbar组件，企业微信小程序需手动引入
-//- w-tabbar
+  view(slot="header" class="header")
+  view(slot="content" class="content")
+    text {{title}}
+  view(slot="footer" class="footer")

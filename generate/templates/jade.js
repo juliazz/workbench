@@ -3,13 +3,13 @@ module.exports = options => {
   let string = `
 w-loading(id="w-loading")
 w-page(
-    class="w-page ${options.type}-${options.name}"
+  class="w-page ${options.type}-${options.name}"
 )
-    view(slot="header" class="header")
-    view(slot="content" class="content")
-        text {{title}}
-    view(slot="footer" class="footer")
-    `
+  view(slot="header" class="header")
+  view(slot="content" class="content")
+    text {{title}}
+  view(slot="footer" class="footer")
+`
   // 功能组件 | 业务组件
   if (options.type == 'components' || options.type == 'module') {
     string = `

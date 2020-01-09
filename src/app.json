@@ -19,10 +19,18 @@
 		"borderStyle": "black",
 		"backgroundColor": "#000000",
 		"list": [
-			{ "pagePath": "pages/home/home" },
-			{ "pagePath": "pages/category/category" },
-			{ "pagePath": "pages/shopping-cart/shopping-cart" },
-			{ "pagePath": "pages/user/user" }
+			{
+				"pagePath": "pages/home/home"
+			},
+			{
+				"pagePath": "pages/category/category"
+			},
+			{
+				"pagePath": "pages/shopping-cart/shopping-cart"
+			},
+			{
+				"pagePath": "pages/user/user"
+			}
 		]
 	},
 	"usingComponents": {

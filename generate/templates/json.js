@@ -2,8 +2,8 @@ module.exports = options => {
   // 普通页面
   let string =  `
 {
-    "navigationBarTitleText": "",
-    "usingComponents": {}
+  "navigationBarTitleText": "",
+  "usingComponents": {}
 }
   `
 
@@ -11,7 +11,7 @@ module.exports = options => {
   if(options.type == 'components' || options.type == 'module') {
     string =  `
   {
-      "usingComponents": {}
+    "usingComponents": {}
   }
       `
   }

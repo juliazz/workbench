@@ -6,7 +6,9 @@ const getWindowStyle = () => {
       global
     } = __wxConfig
     const pages = getCurrentPages()
-    const { route } = pages[pages.length - 1]
+    const {
+      route
+    } = pages[pages.length - 1]
     let window = {}
     Object.keys(page).forEach(key => {
       if (key.indexOf(route) >= 0) {
