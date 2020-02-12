@@ -1,7 +1,9 @@
 import _ from './pages.js';
 
 export default Behavior({
-  data: {},
+  data: {
+    $isIpx: _.data.$isIpx
+  },
   methods: {
     $showToast: _.$showToast,
     $hideToast: _.$hideToast,

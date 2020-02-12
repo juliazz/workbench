@@ -1,0 +1,43 @@
+.inputBox {
+    height: 100rpx;
+    position: relative;
+    box-sizing: border-box;
+    padding: 20rpx 30rpx;
+    display: flex;
+    align-items: center;
+    .input {
+        height: 60rpx;
+        text-align: left;
+        border: none;
+        width: 87%;
+        background: #ebebeb;
+        padding: 0 35rpx 0 60rpx;
+        font-size: 24rpx;
+        border-radius: 60rpx;
+        box-sizing: border-box;
+    }
+    text{
+        margin-left: 30rpx;
+        font-size: 28rpx;
+        color: #999;
+    }
+
+   .placeholders_ {
+    color: #999;
+    text-align: left;
+    font-size: 24rpx;
+   }
+   .searchIcon{
+       position: absolute;
+       left: 60rpx;
+       top: 0;
+       height: 100%;
+       width: 50rpx;
+       display: flex;
+       align-items: center;
+       .iconImg{
+           height: 28rpx;
+           width: 28rpx;
+       }
+   }
+}

@@ -1,0 +1,59 @@
+
+@import '../../assets/style/index';
+.pages-login {
+    .header{
+        height: 262rpx;
+    }
+    .image-box{
+        width: 100vw;
+        height: 180rpx;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .header-image{
+            height: 33rpx;
+            width: 273rpx;
+        }
+    }
+        .title-header{
+            border-bottom: 1rpx solid #000;
+            line-height: 80rpx;
+            text-align: center;
+            letter-spacing: 4rpx;
+            font-size: 30rpx;
+            border-top: 1rpx solid #000;
+        }
+        .content{
+            .input-area{
+                padding: 7vh 60rpx 10vh;
+            }
+            .form{
+                .section{
+                    padding-top: 10rpx;
+                    .label{
+                        font-size: 28rpx;
+                        line-height: 60rpx;
+                    }
+                    input{
+                        padding-left: 20rpx;
+                        line-height: 100rpx;
+                        height: 80rpx;
+                        border: 1rpx solid gray;
+                    }
+        
+                }
+                .button-box{
+                    position: fixed;
+                    bottom: 20vh;
+                    width: 630rpx;
+                    // padding-top:7vh;
+                    button{
+                        background-color: #000;
+                        color: #fff;
+                    }
+                    
+                }
+            }
+
+        }
+}

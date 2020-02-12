@@ -1,0 +1,43 @@
+
+w-loading(id="w-loading")
+w-page(
+  class="w-page pages-change-passworld"
+)
+  view(slot="header" class="header")
+    view.image-box
+        image.header-image(
+          src='../../assets/image/zegna_black_logo.png'
+        )
+    view.title-header 登录
+  view(slot="content" class="content")
+    view.input-area
+      form.form(
+        bindsubmit="submitEventer"
+        report-submit="true"
+      )
+        view.section
+          view.label CA CODE
+          input.cacode( 
+            name="code"
+            auto-focus placeholder="" value="{{ca.code}}"
+            bindinput="codeInput"
+          )
+        view.section
+          view.label 初始密码
+          input.cacode( 
+            name="passworld"
+            auto-focus placeholder="" value ="{{ca.passworld}}" 
+            )
+        view.section
+          view.label 再次输入新密码
+          input.cacode( 
+            name="passworldCheck"
+            auto-focus placeholder="" value ="{{ca.passworld}}" 
+            )
+        view.button-box
+          button(
+            class="submit"
+            text="结算"
+            formType="submit"
+          ) 立即登录
+  view(slot="footer" class="footer")

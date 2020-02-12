@@ -1,23 +1,23 @@
 export default [{
-  pagePath: 'pages/home/home',
-  icon: 'icon-home',
-  iconPath: '',
-  selectedIconPath: '',
-  text: '首页'
-}, {
-  pagePath: 'pages/category/category',
+  pagePath: 'pages/product-list/product-list',
   icon: 'icon-category',
   iconPath: '',
   selectedIconPath: '',
-  text: '分类'
+  text: '商品库'
 }, {
-  pagePath: 'pages/shopping-cart/shopping-cart',
+  pagePath: 'pages/remote-list/remote-list',
   icon: 'icon-cart',
   iconPath: '',
   selectedIconPath: '',
-  text: '购物车'
+  text: '推荐列表'
 }, {
-  pagePath: 'pages/user/user',
+  pagePath: 'pages/remote-history/remote-history',
+  icon: 'icon-home',
+  iconPath: '',
+  selectedIconPath: '',
+  text: '推荐历史'
+}, {
+  pagePath: 'pages/person/person',
   icon: 'icon-user',
   iconPath: '',
   selectedIconPath: '',

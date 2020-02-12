@@ -1,0 +1,23 @@
+view.inputBox
+	input.input(
+	    type="text"
+	    disabled="{{disabled}}"
+	    focus="{{focus}}"
+	    value="{{value}}"
+	    placeholder="{{placeholder}}"
+	    maxlength="{{maxlength}}"
+	    placeholder-class="placeholders_"
+		confirm-type = "search"
+	    bindinput="chageEventer"
+		bindconfirm="searchEventer"
+	    bindfocus="focusEventer"
+	    bindblur="blurEventer"
+	)
+	text(
+		bindtap = "searchEventer"
+	) 取消
+
+	view.searchIcon
+		image.iconImg(
+			src='../../assets/image/icon/search.png'
+		)

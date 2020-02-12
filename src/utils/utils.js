@@ -90,6 +90,11 @@ const parseUrl = (url) => {
     query
   };
 };
+const currency = (value) => {
+  if (typeof value == 'string') value = parseFloat(value)
+  if (isNaN(value)) return value
+  return `￥${(value.toFixed(0) + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')}`
+}
 
 /**
  * 去除首字符
@@ -236,6 +241,16 @@ const getPlatform = () => {
   return wx.getSystemInfoSync().platform
 }
 
+// 判断是否是Ipx
+const isIpx = () => {
+  const name = 'iPhone X'         // x , xs
+  const name2 = 'iPhone11'      // xsP
+  const model = wx.getSystemInfoSync().model
+  console.log('model===', model)
+  return model.indexOf(name) > -1 || model.indexOf(name2) > -1
+}
+
+
 
 /**
  * 判断SDK版本
@@ -314,6 +329,8 @@ export default {
   parseUrl,
   debounce,
   throttle,
+  currency,
+  isIpx,
   formatDate,
   combinUrl,
   randomId,

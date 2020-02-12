@@ -41,6 +41,7 @@ const token = {
     this.status = true;
     try {
       const result = await this.refresh();
+      console.log(result)
       const { data } = result
       this.complete('success', result);
       return data.token;
@@ -70,20 +71,23 @@ const token = {
     }
     // 累计次数
     this.count += 1;
-    const {
-      code
-    } = await wx.$login();
-
-    // todo 用户静默登录
+    // const { code} = await wx.$login();
+    // console.log(code)
+    // // todo 用户静默登录
     // const result = await request.get({
-    //   url: `/login`,
+    //   url: `/member/onLogin/${code}/${config.wechatId}`,
     //   auth: true
     // });
-    // const { data, code } = result
-    // if (resultCode != '1') throw new Error('Token fetch failed');
-    // const { token } = data
+    // const { data, resultCode } = result
+    // if (resultCode != -1) throw new Error('Token fetch failed');
+    // const { token } = data;
+   
     // await this.set(token);
-    // return result;
+    // console.log(result)
+    // 用户登录失效或者缓存失效的时候
+    // wx.redirectTo({
+    //   url: '/pages/login/login'
+    // })
   },
   complete(type, result) {
     this.status = false;

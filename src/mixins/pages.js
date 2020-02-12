@@ -7,7 +7,8 @@ const {
   normalizeUrl,
   debounce,
   isFunction,
-  convertQuery
+  convertQuery,
+  isIpx
 } = utils;
 
 const routeHooks = [
@@ -28,7 +29,8 @@ const $debounce = debounce((callback) => {
 
 export default {
   data: {
-    $loading: {}
+    $loading: {},
+    $isIpx: isIpx()
   },
   async onLoad() {
     /**

@@ -1,0 +1,124 @@
+van-toast(
+  id="van-toast"
+  duration="10000"
+) 
+
+w-page(
+  class="w-page pages-productList"
+)
+    view(slot="header" class="header")
+    view(slot="content" class="content" wx:if="{{productList.length}}")
+      view.search-area(
+        class="{{focus?'higer':''}}"
+      )
+        w-search(
+            placeholder='输入货号或关键字搜索'
+            value="{{searchKeyWord}}"
+            maxlength="11"
+            bindfocus ='foucusEventer'
+            bindconfirm="searchEventer"
+        )
+        view.search-data(
+            class="{{focus?'higer':''}}"
+        )
+            view.search-box
+              view.search-history
+                view.line 
+                    view.title 价格范围
+                    view.scope 
+                      input.low(
+                        input-class="input-class"
+                        data-type = "low"
+                        value ="{{low}}"
+                        comfirm-type = "search"
+                        placeholder-class="input-class"
+                        bindinput="inputLowLimit"
+                      )
+                      text ~
+                      input.high(
+                        placeholder-class="input-class"
+                        value ="{{high}}"
+                        data-type = "high"
+                        comfirm-type = "search"
+                        input-class="input-class"
+                        bindconfirm="inputLowLimit"
+                      )
+                    //- view.del(
+                    //-     bindtap="delHistoryWords"
+                    //- )
+                    //-     image(
+                    //-         src="../../assets/image/icon/icon-deleteProduct.png"
+                        )
+                //- view.history-word(
+                //- )
+                //-     text.word(
+                //-         data-keyword='{{item}}'
+                //-         wx:for="{{prizeScope}}"
+                //-         wx:for-item="item",
+                //-         bindtap="searchKeyWord"
+                //-         wx:key ="index"
+                //-     ) {{item}}
+                view.
+              view.hot-search
+                  view.title 类目
+                  view.hot-word(
+                  )
+                      text.word(
+                          data-keyword='{{item}}'
+                          bindtap="searchKeyWord"
+                          wx:for="{{hotWords}}"
+                          wx:for-item="item",
+                          wx:key ="index"
+                      ) {{item}}
+      view(
+        class="list-area"
+        wx:for="{{productList}}"
+        wx:key="index"
+        index="{{index}}"
+      )
+        view.cart-item
+          view.item
+              view.box
+                  image(
+                  data-path="{{item.path}}"
+                  bindtap="$go"
+                  mode="aspectFill"
+                  src="{{item.mainImageUrl}}"
+                  )
+              view.box
+                  view.desc
+                      view.text {{item.productName}}
+                      view.share-icon(
+                        bindtap="toEcMiniProgram"
+                      )
+                        image(
+                          src="../../assets/image/icon/share.png"
+                        )
+                      //- text 尺码：{{item.size}}
+                  view.currency-quantity
+                      w-currency(value="{{item.salesPrice}}" class="currency")
+                      text.text 添加至推荐列表
+    w-tabbar(
+      tabs="{{$tabs}}"
+      isLens="{{$isLens}}"
+    )
+   
+    view(slot="footer" class="footer")
+
+
+    
+  
+//- van-popup(
+//-   z-index = '9999'
+//-   closeable
+//-   close-icon-position="top-right"
+//-   show="{{ shareCardShow }}" 
+//-   bind:close="onClose"
+//- )
+//-   view.share-card(
+    
+//-   )
+//-       view.box
+//-         image(
+//-           src=""
+//-         )

@@ -18,6 +18,28 @@ const lifecycleHooks = [
   'onReachBottom', 'onShareAppMessage',
   'onPageScroll', 'onTabItemTap'
 ]
+/**
+ * 扩展数值类型
+ */
+Object.defineProperty(Number.prototype, '$currency', {
+  writable: false,
+  enumerable: false,
+  configurable: true,
+  value: function() {
+      return utils.currency(this)
+  }
+})
+/**
+ * 扩展对象类型
+ */
+Object.defineProperty(String.prototype, '$currency', {
+  writable: false,
+  enumerable: false,
+  configurable: true,
+  value: function() {
+      return utils.currency(this)
+  }
+})
 const _Page = Page
 Page = function (options) {
   const opts = {mixins: [], ...options}

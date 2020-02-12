@@ -1,0 +1,167 @@
+
+w-loading(id="w-loading")
+
+w-page(
+  class="w-page pages-remote-history"
+)
+  view(slot="header" class="header")
+  view(slot="content" class="content" )
+    //- view.tab-area
+    //-   view.tab(
+    //-     data-index="0"
+    //-     bindtap="tabEventer"
+    //-   )
+    //-     text.tab1(class="{{tabIndex == 0?'active':''}}") 推荐历史
+    //-   view.tab(
+    //-     data-index="1"
+    //-     bindtap="tabEventer"
+    //-   )
+    //-     text.tab2(class="{{tabIndex == 1?'active':''}}") 指导推荐
+    view.history-list
+      view.inputBox
+        input.input(
+            type="text"
+            disabled="{{disabled}}"
+            focus="{{focus}}"
+            value="{{value}}"
+            placeholder="输入单号搜索"
+            maxlength="{{maxlength}}"
+            placeholder-class="placeholders_"
+          confirm-type = "search"
+            bindinput="chageEventer"
+          bindconfirm="searchEventer"
+            bindfocus="focusEventer"
+            bindblur="blurEventer"
+        )
+        view.searchIcon
+          image.iconImg(
+            src='../../assets/image/icon/search.png'
+          )
+        view.picker-area
+          picker(
+            mode ="date"
+            value ="{{date}}"
+            start="2015-09-01" end="2017-09-01"
+            bindchange="bindDateChange"
+          ) 2020/01/09
+          text 至
+          picker(
+            mode ="date"
+            value ="{{date}}"
+            start="2015-09-01" end="2017-09-01"
+            bindchange="bindDateChange"
+          ) 2020/01/20
+          
+      view(
+        class="list-area"
+        wx:if!="{{shareHistoryList.length&&tabIndex==0}}"
+        wx:for="{{shareHistoryList}}"
+        wx:for-index="index"
+        wx:key="index"
+      )
+        view.cart-item
+          view.title
+            text 订单号: {{item.orderNum}}
+            text {{item.date}}
+          view.item-area(
+            class="{{item.expand? 'expand_':'fold_'}}"
+          )
+            view.shareDetail-btn 查看分享详情
+            view.item(
+              wx:if!="{{item.shareList}}"
+              wx:for="{{item.shareList}}"
+              wx:key="idx"
+              wx:for-index="idx"
+              wx:for-item="subItem"
+            )
+              view.box
+                image(
+                data-path="{{subItem.path}}"
+                bindtap="$go"
+                mode="aspectFill"
+                src="{{subItem.mainImageUrl}}"
+                )
+              view.box
+                view.desc
+                  view.text {{subItem.productName}}
+                  //- view.share-icon
+                  //-   image(
+                  //-     src=""
+                  //-   )
+                  //- text 尺码：{{item.size}}
+                view.currency-quantity
+                  w-currency(value="{{subItem.salesPrice}}" class="currency")
+            view.expand.abs(
+              data-index ="{{index}}"
+              wx:if="{{item.expand}}"
+              bindtap="expandEventer"
+
+            )
+              view.tap-area
+                image(
+                  class
+                  src="../../assets/image/icon/up.png"
+                )
+            view.expand(
+              wx:else
+              data-index ="{{index}}"
+              bindtap="expandEventer"
+            )
+              view.tap-area  
+                image(
+                  src="../../assets/image/icon/down.png"
+              )
+ 
+  w-tabbar(
+    tabs="{{$tabs}}"
+    isLens="{{$isLens}}"
+  )
+  w-loading(
+      show="{{$loading.show}}"
+      text="{{$loading.text}}"
+  )
+van-popup(
+  z-index = '9999'
+  closeable
+  close-icon-position="top-right"
+  show="{{ popupShow }}" 
+  bind:close="onClose"
+)
+  view.content
+    view.close(
+      bindtap="onClose"
+    )
+      image(
+        src="../../assets/image/icon/close.png"
+      )
+    view.title 
+      view.grid 客人昵称
+      view.grid 最后打开时间
+      view.grid 打开次数
+    view.line-content
+      view.line
+        text ZOEY
+        text 2019/01/01
+        text 9999
+      view.line
+        text ZOEY
+        text 2019/01/01
+        text 9999
+      view.line
+        text ZOEY
+        text 2019/01/01
+        text 9999
+      view.line
+        text ZOEY
+        text 2019/01/01
+        text 9999
+      view.line
+        text ZOEY
+        text 2019/01/01
+        text 9999
+      view.line
+        text ZOEY
+        text 2019/01/01
+        text 9999
+  
+  view(slot="footer" class="footer")

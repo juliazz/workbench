@@ -1,16 +1,23 @@
 {
 	"pages": [
+		"pages/login/login",
 		"pages/home/home",
 		"pages/category/category",
 		"pages/shopping-cart/shopping-cart",
-		"pages/user/user"
+		"pages/user/user",
+		"pages/reset-passworld/reset-passworld",
+		"pages/product-list/product-list",
+		"pages/remote-list/remote-list",
+		"pages/remote-history/remote-history",
+		"pages/person/person",
+		"pages/shareDetail/shareDetail"
 	],
 	"window": {
 		"navigationStyle": "default",
 		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#000000",
-		"navigationBarTitleText": "标题",
-		"navigationBarTextStyle": "white"
+		"navigationBarBackgroundColor": "#fff",
+		"navigationBarTitleText": "",
+		"navigationBarTextStyle": "black"
 	},
 	"tabBar": {
 		"custom": true,
@@ -20,23 +27,24 @@
 		"backgroundColor": "#000000",
 		"list": [
 			{
-				"pagePath": "pages/home/home"
+				"pagePath": "pages/product-list/product-list"
 			},
 			{
-				"pagePath": "pages/category/category"
+				"pagePath": "pages/remote-list/remote-list"
 			},
 			{
-				"pagePath": "pages/shopping-cart/shopping-cart"
+				"pagePath": "pages/remote-history/remote-history"
 			},
 			{
-				"pagePath": "pages/user/user"
+				"pagePath": "pages/person/person"
 			}
 		]
 	},
 	"usingComponents": {
 		"w-navbar": "./custom-nav-bar/index",
 		"w-tabbar": "./custom-tab-bar/index",
-		"w-page": "./components/page/index"
+		"w-page": "./components/page/index",
+		"van-popup": "./miniprogram_npm/vant-weapp/popup"
 	},
 	"networkTimeout": {
 		"request": 20000,
@@ -46,5 +54,8 @@
 		"scope.userLocation": {
 			"desc": "您的位置信息将用于匹配专卖店地址。"
 		}
-	}
+	},
+	"navigateToMiniProgramAppIdList": [
+		"wxcc92c871c0188fe5"
+	  ]
 }

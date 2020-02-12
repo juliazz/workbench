@@ -1,0 +1,13 @@
+ const {
+      code
+    } = await wx.$login();
+
+    // todo 用户静默登录
+    const result = await request.get({
+      url: `/member/onLogin/${code}/${config.wechatId}`,
+      auth: true
+    });
+    const { data, resultCode } = result
+    if (resultCode != -1) throw new Error('Token fetch failed');
+    const { token } = data
+    await this.set(token);

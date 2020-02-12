@@ -1,0 +1,64 @@
+.collapse {
+    .collapse-title {
+        display: flex;
+        justify-content: space-between;
+        .icon {
+            position: relative;
+            width: 50rpx;
+            height: 50rpx;
+        }
+        .icon-plus {
+            &:before {
+                content: '';
+                position: absolute;
+                width: 24rpx;
+                height: 2rpx;
+                left: 50%;
+                top: 50%;
+                margin-left: -12rpx;
+                margin-top: -2rpx;
+                background-color: #333;
+            }
+            &:after {
+                content: '';
+                position: absolute;
+                width: 2rpx;
+                height: 24rpx;
+                left: 50%;
+                top: 50%;
+                margin-left: -2rpx;
+                margin-top: -12rpx;
+                background-color: #333;
+            }
+        }
+        .icon-minus {
+            &:before {
+                content: '';
+                position: absolute;
+                width: 24rpx;
+                height: 2rpx;
+                left: 50%;
+                top: 50%;
+                margin-left: -12rpx;
+                margin-top: -2rpx;
+                background-color: #333;
+            }
+        }
+    }
+    .collapse-outer {
+        height: 0;
+        overflow: hidden;
+        &.collapse-outer-show {
+            height: auto;
+        }
+        .collapse-inner {
+            opacity: 0;
+            transform: translateY(-50%);
+            transition: .3s;
+            &.collapse-inner-show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+}

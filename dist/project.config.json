@@ -3,15 +3,30 @@
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
+		"enhance": true,
 		"postcss": true,
+		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
-		"uglifyFileName": false
+		"coverView": true,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"uglifyFileName": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"nodeModules": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.6.0",
-	"appid": "wx7fc9a5b3b12834dd",
-	"projectname": "miniapp-base-estore",
+	"appid": "wx7fbb20fb0d685822",
+	"projectname": "miniapp-base-code",
 	"miniprogramRoot": "app/",
 	"scripts": {
 		"beforeCompile": "..\\bin\\beforeCompile.sh",
@@ -36,9 +51,21 @@
 		"game": {
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
 			"current": 0,
-			"list": []
+			"list": [
+				{
+					"id": -1,
+					"name": "pages/product-list/product-list",
+					"pathName": "pages/product-list/product-list",
+					"query": "",
+					"scene": null
+				}
+			]
 		}
 	}
 }

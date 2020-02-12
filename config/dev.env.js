@@ -1,5 +1,6 @@
 module.exports = {
-  baseUrl: '',
-  cdnUrl: '',
-  appid: 'wx7fc9a5b3b12834dd'
+  baseUrl: 'https://dev.estore.d1m.cn/api/v4/estore',
+  storeUrl: 'https://dev.estore.d1m.cn/api/v4/locator/core',
+  cdnUrl: 'https://dev.estore.d1m.cn/attached',
+  appid: 'wx7fbb20fb0d685822'
 }

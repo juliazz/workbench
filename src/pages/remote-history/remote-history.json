@@ -1,0 +1,12 @@
+
+{
+  "navigationBarTitleText": "REMOTE SALES",
+  "usingComponents": {
+    "w-currency": "../../components/currency/index",
+    "van-popup":"../../miniprogram_npm/vant-weapp/popup",
+    "van-button": "../../miniprogram_npm/vant-weapp/button",
+    "w-collapse":"../../components/collapse/index"
+  }
+
+}
+  
