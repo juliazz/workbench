@@ -8,7 +8,7 @@ w-page(
       image.header-image(
         src='../../assets/image/zegna_black_logo.png'
       )
-    view.title-header 修改密码
+    view.title-header 登录
   view(slot="content" class="content")
     view.input-area
       form.form(
@@ -18,24 +18,22 @@ w-page(
         view.section
           view.label CA CODE
           input.cacode( 
-            name="code"
-            auto-focus placeholder="" value="{{ca.code}}"
-            bindinput="codeInput"
+            name="account"
+            placeholder="" value="{{ca.account}}"
+            bindinput="accountInput"
           )
         view.section
           view.label 初始密码
           input.cacode( 
-            name="passworld"
-            bindinput="passworldInput"
-            auto-focus placeholder="" value ="{{ca.passworld}}" 
-            )
+            password
+            name="password"
+            bindinput="passwordInput"
+            placeholder="" value ="{{ca.password}}" 
+          )
         view.button-box
           button(
             class="submit"
             text="结算"
             formType="submit"
           ) 立即登录
-
-        
-      
   view(slot="footer" class="footer")

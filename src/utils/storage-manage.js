@@ -30,7 +30,13 @@ export default {
   clearPhone: async () => storage.remove(`${PREFIX}PHONE`),
 
   // 用户会员信息
-  setCustomerInfo: async (value) => storage.set(`${PREFIX}CUSTOMERINFO`, value, 24 * 7),
-  getCustomerInfo: async () => storage.get(`${PREFIX}CUSTOMERINFO`),
-  clearCustomerInfo: async () => storage.remove(`${PREFIX}CUSTOMERINFO`)
+  setCaName: async (value) => storage.set(`${PREFIX}CANAME`, value, 24 * 7),
+  getCaName: async () => storage.get(`${PREFIX}CANAME`),
+  clearCaName: async () => storage.remove(`${PREFIX}CANAME`),
+
+  // 推荐单商品数据
+  setRemoteoducts: async value => storage.set(`${PREFIX}REMOTEPRODUCTS`, value, 24 * 7),
+  getRemoteProducts: async () => storage.get(`${PREFIX}REMOTEPRODUCTS`),
+  clearRemoteProducts: async () => storage.remove(`${PREFIX}REMOTEPRODUCTS`)
+
 };

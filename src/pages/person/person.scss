@@ -6,7 +6,7 @@
     //     height: 100vh;
     //     width: 100vw;
     // }
-    padding-bottom: 100rpx;
+    padding-bottom: 120rpx;
     .header{
         background: #f3f3f3;
         display: flex;
@@ -28,6 +28,12 @@
         .welcome{
             padding-left: 30rpx;
             color: #000;
+            font-size: 25rpx;
+            display: flex;
+            align-items: center;
+            .nickname{
+              margin-right: 10rpx;
+            }
         }
     }
     .right{
@@ -48,19 +54,24 @@
     }
     .record-title{
         padding: 30rpx;
-        font-size: 25rpx;
         display: flex;
         justify-content: space-between;
+        .record{
+          font-size: 28rpx;
+          font-weight: 600;
+        }
         .picker-box{
-          justify-content: flex-end;
+          justify-content: flex-start;
+          align-items: center;
           display: flex;
           text{
-            margin: 0 15rpx;
+            margin:0 10rpx;
           }
           picker{
             text-decoration: underline;
           }
         }
+        
     }
     .list-area {
         padding: 0 30rpx 10rpx;
@@ -84,6 +95,7 @@
           box-sizing: border-box;
           position: relative;
           overflow: hidden;
+          padding-bottom: 20rpx;
           transition: max-height 0.5s;
           // height: 360rpx;
           border: 1rpx solid #eee;
@@ -207,11 +219,11 @@
           }
         }
         .expand_{
-          max-height: 1500rpx;
+          max-height: 3500rpx;
           // animation: up linear 0.5s  forwards ;
         }
         .fold_{
-          max-height: 370rpx;
+          max-height: 190rpx;
           // animation: down linear 0.5s  forwards ;
         }
       }

@@ -46,7 +46,39 @@ const formatDate = (time) => {
 
   return `${date} ${time}.${millisecond}`;
 };
-
+// 获取当前时间2018/05/19
+const getNowFormatDate = () => {
+  let date = new Date();
+  let seperator1 = "-";
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let strDate = date.getDate();
+  if(month >= 1 && month <= 9) {
+      month = "0" + month;
+  }
+  if(strDate >= 0 && strDate <= 9) {
+      strDate = "0" + strDate;
+  }
+  let currentdate = year + seperator1 + month + seperator1 + strDate;
+  return currentdate;
+}
+// 将2018-05-19T08:04:52.000+0000转化为2018/05/19
+const myTime = (date) =>{
+       let arr=date.split("T");
+        let dd=arr[0].replace(/-/g, '/');
+   return dd;
+  }
+const myTime2 = (date) =>{
+       let arr=date.split(" ");
+        let dd=arr[0].replace(/-/g, '/');
+   return dd;
+  }
+  // 手机中间四位******
+const hidePhoneNumber = (phone) =>{
+  let reg = /(\d{3})\d{4}(\d{4})/;
+  let tel1 = phone.replace(reg, "$1****$2")
+  return tel1
+}
 
 /**
  * 格式链接
@@ -249,9 +281,6 @@ const isIpx = () => {
   console.log('model===', model)
   return model.indexOf(name) > -1 || model.indexOf(name2) > -1
 }
-
-
-
 /**
  * 判断SDK版本
  * @param {*} v1  小程序SDK最低版本
@@ -282,7 +311,6 @@ const compareVersion = (v1, v2) => {
   }
   return 0
 }
-
 const convertQuery = (value) => {
   let result = ''
   Object.keys(value).forEach((key) => {
@@ -291,7 +319,6 @@ const convertQuery = (value) => {
   result = result.substring(0, result.length - 1)
   return result
 }
-
 const convertParams = (value) => {
   value = decodeURIComponent(value)
   let result = {}
@@ -301,9 +328,6 @@ const convertParams = (value) => {
   })
   return result
 }
-
-
-
 // 正则去掉字符串两边空格
 const spaceTrim = (value) => {
   return value.replace(/(^\s*)|(\s*$)/g, '');
@@ -318,7 +342,14 @@ const checkAndroid = () => {
     platform, system
   } = systemInfo
   return !!~platform.indexOf('android') || !!~system.indexOf('Android')
-};
+}
+//日期转时间戳
+const  getUnixTime = (dateStr) =>{
+  let newstr = dateStr.replace(/-/g,'/'); 
+  let date =  new Date(newstr); 
+  let time_str = date.getTime().toString();
+  return time_str.substr(0, 10);
+}
 
 export default {
   ...lodash,
@@ -339,5 +370,10 @@ export default {
   convertQuery,
   convertParams,
   spaceTrim,
-  checkAndroid
+  checkAndroid,
+  getUnixTime,
+  myTime,
+  myTime2,
+  hidePhoneNumber,
+  getNowFormatDate
 };

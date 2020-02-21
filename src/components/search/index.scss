@@ -10,11 +10,15 @@
         text-align: left;
         border: none;
         width: 87%;
+        transition: with .5s;
         background: #ebebeb;
-        padding: 0 35rpx 0 60rpx;
+        padding: 0 35rpx 0 85rpx;
         font-size: 24rpx;
         border-radius: 60rpx;
         box-sizing: border-box;
+    }
+    .broaden{
+        width: 100%;
     }
     text{
         margin-left: 30rpx;

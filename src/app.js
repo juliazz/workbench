@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable  import/order */
 import {
   logger,
@@ -9,7 +10,10 @@ App({
   async onLaunch() {
     await tokenManage.get()
   },
-  async onShow() {
+  async onShow (opts) {
+    this.data.from = opts.referrerInfo.extraData && opts.referrerInfo.extraData.from
+    // this.data.from = 'ECback'
+    console.log(this.data.from, 'this.globalData.from')
     try {
       await wx.$checkSession();
       logger.info('session_key 未过期');
@@ -21,5 +25,7 @@ App({
       }
     }
   },
-  data: {}
+  data: {
+    from: ''
+  }
 });

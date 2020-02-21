@@ -13,12 +13,12 @@ w-page(
         data-index="0"
         bindtap="tabEventer"
       )
-        text.tab1(class="{{tabIndex == 0?'active':''}}") 推荐历史
-      view.tab(
-        data-index="1"
-        bindtap="tabEventer"
-      )
-        text.tab2(class="{{tabIndex == 1?'active':''}}") 指导推荐
+        text.tab1(class="{{tabIndex == 0?'active':''}}") 推荐列表
+      //- view.tab(
+      //-   data-index="1"
+      //-   bindtap="tabEventer"
+      //- )
+      //-   text.tab2(class="{{tabIndex == 1?'active':''}}") 指导推荐
     view.tab1-area(
       wx:if!="{{productList.length&&tabIndex == 0}}"
     )
@@ -36,22 +36,26 @@ w-page(
           view.item
             view.box
               image(
-              data-path="{{item.path}}"
-              bindtap="$go"
+              b
               mode="aspectFill"
-              src="{{item.mainImageUrl}}"
+              src="{{item.images[0].url}}"
               )
             view.box
               view.desc
                 view.text {{item.productName}}
-                view.share-icon
+                view.share-icon(
+                  data-index ="{{index}}"
+                  bindtap="delRemoteList"
+                )
                   image(
                     src="../../assets/image/icon/icon-deleteProduct.png"
                   )
                 //- text 尺码：{{item.size}}
               view.currency-quantity
-                w-currency(value="{{item.salesPrice}}" class="currency")
-      view.del-btn 
+                w-currency(value="{{item.marketPrice}}" class="currency")
+      view.del-btn(
+        bindtap="clearRemoteList"
+      )
         text 清空列表
     view.tab2-area(
       wx:if!="{{tabIndex == 1}}"
@@ -87,9 +91,5 @@ w-page(
   w-tabbar(
     tabs="{{$tabs}}"
     isLens="{{$isLens}}"
-  )
-  w-loading(
-      show="{{$loading.show}}"
-      text="{{$loading.text}}"
   )
   view(slot="footer" class="footer")

@@ -11,7 +11,20 @@ const { wechatId } = config
  */
 const getChildCategory = async (params = {}) => request.get({
   data: params,
-  url: `/estore/category/getAll/${0}/${config.wechatId}`
+  url: `/catalog/getAll/${0}/${config.shopWechatId}`
+});
+
+
+/**
+ * 获取分类数据
+ * @id      ID
+ * @name    名称
+ * @status  状态 0 | 1
+ * @type    0 web首页 | 1 小程序首页 | 2 二级页 | 3 分类页 | 4 开屏
+ */
+const getCategory = async (params = {}) => request.post({
+  data: { type: 2, status: 1 },
+  url: 'index/select'
 });
 
 
@@ -21,26 +34,7 @@ const getChildCategory = async (params = {}) => request.get({
  */
 const getSearchList = async (params = {}) => request.post({
   data: params,
-  url: '/estore/product/search'
-});
-
-
-/**
- * 获取搜索列表
- * @categoryIds array
- */
-const getProductList = async (params = {}) => request.post({
-  data: params,
-  url: '/estore/product/search'
-});
-
-
-/**
- * 获取商品详情
- * @spu
- */
-const getProductDetail = async (params = {}) => request.get({
-  url: `/estore/product/getBySpu/${params.spu}?isAll=1`
+  url: '/product/search'
 });
 
 /**
@@ -59,32 +53,10 @@ const getSharePicture = async (params = {}) => {
   }
 }
 
-/**
- * 获取推荐商品
- * @spu
- */
-
-const getEgcRelatedGoods = async () => request.get({
-  url: `/estore/product/getRelatedProductByConfig/${wechatId}/EGC_INVALIDGOODS`
-})
-
-/**
- * 添加购物车商品
- * @productId
- * @productSpecId
- * @quantity
- */
-const addCart = async (params = {}) => request.post({
-  data: params,
-  url: '/estore/cart/add'
-});
 
 export default {
   getChildCategory,
   getSearchList,
-  getProductList,
-  getProductDetail,
   getSharePicture,
-  addCart,
-  getEgcRelatedGoods
+  getCategory
 };

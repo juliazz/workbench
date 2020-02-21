@@ -5,21 +5,24 @@ export default Component({
   properties: {
     value: {
       type: String,
-      value: '',
-      observer: 'fieldChangeEventer'
+      value: ''
     },
     type: {
       type: String,
       value: 'text'
     },
     disabled: Boolean,
-    focus: Boolean,
+    focus: {
+      type: Boolean,
+      value: false,
+      observer: 'focusChangeEventer'
+    },
     maxlength: {
       type: Number,
       value: 140
     },
     placeholder: {
-      vlaue: 'A-maze高性能球鞋',
+      vlaue: '',
       type: String
     }
   },
@@ -39,6 +42,12 @@ export default Component({
     },
     searchEventer({ detail = {} } = {}) {
       this.triggerEvent('confirm', detail)
+    },
+    focusChangeEventer(newVal, oldVal) {
+      console.log(newVal, oldVal)
+      this.setData({
+        isfocus: newVal
+      })
     }
   }
 })

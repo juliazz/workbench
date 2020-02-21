@@ -1,3 +1,5 @@
+import api from '../../api/index.js'
+import { Base64 } from '../../utils/base64';
 
 const fetch = async (options) => {
   try {
@@ -13,7 +15,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title: 'change-passworld'
+    account: {
+      oldPass: '',
+      newPass: '',
+      againPass: ''
+    }
   },
   onPreLoad: fetch,
   /**
@@ -25,14 +31,37 @@ Page({
     // console.log(result)
     // this.$wLoading.hide()
   },
-  codeInput(e) {
+  inputEventer(e) {
     const { value } = e.detail
+    const {type } = e.currentTarget.dataset
+    const data = `account.${type}`
     this.setData({
-      'ca.code': value
+      [data]: value
     })
   },
-  submitEventer(e) {
+  async submitEventer(e) {
     console.log(e)
+    const caCode = wx.getStorageSync('cacode')
+    const { account} = this.data
+    const { oldPass, newPass, againPass} = account
+    console.log(account)
+    if (oldPass === newPass) return this.$showToast('原密码与新密码不能相同！');
+    if (againPass != newPass) return this.$showToast('两次输入的密码不相同');
+    for (let key in account) {
+      if (!account[key]) return this.$showToast('请填写必填项！');
+    }
+    const result = await api.salesAssistant({
+      password: Base64.encode(newPass),
+      originalPassword: Base64.encode(oldPass),
+      number: caCode
+    })
+    const { msg, resultCode, data} = result
+    if (resultCode != 1) return this.$showToast(msg);
+    if (resultCode == 1) return this.$showToast('密码已修改请重新登录\r\n .......');
+    setTimeout(() => {
+      this.$routeTo('product-list', 'redirect')
+    }, 2000)
+    console.log(msg, resultCode, data)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

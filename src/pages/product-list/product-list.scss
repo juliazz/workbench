@@ -2,8 +2,7 @@
 @import '../../assets/style/index';
 .pages-productList {
     .content {
-       
-        margin-bottom: 20rpx;
+        padding-bottom: 120rpx;
         background: white;
         .search-area{
           z-index: 99;
@@ -31,8 +30,9 @@
                 font-weight: 500;
                 line-height: 80rpx;
               }
+
             }
-            .hot-search{
+            .hot-search,.search-prize{
               min-height: 70rpx;
               width: 100%;
               .hot-word{
@@ -50,11 +50,15 @@
                 }
               }
             }
-            .search-history{
+            .search-prize{
               .line,.scope{
                 display: flex;
                 justify-content:flex-start;
                 align-items: center;
+                .word{
+                  // display: flex;
+
+                }
                 .del{
                   image{
                     height: 28rpx;

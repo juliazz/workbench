@@ -3,28 +3,13 @@
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
-		"enhance": true,
 		"postcss": true,
-		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
-		"coverView": true,
-		"autoAudits": false,
-		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false,
-		"uglifyFileName": false,
-		"checkInvalidKey": true,
-		"checkSiteMap": true,
-		"uploadWithSourceMap": true,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		},
-		"nodeModules": true
+		"uglifyFileName": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.6.0",
+	"libVersion": "2.10.1",
 	"appid": "wx7fbb20fb0d685822",
 	"projectname": "miniapp-base-code",
 	"miniprogramRoot": "app/",
@@ -60,9 +45,8 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "pages/product-list/product-list",
-					"pathName": "pages/product-list/product-list",
-					"query": "",
+					"name": "pages/remote-history/remote-history",
+					"pathName": "pages/remote-history/remote-history",
 					"scene": null
 				}
 			]

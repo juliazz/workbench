@@ -27,7 +27,6 @@ const token = {
   },
   async get() {
     const _token = await store.getter();
-
     if (_token) return _token;
     if (this.status) {
       const result = await new Promise((resolve, reject) => {
@@ -71,23 +70,20 @@ const token = {
     }
     // 累计次数
     this.count += 1;
-    // const { code} = await wx.$login();
-    // console.log(code)
-    // // todo 用户静默登录
-    // const result = await request.get({
-    //   url: `/member/onLogin/${code}/${config.wechatId}`,
-    //   auth: true
-    // });
-    // const { data, resultCode } = result
-    // if (resultCode != -1) throw new Error('Token fetch failed');
-    // const { token } = data;
-   
-    // await this.set(token);
-    // console.log(result)
-    // 用户登录失效或者缓存失效的时候
-    // wx.redirectTo({
-    //   url: '/pages/login/login'
-    // })
+    const { code} = await wx.$login();
+    console.log(code)
+    // todo 用户静默登录
+    const result = await request.get({
+      url: `/member/caOnLogin/${code}/${config.wechatId}/${config.shopWechatId}`,
+      auth: true
+    });
+    const { data, resultCode } = result
+    console.log(result)
+    if (resultCode != 1) throw new Error('Token fetch failed');
+    const { token } = data;
+    console.log(token)
+    await this.set(token);
+    return result;
   },
   complete(type, result) {
     this.status = false;

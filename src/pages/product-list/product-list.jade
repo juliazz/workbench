@@ -14,7 +14,9 @@ w-page(
         w-search(
             placeholder='输入货号或关键字搜索'
             value="{{searchKeyWord}}"
-            maxlength="11"
+            maxlength="30"
+            focus="{{focus}}"
+            data-type ="input"
             bindfocus ='foucusEventer'
             bindconfirm="searchEventer"
         )
@@ -22,51 +24,57 @@ w-page(
             class="{{focus?'higer':''}}"
         )
             view.search-box
-              view.search-history
-                view.line 
-                    view.title 价格范围
-                    view.scope 
-                      input.low(
-                        input-class="input-class"
-                        data-type = "low"
-                        value ="{{low}}"
-                        comfirm-type = "search"
-                        placeholder-class="input-class"
-                        bindinput="inputLowLimit"
-                      )
-                      text ~
-                      input.high(
-                        placeholder-class="input-class"
-                        value ="{{high}}"
-                        data-type = "high"
-                        comfirm-type = "search"
-                        input-class="input-class"
-                        bindconfirm="inputLowLimit"
-                      )
+              view.search-prize
+                view.title 价格范围
+                view.hot-word(
+                )
+                  text.word(
+                      data-keyword='{{item}}'
+                      data-type ="prize"
+                      wx:for="{{prizeScope}}"
+                      wx:for-item="item",
+                      bindtap="searchCategoryAction"
+                      wx:key ="index"
+                  ) 
+                    text.low {{item.low}}
+                    text(wx:if !="{{item.type !='infinty'}}") ~
+                    text.high {{item.high}}
+                //- view.line 
+                //-   view.title 价格范围
+                //-   view.scope 
+                //-     input.low(
+                //-       input-class="input-class"
+                //-       data-type = "low"
+                //-       value ="{{low}}"
+                //-       comfirm-type = "search"
+                //-       placeholder-class="input-class"
+                //-       bindinput="inputLowLimit"
+                //-     )
+                //-     text ~
+                //-     input.high(
+                //-       placeholder-class="input-class"
+                //-       value ="{{high}}"
+                //-       data-type = "high"
+                //-       comfirm-type = "search"
+                //-       input-class="input-class"
+                //-       bindconfirm="inputLowLimit"
+                //-     )
                     //- view.del(
                     //-     bindtap="delHistoryWords"
                     //- )
                     //-     image(
                     //-         src="../../assets/image/icon/icon-deleteProduct.png"
                         )
-                //- view.history-word(
-                //- )
-                //-     text.word(
-                //-         data-keyword='{{item}}'
-                //-         wx:for="{{prizeScope}}"
-                //-         wx:for-item="item",
-                //-         bindtap="searchKeyWord"
-                //-         wx:key ="index"
-                //-     ) {{item}}
-                view.
+
               view.hot-search
                   view.title 类目
                   view.hot-word(
                   )
                       text.word(
                           data-keyword='{{item}}'
-                          bindtap="searchKeyWord"
-                          wx:for="{{hotWords}}"
+                          data-type ="category"
+                          bindtap="searchCategoryAction"
+                          wx:for="{{categoryList}}"
                           wx:for-item="item",
                           wx:key ="index"
                       ) {{item}}
@@ -80,15 +88,14 @@ w-page(
           view.item
               view.box
                   image(
-                  data-path="{{item.path}}"
-                  bindtap="$go"
                   mode="aspectFill"
-                  src="{{item.mainImageUrl}}"
+                  src="{{item.images[0].url}}"
                   )
               view.box
                   view.desc
                       view.text {{item.productName}}
                       view.share-icon(
+                        data-product-id ="{{item.productId}}"
                         bindtap="toEcMiniProgram"
                       )
                         image(
@@ -96,8 +103,11 @@ w-page(
                         )
                       //- text 尺码：{{item.size}}
                   view.currency-quantity
-                      w-currency(value="{{item.salesPrice}}" class="currency")
-                      text.text 添加至推荐列表
+                      w-currency(value="{{item.marketPrice}}" class="currency")
+                      text.text(
+                        data-index ="{{index}}"
+                        bindtap="addToRemoteList"
+                      ) 添加至推荐列表
     w-tabbar(
       tabs="{{$tabs}}"
       isLens="{{$isLens}}"

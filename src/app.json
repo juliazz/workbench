@@ -43,8 +43,8 @@
 	"usingComponents": {
 		"w-navbar": "./custom-nav-bar/index",
 		"w-tabbar": "./custom-tab-bar/index",
-		"w-page": "./components/page/index",
-		"van-popup": "./miniprogram_npm/vant-weapp/popup"
+		"w-icon": "./components/icon/index",
+		"w-page": "./components/page/index"
 	},
 	"networkTimeout": {
 		"request": 20000,

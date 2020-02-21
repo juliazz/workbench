@@ -1,5 +1,6 @@
 view.inputBox
 	input.input(
+		class="{{isfocus?'':'broaden'}}"
 	    type="text"
 	    disabled="{{disabled}}"
 	    focus="{{focus}}"
@@ -15,6 +16,7 @@ view.inputBox
 	)
 	text(
 		bindtap = "searchEventer"
+		wx:if= "{{isfocus}}"
 	) 取消
 
 	view.searchIcon

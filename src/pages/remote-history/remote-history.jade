@@ -1,6 +1,5 @@
 
 w-loading(id="w-loading")
-
 w-page(
   class="w-page pages-remote-history"
 )
@@ -17,21 +16,20 @@ w-page(
     //-     bindtap="tabEventer"
     //-   )
     //-     text.tab2(class="{{tabIndex == 1?'active':''}}") 指导推荐
+            
+            bindfocus="focusEventer"
+            bindinput="inputEventer"
     view.history-list
       view.inputBox
         input.input(
             type="text"
             disabled="{{disabled}}"
-            focus="{{focus}}"
-            value="{{value}}"
+            value="{{inputValue}}"
             placeholder="输入单号搜索"
-            maxlength="{{maxlength}}"
+            maxlength="30"
             placeholder-class="placeholders_"
-          confirm-type = "search"
-            bindinput="chageEventer"
-          bindconfirm="searchEventer"
-            bindfocus="focusEventer"
-            bindblur="blurEventer"
+            confirm-type = "search"
+            bindconfirm="confirmEventer"
         )
         view.searchIcon
           image.iconImg(
@@ -40,17 +38,19 @@ w-page(
         view.picker-area
           picker(
             mode ="date"
-            value ="{{date}}"
+            value ="{{time.from}}"
             start="2015-09-01" end="2017-09-01"
+            data-type="from"
             bindchange="bindDateChange"
-          ) 2020/01/09
+          ) {{time.from}}
           text 至
           picker(
             mode ="date"
-            value ="{{date}}"
+            value ="{{time.to}}"
+            data-type="to"
             start="2015-09-01" end="2017-09-01"
             bindchange="bindDateChange"
-          ) 2020/01/20
+          ) {{time.to}}
           
       view(
         class="list-area"
@@ -61,38 +61,41 @@ w-page(
       )
         view.cart-item
           view.title
-            text 订单号: {{item.orderNum}}
-            text {{item.date}}
+            text 订单号: {{item.recommendedNo}}
+            text {{item.createdDate}}
           view.item-area(
             class="{{item.expand? 'expand_':'fold_'}}"
           )
-            view.shareDetail-btn 查看分享详情
+            view.shareDetail-btn(
+              data-order-num ="{{item.recommendedNo}}"
+              bindtap="viewShareDetail"
+            ) 查看分享详情
             view.item(
-              wx:if!="{{item.shareList}}"
-              wx:for="{{item.shareList}}"
+              wx:if!="{{productList&&item.expand}}"
+              wx:for="{{productList}}"
               wx:key="idx"
               wx:for-index="idx"
-              wx:for-item="subItem"
+              wx:for-item="proItem"
             )
               view.box
                 image(
-                data-path="{{subItem.path}}"
-                bindtap="$go"
                 mode="aspectFill"
-                src="{{subItem.mainImageUrl}}"
+                src="{{proItem.images[0]}}"
                 )
               view.box
                 view.desc
-                  view.text {{subItem.productName}}
+                  view.text {{proItem.name}}
                   //- view.share-icon
                   //-   image(
                   //-     src=""
                   //-   )
                   //- text 尺码：{{item.size}}
                 view.currency-quantity
-                  w-currency(value="{{subItem.salesPrice}}" class="currency")
+                  w-currency(value="{{proItem.price}}" class="currency")
             view.expand.abs(
               data-index ="{{index}}"
+              data-expand ="{{item.expand}}"
+              data-product-ids ="{{item.productId}}"
               wx:if="{{item.expand}}"
               bindtap="expandEventer"
 
@@ -104,6 +107,8 @@ w-page(
                 )
             view.expand(
               wx:else
+              data-product-ids ="{{item.productId}}"
+              data-expand ="{{item.expand}}"
               data-index ="{{index}}"
               bindtap="expandEventer"
             )
@@ -139,29 +144,14 @@ van-popup(
       view.grid 最后打开时间
       view.grid 打开次数
     view.line-content
-      view.line
-        text ZOEY
-        text 2019/01/01
-        text 9999
-      view.line
-        text ZOEY
-        text 2019/01/01
-        text 9999
-      view.line
-        text ZOEY
-        text 2019/01/01
-        text 9999
-      view.line
-        text ZOEY
-        text 2019/01/01
-        text 9999
-      view.line
-        text ZOEY
-        text 2019/01/01
-        text 9999
-      view.line
-        text ZOEY
-        text 2019/01/01
-        text 9999
+      view.line(
+        wx:for ="{{viewList}}"
+        wx:for-index="index"
+        wx:key="index"
+        )
+        text {{item.memberNickname}}
+        text {{item.visitDate}}
+        text {{item.visitCount}}
+ 
   
   view(slot="footer" class="footer")

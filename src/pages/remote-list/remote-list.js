@@ -1,18 +1,7 @@
+import api from '../../api/index.js'
+import storageManage from '../../utils/storage-manage'
 
-let productList = [
-  {
-    productName: 'TECHMERINO™ A-Maze 运动鞋',
-    salesPrice: '333300'
-  },
-  {
-    productName: 'TECHMERINO™ A-Maze 运动鞋',
-    salesPrice: '3300'
-  },
-  {
-    productName: 'TECHMERINO™ A-Maze 运动鞋',
-    salesPrice: '33300'
-  }];
-
+let remotelistStorge;
 Page({
   $route: 'pages/remote-list/remote-list',
   /**
@@ -40,19 +29,37 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.setData({
-      productList
-    })
+    this.getremoteList()
   },
-  toEcMiniProgram: function() {
-    console.log('00000')
+  async toEcMiniProgram() {
+    wx.showLoading()
+    const caCode = wx.getStorageSync('cacode')
+    const storeCode = wx.getStorageSync('storeCode')
+    // const productId = e.currentTarget.dataset.productid
+    let {productList } = this.data
+    let productId = productList.map((i) => i.productId).join()
+    const par = {
+      productId,
+      caCode: caCode,
+      type: 0
+    }
+    const result = await api.addRemoteList(par)
+    wx.hideLoading()
+    console.log(result)
+    const { msg, resultCode, data} = result
+    if (resultCode != 1) return this.$showToast(msg);
+    const { recommendedNo} = data
     wx.navigateToMiniProgram({
       appId: 'wxcc92c871c0188fe5',
-      path: 'page/giftlist-ca/giftlist-ca',
+      path: 'pages/giftlist-ca/giftlist-ca',
       extraData: {
-        foo: 'bar'
+        // fromCaMiniShare: {
+        recommendedNo,
+        caCode,
+        storeCode
+        // }
       },
-      envVersion: 'develop',
+      envVersion: 'trial',
       success(res) {
         // 打开成功
       }
@@ -63,6 +70,39 @@ Page({
     console.log(e)
     this.setData({
       tabIndex: index
+    })
+  },
+  async getremoteList() {
+    wx.showLoading()
+    const remotelistStorge = await storageManage.getRemoteProducts() || []
+    console.log(remotelistStorge)
+    this.setData({
+      productList: remotelistStorge
+    })
+    wx.hideLoading()
+  },
+  async delRemoteList(eve) {
+    const {index } = eve.currentTarget.dataset
+    let productList = await storageManage.getRemoteProducts() || []
+    productList.length && productList.splice(index, index + 1)
+    console.log(productList)
+    this.setData({
+      productList
+    })
+    await storageManage.setRemoteoducts(productList)
+    wx.showToast({
+      title: '删除成功',
+      icon: 'success',
+      duration: 2000
+    })
+  },
+  // async getRemoteProducts() {
+  //   return await storageManage.getRemoteProducts() || []
+  // },
+  async clearRemoteList() {
+    await storageManage.setRemoteoducts([])
+    this.setData({
+      productList: []
     })
   },
   /**
@@ -97,6 +137,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-
+    return {
+      title: '',
+      imageUrl: '',
+      path: '/pages/home/home?share=首页'
+    };
   }
 })

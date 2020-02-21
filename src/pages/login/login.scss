@@ -23,6 +23,12 @@
             font-size: 30rpx;
             border-top: 1rpx solid #000;
         }
+        p{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+           
+        }
         .content{
             .input-area{
                 padding: 7vh 60rpx 10vh;

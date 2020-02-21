@@ -1,38 +1,43 @@
 import api from '../../api/index.js'
-import Toast from '../../miniprogram_npm/vant-weapp/toast/toast';
+import storageManage from '../../utils/storage-manage'
 
+let productList;// 用于存储整体列表数据
 const fetch = async (options) => {
   try {
-    return await api.getProductList({ type: 'POST', options: { isWishFirst: 0 } })
+    return await api.getSearchList({ isWishFirst: 0 })
   } catch (err) {
-    return {}
+    return {err}
   }
 }
-let productList = [
-  {
-    productName: 'TECHMERINO™ A-Maze 运动鞋',
-    salePrice: '333300'
-  },
-  {
-    productName: 'TECHMERINO™ A-Maze 运动鞋',
-    salePrice: '3300'
-  },
-  {
-    productName: 'TECHMERINO™ A-Maze 运动鞋',
-    salesPrice: '33300'
-  }];
-
 Page({
   $route: 'pages/product-list/product-list',
   /**
    * 页面的初始数据
    */
-
   data: {
     shareCardShow: true,
     showLoading: true,
-    hotWords: ['上衣', '围巾', '下衣', '童装', '帽子'],
-    prizeScope: ['0 ~ 5000', '5000 ~ 10000', '10000 ~ 15000', '15000 ~ 20000', '0 ~ 不限']
+    focus: false,
+    historyWords: [],
+    categoryList: [],
+    prizeScope: [{
+      low: 0,
+      high: 3000
+    }, {
+      low: 3001,
+      high: 5000
+    }, {
+      low: 5001,
+      high: 10000
+    }, {
+      low: 15000,
+      high: 20000
+    }, {
+      high: '及以上',
+      type: 'infinty',
+      low: 20000
+    }]
+
   },
   onPreLoad: fetch,
   /**
@@ -41,6 +46,7 @@ Page({
   onLoad: async function (options) {
     // this.$Loading.show()
     this.getProductList(options)
+    this.getCategoryList()
     // this.$wLoading.hide()
   },
   /**
@@ -56,42 +62,60 @@ Page({
   onShow: function () {
     this.setData({
       focus: false,
-      searchKeyWord: '',
-      productList
+      searchKeyWord: ''
     })
-    Toast.loading({
-      mask: true,
-      duration: 0,
-      message: '加载中...'
-    });
-    Toast.clear();
   },
+
   async getProductList(options) {
+    wx.showLoading()
     const result = await this.$getPreload(fetch, options)
+    wx.hideLoading()
     console.log(result)
-    // if (res.resultCode == 1) {
+    const { data, msg, resultCode} = result
+    if (resultCode != 1) return this.$showToast(msg);
+    productList = data
     this.setData({
-      productList
+      productList: data
     })
-    // }
-    console.log(result)
   },
   foucusEventer(e) {
     this.setData({
       focus: true
     })
-
-    console.log(e)
   },
-  // 点击分享
-  toEcMiniProgram: function() {
+  // 品类列表 暂未使用
+  async getCategoryList () {
+    wx.showLoading()
+    const result = await api.getChildCategory()
+    const { msg, resultCode, data} = result
+    if (resultCode != 1) return this.$showToast(msg);
+    let categoryList = data.map(i => { return i.name })
+    this.setData({
+      categoryList
+    })
+    wx.hideLoading()
+  },
+  async toEcMiniProgram(e) {
+    wx.showLoading()
+    const caCode = wx.getStorageSync('cacode')
+    const { productId } = e.currentTarget.dataset
+    const par = {
+      productId,
+      caCode: caCode,
+      type: 0
+    }
+    const result = await api.addRemoteList(par)
+    wx.hideLoading()
+    const { msg, resultCode, data} = result
+    if (resultCode != 1) return this.$showToast(msg);
+    const { recommendedNo} = data
     wx.navigateToMiniProgram({
       appId: 'wxcc92c871c0188fe5',
-      path: 'pages/giftlist/giftlist?pathData=666',
+      path: 'pages/giftlist-ca/giftlist-ca',
       extraData: {
-        remoteID: 'abc'
+        recommendedNo
       },
-      envVersion: 'develop',
+      envVersion: 'trial',
       success(res) {
         // 打开成功
       }
@@ -99,36 +123,27 @@ Page({
   },
   // input输入关键字
   searchEventer(e) {
-    console.log(e)
     const keyword = e.detail.value
-    this.searching(keyword)
+    const { type } = e.currentTarget.dataset
+    this.searching(keyword, type)
   },
+
   // 搜索
-  searching(keyword) {
+  searching(keyword, type) {
     if (!keyword) {
       this.setData({
         focus: false
       })
       return
     }
-    const res = this.filterBySearch(this.data.list, keyword)
-    if (res.length) {
-      let historyWords = this.data.historyWords
-      // 从前面加入历史搜索词
-      historyWords.unshift(keyword)
-      console.log(historyWords)
-      // this.handleHistoryWords(historyWords)
-      // 去重
-      let newArr = Array.from(new Set(historyWords));
-      // 截取前8个
-      newArr = newArr.slice(0, 8)
-      wx.setStorageSync('historyWords', newArr)
+    console.log(keyword)
+    const filterRes = this.filterBySearch(keyword, type)
+    console.log(filterRes)
+    if (filterRes.length) {
       this.setData({
-        historyWords: newArr
+        productList: filterRes,
+        focus: false
       })
-      console.log(this.data.historyWords)
-      wx.setStorageSync('searchList', res)
-      this.$to(`search/search?keyword=${keyword}`)
     } else {
       wx.showToast({
         title: '未搜索到匹配商品',
@@ -145,20 +160,63 @@ Page({
       });
     }
   },
-  filterBySearch(list, keyWord) {
-    const filterRes = list.filter((v) => {
-      if (v.productName.indexOf(keyWord) > -1) {
-        return v
-      }
-    })
+  // 点击类目筛选
+  searchCategoryAction(e) {
+    console.log(e)
+    const { keyword, type} = e.currentTarget.dataset
+    this.searching(keyword, type)
+  },
+  // 搜索框搜索
+  filterBySearch(keyWord, type) {
+    let filterRes;
+    switch (type) {
+    case 'prize':
+      filterRes = productList.filter((v) => {
+        const { low, high} = keyWord
+        let result = this.isRangeIn(v.marketPrice, high, low)
+        console.log(result)
+        if (result) return v
+      })
+
+      break;
+    case 'category':
+      console.log('filtertype', type)
+      filterRes = productList.filter((v) => {
+        console.log(v.catalogs[0].name.indexOf(keyWord) > -1)
+        if (v.catalogs[0].name.indexOf(keyWord) > -1) {
+          return v
+        }
+      })
+      break;
+    default:
+      console.log('filtertype', type)
+      filterRes = productList.filter((v) => {
+        if (v.productName.indexOf(keyWord) > -1 || v.productCode == keyWord) {
+          return v
+        }
+      })
+      break;
+    }
     console.log(filterRes)
     return filterRes
   },
-  // 点击关键字
-  searchKeyWord(e) {
-    console.log(e)
-    const { keyword } = e.currentTarget.dataset
-    this.searching(keyword)
+  // 参数str判断的字符串 m最小值 n最大值
+  isRangeIn(str, maxnum, minnum) {
+    let num = parseFloat(str);
+    console.log(num, maxnum, minnum)
+    switch (maxnum) {
+    case '及以上':
+      if (num >= minnum) {
+        return true;
+      }
+      return false
+    default:
+      if (num <= maxnum && num >= minnum) {
+        console.log(num, maxnum, minnum)
+        return true;
+      }
+      return false;
+    }
   },
   delHistoryWords() {
     this.setData({
@@ -179,11 +237,20 @@ Page({
   searchByPrize() {
     console.log('根据价格搜索')
   },
-
-  // async getProductList() {
-  //   const result = await api.test2()
-  //   console.log(result)
-  // },
+  // 添加推荐单
+  async addToRemoteList(e) {
+    const {index } = e.currentTarget.dataset
+    const productList = this.data.productList
+    let recommendListParams = await storageManage.getRemoteProducts() || []
+    recommendListParams.push(productList.slice(index, index + 1)[0])
+    // 缓存结算参数
+    await storageManage.setRemoteoducts(recommendListParams)
+    wx.showToast({
+      title: '添加成功',
+      icon: 'success',
+      duration: 2000
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

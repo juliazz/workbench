@@ -4,6 +4,7 @@
   "usingComponents": {
     "w-currency": "../../components/currency/index",
     "w-button": "../../components/button/index",
+    "w-icon": "../../components/icon/index",
     "van-popup":"../../miniprogram_npm/vant-weapp/popup"
   }
 }

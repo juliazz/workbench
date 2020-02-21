@@ -1,0 +1,42 @@
+.icon {
+  font-size: 0;
+  display: block;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  &-smaller {
+    width: 24rpx;
+    height: 24rpx;
+    background-size: 100% 100%;
+  }
+
+  &-small {
+    width: 30rpx;
+    height: 30rpx;
+    background-size: 100% 100%;
+  }
+
+  &-normal {
+    width: 40rpx;
+    height: 40rpx;
+    background-size: 100% 100%;
+  }
+
+  &-large {
+    width: 60rpx;
+    height: 60rpx;
+    background-size: 100% 100%;
+  }
+  &-xlarge {
+    width: 70rpx;
+    height: 70rpx;
+    background-size: 100% 100%;
+  }
+}
+
+.icon-calendar{
+  background-image: url('../../assets/image/icon/calendar.png');
+}
+.icon-exit{
+  background-image: url('../../assets/image/icon/exit.png');
+}

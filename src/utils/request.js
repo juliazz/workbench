@@ -62,16 +62,16 @@ const interceptors = {
     // 处理HttpError
     async handleHttpError(options, result) {
       if (result.statusCode === 200) {
-
         // todo 处理鉴权失败
-        // const {
-        //   code
-        // } = result.data;
-        // if (code === -1) {
-        //   await tokenManage.clear();
-        //   result = await request.send(options);
-        // }
-
+        const {
+          code
+        } = result.data;
+        console.log('code=======', code)
+        if (code === -1) {
+          await tokenManage.clear();
+          await tokenManage.get()
+          // result = await request.send(options);
+        }
       } else if (result.statusCode >= 400 && result.statusCode < 500) {
         throw new Error('Bad Request.', result.data);
       } else if (result.statusCode >= 500) {

@@ -8,7 +8,7 @@ w-page(
         image.header-image(
           src='../../assets/image/zegna_black_logo.png'
         )
-    view.title-header 登录
+    view.title-header 修改密码
   view(slot="content" class="content")
     view.input-area
       form.form(
@@ -16,28 +16,35 @@ w-page(
         report-submit="true"
       )
         view.section
-          view.label CA CODE
+          view.label 原密码
           input.cacode( 
             name="code"
-            auto-focus placeholder="" value="{{ca.code}}"
-            bindinput="codeInput"
+            password
+            data-type ="oldPass"
+            auto-focus placeholder="" value="{{account.oldPass}}"
+            bindinput="inputEventer"
           )
         view.section
-          view.label 初始密码
+          view.label 新密码
           input.cacode( 
+            password
+            data-type ="newPass"
             name="passworld"
-            auto-focus placeholder="" value ="{{ca.passworld}}" 
+            bindinput="inputEventer"
+            auto-focus placeholder="" value ="{{account.newPass}}" 
             )
         view.section
           view.label 再次输入新密码
           input.cacode( 
-            name="passworldCheck"
-            auto-focus placeholder="" value ="{{ca.passworld}}" 
+            password
+            data-type ="againPass"
+            bindinput="inputEventer"
+            auto-focus placeholder="" value ="{{account.againPass}}" 
             )
         view.button-box
           button(
             class="submit"
-            text="结算"
+            text=""
             formType="submit"
-          ) 立即登录
+          ) 确认修改
   view(slot="footer" class="footer")

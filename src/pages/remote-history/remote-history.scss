@@ -33,6 +33,12 @@ van-popup{
         display: flex;
         font-size: 24rpx;
         justify-content: space-between;
+        text{
+          flex:1;
+        }
+        text:last-child{
+          text-align: right;
+        }
       }
       .line:nth-of-type(odd){
         background-color: #f0f0f0;
@@ -45,7 +51,8 @@ van-popup{
 }
 .pages-remote-history {
   .content {
-    margin-bottom: 20rpx;
+    padding-bottom: 120rpx;
+    // margin-bottom: 20rpx;
     background: white;
     .tab-area {
       margin: 0 30rpx;
@@ -172,7 +179,7 @@ van-popup{
           box-sizing: border-box;
           position: relative;
           overflow: hidden;
-          max-height: 350rpx;
+          // max-height: 350rpx;
           transition: max-height 0.5s;
           padding-bottom: 40rpx;
           border: 1rpx solid #eee;
@@ -295,11 +302,11 @@ van-popup{
           }
         }
         .expand_{
-          max-height: 350rpx;
+          max-height: 1550rpx;
           // animation: up linear 0.5s  forwards ;
         }
         .fold_{
-          max-height: 1500rpx;
+          max-height: 350rpx;
           // animation: down linear 0.5s  forwards ;
         }
       }
