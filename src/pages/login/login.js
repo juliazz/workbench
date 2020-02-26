@@ -42,14 +42,14 @@ Page({
       url: `/member/caOnLogin/${code}/${config.wechatId}/${config.shopWechatId}`,
       auth: true
     });
-    const { data, resultCode } = result
     wx.hideLoading()
+    const { data, resultCode } = result
     if (resultCode != '1') throw new Error('Token fetch failed');
     const { token, unionid } = data;
-    console.log(result)
     await tokenManage.set(token);
-    await storageManage.setUnionId(unionid);
+    console.log(unionid)
     if (unionid) {
+      await storageManage.setUnionId(unionid);
       const loginStatus = wx.getStorageSync('loginStatus');
       if (loginStatus) {
         this.$routeTo('product-list', 'switchTab')
@@ -88,12 +88,18 @@ Page({
     const unionid = await storageManage.getUnionId();
     if (!unionid) {
       wx.showToast({
-        title: '缺少必要信息，请允许跳转杰尼亚微商城',
+        title: '因您没有登录过微商城，现在将跳转至杰尼亚微商城进行授权',
         icon: 'none',
         duration: 2000
       })
       setTimeout(() => {
-        this.toEcMiniProgram()
+        let data = {
+          path: 'pages/auth-user-info/auth-user-info',
+          extraData: {
+            from: 'CAlogin'
+          }
+        }
+        app.navigateToMiniProgram_(data.path, data.extraData)
       }, 1500)
     } else {
       this.passWordLogin()
@@ -102,7 +108,7 @@ Page({
   // 密码登录
   async passWordLogin() {
     const {ca } = this.data
-    let {account, password} = ca
+    let { account, password } = ca
     if (!password || !account) {
       wx.showToast({
         title: '账号或密码不能为空\r\n .......',
@@ -134,22 +140,6 @@ Page({
       this.$routeTo('product-list', 'switchTab')
     }
   },
-  toEcMiniProgram: function() {
-    console.log('00000')
-    wx.navigateToMiniProgram({
-      appId: 'wxcc92c871c0188fe5',
-      path: 'pages/auth-user-info/auth-user-info',
-      // path: 'pages/mall/mall',
-      extraData: {
-        from: 'CAlogin'
-      },
-      envVersion: 'trial',
-      success(res) {
-        // 打开成功
-      }
-    })
-  },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
