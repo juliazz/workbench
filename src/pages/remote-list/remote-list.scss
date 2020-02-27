@@ -93,7 +93,6 @@
                     //border: 2rpx solid #e3e3e3;
                     font-size: 0;
                   image{
-                    background-color: green;
                     width: 200rpx;
                     height: 199rpx;
                     overflow: hidden;
@@ -135,6 +134,11 @@
                               width: 100%;
                             }
                         }
+                    }
+                    .subTitle{
+                      font-size: 26rpx;
+                      color: #999;
+                      margin-top: -45rpx;
                     }
                     .currency-quantity{
                     display: flex;

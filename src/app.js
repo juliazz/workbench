@@ -12,8 +12,9 @@ App({
   },
   async onShow (opts) {
     this.data.from = opts.referrerInfo.extraData && opts.referrerInfo.extraData.from
+    this.data.unionId = opts.referrerInfo.extraData && opts.referrerInfo.extraData.unionId
     // this.data.from = 'ECback'
-    console.log(this.data.from, 'this.globalData.from')
+    console.log(opts, 'this.opts')
     try {
       await wx.$checkSession();
       logger.info('session_key 未过期');
@@ -25,7 +26,28 @@ App({
       }
     }
   },
-  data: {
+  navigateToMiniProgram_ (path, extraData = {
+    recommendedNo: '',
+    caCode: '',
+    storeCode: '',
     from: ''
+  }) {
+    console.log(extraData)
+    wx.navigateToMiniProgram({
+      appId: 'wxcc92c871c0188fe5',
+      path: path,
+      extraData: extraData,
+      envVersion: 'trial',
+      success(res) {
+        // 打开成功
+      },
+      fail(err) {
+        console.log(extraData)
+      }
+    })
+  },
+  data: {
+    from: '',
+    unionId: ''
   }
 });

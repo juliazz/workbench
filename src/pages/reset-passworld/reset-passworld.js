@@ -1,5 +1,6 @@
 import api from '../../api/index.js'
 import { Base64 } from '../../utils/base64';
+import storageManage from '../../utils/storage-manage'
 
 const fetch = async (options) => {
   try {
@@ -26,10 +27,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    // this.$wLoading.show()
-    // const result = await this.$getPreload(fetch, options)
-    // console.log(result)
-    // this.$wLoading.hide()
+    console.log('')
   },
   inputEventer(e) {
     const { value } = e.detail
@@ -40,8 +38,8 @@ Page({
     })
   },
   async submitEventer(e) {
-    console.log(e)
-    const caCode = wx.getStorageSync('cacode')
+    const caInfo = await storageManage.getCaInFo()
+    // const caCode = wx.getStorageSync('cacode')
     const { account} = this.data
     const { oldPass, newPass, againPass} = account
     console.log(account)
@@ -53,14 +51,14 @@ Page({
     const result = await api.salesAssistant({
       password: Base64.encode(newPass),
       originalPassword: Base64.encode(oldPass),
-      number: caCode
+      number: caInfo.cacode
     })
     const { msg, resultCode, data} = result
     if (resultCode != 1) return this.$showToast(msg);
-    if (resultCode == 1) return this.$showToast('密码已修改请重新登录\r\n .......');
     setTimeout(() => {
-      this.$routeTo('product-list', 'redirect')
-    }, 2000)
+      this.$routeTo('login', 'reLaunch')
+    }, 1500)
+    if (resultCode == 1) return this.$showToast('密码已修改请重新登录\r\n .......');
     console.log(msg, resultCode, data)
   },
   /**

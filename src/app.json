@@ -1,16 +1,11 @@
 {
 	"pages": [
 		"pages/login/login",
-		"pages/home/home",
-		"pages/category/category",
-		"pages/shopping-cart/shopping-cart",
-		"pages/user/user",
 		"pages/reset-passworld/reset-passworld",
 		"pages/product-list/product-list",
 		"pages/remote-list/remote-list",
 		"pages/remote-history/remote-history",
-		"pages/person/person",
-		"pages/shareDetail/shareDetail"
+		"pages/person/person"
 	],
 	"window": {
 		"navigationStyle": "default",

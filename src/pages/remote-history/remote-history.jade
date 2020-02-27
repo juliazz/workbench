@@ -29,7 +29,7 @@ w-page(
             maxlength="30"
             placeholder-class="placeholders_"
             confirm-type = "search"
-            bindconfirm="confirmEventer"
+            bindinput="confirmEventer"
         )
         view.searchIcon
           image.iconImg(
@@ -39,7 +39,6 @@ w-page(
           picker(
             mode ="date"
             value ="{{time.from}}"
-            start="2015-09-01" end="2017-09-01"
             data-type="from"
             bindchange="bindDateChange"
           ) {{time.from}}
@@ -48,7 +47,6 @@ w-page(
             mode ="date"
             value ="{{time.to}}"
             data-type="to"
-            start="2015-09-01" end="2017-09-01"
             bindchange="bindDateChange"
           ) {{time.to}}
           
@@ -79,8 +77,8 @@ w-page(
             )
               view.box
                 image(
-                mode="aspectFill"
-                src="{{proItem.images[0]}}"
+                mode="aspectFit"
+                src="{{proItem.url}}"
                 )
               view.box
                 view.desc
@@ -149,7 +147,7 @@ van-popup(
         wx:for-index="index"
         wx:key="index"
         )
-        text {{item.memberNickname}}
+        text {{item.nickname}}
         text {{item.visitDate}}
         text {{item.visitCount}}
  

@@ -5,8 +5,6 @@ w-page(
 )
   view(slot="header" class="header")
       //- view.title
-      
-      
   view(slot="content" class="content")
     view.tab-area
       view.tab(
@@ -24,7 +22,8 @@ w-page(
     )
       view.share-btn
         button(
-          bindtap="toEcMiniProgram"
+          data-temp-id ="ciaJk6J0N50eRvcPdbBc1hW5aPcrYS4Q0K0xvHlwPXE"
+          bindtap="orderMessageShare"
         ) 发送分享单
       view(
         class="list-area"
@@ -36,7 +35,6 @@ w-page(
           view.item
             view.box
               image(
-              b
               mode="aspectFill"
               src="{{item.images[0].url}}"
               )
@@ -50,6 +48,7 @@ w-page(
                   image(
                     src="../../assets/image/icon/icon-deleteProduct.png"
                   )
+              view.desc.subTitle {{item.subTitle}} 
                 //- text 尺码：{{item.size}}
               view.currency-quantity
                 w-currency(value="{{item.marketPrice}}" class="currency")

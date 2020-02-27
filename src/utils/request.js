@@ -64,10 +64,10 @@ const interceptors = {
       if (result.statusCode === 200) {
         // todo 处理鉴权失败
         const {
-          code
+          resultCode
         } = result.data;
-        console.log('code=======', code)
-        if (code === -1) {
+        console.log('resultCode=======', resultCode)
+        if (resultCode === -1) {
           await tokenManage.clear();
           await tokenManage.get()
           // result = await request.send(options);

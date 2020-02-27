@@ -28,7 +28,7 @@
                 text-align: left;
                 font-size: 29rpx;
                 font-weight: 500;
-                line-height: 80rpx;
+                line-height: 60rpx;
               }
 
             }
@@ -38,16 +38,36 @@
               .hot-word{
                 display: flex;
                 flex-wrap: wrap;
-                padding: 20rpx 0 40rpx;
+                padding: 10rpx 0 20rpx;
                 justify-content: flex-start;
                 .word{
-                  padding: 15rpx;
+                  padding: 10rpx 18rpx;
                   color: #999;
                   margin: 10rpx 15rpx;
                   border-radius: 25rpx;
                   background: #ebebeb;
                   font-size: 24rpx;
                 }
+                .bgr{
+                  background-color: #666;
+                }
+              }
+            }
+            .btns{
+              display: flex;
+              padding: 20rpx 0;
+              justify-content: space-between;
+              button{
+                height: 60rpx;
+                line-height: 60rpx;
+                background: none;
+                border: 1rpx solid #000;
+                width: 250rpx;
+              }
+              .confirm{
+                margin-left: 35rpx;
+                background: #000;
+                color: #eee;
               }
             }
             .search-prize{
@@ -181,6 +201,11 @@
                             // background-color: grey;
                           }
                       }
+                  }
+                  .subTitle{
+                    margin-top: -40rpx;
+                    font-size: 26rpx;
+                    color: #999;
                   }
                   .currency-quantity{
                   display: flex;

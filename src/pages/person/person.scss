@@ -95,7 +95,7 @@
           box-sizing: border-box;
           position: relative;
           overflow: hidden;
-          padding-bottom: 20rpx;
+          padding-bottom: 35rpx;
           transition: max-height 0.5s;
           // height: 360rpx;
           border: 1rpx solid #eee;
@@ -129,7 +129,7 @@
               //border: 2rpx solid #e3e3e3;
               font-size: 0;
               image {
-                background-color: green;
+                // background-color: green;
                 width: 145rpx;
                 height: 145rpx;
                 overflow: hidden;

@@ -2,14 +2,22 @@ import request from '../utils/request';
 import config from '../config'
 import tokenManage from '../utils/token-manage';
 
-const { wechatId } = config
+const { shopWechatId } = config
 
 
 /**
- * 获取商品列表
+ * 获取分类列表
  * @parentId
  */
 const getChildCategory = async (params = {}) => request.get({
+  data: params,
+  url: `/category/getAll/${0}/${config.shopWechatId}`
+});
+/**
+ * 获取类目列表
+ * @parentId
+ */
+const getChildCatelog = async (params = {}) => request.get({
   data: params,
   url: `/catalog/getAll/${0}/${config.shopWechatId}`
 });
@@ -38,6 +46,15 @@ const getSearchList = async (params = {}) => request.post({
 });
 
 /**
+ * 获取商品推荐列表
+ * @categoryIds array
+ */
+const getRemoteList = async (params = {}) => request.get({
+  // data: params,
+  url: `product/getRelatedProductByConfig/${shopWechatId}/BRAND_RECOMMEND_CART_PAGE`
+});
+
+/**
  * 生成分享二维码
  * @spu
  */
@@ -56,7 +73,9 @@ const getSharePicture = async (params = {}) => {
 
 export default {
   getChildCategory,
+  getChildCatelog,
   getSearchList,
+  getRemoteList,
   getSharePicture,
   getCategory
 };

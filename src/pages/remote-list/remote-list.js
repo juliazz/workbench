@@ -1,6 +1,10 @@
+/* eslint-disable import/named */
 import api from '../../api/index.js'
 import storageManage from '../../utils/storage-manage'
+import  orderMessage  from '../../utils/orderMessage.js'
 
+const app = getApp();
+let isdel = false;
 let remotelistStorge;
 Page({
   $route: 'pages/remote-list/remote-list',
@@ -15,7 +19,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    console.log(orderMessage.orderMessage)
   },
 
   /**
@@ -33,8 +37,9 @@ Page({
   },
   async toEcMiniProgram() {
     wx.showLoading()
-    const caCode = wx.getStorageSync('cacode')
-    const storeCode = wx.getStorageSync('storeCode')
+    const caInfo = await storageManage.getCaInFo()
+    const caCode = caInfo.cacode
+    const storeCode = caInfo.storeCode
     // const productId = e.currentTarget.dataset.productid
     let {productList } = this.data
     let productId = productList.map((i) => i.productId).join()
@@ -49,22 +54,18 @@ Page({
     const { msg, resultCode, data} = result
     if (resultCode != 1) return this.$showToast(msg);
     const { recommendedNo} = data
-    wx.navigateToMiniProgram({
-      appId: 'wxcc92c871c0188fe5',
-      path: 'pages/giftlist-ca/giftlist-ca',
-      extraData: {
-        // fromCaMiniShare: {
-        recommendedNo,
-        caCode,
-        storeCode
-        // }
-      },
-      envVersion: 'trial',
-      success(res) {
-        // 打开成功
-      }
+    console.log(recommendedNo, caCode, storeCode)
+    app.navigateToMiniProgram_('pages/giftlist-ca/giftlist-ca', {recommendedNo, caCode, storeCode})
+  },
+  // 订阅消息
+  orderMessageShare(eve) {
+    const {tempId} = eve.currentTarget.dataset
+    console.log(eve.currentTarget.dataset)
+    orderMessage.orderMessage(tempId, () => {
+      this.toEcMiniProgram()
     })
   },
+
   tabEventer(e) {
     const {index} = e.currentTarget.dataset
     console.log(e)
@@ -82,18 +83,26 @@ Page({
     wx.hideLoading()
   },
   async delRemoteList(eve) {
+    if(isdel) return // 防止操作太快
     const {index } = eve.currentTarget.dataset
     let productList = await storageManage.getRemoteProducts() || []
-    productList.length && productList.splice(index, index + 1)
+    console.log(index, index + 1)
+    productList.length && productList.splice(index, 1)
     console.log(productList)
     this.setData({
       productList
     })
     await storageManage.setRemoteoducts(productList)
+    isdel = true
     wx.showToast({
       title: '删除成功',
       icon: 'success',
-      duration: 2000
+      duration: 2000,
+      success: () => {
+        setTimeout(() => {
+          isdel = false
+        }, 1500);
+      }
     })
   },
   // async getRemoteProducts() {
@@ -131,16 +140,5 @@ Page({
    */
   onReachBottom: function() {
 
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-    return {
-      title: '',
-      imageUrl: '',
-      path: '/pages/home/home?share=首页'
-    };
   }
 })

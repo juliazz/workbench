@@ -12,7 +12,7 @@ w-page(
         class="{{focus?'higer':''}}"
       )
         w-search(
-            placeholder='输入货号或关键字搜索'
+            placeholder='请输入关键字搜索'
             value="{{searchKeyWord}}"
             maxlength="30"
             focus="{{focus}}"
@@ -29,7 +29,9 @@ w-page(
                 view.hot-word(
                 )
                   text.word(
+                      class="{{item.action?'':bgr}}"
                       data-keyword='{{item}}'
+                      data-index='{{index}}'
                       data-type ="prize"
                       wx:for="{{prizeScope}}"
                       wx:for-item="item",
@@ -71,16 +73,76 @@ w-page(
                   view.hot-word(
                   )
                       text.word(
+                          bindtap ="allCategoryEventer"
+                      ) 全部
+                         
+                      text.word(
                           data-keyword='{{item}}'
+                          data-type ="catelog"
+                          bindtap="searchCategoryAction"
+                          wx:for="{{catelogList}}"
+                          wx:for-item="item",
+                          wx:key ="index"
+                      ) {{item}} 
+              view.hot-search
+                  view.title 分类
+                  view.hot-word(
+                  )
+                      text.word(
+                          wx:if="{{item.filter==1}}"
+                          data-keyword='{{item.name}}'
                           data-type ="category"
                           bindtap="searchCategoryAction"
                           wx:for="{{categoryList}}"
                           wx:for-item="item",
                           wx:key ="index"
-                      ) {{item}}
+                      ) {{item.name}}
+              view.btns
+                button.reset(
+                  bindtap ="resetEventer"
+                ) 重置
+                button.confirm(
+                  bindtap ="confirmEventer"
+                ) 确认
+
       view(
         class="list-area"
         wx:for="{{productList}}"
+        wx:key="index"
+        wx:if ="{{!isSearchingShow}}"
+        index="{{index}}"
+      )
+        view.cart-item
+          view.item
+              view.box
+                  image(
+                  mode="aspectFill"
+                  src="{{item.images[0].url}}"
+                  )
+              view.box
+                  view.desc
+                    view.text {{item.productName}}
+                    view.share-icon(
+                      data-product-id ="{{item.productId}}"
+                      data-temp-id ="ciaJk6J0N50eRvcPdbBc1hW5aPcrYS4Q0K0xvHlwPXE"
+                      bindtap="orderMessageShare"
+                    )
+                      image(
+                        src="../../assets/image/icon/share.png"
+                      )
+                    //- text 尺码：{{item.size}}
+                  view.desc.subTitle {{item.subTitle}}
+                  view.currency-quantity
+                      w-currency(value="{{item.marketPrice}}" class="currency")
+                      text.text(
+                        data-index ="{{index}}"
+                        data-product-code ="{{item.productCode}}"
+                        bindtap="addToRemoteList"
+                      ) 添加至推荐列表
+      view(
+        class="list-area"
+        wx:if ="{{isSearchingShow}}"
+        wx:for="{{filterList}}"
         wx:key="index"
         index="{{index}}"
       )
@@ -101,7 +163,7 @@ w-page(
                         image(
                           src="../../assets/image/icon/share.png"
                         )
-                      //- text 尺码：{{item.size}}
+                  view.desc.subTitle {{item.subTitle}}
                   view.currency-quantity
                       w-currency(value="{{item.marketPrice}}" class="currency")
                       text.text(

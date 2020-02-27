@@ -28,7 +28,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function(option) {
-    console.log('login页面参数onshow', option)
+    console.log('login页面参数onshow1', option)
     this.isHasToken()
   },
   async isHasToken() {
@@ -38,8 +38,10 @@ Page({
     const { code} = await wx.$login();
     console.log(code)
     // todo 用户静默登录
+    let unionId_ = app.data.unionId || '' // 从微商城带来的unionId
+    console.log('url', `/member/caOnLogin/${code}/${config.wechatId}/${config.shopWechatId}?unionId=${unionId_}`)
     const result = await request.get({
-      url: `/member/caOnLogin/${code}/${config.wechatId}/${config.shopWechatId}`,
+      url: `/member/caOnLogin/${code}/${config.wechatId}/${config.shopWechatId}?unionId=${unionId_}`,
       auth: true
     });
     wx.hideLoading()
@@ -47,10 +49,10 @@ Page({
     if (resultCode != '1') throw new Error('Token fetch failed');
     const { token, unionid } = data;
     await tokenManage.set(token);
-    console.log(unionid)
+    console.log(unionid, 'unionid')
     if (unionid) {
       await storageManage.setUnionId(unionid);
-      const loginStatus = wx.getStorageSync('loginStatus');
+      const loginStatus = await storageManage.getLoginStatus();
       if (loginStatus) {
         this.$routeTo('product-list', 'switchTab')
       }
@@ -132,11 +134,18 @@ Page({
       if (resultCode != 1) return this.$showToast(msg);
       const { name, number, storeCode} = data
       // await storageManage.setLoginStatus(true);//77天有效
-      wx.setStorageSync('loginStatus', true);
-      // await storageManage.setCaName(name)
-      wx.setStorageSync('caname', name);
-      wx.setStorageSync('cacode', number);
-      wx.setStorageSync('storeCode', storeCode);
+      // wx.setStorageSync('loginStatus', true);
+      await storageManage.setLoginStatus(true)
+      const caInfo = {
+        caname: name,
+        cacode: number,
+        storeCode
+      }
+      // setCaInFo
+      await storageManage.setCaInFo(caInfo)
+      // wx.setStorageSync('caname', name);
+      // wx.setStorageSync('cacode', number);
+      // wx.setStorageSync('storeCode', storeCode);
       this.$routeTo('product-list', 'switchTab')
     }
   },

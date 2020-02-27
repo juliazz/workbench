@@ -3,9 +3,10 @@
 /* eslint-disable default-case */
 import api from '../../api/index.js'
 import utils from '../../utils/utils'
+import storageManage from '../../utils/storage-manage';
 
 let pageNumber = 1;
-let caCode;
+let caCode = '';
 let productList = []
 let shareHistoryList = []; // 用于存储数据
 
@@ -33,7 +34,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function (options) {
-    caCode = wx.getStorageSync('cacode') || ''
+    const caInfo = await storageManage.getCaInFo()
+    // caCode = wx.getStorageSync('cacode') || ''
+    caCode = caInfo.cacode
+    console.log(caCode)
     this.setData({
       searchKeyWord: ''
     })
@@ -114,22 +118,27 @@ Page({
       if (!from) return this.$showToast('请先选择开始时间');
       const fromUnix = utils.getUnixTime(from);
       const toUnix = utils.getUnixTime(value)
-      if (fromUnix >= toUnix) return this.$showToast('开始时间不能大于或等于结束时间');
+      if (fromUnix > toUnix) return this.$showToast('开始时间不能大于结束时间');
       this.setData({
         'time.to': value,
         inputValue: ''
       })
       // 根据时间查推荐单
-      this.getRemoteHistory(from, to)
+      this.getRemoteHistory(this.data.time.from, value)
       break;
     }
   },
+  // 查询推荐历史
   async getRemoteHistory (from, to) {
     wx.showLoading()
+    const caInfo = await storageManage.getCaInFo()
+    // caCode = wx.getStorageSync('cacode') || ''
+    const caCode = caInfo.cacode
+    console.log(from, to, caCode)
     let par = {}
     if (from && to) {
       par = {
-        beginDate: '2020-02-18' || '',
+        beginDate: from || '',
         endDate: to || '',
         caCode,
         pageSize: 0,
@@ -146,10 +155,10 @@ Page({
     wx.hideLoading()
     const { msg, resultCode, data} = result
     if (resultCode != 1) return this.$showToast(msg);
-    if (!data.length && from && endDate) return this.$showToast('未找到该时间段的推荐历史！');
+    if (!data.length && par.beginDate && par.endDate) return this.$showToast('未找到该时间段的推荐历史！');
     let data_ = data.map((item) => {
       return Object.assign(item, {
-        createdDate: utils.myTime(item.createdDate),
+        createdDate: utils.myTime(item.createdDate), // 格式化时间
         expand: false
       })
     })
@@ -157,12 +166,10 @@ Page({
     this.setData({
       shareHistoryList: data_
     })
-    console.log(data)
   },
   // 展开列表
   expandEventer(e) {
     const { index, productIds, expand} = e.currentTarget.dataset
-    console.log(expand)
     console.log(productIds)
     let shareHistoryList = this.data.shareHistoryList
     shareHistoryList[index].expand = !expand
@@ -170,6 +177,7 @@ Page({
       shareHistoryList
     })
     if (!expand) {
+      // 根据id查分享单详情
       this.getRemoteListDetail({ids: productIds})
     }
   },
@@ -188,7 +196,7 @@ Page({
       popupShow: false
     })
   },
-  // 分享详情
+  // 分享阅读详情
   async viewShareDetail(eve) {
     wx.showLoading()
     const {orderNum} = eve.currentTarget.dataset

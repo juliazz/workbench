@@ -1,1 +1,1 @@
-export default {baseUrl: 'https://dev.estore.d1m.cn/api/v4/estore', storeUrl: 'https://dev.estore.d1m.cn/api/v4/locator/core', cdnUrl: 'https://dev.estore.d1m.cn/attached', appid: 'wx7fbb20fb0d685822', env: 'dev', version: '2.10.1', wechatId: 202, shopWechatId: 87}
+export default {baseUrl: 'http://zegna.estore.t.d1miao.com/api/v4/estore', cdnUrl: 'https://uat.estore.d1m.cn/attached', appid: 'wx7fbb20fb0d685822', env: 'uat', version: '2.10.1', wechatId: 202, shopWechatId: 87}

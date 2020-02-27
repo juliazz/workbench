@@ -137,11 +137,11 @@ van-popup{
           }
         }
         .picker-area{
-          width: 50%;
+          width: 55%;
           display: flex;
           align-items: center;
           justify-content: flex-end;
-          margin-left: 30rpx;
+          margin-left: 25rpx;
           font-size: 25rpx;
             picker {
               height: 66rpx;
@@ -150,7 +150,7 @@ van-popup{
               text-decoration: underline;
             }
             text{
-              margin:0 15rpx;
+              margin:0 8rpx;
             }
         }
         
@@ -158,7 +158,7 @@ van-popup{
 
 
       .list-area {
-        padding: 0 30rpx 10rpx;
+        padding: 0 30rpx 30rpx;
         overflow: hidden;
         .cart-item {
           position: relative;
@@ -209,7 +209,6 @@ van-popup{
               //border: 2rpx solid #e3e3e3;
               font-size: 0;
               image {
-                background-color: green;
                 width: 200rpx;
                 height: 199rpx;
                 overflow: hidden;
