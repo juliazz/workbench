@@ -133,8 +133,6 @@ Page({
       if (resultCode == 11006) return this.$showToast('密码错误，请重新输入\r\n ......');
       if (resultCode != 1) return this.$showToast(msg);
       const { name, number, storeCode} = data
-      // await storageManage.setLoginStatus(true);//77天有效
-      // wx.setStorageSync('loginStatus', true);
       await storageManage.setLoginStatus(true)
       const caInfo = {
         caname: name,
@@ -143,9 +141,6 @@ Page({
       }
       // setCaInFo
       await storageManage.setCaInFo(caInfo)
-      // wx.setStorageSync('caname', name);
-      // wx.setStorageSync('cacode', number);
-      // wx.setStorageSync('storeCode', storeCode);
       this.$routeTo('product-list', 'switchTab')
     }
   },

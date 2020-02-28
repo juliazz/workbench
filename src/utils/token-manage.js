@@ -40,7 +40,6 @@ const token = {
     this.status = true;
     try {
       const result = await this.refresh();
-      console.log(result)
       const { data } = result
       this.complete('success', result);
       return data.token;

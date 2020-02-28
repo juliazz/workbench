@@ -31,8 +31,6 @@ Page({
   onLoad: async function(options) {
     const caInfo = await storageManage.getCaInFo()
     console.log(caInfo)
-    // caCode = wx.getStorageSync('cacode')
-    // storeCode = wx.getStorageSync('storeCode')
     caCode = caInfo.cacode
     storeCode = caInfo.storeCode
     const endDate = utils.getNowFormatDate() // 日期改成 yyyy-mm-dd
@@ -123,7 +121,6 @@ Page({
   },
   async getNickName() {
     const userInfo = await storageManage.getCaInFo()
-    // caName = wx.getStorageSync('caname')
     this.setData({
       caName: userInfo.caname
     })
@@ -135,9 +132,9 @@ Page({
     // })
   },
   async setNickName() {
-    wx.showLoading()
     if (!nickInPutvalue) return this.$showToast('昵称为空！');
     if (nickInPutvalue == caName) return this.$showToast('新昵称与旧昵称不能相同！');
+    wx.showLoading()
     const result = await api.salesAssistant({
       name: nickInPutvalue,
       number: caCode
@@ -149,7 +146,6 @@ Page({
     let caInfo = await storageManage.getCaInFo()
     caInfo.caname = name
     await storageManage.setCaInFo(caInfo)
-    // wx.setStorageSync('caname', name);
     this.$showToast('修改成功');
     setTimeout(() => {
       this.setData({
@@ -187,10 +183,6 @@ Page({
     }
     // setCaInFo
     await storageManage.setCaInFo(caInfo)
-    // wx.setStorageSync('loginStatus', false);
-    // wx.setStorageSync('caname', '');
-    // wx.setStorageSync('cacode', '');
-    // wx.setStorageSync('storeCode', '');
   },
 
   /**

@@ -40,7 +40,6 @@ Page({
     const caInfo = await storageManage.getCaInFo()
     const caCode = caInfo.cacode
     const storeCode = caInfo.storeCode
-    // const productId = e.currentTarget.dataset.productid
     let {productList } = this.data
     let productId = productList.map((i) => i.productId).join()
     const par = {
@@ -105,9 +104,6 @@ Page({
       }
     })
   },
-  // async getRemoteProducts() {
-  //   return await storageManage.getRemoteProducts() || []
-  // },
   async clearRemoteList() {
     await storageManage.setRemoteoducts([])
     this.setData({

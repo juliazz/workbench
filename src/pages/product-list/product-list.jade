@@ -168,6 +168,7 @@ w-page(
                       w-currency(value="{{item.marketPrice}}" class="currency")
                       text.text(
                         data-index ="{{index}}"
+                        data-product-code ="{{item.productCode}}"
                         bindtap="addToRemoteList"
                       ) 添加至推荐列表
     w-tabbar(

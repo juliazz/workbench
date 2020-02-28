@@ -78,7 +78,6 @@ Page({
       searchKeyWord: ''
     })
   },
-
   async getProductRemoteList(options) {
     wx.showLoading()
     const result = await this.$getPreload(fetch, options)
@@ -92,10 +91,10 @@ Page({
   async getProductList() {
     wx.showLoading()
     const result = await api.getSearchList()
+    wx.hideLoading()
     const { data, msg, resultCode} = result
     if (resultCode != 1) return this.$showToast(msg);
     filterListALL = data
-    wx.hideLoading()
   },
   foucusEventer(e) {
     // 一进来的时候就把搜索列表恢复成完整列表
@@ -152,9 +151,6 @@ Page({
         icon: 'none',
         duration: 1500,
         success: (result) => {
-          // this.setData({
-          //   searchKeyWord: ''
-          // })
           this.resetEventer()
         },
         fail: () => { },
@@ -186,10 +182,6 @@ Page({
         icon: 'none',
         duration: 1500,
         success: (result) => {
-          // this.setData({
-          //   focus: false,
-          //   searchKeyWord: ''
-          // })
           this.resetEventer()
         },
         fail: () => { },
@@ -220,7 +212,6 @@ Page({
         })
         break;
       case 'catelog':
-        console.log('filtertype', type)
         filterRes = filterList.filter((v) => {
           console.log(v.catalogs[0].name, keyWord)
           if (v.catalogs[0].name && v.catalogs[0].name.indexOf(keyWord) > -1) {
@@ -229,7 +220,6 @@ Page({
         })
         break;
       case 'category':
-        console.log('filtertype', type)
         filterRes = filterList.filter((v) => {
           console.log(v.categories[0].name, keyWord)
           if (v.categories[0].name && v.categories[0].name.indexOf(keyWord) > -1) {
@@ -238,7 +228,6 @@ Page({
         })
         break;
       default:
-        console.log('filtertype', type)
         filterRes = filterList.filter((v) => {
           console.log(v.subTitle, v.productCode, keyWord)
           if (v.productName.indexOf(keyWord) > -1 || v.subTitle.indexOf(keyWord) > -1) {
@@ -255,6 +244,7 @@ Page({
   async getCategoryList () {
     wx.showLoading()
     const result = await api.getChildCategory()
+    wx.hideLoading()
     const { msg, resultCode, data} = result
     if (resultCode != 1) return this.$showToast(msg);
     let categoryList = data.map(i => {
@@ -267,12 +257,12 @@ Page({
     this.setData({
       categoryList
     })
-    wx.hideLoading()
   },
   // 类目列表
   async getCatelogList () {
     wx.showLoading()
     const result = await api.getChildCatelog()
+    wx.hideLoading()
     const { msg, resultCode, data} = result
     if (resultCode != 1) return this.$showToast(msg);
     let catelogList = data.map(i => {
@@ -281,7 +271,6 @@ Page({
     this.setData({
       catelogList
     })
-    wx.hideLoading()
   },
   // 参数str判断的字符串 m最小值 n最大值
   isRangeIn(str, maxnum, minnum) {

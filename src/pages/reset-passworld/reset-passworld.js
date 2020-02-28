@@ -39,10 +39,8 @@ Page({
   },
   async submitEventer(e) {
     const caInfo = await storageManage.getCaInFo()
-    // const caCode = wx.getStorageSync('cacode')
     const { account} = this.data
     const { oldPass, newPass, againPass} = account
-    console.log(account)
     if (oldPass === newPass) return this.$showToast('原密码与新密码不能相同！');
     if (againPass != newPass) return this.$showToast('两次输入的密码不相同');
     for (let key in account) {

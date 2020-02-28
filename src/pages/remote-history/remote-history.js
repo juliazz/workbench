@@ -35,7 +35,6 @@ Page({
    */
   onLoad: async function (options) {
     const caInfo = await storageManage.getCaInFo()
-    // caCode = wx.getStorageSync('cacode') || ''
     caCode = caInfo.cacode
     console.log(caCode)
     this.setData({
@@ -93,10 +92,8 @@ Page({
     console.log(filterRes)
     return filterRes
   },
-
   tabEventer(e) {
     const {index} = e.currentTarget.dataset
-    console.log(e)
     this.setData({
       tabIndex: index
     })
@@ -132,7 +129,6 @@ Page({
   async getRemoteHistory (from, to) {
     wx.showLoading()
     const caInfo = await storageManage.getCaInFo()
-    // caCode = wx.getStorageSync('cacode') || ''
     const caCode = caInfo.cacode
     console.log(from, to, caCode)
     let par = {}
@@ -170,8 +166,13 @@ Page({
   // 展开列表
   expandEventer(e) {
     const { index, productIds, expand} = e.currentTarget.dataset
-    console.log(productIds)
     let shareHistoryList = this.data.shareHistoryList
+    shareHistoryList = shareHistoryList.map((i) => {
+      return Object.assign(i, {
+        expand: false
+      })
+    })
+    console.log(shareHistoryList)
     shareHistoryList[index].expand = !expand
     this.setData({
       shareHistoryList
@@ -200,10 +201,8 @@ Page({
   async viewShareDetail(eve) {
     wx.showLoading()
     const {orderNum} = eve.currentTarget.dataset
-    console.log(orderNum)
     const result = await api.RemoteListViewDetail({
       id: orderNum
-      // id: '1581653312909'测试
     })
     wx.hideLoading()
     console.log(result)
@@ -211,7 +210,6 @@ Page({
     if (resultCode === '11009') return this.$showToast('该分享单暂无浏览记录~');
     if (resultCode != 1) return this.$showToast(msg);
     let data_ = data
-
     data_ = data_.map((item) => {
       return Object.assign(item, {
         visitDate: utils.myTime(item.visitDate)
@@ -229,9 +227,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-    console.log('----------触底了-------')
-    pageNumber++;
-    // this.getRemoteHistory()
   },
 
 
