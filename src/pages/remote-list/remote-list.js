@@ -1,7 +1,7 @@
 /* eslint-disable import/named */
 import api from '../../api/index.js'
 import storageManage from '../../utils/storage-manage'
-import  orderMessage  from '../../utils/orderMessage.js'
+import orderMessage from '../../utils/orderMessage.js'
 
 const app = getApp();
 let isdel = false;
@@ -83,7 +83,7 @@ Page({
     wx.hideLoading()
   },
   async delRemoteList(eve) {
-    if(isdel) return // 防止操作太快
+    if (isdel) return // 防止操作太快
     const {index } = eve.currentTarget.dataset
     let productList = await storageManage.getRemoteProducts() || []
     console.log(index, index + 1)
