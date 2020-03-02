@@ -11,7 +11,7 @@
 		"navigationStyle": "default",
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#fff",
-		"navigationBarTitleText": "",
+		"navigationBarTitleText": "杰尼亚店员导购",
 		"navigationBarTextStyle": "black"
 	},
 	"tabBar": {

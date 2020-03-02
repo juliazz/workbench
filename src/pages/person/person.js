@@ -135,6 +135,7 @@ Page({
     if (!nickInPutvalue) return this.$showToast('昵称为空！');
     if (nickInPutvalue == caName) return this.$showToast('新昵称与旧昵称不能相同！');
     wx.showLoading()
+    nickInPutvalue = nickInPutvalue.replace(/\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g, '');// 去除emoji表情
     const result = await api.salesAssistant({
       name: nickInPutvalue,
       number: caCode

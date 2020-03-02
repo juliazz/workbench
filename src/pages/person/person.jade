@@ -54,6 +54,8 @@ w-page(
             view.total-amount
               text 订单金额: 
               w-currency(value="{{item.totalAmount}}" class="oderPrize")
+            view.logistics 物流 {{item.expressCompany}} {{item.expressNo}}
+              
           view.item(
             wx:if!="{{item.listOrderProduct}}"
             wx:for="{{item.listOrderProduct}}"
