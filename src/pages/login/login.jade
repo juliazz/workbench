@@ -19,6 +19,7 @@ w-page(
           view.label CA CODE
           input.cacode( 
             name="account"
+            maxlength="30"
             placeholder="" value="{{ca.account}}"
             bindinput="accountInput"
           )
@@ -26,6 +27,7 @@ w-page(
           view.label 初始密码
           input.cacode( 
             password
+            maxlength="30"
             name="password"
             bindinput="passwordInput"
             placeholder="" value ="{{ca.password}}" 

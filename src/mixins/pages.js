@@ -79,6 +79,22 @@ export default {
     }
     wx.showToast(params)
   },
+  // 非生命周期方法
+  $showLoading(options = {}) {
+    let params = {
+      title: '正在加载...',
+      mask: true
+    }
+    if (typeof options == 'string') {
+      params.title = options
+    } else {
+      params = Object.assign(params, options)
+    }
+    wx.showLoading(params)
+  },
+  $hideLoading() {
+    wx.hideLoading()
+  },
   $hideToast() {
     wx.hideToast()
   },

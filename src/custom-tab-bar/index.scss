@@ -1,3 +1,4 @@
+@import '../assets/style/index';
 .tab-bar {
   position: fixed;
   bottom: 0;
@@ -5,7 +6,7 @@
   right: 0;
   z-index: 1001;
   height: 110rpx;
-  background: rgba(#fff, .9);
+  background: rgba(#fff, 1);
   display: flex;
   padding-bottom: env(safe-area-inset-bottom);
 
@@ -40,17 +41,17 @@
     }
 
     .tab-bar-text {
-      font-size: 28rpx;
+      font-size: 27rpx;
       color: #999;
     }
 
     &.active {
       .tab-bar-icon {
-        color: #000;
+        color: $lpc;
       }
 
       .tab-bar-text {
-        color: #000;
+        color: $lpc;
       }
     }
   }

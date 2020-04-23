@@ -1,0 +1,53 @@
+/* eslint-disable import/prefer-default-export */
+export const statusList = [{
+  title: '待付款',
+  id: 0
+}, {
+  title: '支付完成',
+  id: 1
+}, {
+  title: '已发货',
+  id: 2
+}, {
+  title: '已签收',
+  id: 3
+}, {
+  title: '支付超时',
+  id: 4
+}, {
+  title: '退款成功',
+  id: 5
+}, {
+  title: '已退货',
+  id: 7
+}, {
+  title: '成功退款',
+  id: 6
+}, {
+  title: '订单确认',
+  id: 13
+}, {
+  title: '订单确认',
+  id: 14
+}, {
+  title: '订单确认',
+  id: 16
+}, {
+  title: '订单确认',
+  id: 17
+}, {
+  title: '订单确认',
+  id: 21
+}, {
+  title: '退货申请中',
+  id: 20
+}, {
+  title: '待发货',
+  id: 15
+}, {
+  title: '订单取消',
+  id: 19
+}, {
+  title: '订单确认',
+  id: 18
+}]

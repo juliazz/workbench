@@ -10,7 +10,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.10.1",
-	"appid": "wx7fbb20fb0d685822",
+	"appid": "wx5d9cfc80017e0c29",
 	"projectname": "miniapp-base-code",
 	"miniprogramRoot": "app/",
 	"scripts": {
@@ -36,20 +36,15 @@
 		"game": {
 			"list": []
 		},
-		"gamePlugin": {
-			"current": -1,
-			"list": []
-		},
 		"miniprogram": {
-			"current": 0,
-			"list": [
-				{
-					"id": -1,
-					"name": "pages/person/person",
-					"pathName": "pages/person/person",
-					"scene": null
-				}
-			]
+			"current": 2,
+			"list": [{
+				"id": -1,
+				"name": "工作台",
+				"pathName": "pages/work-bench/work-bench",
+				"query": "",
+				"scene": ""
+			}]
 		}
 	}
 }

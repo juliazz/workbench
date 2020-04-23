@@ -50,7 +50,9 @@ export default Component({
       this.setHidden([`animate__${this.data.animation}_out`, 'animate__fade_out'])
     },
     clickCloseBackdrop () {
+      console.log('pppppp')
       const { closeOnClickBackdrop } = this.data
+      console.log(closeOnClickBackdrop)
       if (!closeOnClickBackdrop) return
       this.setData({ show: false })
     }

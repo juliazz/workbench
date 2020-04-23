@@ -10,7 +10,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.10.1",
-	"appid": "wx7fc9a5b3b12834dd",
+	"appid": "wx5d9cfc80017e0c29",
 	"projectname": "miniapp-base-code",
 	"miniprogramRoot": "app/",
 	"scripts": {
@@ -37,8 +37,16 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
-			"list": []
+			"current": 2,
+			"list": [
+				{
+					"id": -1,
+					"name": "工作台",
+					"pathName": "pages/work-bench/work-bench",
+					"query": "",
+					"scene":""
+				}
+			]
 		}
 	}
 }

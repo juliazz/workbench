@@ -32,11 +32,33 @@
     height: 70rpx;
     background-size: 100% 100%;
   }
+  &-vs {
+    width: 68rpx;
+    height: 60rpx;
+    background-size: 100% 100%;
+  }
+  &-right{
+    width: 28rpx;
+    height: 20rpx;
+    background-size: 100% 100%;
+  }
 }
 
 .icon-calendar{
   background-image: url('../../assets/image/icon/calendar.png');
 }
-.icon-exit{
-  background-image: url('../../assets/image/icon/exit.png');
+.icon-warn{
+  background-image: url('../../assets/image/icon/warn.png');
+}
+.icon-vs{
+  background-image: url('../../assets/image/icon/vs.png');
+}
+.icon-crown{
+  background-image: url('../../assets/image/icon/crown.png');
+}
+.icon-right{
+  background-image: url('../../assets/image/icon/right.png');
+}
+.icon-close{
+  background-image: url('../../assets/image/icon/close.png');
 }

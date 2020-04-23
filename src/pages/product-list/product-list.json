@@ -1,6 +1,6 @@
 
 {
-    "navigationBarTitleText": "REMOTE SALES",
+    "navigationBarTitleText": "杰尼亚店员导购",
     "usingComponents": {
       "w-search": "../../components/search/index",
       "van-toast": "../../miniprogram_npm/vant-weapp/toast",

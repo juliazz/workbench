@@ -1,0 +1,48 @@
+.top-arrow1,
+.top-arrow2 {
+width: 0;
+height: 0;
+display: block;
+position: absolute;
+left: 0;
+top: 0;
+z-index: 5;
+/*兼容ie8-*/
+border-top: 10px transparent dashed;
+border-left: 10px transparent dashed;
+border-right: 10px transparent dashed;
+border-bottom: 10px white solid;
+overflow: hidden;
+}
+
+@mixin right-arrow{
+    display: inline-block;
+    width: 15rpx;
+    height: 15rpx;
+    border-top: 2px solid #919191;
+    border-right: 2px solid #919191;
+    transform: rotate(45deg);
+}
+
+@mixin close-icon{
+    position: absolute;
+    right: 35rpx;
+    top: 35rpx;
+    width: 50rpx;
+    height: 50rpx;
+    &::before,&::after{
+      position: absolute;
+      left: 15px;
+      content: ' ';
+      height: 40rpx;
+      width: 2rpx;
+      background-color: #000
+    }
+    &::before {
+      transform: rotate(45deg);
+    }
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
+  

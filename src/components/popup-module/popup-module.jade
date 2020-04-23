@@ -1,0 +1,23 @@
+w-popup(
+    show="{{show}}"
+    position="{{type}}"
+    bindclose='clickCloseBackdrop'
+    custom-class="custom-class {{type=='bottom'?'moreWith':''}}"
+  )
+      //- 头部标题
+      view.header(wx:if="{{headTitle}}")
+        text {{headTitle}}
+      //- x号关闭按钮
+      //- w-icon( class="close-icon" type="close" size="large" wx:if="{{closeIcon}}" bindtap='clickCloseBackdrop')
+      view.close-icon(wx:if="{{closeIcon}}" bindtap='clickCloseBackdrop')
+      //- 弹窗内容
+      view.contents()
+        slot(name="content")
+      //- 底部关闭按钮
+      view.close-bottom(
+        wx:if="{{closeBottom}}"
+        class="{{borBottom?'':'content-bor-bottom'}}"
+        bindtap='clickCloseBackdrop'
+        data-title="close"
+      ) 
+        slot(name="bottom")

@@ -6,6 +6,8 @@ export default Behavior({
   },
   methods: {
     $showToast: _.$showToast,
+    $showLoading: _.$showLoading,
+    $hideLoading: _.$hideLoading,
     $hideToast: _.$hideToast,
     $switchTab: _.$switchTab,
     $navigateTo: _.$navigateTo,

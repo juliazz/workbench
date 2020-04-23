@@ -3,12 +3,19 @@
 import {
   logger,
   tokenManage,
-  storageManage
+  storageManage,
+  utils
 } from './utils/index'
+
+const {
+  compareVersion
+} = utils;
 
 App({
   async onLaunch() {
     // await tokenManage.get()
+    const getSystemInfo = wx.getSystemInfoSync();
+    console.log('getSystemInfo===', getSystemInfo);
   },
   async onShow (opts) {
     this.data.from = opts.referrerInfo.extraData && opts.referrerInfo.extraData.from

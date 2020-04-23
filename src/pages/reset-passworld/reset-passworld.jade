@@ -20,6 +20,7 @@ w-page(
           input.cacode( 
             name="code"
             password
+            maxlength="30"
             data-type ="oldPass"
             auto-focus placeholder="" value="{{account.oldPass}}"
             bindinput="inputEventer"
@@ -28,6 +29,7 @@ w-page(
           view.label 新密码
           input.cacode( 
             password
+            maxlength="30"
             data-type ="newPass"
             name="passworld"
             bindinput="inputEventer"
@@ -37,6 +39,7 @@ w-page(
           view.label 再次输入新密码
           input.cacode( 
             password
+            maxlength="30"
             data-type ="againPass"
             bindinput="inputEventer"
             auto-focus placeholder="" value ="{{account.againPass}}" 

@@ -122,10 +122,11 @@ const parseUrl = (url) => {
     query
   };
 };
-const currency = (value) => {
+const currency = (value ,type) => {
   if (typeof value == 'string') value = parseFloat(value)
   if (isNaN(value)) return value
-  return `￥${(value.toFixed(0) + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')}`
+  console.log(value, type)
+  return `${(value.toFixed(2) + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')}`
 }
 
 /**

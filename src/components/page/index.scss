@@ -4,12 +4,13 @@
   will-change: opacity;
   opacity: 0;
   transition: opacity .5s;
-
   &.components-show-page {
     opacity: 1;
   }
 
-  .components-page-header {}
+  .components-page-header {
+    position: relative;
+  }
 
   .components-page-content {
     @include safe-padding-bottom(0rpx);

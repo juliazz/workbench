@@ -6,6 +6,7 @@
 import utils from '../../utils/utils';
 import api from '../../api/index.js';
 import storageManage from '../../utils/storage-manage';
+import {statusList } from './config'
 
 let nickInPutvalue;
 let caCode; let storeCode;
@@ -19,6 +20,7 @@ Page({
     setNickNameShow: false, // 设定昵称弹框
     outLoginShow: false, // 重新登录弹框
     closeOnClickOverlay: true,
+    statusList,
     time: {
       from: '2020-02-01',
       to: ''
@@ -132,10 +134,15 @@ Page({
     // })
   },
   async setNickName() {
-    if (!nickInPutvalue) return this.$showToast('昵称为空！');
+    let pattern = RegExp(/^[\u4e00-\u9fa5_a-zA-Z0-9]+$/);
+    nickInPutvalue = nickInPutvalue.match(pattern)// 去除emoji表情
+    if (nickInPutvalue) {
+      nickInPutvalue = nickInPutvalue[0]
+    }
+    console.log(nickInPutvalue)
+    if (!nickInPutvalue) return this.$showToast('昵称为空,或包含不支持的表情');
     if (nickInPutvalue == caName) return this.$showToast('新昵称与旧昵称不能相同！');
     wx.showLoading()
-    nickInPutvalue = nickInPutvalue.replace(/\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g, '');// 去除emoji表情
     const result = await api.salesAssistant({
       name: nickInPutvalue,
       number: caCode

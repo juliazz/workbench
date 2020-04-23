@@ -51,11 +51,18 @@
         .popup-content {
             min-width: 100rpx;
             min-height: 100%;
-            background: #fff;
+            // background: #fff;
         }
     }
 }
-
+.close-icon{
+    position: absolute;
+    right: 60rpx;
+    top: 10vh;
+    width: 50rpx;
+    height: 50rpx;
+  
+  }
 
 
 

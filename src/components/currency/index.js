@@ -8,6 +8,10 @@ export default Component({
           text: value.$currency()
         })
       }
+    },
+    type: {
+      type: String,
+      value: ''
     }
   },
   data: {

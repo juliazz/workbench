@@ -54,7 +54,13 @@ w-page(
             view.total-amount
               text 订单金额: 
               w-currency(value="{{item.totalAmount}}" class="oderPrize")
-            view.logistics 物流 {{item.expressCompany}} {{item.expressNo}}
+            view.logistics(
+               wx:for="{{statusList}}"
+              wx:for-item="subItem"
+              wx:key="index"
+              wx:if="{{subItem.id == item.status}}"
+            ) 订单状态: {{subItem.title}}
+            view.logistics 物流信息: {{item.expressCompany}} {{item.expressNo}}
               
           view.item(
             wx:if!="{{item.listOrderProduct}}"
@@ -113,6 +119,7 @@ van-popup(
     )  设定昵称
     input.nickInput( 
       placeholder-class="inputStyle"
+      maxlength="30"
       auto-focus placeholder="请输入昵称" value="{{nickname}}"
       bindinput="nickNameInput"
     )

@@ -1,4 +1,4 @@
-view(class="tab-bar")
+view(class="tab-bar" wx:if="{{show}}")
   view(
     class="tab-bar-border"
   )
@@ -13,16 +13,16 @@ view(class="tab-bar")
     view(
       class="tab-bar-icon"
     )
-      //- image(
-      //-   class="image"
-      //-   hidden="{{activeIndex == index}}"
-      //-   src="{{item.iconPath}}"
-      //- )
-      //- image(
-      //-   class="image"
-      //-   hidden="{{activeIndex != index}}"
-      //-   src="{{item.selectedIconPath}}"
-      //- )
+      image(
+        class="image"
+        hidden="{{activeIndex == index}}"
+        src="{{item.iconPath}}"
+      )
+      image(
+        class="image"
+        hidden="{{activeIndex != index}}"
+        src="{{item.selectedIconPath}}"
+      )
     view(
       class="tab-bar-text"
     ) {{item.text}}

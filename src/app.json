@@ -1,5 +1,6 @@
 {
 	"pages": [
+		"pages/work-bench/work-bench",
 		"pages/login/login",
 		"pages/reset-passworld/reset-passworld",
 		"pages/product-list/product-list",
@@ -10,9 +11,9 @@
 	"window": {
 		"navigationStyle": "default",
 		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#fff",
+		"navigationBarBackgroundColor": "#0f8eef",
 		"navigationBarTitleText": "杰尼亚店员导购",
-		"navigationBarTextStyle": "black"
+		"navigationBarTextStyle": "white"
 	},
 	"tabBar": {
 		"custom": true,
@@ -22,7 +23,7 @@
 		"backgroundColor": "#000000",
 		"list": [
 			{
-				"pagePath": "pages/product-list/product-list"
+				"pagePath": "pages/work-bench/work-bench"
 			},
 			{
 				"pagePath": "pages/remote-list/remote-list"
@@ -39,6 +40,8 @@
 		"w-navbar": "./custom-nav-bar/index",
 		"w-tabbar": "./custom-tab-bar/index",
 		"w-icon": "./components/icon/index",
+		"w-vant-icon": "./miniprogram_npm/vant-weapp/icon/index",
+		"w-popup-module": "./components/popup-module/popup-module",
 		"w-page": "./components/page/index"
 	},
 	"networkTimeout": {
@@ -52,5 +55,5 @@
 	},
 	"navigateToMiniProgramAppIdList": [
 		"wxcc92c871c0188fe5"
-	  ]
+	]
 }

@@ -1,25 +1,25 @@
 export default [{
-  pagePath: 'pages/product-list/product-list',
+  pagePath: 'pages/work-bench/work-bench',
   icon: 'icon-category',
   iconPath: '',
-  selectedIconPath: '',
-  text: '商品库'
+  selectedIconPath: '../assets/image/icon/home-active.png',
+  text: '首页'
 }, {
   pagePath: 'pages/remote-list/remote-list',
   icon: 'icon-cart',
   iconPath: '',
   selectedIconPath: '',
-  text: '推荐列表'
+  text: '客户'
 }, {
   pagePath: 'pages/remote-history/remote-history',
   icon: 'icon-home',
   iconPath: '',
   selectedIconPath: '',
-  text: '推荐历史'
+  text: '统计'
 }, {
   pagePath: 'pages/person/person',
   icon: 'icon-user',
   iconPath: '',
   selectedIconPath: '',
-  text: '个人中心'
+  text: '财务'
 }]

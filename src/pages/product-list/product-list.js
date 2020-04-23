@@ -117,6 +117,7 @@ Page({
       filterList
     })
   },
+  // 全部类目
   allCategoryEventer () {
     // 搜索列表恢复成完整列表
     filterList = filterListALL

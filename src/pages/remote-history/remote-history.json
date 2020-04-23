@@ -1,6 +1,6 @@
 
 {
-  "navigationBarTitleText": "REMOTE SALES",
+  "navigationBarTitleText": "杰尼亚店员导购",
   "usingComponents": {
     "w-currency": "../../components/currency/index",
     "van-popup":"../../miniprogram_npm/vant-weapp/popup",

@@ -10,7 +10,8 @@ Component({
     }
   },
   data: {
-    list
+    list,
+    show: true
   },
   pageLifetimes: {
     show: function () {},
@@ -35,6 +36,12 @@ Component({
           this.$switchTab(url)
         }
       }
+    },
+    showTabBar() {
+      this.setData({ show: true });
+    },
+    hideTabBar() {
+      this.setData({ show: false });
     }
   }
 })

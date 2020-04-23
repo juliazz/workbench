@@ -1,6 +1,6 @@
 
 {
-  "navigationBarTitleText": "REMOTE SALES",
+  "navigationBarTitleText": "杰尼亚店员导购",
   "usingComponents": {
     "w-search": "../../components/search/index",
     "w-currency": "../../components/currency/index"
