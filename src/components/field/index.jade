@@ -1,0 +1,8 @@
+view.field
+  view.field-inner
+    view.label(wx:if="{{label}}")
+      view {{label}}
+    view.content
+      slot
+  view.err-msg(class="{{status ? 'active': ''}}")
+    text {{message}}

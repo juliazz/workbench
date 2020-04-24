@@ -45,6 +45,18 @@
 					"pathName": "pages/work-bench/work-bench",
 					"query": "",
 					"scene":""
+				},{
+					"id": -1,
+					"name": "订单录入",
+					"pathName": "pages/order-type-in/order-type-in",
+					"query": "",
+					"scene":""
+				},{
+					"id": -1,
+					"name": "排行榜",
+					"pathName": "pages/rank-list/rank-list",
+					"query": "rankType=个人",
+					"scene":""
 				}
 			]
 		}

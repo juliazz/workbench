@@ -44,6 +44,7 @@ Page({
     ],
     type: '2d',
     postCurrent: 0,
+    liveCurrent: 0,
     activeId: 1,
     unfoldStateList: [{
       state: false
@@ -87,16 +88,24 @@ Page({
   },
   popupShow: function(eve) {
     const { popupType } = eve.currentTarget.dataset
-    if (popupType == 'choosePoster') { this.getTabBar().hideTabBar(); console.log('8888') }
+    if (popupType == 'choosePoster' || popupType == 'liveInvite') { this.getTabBar().hideTabBar(); }
     this.setData({
       popupType
     })
   },
   closePopup: function(eve) {
     const { popupType } = eve.currentTarget.dataset
-    if (popupType == 'choosePoster') { this.getTabBar().showTabBar(); }
+    if (popupType == ('choosePoster' || 'liveInvite')) { this.getTabBar().showTabBar(); console.log('showTabBarshowTabBar') }
     this.setData({
       popupType: ''
+    })
+  },
+  // 选择海报 或 直播邀请
+  choosePost(eve) {
+    const {index, type} = eve.currentTarget.dataset
+    console.log(index, type)
+    this.setData({
+      [`${type}`]: index
     })
   },
   viewMore: function(eve) {
@@ -105,6 +114,10 @@ Page({
     this.setData({
       [`unfoldStateList[${index}].state`]: !unfoldStateList[index].state
     })
+  },
+  // 核销码输入
+  bindinput(e) {
+    console.log(e)
   },
 
   /**

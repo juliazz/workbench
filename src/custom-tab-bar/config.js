@@ -1,7 +1,7 @@
 export default [{
   pagePath: 'pages/work-bench/work-bench',
   icon: 'icon-category',
-  iconPath: '',
+  iconPath: '../assets/image/icon/home.png',
   selectedIconPath: '../assets/image/icon/home-active.png',
   text: '首页'
 }, {
@@ -16,10 +16,4 @@ export default [{
   iconPath: '',
   selectedIconPath: '',
   text: '统计'
-}, {
-  pagePath: 'pages/person/person',
-  icon: 'icon-user',
-  iconPath: '',
-  selectedIconPath: '',
-  text: '财务'
 }]

@@ -18,6 +18,10 @@ export default Component({
       type: Boolean,
       value: true
     },
+    name: {
+      type: String,
+      value: ''
+    },
     type: {
       type: String,
       // left right top bottom center
@@ -50,9 +54,8 @@ export default Component({
       this.setHidden([`animate__${this.data.animation}_out`, 'animate__fade_out'])
     },
     clickCloseBackdrop () {
-      console.log('pppppp')
-      const { closeOnClickBackdrop } = this.data
-      console.log(closeOnClickBackdrop)
+      const { closeOnClickBackdrop, name} = this.data
+      if (name == 'choosePoster' || name == 'liveInvite') { this.getTabBar().showTabBar(); }
       if (!closeOnClickBackdrop) return
       this.setData({ show: false })
     }

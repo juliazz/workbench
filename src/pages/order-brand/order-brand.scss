@@ -1,0 +1,14 @@
+
+@import '../../assets/style/index';
+.pages-order-brand {
+    .header{
+        position: fixed;
+        width: 100vw;
+        z-index: 100;
+        left: 0;
+        top: 0;
+    }
+    .content{
+        padding-top: 110rpx;
+    }
+}

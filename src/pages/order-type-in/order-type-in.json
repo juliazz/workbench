@@ -1,0 +1,12 @@
+
+{
+  "navigationBarTitleText": "订单录入",
+  "usingComponents": {
+    "w-field": "../../components/field/index",
+    "w-input": "../../components/input/index",
+    "van-calendar": "../../miniprogram_npm/vant-weapp/calendar/index",
+    "van-uploader": "../../miniprogram_npm/vant-weapp/uploader"
+    
+  }
+}
+  

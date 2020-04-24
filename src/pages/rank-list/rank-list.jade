@@ -1,0 +1,30 @@
+
+w-loading(id="w-loading")
+w-page(
+  class="w-page pages-rank-list"
+)
+  view(slot="header" class="header")
+    view.top-title
+      view.title {{rankType}}排行榜
+      image(src="../../assets/image/icon/cup.png")
+    view.top-info
+      view.section.section-1
+        view.line1 
+          view.left 活动阶段: 春暖花开
+          view.right
+            text 阶段切换
+            w-icon(type="down-orange" size="small")
+        view.line2 2020.4.1 8:00-2020.4.10 20:00
+      view.section.section-2
+        view.search-input
+          van-search(value="{{searchValue}}" placeholder="员工姓名或品牌名称")
+          vant-button( type="default" size="small" class="search-btn" custom-class="custom-class")
+            text 搜索
+        view.rule-title
+          text 奖励规则
+          w-icon(type="question" size="normal")
+          
+          
+  view(slot="content" class="content")
+    text 
+  view(slot="footer" class="footer")

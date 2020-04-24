@@ -1,0 +1,71 @@
+
+@import '../../assets/style/index';
+.pages-order-type-in {
+    padding-bottom: 100rpx;
+    .title{
+        color: $g4c;
+        background-color: $g5c;
+        line-height: 70rpx;
+        font-size: 28rpx;
+        padding:0 50rpx;
+    }
+    .content{
+        font-size: 28rpx;
+        
+        .field{
+            position: relative;
+            // height: 80rpx;
+            // line-height: 80rpx;
+            .arr-box{
+                height: 70rpx;
+                line-height: 70rpx;
+                width: 50rpx;
+                position: absolute;
+                left: 91vw;
+                top: 8rpx;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .right-arrow{
+                // position: absolute;
+                // left: 95vw;
+                // top: 33rpx;
+            }
+            picker{
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 99;
+                height: 100%;
+                width: 100%;
+                color: #fff;
+            }
+        }
+        input{
+            border: none;
+            // height: 90rpx;
+            // line-height: 90rpx;
+        }
+        .upload{
+            display: flex;
+            padding: 30rpx 50rpx;
+            align-items: flex-start;
+        }
+        .button{
+             button{
+                 background-color: $lpc;
+                 line-height: 70rpx;
+                 width: 400rpx;
+                 color: #fff;
+                 border-radius: 15rpx;
+             }
+        }
+       
+    }
+    van-calendar{
+        height: 300rpx;
+        width: 300rpx;
+    }
+
+}

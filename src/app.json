@@ -6,13 +6,15 @@
 		"pages/product-list/product-list",
 		"pages/remote-list/remote-list",
 		"pages/remote-history/remote-history",
-		"pages/person/person"
+		"pages/order-type-in/order-type-in",
+		"pages/order-brand/order-brand",
+		"pages/rank-list/rank-list"
 	],
 	"window": {
 		"navigationStyle": "default",
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#0f8eef",
-		"navigationBarTitleText": "杰尼亚店员导购",
+		"navigationBarTitleText": "",
 		"navigationBarTextStyle": "white"
 	},
 	"tabBar": {
@@ -30,9 +32,6 @@
 			},
 			{
 				"pagePath": "pages/remote-history/remote-history"
-			},
-			{
-				"pagePath": "pages/person/person"
 			}
 		]
 	},
@@ -40,7 +39,8 @@
 		"w-navbar": "./custom-nav-bar/index",
 		"w-tabbar": "./custom-tab-bar/index",
 		"w-icon": "./components/icon/index",
-		"w-vant-icon": "./miniprogram_npm/vant-weapp/icon/index",
+		"vant-button":"./miniprogram_npm/vant-weapp/button/index",
+		"vant-icon": "./miniprogram_npm/vant-weapp/icon/index",
 		"w-popup-module": "./components/popup-module/popup-module",
 		"w-page": "./components/page/index"
 	},

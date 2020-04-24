@@ -12,15 +12,15 @@ w-page(
             open-data.avator(type="userAvatarUrl" )
           view.activity-info
             view.title 
-              text 5.1-5.5 【欧派】全国直播
+              text 5.1-5.6 【欧派】全国直播
             view.content-info
               text 南通市心心橱柜
-              text 南通商场心心旗舰店
+              text 南通商场心心旗
             view.name 
               text 某某某
         view.right(bindtap="popupShow" data-popup-type="changeActive") 
-          text 切换
-          image(src="../../assets/image/icon/down.png")
+          text.change 活动切换
+          w-icon(type="down-orange" size="small")
       view.section.section-1
         view.price-box
           view.price-item
@@ -42,16 +42,16 @@ w-page(
           view.action-item(bindtap="popupShow" data-popup-type="shopping")
             image(src="../../assets/image/icon/jiedai.png" mode="widthFix")
             text 接待逛店
-          view.action-item
+          view.action-item( bindtap="popupShow" data-popup-type="liveInvite" )
             image(src="../../assets/image/icon/zhibo.png" mode="widthFix")
             text 直播邀请
           view.action-item(bindtap="popupShow" data-popup-type="register")
             image(src="../../assets/image/icon/haibao.png" mode="widthFix")
             text 活动注册码
-          view.action-item
+          view.action-item(bindtap="popupShow" data-popup-type="verification" )
             image(src="../../assets/image/icon/hexiao.png" mode="widthFix")
             text 核销扫码
-          view.action-item
+          view.action-item(bindtap="$routeLink" data-path="order-type-in")
             image(src="../../assets/image/icon/hexiao.png" mode="widthFix")
             text 订单录入
           view.action-item
@@ -79,7 +79,7 @@ w-page(
             text 金币排名第
             text.red-word 90
             text 名
-            text.action 查看排行
+            text.action(bindtap="$routeLink" data-path="rank-list?rankType=个人") 查看排行
             text.arrow
         view.section-content
           view.user-kpi
@@ -780,6 +780,7 @@ w-popup(
   class="w-popup popChoosePoster"
   show="{{popupType=='choosePoster'}}"
   type="right"
+  name="choosePoster"
   centerBg="#RRGGBB"
   closeIcon="true"
 )
@@ -804,7 +805,7 @@ w-popup(
           view.album(
             wx:for="{{posterImgs}}"
             wx:key="index")
-            image(src="{{item.imgUrl}}")
+            image(src="{{item.imgUrl}}" bindtap="choosePost" data-index="{{index}}" data-type="postCurrent")
 //- 接待逛店弹窗
 w-popup-module(
   class="w-popup pop-shopping"
@@ -820,6 +821,37 @@ w-popup-module(
       src=""
     )
     view.tips2 客户微信扫一扫,完成逛店
+//- 直播邀请弹窗
+w-popup(
+  class="w-popup popChoosePoster"
+  show="{{popupType=='liveInvite'}}"
+  type="right"
+  name="liveInvite"
+  centerBg="#RRGGBB"
+  closeIcon="true"
+)
+  view(slot="content" class="content")
+    view.bigPoster
+      swiper.swiper(
+        current="{{liveCurrent}}"
+      )
+        block(
+          wx:for="{{posterImgs}}"
+          wx:key="index"
+        )
+          swiper-item
+            image(
+              mode = "aspectFill"
+              src="{{item.imgUrl}}"
+            )
+    view.tips() 长按图片发送至朋友圈或保存至相册2
+    view.smallPoster
+      scroll-view(scroll-x="true" style="width: 100%")
+        view.smallPosterList
+          view.album(
+            wx:for="{{posterImgs}}"
+            wx:key="index")
+            image(src="{{item.imgUrl}}" bindtap="choosePost" data-index="{{index}}" data-type="liveCurrent")
 //- 注册码弹窗
 w-popup-module(
   class="w-popup pop-shopping"
@@ -835,3 +867,36 @@ w-popup-module(
       src=""
     )
     view.tips2 长按识别二维码注册
+//- 核销扫码弹窗
+w-popup-module(
+  class="w-popup pop-cancel-verification"
+  show="{{popupType=='verification'}}"
+  type="center"
+  closeIcon="true"
+  closeBottom="true"
+  headTitle="核销"
+)
+  view(slot="content" class="content")
+    view.title 以下两种方式均可使用
+    view.input-cancel.box
+      view.title-input
+        text.line1 1.核销码扫码
+        text.line2 输入客户个人中心待核销订单的核销码进行核销
+      view.area-input
+        input(
+            class="input"
+            placeholder-class="placeholder"
+            maxlength="40"
+            text="number"
+            bindinput="bindinput"
+            placeholder="请输入商品核销码进行核销"
+        )
+        view.confirm(bindtap="bindconfirm") 确定
+    view.scan-cancel.box
+      view.area-scan
+        view.left
+          text.line1 1.扫码核销
+          text.line2 点开扫一扫,扫描客户个人中心待核销订单的二维码进行核销
+        view.right
+          w-icon(type="scan" size="large")
+          tetx 扫一扫

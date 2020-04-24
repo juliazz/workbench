@@ -1,0 +1,22 @@
+.w-input {
+  input {
+    height: 78rpx;
+    line-height: 78rpx;
+    padding: 10rpx 30rpx;
+    font-size: 26rpx;
+    box-sizing: border-box;
+    border-radius: 0rpx;
+    overflow: hidden;
+    border: 1px solid #979797;
+    background: #fff;
+
+    &.placeholder {
+      color: #666;
+    }
+
+    &.disabled {
+      // background: #f2f2f2;
+      opacity: .5;
+    }
+  }
+}

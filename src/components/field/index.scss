@@ -1,0 +1,32 @@
+@import '../../assets/style/index';
+.field {
+  .field-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:0 50rpx;
+    border-bottom: 2rpx solid $g4c;
+    .label {
+      color: #333;
+      font-size: 24rpx;
+      font-weight: bold;
+      flex: 1;
+      padding: 25rpx 0;
+    }
+    .content {
+      flex: 4;
+    }
+  }
+
+  .err-msg {
+    height: 0;
+    color: #EB4747;
+    overflow: hidden;
+    transition: height .3s;
+    font-size: 20rpx;
+    line-height: 40rpx;
+    &.active {
+      height: 40rpx;
+    }
+  }
+}

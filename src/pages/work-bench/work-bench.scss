@@ -24,7 +24,7 @@ page{
         color: #fff;
         background-color: $pc;
         .left{
-            width: 600rpx;
+            width: 580rpx;
             @include flex-align-center;
             .avator{
                 height: 150rpx;
@@ -43,12 +43,9 @@ page{
             justify-content: flex-end;
             margin-left: 15rpx;
             color: #FFBE97;
-            text{
-                width: 60rpx;
-            }
-            image{
-                height: 18rpx;
-                width: 18rpx;
+            .change{
+                white-space: nowrap;
+                width: 105rpx;
             }
         }
 
@@ -87,7 +84,7 @@ page{
         }
         .action{
             color: #919191;
-            margin:  0 20rpx;
+            margin-left:20rpx;
         }
         .title-2{
             font-size: 28rpx;
@@ -326,6 +323,7 @@ page{
         color: #21A43D;
     }
 }
+// 选择海报弹窗
 .popChoosePoster{
     .content{
         width: 100vw;
@@ -394,4 +392,73 @@ page{
         }
 
     }
+}
+.pop-cancel-verification{
+    .content{
+        padding: 30rpx 35rpx;
+    }
+    .title{
+        font-size: 30rpx;
+        margin-bottom: 20rpx;
+        font-weight: 500;
+    }
+    .box{
+        font-size: 26rpx;
+        padding: 20rpx 0;
+        color: $b2c;
+        line-height: 50rpx;
+        .line2{
+            font-size: 24rpx;
+        }
+        text{
+            display: block;
+        }
+        .title-input{
+            font-size: 28rpx;
+            margin-bottom: 20rpx;
+           
+        }
+        .area-input{
+            @include flex-just-between;
+            align-items: center;
+            .confirm{
+                width: 105rpx;
+                line-height: 50rpx;
+                height: 50rpx;
+                background-color: $lpc;
+                text-align: center;
+                border-radius: 10rpx;
+                color: #fff;
+            }
+            .input{
+                width: 450rpx;
+                height: 70rpx;
+                font-size: 30rpx;
+                border-bottom: 2px solid #F5F5F5;
+            }
+            .placeholder{
+                color: #919191;
+            }
+        }
+    }
+    .scan-cancel{
+        .area-scan,.right{
+            @include flex-just-between;
+            align-items: center;
+        }
+        .left{
+            width: 400rpx;
+            line-height: 35rpx;
+            .line1{
+                margin-bottom: 10rpx;
+            }
+        }
+        .right{
+            @include flex-dire-column;
+            align-items: center;
+            color: $b3c;
+            width: 105rpx;
+        }
+    }
+
 }
