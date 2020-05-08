@@ -1,0 +1,32 @@
+view(class="textarea-inner {{platform}}")
+	textarea(
+		hidden="{{visible}}"
+		class="textarea"
+	    disabled="{{disabled}}"
+	    focus="{{focus}}"
+	    value="{{value}}"
+	    maxlength="{{maxlength}}"
+	    placeholder-class="placeholder"
+	    bindinput="bindinput"
+	    bindfocus="bindfocus"
+	    bindblur="bindblur"
+		data-growing-track='true'
+	)
+		view(
+			class="placeholder"
+			wx:if="{{isPlaceholder}}"
+		) {{placeholder}}
+	view(
+		hidden="{{!visible}}"
+		class="textarea"
+		catchtap="catchtap"
+	)
+		view(
+			class="placeholder"
+			wx:if="{{isPlaceholder}}"
+		) {{placeholder}}
+		view(
+			class="value"
+			wx:if="{{!isPlaceholder}}"
+		) {{value}}
+

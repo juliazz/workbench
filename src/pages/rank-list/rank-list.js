@@ -13,7 +13,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title: 'rank-list'
+    stepOption: [
+      { text: '春暖花开', value: 0 },
+      { text: '新款商品', value: 1 },
+      { text: '活动商品', value: 2 }
+    ],
+    popupType: '',
+    expandIndex: null, // 查看数据展开的index
+    stepValue: 0 // 活动阶段
   },
   onPreLoad: fetch,
   /**
@@ -25,7 +32,26 @@ Page({
     this.setData({
       rankType
     })
-    // const result = await this.$getPreload(fetch, options)
+  },
+  popupShow: function(eve) {
+    const { popupType } = eve.currentTarget.dataset
+    this.setData({
+      popupType
+    })
+  },
+  closePopup: function(eve) {
+    const { popupType } = eve.currentTarget.dataset
+    this.setData({
+      popupType: ''
+    })
+  },
+  collapseEventer(eve) {
+    const {expandIndex} = this.data
+    let {index} = eve.currentTarget.dataset
+    index = expandIndex == index ? null : index
+    this.setData({
+      expandIndex: index
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

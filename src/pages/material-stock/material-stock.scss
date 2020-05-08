@@ -1,0 +1,188 @@
+
+@import '../../assets/style/index';
+.pages-material-stock {
+    .content{
+    }
+    .material-list{
+        .material-item{
+            font-size: 28rpx;
+            padding: 30rpx;
+            border-bottom: 30rpx solid $g3c;
+            .header{
+                .left{
+                    .avator{
+                        image{
+                            height: 100rpx;
+                            width: 100rpx;
+                        }
+                    }
+                    .material-info{
+                        .material-name{
+                            font-weight: 500;
+                            font-size: 28rpx;
+                        }
+                    }
+                }
+                .recommend{
+                    text{
+                        margin-left: 10rpx;
+                        font-size: 24rpx;
+                    }
+                }
+            }
+            .words{
+                padding: 30rpx 0 0;
+                max-height: 70rpx;
+                line-height: 35rpx;
+                margin-bottom: 30rpx;
+                transition: max-height 0.5s;
+                overflow: hidden;
+                position: relative;
+            }
+            .words::after {
+                content: "..."; position: absolute; bottom: 0; right: 0; padding-left: 70px;
+                color: orange;
+                background: -webkit-linear-gradient(left, transparent, #fff 5%);
+                background: -o-linear-gradient(right, transparent, #fff 5%);
+                background: -moz-linear-gradient(right, transparent, #fff 5%);
+                background: linear-gradient(to right, transparent, #fff 5%);
+            }
+            .view-more{
+                color: orange;
+                position: absolute;
+                right: 30rpx;
+                bottom: 0rpx;
+                z-index: 9;
+            }
+            .higer{
+                max-height: 100rpx;
+                &::after{
+                    content: "";
+                    background: none;
+                }
+            }
+
+            van-grid{
+                .van-grid{
+                    border-bottom: 2rpx solid $g3c;
+                }
+                .no-boder-bottom{
+                    border-bottom: none;
+                }
+                van-grid-item{
+                    .grid-item{
+                        padding: 0;
+                        height:  210rpx;
+                        width:  210rpx;
+                        image{
+                            height: 210rpx;
+                            width: 210rpx;
+                        }
+                    }
+                }
+            }
+            .btns{
+                padding: 30rpx;
+                .save{
+                    
+                    background-color: #fff;
+                }
+                .question-icon{
+                    padding-top: 4rpx;
+                }
+                .save,.share{
+                    .btns-slots{
+                        display: flex;
+                        height: 60rpx;
+                        align-items: center;
+                        text{
+                            margin-left: 5rpx;
+                        }
+                    }
+                    margin-right: 20rpx;
+                    border-radius: 35rpx;
+                }
+
+            }
+        }
+    }
+    .add-material{
+        position: fixed;
+        bottom: 100rpx;
+        left: 50vw;
+        margin-left: -125rpx;
+        .add-box{
+            height: 90rpx;
+            width: 250rpx;
+            color: #fff;
+            border-radius: 45rpx;
+            background-color: $pc;
+            justify-content: center;
+            text{
+                margin-left: 10rpx;
+            }
+            vant-icon{
+                margin-top: 4rpx;
+            }
+        }
+
+    }
+    
+}
+// 分享弹窗
+van-action-sheet{
+    .content{
+        padding: 70rpx 30rpx;
+        .tips{
+            color: $b3c;
+            font-size: 24rpx;
+        }
+        .line1,.line2{
+            padding: 20rpx 50rpx 30rpx;
+            
+        }
+        .line1{
+            .item{
+                align-items: center;
+            }
+            vant-icon{
+                margin-right: 5rpx;
+            }
+        }
+        .line2{
+            align-items: center;
+            .line-tips{
+                text-align: center;
+            }
+            .line{
+                height: 2rpx;
+                width: 150rpx;
+                background-color: $b3c;
+            }
+        }
+        .line3{
+            font-size: 28rpx;
+            margin-top: 20rpx;
+            .step{
+                .num{
+                    color: red;
+                    border: 2rpx solid red;
+                    display: inline-block;
+                    width: 28rpx;
+                    height: 28rpx;
+                    line-height: 28rpx;
+                    font-size: 22rpx;
+                    text-align: center;
+                    border-radius: 50%;
+                    margin-right: 10rpx;
+                }
+            }
+        }
+    }
+}
+.specification{
+    .content{
+        padding: 40rpx 30rpx;
+        font-size: 26rpx;
+    }
+}

@@ -1,0 +1,10 @@
+
+{
+  "navigationBarTitleText": "发起PK",
+  "usingComponents": {
+    "vant-picker":"../../miniprogram_npm/vant-weapp/picker/index",
+    "vant-checkbox":"../../miniprogram_npm/vant-weapp/checkbox/index",
+    "vant-checkbox-group":"../../miniprogram_npm/vant-weapp/checkbox-group/index"
+  }
+}
+  

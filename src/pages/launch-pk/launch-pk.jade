@@ -1,0 +1,119 @@
+
+w-loading(id="w-loading")
+w-page(
+  class="w-page pages-launch-pk"
+)
+  view(slot="header" class="header")
+  view(slot="content" class="content")
+    vant-cell( title="pk阶段:" is-link value="{{stepValue}}" value-class="value-class" bind:click="popupShow" data-popup-type="pkStep")
+    vant-cell( title="pk项目:" is-link value="{{projectValue}}"  value-class="value-class" bind:click="popupShow" data-popup-type="project")
+    view.cell-picker
+      vant-cell( title="pk上级:"  value="{{areaValue}}" value-class="value-class" custom-class="custom-class")
+      view.arr-box
+        vant-icon(name="arrow" color="#999" size="18px")
+        picker(
+          mode="multiSelector"
+          data-type="guide"
+          bindchange="bindMultiPickerChange"
+          bindcolumnchange="bindMultiPickerColumnChange" 
+          value="{{multiIndex}}" range="{{multiArray}}"
+        )
+          view.picker .
+    vant-cell( title="{{pkCellTitle}}" is-link value="{{endChoiceValue}}" value-class="value-class" bind:click="popupShow" data-popup-type="end")
+    vant-field( 
+      value="{{ pkPrice }}"  label="金额:" 
+      placeholder="请输入PK金额"
+      type="number"
+      input-align="center"
+      bind:click-icon="onClickIcon" value-class="value-class")
+    view.btn
+      vant-button( type="default"  custom-class="invite-btn" color="#0f8eef" bind:click="inviteEventer" data-popup-type="invite")
+        text 邀请
+      
+  view(slot="footer" class="footer")
+//- 阶段弹框
+w-popup-module(
+  class="w-popup pop-pkList"
+  show="{{popupType=='pkStep'}}"
+  type="bottom"
+  radius="{{false}}"
+  closeIcon="{{false}}"
+  closeBottom="true"
+  headTitle=""
+)
+  view(slot="content" class="content")
+    view.title
+      text.cancel(bindtap="onCancel" data-type="step") 取消
+      text.center PK阶段
+      text.comfirm(bindtap="onConfirm" data-type="step") 确认
+    view.list-box
+      scroll-view.list(scroll-y="true" style="height: 40vh")
+        view.line(wx:for="1234456" wx:key="index" bindtap="onChange" data-index="{{index}}" data-type="step")  
+          tetx 234
+          vant-icon(name="checked" color="#2955FF" wx:if="{{activeIndex.step==index}}")
+//- pk项目
+w-popup-module(
+  class="w-popup pop-pkList"
+  show="{{popupType=='project'}}"
+  type="bottom"
+  radius="{{false}}"
+  closeIcon="{{false}}"
+  closeBottom="true"
+  headTitle=""
+)
+  view(slot="content" class="content")
+    view.title
+      text.cancel(bindtap="onCancel" data-type="project") 取消
+      text.center PK项目
+      text.comfirm(bindtap="onConfirm" data-type="project") 确认
+    view.list-box
+      scroll-view.list(scroll-y="true" style="height: 40vh")
+        view.line(wx:for="1234456" wx:key="index" bindtap="onChange" data-index="{{index}}" data-type="project")  
+          tetx 234
+          vant-icon(name="checked" color="#2955FF" wx:if="{{activeIndex.project==index}}")
+//- end
+w-popup-module(
+  class="w-popup pop-pkList end"
+  show="{{popupType=='end'}}"
+  type="bottom"
+  radius="{{false}}"
+  closeIcon="{{false}}"
+  closeBottom="true"
+  headTitle=""
+)
+  view(slot="content" class="content")
+    view.title
+      text.cancel(bindtap="onCancel" data-type="endChoice") 取消
+      text.center {{endChoiceTitle}}
+      text.comfirm(bindtap="onConfirm" data-type="endChoice") 确认
+    view.list-box
+      scroll-view.list(scroll-y="true" style="height: 40vh")
+        vant-checkbox-group(value="{{ result }}" bind:change="onChangeEnd")
+          vant-cell-group()
+            vant-cell(
+              data-index="{{ index }}" bind:click="toggle" wx:for="{{ list }}"
+              wx:key="index"
+              title="复选框 {{ item }}"
+              title-class="title-class"
+              value-class="value-class"
+              clickable
+            )
+              vant-checkbox(catch:tap="noop" class="checkboxes-{{ index }}" name="{{ item }}")
+
+//- comfirm invite
+w-popup-module(
+  class="w-popup invite"
+  show="{{popupType=='invite'}}"
+  type="center"
+  radius="{{false}}"
+  closeIcon="{{false}}"
+  closeBottom="true"
+  headTitle=""
+)
+  view(slot="content" class="content")
+    view.title 恭喜您已成功邀请
+    view.tips 点击确认并等待对方接受
+    view.btn
+      vant-button( type="default"  custom-class="comfirm-invite-btn" color="#0f8eef" bind:click="comfirmInvite")
+        text 确定
+      

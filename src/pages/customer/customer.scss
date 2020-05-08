@@ -1,0 +1,27 @@
+
+@import '../../assets/style/index';
+.pages-customer {
+    .content{
+        padding: 30rpx;
+    }
+    .customer-list{
+        @include flex-just-start;
+        flex-wrap: wrap;
+        .customer-item{
+            width: 173rpx;
+            margin-bottom: 30rpx;
+            font-size: 26rpx;
+            @include flex-dire-column;
+            align-items: center;
+            text-align: center;
+            image{
+                height: 44rpx;
+                width: 40rpx;
+                margin-bottom: 15rpx;
+            }
+            text{
+                padding: 0 7rpx;
+            }
+        }
+    }
+}

@@ -32,6 +32,7 @@ const saveImageToPhotosAlbum = function (opts, done) {
   isCheckAuthApiSetting('scope.writePhotosAlbum', () => done(opts));
 }
 
+
 export default {
   authorize,
   chooseAddress,

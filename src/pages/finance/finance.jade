@@ -1,0 +1,160 @@
+
+w-loading(id="w-loading")
+w-page(
+  class="w-page pages-finance"
+)
+  view(slot="header" class="header")
+  view(slot="content" class="content")
+    van-tabs.van-tabs(active="{{ activeTabIndex }}" bind:change="onChange" color="{{$themColor}}" )
+      van-tab.vantab(
+        wx:for="{{ tabs }}"
+        wx:key="*this"
+        wx:for-index="tabIndex"
+        title="{{item }}排行榜"
+      )
+    view(wx:if="{{activeTabIndex==0}}")
+      view.income-List
+        view.income-item.income-item-1
+          view.title 直播签单收入
+          w-currency(value="100" class="oderPrize")
+          vant-button( type="default"  round="{{true}}"
+          custom-class="income-detail-btn" color="#fff" 
+          data-path='income-detail?type=normal'
+          bind:click="$routeLink" 
+          )
+            text 查看明细
+        view.income-item.income-item-2
+          view.title 直播签单收入
+          w-currency(value="100" class="oderPrize")
+          vant-button( type="default" round custom-class="income-detail-btn" color="#fff"
+          data-path='income-detail?type=normal'
+          bind:click="$routeLink" )
+            text 查看明细
+        view.income-item.income-item-3
+          view.title 直播签单收入
+          w-currency(value="100" class="oderPrize")
+          vant-button( type="default" round custom-class="income-detail-btn" color="#fff"
+          data-path='income-detail?type=online'
+          bind:click="$routeLink" )
+            text 查看明细
+      view.section-List
+        view.section-1.section
+          view.title
+            view.left
+              text 品牌账户余额
+            view.right(bindtap="$routeLink" data-path="account-detail")
+              text 查看明细
+              text.arr-box
+                text.right-arrow
+          view.section-content
+            view.line1
+              text 共计
+              w-currency(value="100" class="oderPrize")
+            view.btns
+              vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="inviteEventer" )
+                text 提现
+              vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="inviteEventer" )
+                text 去充值
+        view.section-2.section
+          view.title
+            view.left
+              text 推广费用余额
+            view.right(bindtap="$routeLink" data-path="account-detail")
+              text 查看明细
+              text.arr-box
+                text.right-arrow
+          view.section-content
+            view.line1
+              text 推广费用均摊支出金额
+              vant-icon(name="question" color="#888" size="24px" bind:click="popupShow")
+            w-currency(value="-100" class="oderPrize")
+        view.section-3.section
+          view.title
+            view.left
+              text 品牌阶段活动金币兑换收入
+            view.right(bindtap="$routeLink" data-path="account-detail")
+              text 查看明细
+              text.arr-box
+                text.right-arrow
+          view.section-content
+            view.line1
+              text 共计
+              w-currency(value="100" class="oderPrize")
+        view.section-4.section
+          view.title
+            view.left
+              text 扣罚明细
+            view.right
+              text 查看明细
+              text.arr-box
+                text.right-arrow(bindtap="$routeLink" data-path="order-brand")
+    view(wx:if="{{activeTabIndex==1}}")
+      view.section-List.person(class="{{personDetailShow?'nopadding':''}}")
+        view.section-1.section(wx:if!="{{!personDetailShow}}")
+          view.title
+            view.left
+              text 个人账户余额
+            view.right(bindtap="showPersonDetail")
+              text 查看明细
+              text.arr-box
+                text.right-arrow
+          view.section-content
+            view.line1
+              view.price
+                text 共计
+                w-currency(value="100" )
+              vant-icon(name="question" color="#888" size="24px" bind:click="popupShow")
+            view.btns
+              vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="inviteEventer" )
+                text 提现
+              vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="inviteEventer" )
+                text 去充值
+        view.person-detail
+          view.title.flex-just-between.padding-area.bod-bottom
+            view.left 收支明细
+            view.right 
+              view.extract-prize
+                text (可提取金额：
+                w-currency(value="-100" type="num" class="oderPrize")
+                text )
+              vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="inviteEventer" )
+                text 提现
+          view.money-type-list.flex-just-between.bod-bottom
+            view.type-item
+              w-currency(value="100" class="oderPrize")
+              text 奖励总额
+            view.type-item
+              w-currency(value="100" class="oderPrize")
+              text 已提取金额
+            view.type-item
+              w-currency(value="100" class="oderPrize")
+              text 罚款金额
+            view.type-item
+              w-currency(value="100" class="oderPrize")
+              text 账户余额
+          view.money-detail-list
+            view.item-box.bod-bottom.padding-area.flex-just-between(wx:for="123456")
+              view.left
+                view.title 直播签单
+                view.time 2020.05.01
+              view.right
+                w-currency(value="-100" type="num" class="oderPrize")
+            
+              
+  view(slot="footer" class="footer")
+w-popup-module(
+  class="w-popup pop-explain"
+  show="{{popupType=='pop-explain'}}"
+  type="center"
+  closeIcon="true"
+  closeBottom="true"
+  headTitle="说明"
+)
+  view(slot="content" class="content")
+    view.activeListBox
+      view.lineItem(wx:for="1234" wx:key="index" bindtap="changeActive" data-active-id="{{item.id}}")
+        view.title
+          text {{index}}.
+          text 推广费用金额:
+        view 
+          text 阅读红包。阅读红包。阅读红包。阅读红包。阅读红包。

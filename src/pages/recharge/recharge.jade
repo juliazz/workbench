@@ -1,0 +1,21 @@
+
+w-loading(id="w-loading")
+w-page(
+  class="w-page pages-recharge"
+)
+  view(slot="header" class="header")
+  view(slot="content" class="content")
+    view.recharge-content
+      view.main-area
+        view.title 充值金额
+        view.input-area
+          text ￥
+          input(
+            type="number"
+            value="{{rechargeNum}}"
+            bindinput="bindinput"
+          )
+      view.btn-box
+        vant-button(type="primary" block custom-class="action-btn"  bind:click="nextEventer" )
+          text 下一步
+  view(slot="footer" class="footer")

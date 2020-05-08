@@ -1,0 +1,65 @@
+
+@import '../../assets/style/index';
+.pages-statistics {
+    .header{
+        background-color: $g3c;
+        .rank-list{
+            background-color: #fff;
+            margin-top: 20rpx;
+            padding: 7rpx;
+            @include flex-just-start;
+            flex-wrap: wrap;
+            .rank-item{
+                width: 170rpx;
+                color: $b3c;
+                background-color: $g3c;
+                line-height: 70rpx;
+                font-size: 26rpx;
+                padding: 0 15rpx;
+                border-radius: 15rpx;
+                margin: 15rpx 25rpx;
+                text-align: center;
+            }
+            .active{
+                background-color: #C4D8FE;
+            }
+        }
+    }
+    .content{
+        padding-bottom: 120rpx;
+        background-color: $g3c;
+        padding-top: 30rpx;
+        .special-tab {
+            transition: all 0.25s ease-in-out;
+        }
+        .data-area{
+            background-color: #fff;
+            padding: 30rpx 0;
+            .title{
+                padding-left: 30rpx;
+                font-size: 32rpx;
+                margin-bottom: 30rpx;
+                font-weight: 500;
+            }
+            .data-table{
+                margin-top: 50rpx;
+                .grid-item{
+                    color: $g3c;
+                    text-align: center;
+                    text{
+                        display: block;
+                    }
+                    .num{
+                        color: $wc;
+                        font-size: 34rpx;
+                    }
+                    .text{
+                        white-space: nowrap;
+                        color: $b3c;
+                        font-size: 24rpx;
+                    }
+                }
+            }
+        }
+    }
+}

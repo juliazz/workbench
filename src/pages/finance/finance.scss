@@ -1,0 +1,168 @@
+
+@import '../../assets/style/index';
+.pages-finance {
+    // 公共类
+    .padding-area{
+        padding: 30rpx 40rpx;
+    }
+    .flex-just-between{
+        @include flex-just-between;
+    }
+    .bod-bottom{
+        border-bottom: 2rpx solid $g3c;
+    }
+    .action-btn{
+        line-height: 58rpx;
+        height: 60rpx;
+    }
+    .content{
+        background-color: $g3c;
+        min-height: 100vh;
+        box-sizing: border-box;
+        padding-bottom: 100rpx;
+        .income-List{
+            margin-top: 15rpx;
+            background-color: #fff;
+            padding: 15rpx 30rpx;
+            @include flex-just-between;
+            .income-item{
+                width: 220rpx;
+                height: 180rpx;
+                color: #fff;
+                background-color: $pc;
+                border-radius: 20rpx;
+                font-size: 28rpx;
+                @include flex-dire-column;
+                justify-content: center;
+                align-items: center;
+                w-currency{
+                    margin: 10rpx 0;
+                }
+                .income-detail-btn{
+                    line-height: 38rpx;
+                    height: 45rpx;
+                    text{
+                        font-size: 22rpx;
+                        color: $pc;
+                    }
+                }
+                &-2{
+                    .income-detail-btn{
+                        text{
+                            color: #09CAAE;
+                        }
+                    }
+                    background-color: #09CAAE;
+                }
+                &-3{
+                    .income-detail-btn{
+                        text{
+                            color: #BC50F3;
+                        }
+                    }
+                    background-color: #BC50F3;
+                }
+            }
+        }
+        .section-List{
+            // margin-top: 30rpx;
+            padding: 30rpx 40rpx;
+            .section{
+                margin-bottom: 30rpx;
+                background-color: #fff;
+                border-radius: 15rpx;
+                font-size: 26rpx;
+                .title{
+                    @include flex-just-between;
+                    padding: 20rpx 30rpx;
+                    border-bottom: 2rpx solid $g3c;
+                    .right{
+                       .arr-box{margin-left: 20rpx;}
+                    }
+                }
+                .section-content{
+                    padding: 30rpx 20rpx;
+                    color: $b3c;
+                    .line1{
+                        line-height: 70rpx;
+                    }
+                    .btns{
+                        @include flex-just-between;
+                        border-radius: 5rpx;
+                        margin-top: 10rpx;
+                    }
+                }
+                &-2{
+                    
+                    .line1{
+                        @include flex-just-between;
+                        align-items: center;
+                    }
+                }
+            }
+
+        }
+        .person{
+            .line1{
+                @include flex-just-between;
+                align-items: center;
+            }
+        }
+        .nopadding{
+            padding: 30rpx 0 0;
+        }
+        .person-detail{
+            font-size: 26rpx;
+            background-color: #fff;
+            .title{
+                align-items: center;
+                font-size: 32rpx;
+                .right{
+                    font-size: 30rpx;
+                    display: flex;
+                    align-items: center;
+                    .extract-prize{
+                        margin-right: 20rpx;
+                    }
+                }
+            }
+            .money-type-list{
+                flex: 4;
+                padding: 30rpx 0;
+                .type-item{
+                    flex: 1;
+                    text-align: center;
+                    text{
+                        display: block;
+                    }
+                }
+            }
+            .money-detail-list{
+                .item-box{
+                    font-size: 28rpx;
+                    .left{
+                        .time{
+                            color: $b3c;
+                        }
+                    }
+                    .right{
+                        text{
+                            color: red;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}
+.pop-explain{
+    .content{
+        padding:30rpx 40rpx;
+        font-size: 26rpx;
+        .lineItem{
+            margin-bottom: 20rpx;
+            
+        }
+    }
+}

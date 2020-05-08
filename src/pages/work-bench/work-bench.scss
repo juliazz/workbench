@@ -2,6 +2,12 @@
 @import '../../assets/style/index';
 page{
 }
+// 头像
+.avator{
+    height: 90rpx;
+    width: 90rpx;
+    border-radius: 50%;
+}
 .pages-work-bench {
     height: 90vh;
     width: 100vw;
@@ -326,9 +332,12 @@ page{
 // 选择海报弹窗
 .popChoosePoster{
     .content{
-        width: 100vw;
-        height: 84vh;
-        position: relative;
+        // position: absolute;
+        .content-in{
+            width: 100vw;
+            height: 84vh;
+            position: relative;
+        }
         .bigPoster{
             margin-top: 16vh;
             box-sizing: border-box;
@@ -461,4 +470,101 @@ page{
         }
     }
 
+}
+//金币规则
+.pop-gold-coin-rule{
+    .content{
+        padding-bottom: 30rpx;
+        .line{
+            padding: 15rpx 30rpx;
+            font-size: 26rpx;
+        } 
+    }
+}
+// 奖励弹窗
+.reword{
+    .content{
+        width: 650rpx;
+    }
+    .top{
+        font-size: 28rpx;
+        .item{
+            text-align: center;
+            text:last-child{
+                display: block;
+                color: #FFC800;
+            }
+        }
+        border-bottom: 2px solid $g3c;
+    }
+    .top,.center{
+        padding: 30rpx 20rpx;
+        @include flex-just-between;
+        border-bottom: 2px solid $g3c;
+    }
+    .center{
+        align-items: center;
+        image{
+            background-color: red;
+        }
+        .main-info{
+            margin-left: 30rpx;
+            width: 400rpx;
+            font-weight: 500;
+        }
+        .prize{
+            font-size: 28rpx;
+            width: 300rpx;
+            align-items: flex-end;
+            @include flex-dire-column;
+        }
+    }
+}
+// 惩罚弹窗
+.fine{
+    .content{
+        width: 650rpx;
+    }
+    .top{
+        
+        image{
+            background-color: red;
+        }
+        .main-info{
+            margin-left: 30rpx;
+            width: 400rpx;
+            font-weight: 500;
+        }
+        .prize{
+            font-size: 28rpx;
+            width: 300rpx;
+            text-align: right;
+        }
+        .prize{
+            text{
+                clear: red;
+            }
+        }
+    }
+    .line,.top{
+        padding: 30rpx 20rpx;
+        @include flex-just-between;
+        align-items: center;
+        border-bottom: 2px solid $g3c;
+       
+    }
+    .line{
+        font-size: 28rpx;
+        .state{
+            text-align: right;
+            color: red;
+        }
+        
+        .right{
+            text-align: right;
+            text{
+                display: block;
+            }
+        }
+    }
 }

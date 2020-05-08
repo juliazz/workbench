@@ -1,0 +1,17 @@
+
+@import '../../assets/style/index';
+.components-coin-card {
+    @include flex-just-between;
+    flex-wrap: wrap;
+    padding: 30rpx 50rpx;
+    .item{
+        font-size: 26rpx;
+        text-align: center;
+        color: $b3c;
+        width: 130rpx;
+        margin-bottom: 30rpx;
+        text{
+            display: block;
+        }
+    }
+}

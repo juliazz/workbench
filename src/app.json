@@ -4,11 +4,24 @@
 		"pages/login/login",
 		"pages/reset-passworld/reset-passworld",
 		"pages/product-list/product-list",
-		"pages/remote-list/remote-list",
-		"pages/remote-history/remote-history",
 		"pages/order-type-in/order-type-in",
 		"pages/order-brand/order-brand",
-		"pages/rank-list/rank-list"
+		"pages/rank-list/rank-list",
+		"pages/launch-pk/launch-pk",
+		"pages/messgae/messgae",
+		"pages/customer/customer",
+		"pages/customer-list/customer-list",
+		"pages/statistics/statistics",
+		"pages/statistics-rank/statistics-rank",
+		"pages/webview/webview",
+		"pages/finance/finance",
+		"pages/income-detail/income-detail",
+		"pages/account-detail/account-detail",
+		"pages/widthdraw/widthdraw",
+		"pages/recharge/recharge",
+		"pages/material-stock/material-stock",
+		"pages/my-material/my-material",
+		"pages/add-material/add-material"
 	],
 	"window": {
 		"navigationStyle": "default",
@@ -28,10 +41,16 @@
 				"pagePath": "pages/work-bench/work-bench"
 			},
 			{
-				"pagePath": "pages/remote-list/remote-list"
+				"pagePath": "pages/customer/customer"
 			},
 			{
-				"pagePath": "pages/remote-history/remote-history"
+				"pagePath": "pages/statistics/statistics"
+			},
+			{
+				"pagePath": "pages/finance/finance"
+			},
+			{
+				"pagePath": "pages/messgae/messgae"
 			}
 		]
 	},
@@ -39,10 +58,18 @@
 		"w-navbar": "./custom-nav-bar/index",
 		"w-tabbar": "./custom-tab-bar/index",
 		"w-icon": "./components/icon/index",
-		"vant-button":"./miniprogram_npm/vant-weapp/button/index",
-		"vant-icon": "./miniprogram_npm/vant-weapp/icon/index",
 		"w-popup-module": "./components/popup-module/popup-module",
-		"w-page": "./components/page/index"
+		"w-page": "./components/page/index",
+		"w-image": "./components/image/index",
+		"w-currency": "./components/currency/index",
+		"vant-button": "./miniprogram_npm/vant-weapp/button/index",
+		"vant-icon": "./miniprogram_npm/vant-weapp/icon/index",
+		"vant-cell": "./miniprogram_npm/vant-weapp/cell/index",
+		"vant-cell-group": "./miniprogram_npm/vant-weapp/cell-group/index",
+		"vant-field": "./miniprogram_npm/vant-weapp/field/index",
+		"van-grid": "./miniprogram_npm/vant-weapp/grid/index",
+		"van-grid-item": "./miniprogram_npm/vant-weapp/grid-item/index",
+		"van-action-sheet": "./miniprogram_npm/vant-weapp/action-sheet/index"
 	},
 	"networkTimeout": {
 		"request": 20000,

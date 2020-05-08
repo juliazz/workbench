@@ -1,0 +1,9 @@
+
+{
+  "navigationBarTitleText": "发布素材",
+  "usingComponents": {
+    "w-textarea": "../../components/textarea/index",
+    "van-uploader":"../../miniprogram_npm/vant-weapp/uploader/index"
+  }
+}
+  

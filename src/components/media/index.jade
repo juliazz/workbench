@@ -1,0 +1,18 @@
+view(class="w-media")
+  view.image(hidden="{{_type !== 'image'}}")
+    w-image(
+      url="{{url}}" 
+      mode="widthFix"
+    )
+  view.video(hidden="{{_type == 'image'}}")
+    video(
+      id="video"
+      src="{{url}}"
+      muted="true"
+      show-mute-btn
+      controls
+      show-center-play-btn
+      auto-pause-if-open-native="{{false}}"
+      autoplay="{{autoplay}}"
+      bindplay="bindplay"
+    )

@@ -1,0 +1,121 @@
+
+@import '../../assets/style/index';
+.pages-launch-pk {
+    .header{
+        height: 80rpx;
+        background-color: $g3c;
+    }
+    .content{
+        // min-height: 90vh;
+        .cell-picker{
+            position: relative;
+            .arr-box{
+                height: 88rpx;
+                line-height: 88rpx;
+                width: 12vw;
+                position: absolute;
+                left: 88vw;
+                top: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            picker{
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 99;
+                height: 100%;
+                width: 100%;
+                color: #fff;
+            }
+        }
+        .value-class{
+            flex:4;
+            text-align: center;
+           
+        }
+        .title-class{
+            min-width: 50rpx;
+        }
+        .btn{
+            margin-top: 10vh;
+            text-align: center;
+        }
+        .invite-btn{
+            width: 500rpx;
+        }
+
+    }
+}
+.pkList{
+    .content{
+        position: absolute;
+    }
+    .list-box{
+        background-color: #fff;
+        .line{
+            height: 70rpx;
+        }
+    }
+}
+.pop-pkList{
+    .content{
+        .title{
+            @include flex-just-between;
+            padding:20rpx 30rpx;
+            .cancel{
+                color: $b3c;
+            }
+            .comfirm{
+                color: $lpc;
+            }
+            .center{
+                font-size: 30rpx;
+            }
+        }
+        .list-box{
+            .value-class{
+                position: absolute;
+                right: 60rpx;
+            }
+            .title-class{
+                flex:4;
+                text-align: center;
+            }
+            .list{
+                .line{
+                    text-align: center;
+                    line-height: 80rpx;
+                    position: relative;
+                    border-bottom: 2rpx solid $g3c;
+                }
+                vant-icon{
+                    position: absolute;
+                    top: 3rpx;
+                    right: 60rpx;
+                }
+                
+            }
+        }
+    }
+}
+.invite{
+    .content{
+        padding: 30rpx;
+        text-align: center;
+        line-height: 80rpx;
+    }
+    .title{
+        
+        font-size: 30rpx;
+    }
+    .tips{
+        font-size: 28rpx;
+    }
+    .comfirm-invite-btn{
+        height:70rpx;
+        line-height: 70rpx;
+        width: 200rpx;
+    }
+}

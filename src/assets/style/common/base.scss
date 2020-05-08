@@ -2,13 +2,37 @@
     display: flex;
     align-items: center;
 }
+.flex-align-center{
+    display: flex;
+    align-items: center;
+}
 @mixin flex-just-between{
+    display: flex;
+    justify-content: space-between;
+}
+.flex-just-between{
     display: flex;
     justify-content: space-between;
 }
 @mixin flex-dire-column{
     display: flex;
     flex-direction: column;
+}
+.flex-dire-column{
+    display: flex;
+    flex-direction: column;
+}
+@mixin flex-just-start{
+    display: flex;
+    justify-content: flex-start;
+}
+.flex-just-start{
+    display: flex;
+    justify-content: flex-start;
+}
+.flex-just-end{
+    display: flex;
+    justify-content: flex-end;
 }
 @mixin line{
     width: 100%;

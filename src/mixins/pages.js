@@ -30,6 +30,7 @@ const $debounce = debounce((callback) => {
 export default {
   data: {
     $loading: {},
+    $themColor: '#0f8eef',
     $isIpx: isIpx()
   },
   async onLoad() {

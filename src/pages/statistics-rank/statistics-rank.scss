@@ -1,0 +1,88 @@
+
+@import '../../assets/style/index';
+.pages-statistics-rank {
+    .content{
+        position: relative;
+        .van-dropdown-menu{
+            .van-dropdown-menu__item{
+                padding-left: 20rpx;
+                font-weight: 500;
+                font-size: 30rpx;
+            }
+            
+        }
+        .time-title{
+            position: absolute;
+            right: 30rpx;
+            top: 30rpx;
+            font-size: 28rpx;
+        }
+        .num-title{
+            display: flex;
+            padding: 20rpx 30rpx;
+            border-bottom: 2rpx solid $g3c;
+            border-top: 2rpx solid $g3c;
+            font-size: 28rpx;
+            @include flex-just-between;
+        }
+        .rank-list{
+            .rank-item{
+                @include flex-just-between;
+                padding: 20rpx 30rpx;
+                align-items: center;
+                border-bottom: 2rpx solid $g3c;
+                .reword-card{
+                    height: 60rpx;
+                    width: 56rpx;
+                    image{
+                        height: 100%;
+                        width: 100%;
+                    }
+                    text-align: center;
+                }
+                .avator{
+                    image{
+                        height: 100rpx;
+                        width: 100rpx;
+                        border-radius: 50%;
+                        background-color: orange;
+                    }
+                   
+                }
+                .progress-box{
+                    width: 450rpx;
+                    @include flex-dire-column;
+                    font-size: 28rpx;
+                    .progress,.main-info{
+                        @include flex-just-between;
+                        van-progress{
+                            width: 300rpx;
+                        }
+                       
+                    }
+                    .main-info{
+                        align-items: center;
+                        .left{
+                            text{
+                                display: block;
+                            }
+
+                        }
+                        .arrow-box{
+                            padding: 10rpx 20rpx;
+                        }
+                    }
+                    .progress{
+                        align-items: center;
+                        text{
+                            color: $pc;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+   
+
+}

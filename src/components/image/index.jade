@@ -1,0 +1,19 @@
+view(class="w-image")
+    image(
+        id="image"
+        src="{{url}}"
+        class="[{{loaded ? 'animate__fade_in' : ''}},{{radius?'bor-radius':''}}]"
+        style="{{customStyle}}"
+        lazy-load="{{lazyload}}"
+        mode="{{mode}}"
+        bindload="bindload"
+        binderror="binderror"
+    )
+    view.loading(
+        wx:if="{{!loaded}}"
+    )
+        view.loader-inner
+            view.line
+            view.line
+            view.line
+            view.line

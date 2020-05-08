@@ -1,0 +1,47 @@
+
+w-page(
+  class="w-page pages-add-material"
+  showFooter="{{true}}"
+)
+  view(slot="header" class="header")
+  view(slot="content" class="content")
+    view.title.flex-just-between()
+      text 描述不能少于20个字哦
+      text.example 案例
+    w-textarea(
+      class="w-textarea"
+      value="{{recomReason}}" 
+      name="blesstext" 
+      data-type="blesstext"
+      bindblur="bindblur"
+      maxlength="200"
+      placeholder="素材怎么样，请写下详细的推荐理由吧！"
+    )
+    view.upload
+      view.upload-tips
+        text 上传一个图片或视频
+      view.upload-image
+        van-uploader(
+          file-list="{{ imageList }}" bind:after-read="afterRead"
+          name="image"
+          accept="image" preview-image bind:delete="delete"
+        )
+      view.upload-video
+        van-uploader(
+          dta
+          file-list="{{ videoList }}" bind:after-read="afterRead"
+          name="video"
+          accept="video" preview-image bind:delete="delete"
+        )
+          view.upload-w.flex-align-center
+            vant-icon(name="video-o" color="#888" size="24px")
+  view(slot="footer" class="footer")
+    vant-button( 
+      type="default"  
+      block
+      disabled!="{{(!imageList.length) && (!videoList.length)}}"
+      custom-class="issue-btn" color="{{$themColor}}" 
+      data-path='income-detail?type=normal'
+      bind:click="" 
+    )
+      text 确定发布

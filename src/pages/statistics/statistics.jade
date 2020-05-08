@@ -1,0 +1,40 @@
+
+w-loading(id="w-loading")
+w-page(
+  class="w-page pages-statistics"
+)
+  view(slot="header" class="header")
+    van-tabs(active="{{ activeTabIndex }}" bind:change="onChange" color="{{$themColor}}")
+      van-tab(
+        wx:for="{{ tabs }}"
+        wx:key="*this"
+        wx:for-index="tabIndex"
+        title="{{item}}排行榜"
+      )
+        view.rank-list
+          view.rank-item(
+            class!="{{activeTabIndex==tabIndex&&activeRankItemIndex==index?'active':''}}"
+            wx:for="{{rankList}}" wx:key="index" wx:for-item="rankItem"
+            bindtap="rankItemClick" data-rank-index="{{index}}" data-tab-index="{{tabIndex}}")
+            text {{rankItem}} 
+  view(slot="content" class="content")
+    view.data-area
+      view.title 数据总览
+      van-tabs(active="{{ activeNumViewTab }}" type="card" bind:change="onNumViewChange" color="{{$themColor}}")
+        van-tab(
+          wx:for="{{ numViewTabs }}"
+          wx:key="numViewIndex"
+          tab-class="special-tab"
+          color="{{$themColor}}"
+          title="{{item}}"
+        )
+      view.data-table
+        van-grid(column-num="4"  square)
+          van-grid-item(use-slot wx:for="{{ dataList }}"  text="8888" wx:key="*this")
+            view.grid-item()
+              text.num {{item.num}}
+              text.text {{item.title}}
+              
+              
+          
+  view(slot="footer" class="footer")

@@ -1,0 +1,43 @@
+
+w-loading(id="w-loading")
+w-page(
+  class="w-page pages-statistics-rank"
+)
+  view(slot="header" class="header")
+  view(slot="content" class="content")
+    van-dropdown-menu.van-dropdown-menu( wx:if="{{isFirstStep==1}}" active-color="{{$themColor}}" title-class="title-class")
+      van-dropdown-item(value="{{ stepValue }}" options="{{ stepList }}" title="时间切换" bind:change="timeChangeEventer")
+    view.time-title( wx:if="{{isFirstStep==1}}") {{timeTitle}}
+    view.num-title
+      text 总售卡
+      text 1000人
+    view.rank-list
+      view.rank-item(wx:for="12345" wx:key="index")
+        view.reword-card(wx:if="{{index==0}}")
+          image(src="../../assets/image/icon/medal1.png")
+        view.reword-card(wx:elif="{{index==1}}")
+          image(src="../../assets/image/icon/medal2.png")
+        view.reword-card(wx:elif="{{index==2}}")
+          image(src="../../assets/image/icon/medal3.png")
+        view.reword-card(wx:else)
+          text {{index+1}}
+        view.avator()
+          image(src="")
+        view.progress-box
+          view.main-info
+            view.left
+              text.name 姓名
+              text.brand 品牌
+            view.arrow-box(bindtap="$routeLink" data-path='statistics-rank?customerType={{item.name}}&id={{item.id}}')
+              text.right-arrow
+          view.progress
+            van-progress(
+              percentage="60" stroke-width="30"
+              show-pivot="{{false}}"
+              color="#FF7E00"
+            )
+            text 3000人
+            
+          
+        //- van-cell(title="{{listItem}}" wx:for="{{item.list}}" bindtap="selectEvent" data-Index="{{index}}" wx:for-item="listItem" wx:key="listIndex")
+  view(slot="footer" class="footer")

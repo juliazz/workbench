@@ -1,0 +1,10 @@
+
+{
+  "navigationBarTitleText": "活动素材库",
+  "usingComponents": {
+    "van-tab": "../../miniprogram_npm/vant-weapp/tab/index",
+    "van-tabs": "../../miniprogram_npm/vant-weapp/tabs/index",
+    "w-media":"../../components/media/index"
+  }
+}
+  

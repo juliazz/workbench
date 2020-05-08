@@ -1,0 +1,11 @@
+button.seting-btn(
+  wx:if!="{{!$isAuthorizeCamera&&$isAuthorizeCameraFail}}"
+  open-type="openSetting"
+  bindopensetting="$onOpenSetting"
+)
+  slot
+button.seting-btn(
+  wx:else
+  bindtap="$toCamera"
+)
+  slot

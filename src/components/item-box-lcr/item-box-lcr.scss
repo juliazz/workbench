@@ -1,0 +1,22 @@
+
+@import '../../assets/style/index';
+.components-item-box-lcr {
+    width: 100%;
+    @include flex-just-between;
+    align-items: center;
+    box-sizing: border-box;
+    font-size: 26rpx;
+    .left{
+
+    }
+    .center{
+        @include flex-dire-column;
+        text{
+            display: block;
+        }
+
+    }
+    .right{
+
+    }
+}

@@ -1,0 +1,17 @@
+
+w-loading(id="w-loading")
+w-page(
+  class="w-page pages-messgae"
+)
+  view(slot="header" class="header")
+  view(slot="content" class="content")
+    view.message-list
+      view.message-item(wx:for="123456" wx:key="index")
+        w-icon(type="question" size="xlarge")
+        view.main-info
+          text.mess-title 系统消息
+          text.tips 好有发来一体哦洗涤壶的看法和
+        view.mess-time-num
+          text.time 14:00
+          text.num 1
+  view(slot="footer" class="footer")

@@ -72,8 +72,12 @@ const token = {
     const { code} = await wx.$login();
     console.log(code)
     // todo 用户静默登录
+    // const result = await request.get({
+    //   url: `/member/caOnLogin/${code}/${config.wechatId}/${config.shopWechatId}`,
+    //   auth: true
+    // });
     const result = await request.get({
-      url: `/member/caOnLogin/${code}/${config.wechatId}/${config.shopWechatId}`,
+      url: 'test',
       auth: true
     });
     const { data, resultCode } = result

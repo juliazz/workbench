@@ -14,6 +14,10 @@ export default Component({
       type: String,
       value: 'center' // 弹窗内容显示位置left right top bottom center
     },
+    radius: {
+      type: Boolean,
+      value: true // 弹窗内容显示位置left right top bottom center
+    },
     headTitle: {
       type: String // 弹窗内容标题   传值显示，不传隐藏
     },
@@ -37,6 +41,9 @@ export default Component({
     show() {
       // if (popupType == 'choosePoster') { this.getTabBar().hideTabBar(); }
       this.setData({ show: true });
+      setTimeout(() => {
+        console.log(this.data.radius, 'radius')
+      }, 300)
     },
     hide() {
       this.setData({ show: false });

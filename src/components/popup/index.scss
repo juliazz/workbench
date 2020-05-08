@@ -19,7 +19,7 @@
         .popup-content {
             min-width: 300rpx;
             min-height: 100rpx;
-            background: #fff;
+            // background: #fff;
         }
     }
     &.popup--top {
@@ -57,11 +57,11 @@
 }
 .close-icon{
     position: absolute;
-    right: 60rpx;
+    right: 65rpx;
     top: 10vh;
     width: 50rpx;
     height: 50rpx;
-  
+    z-index: 99;
   }
 
 

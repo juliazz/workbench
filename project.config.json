@@ -57,6 +57,24 @@
 					"pathName": "pages/rank-list/rank-list",
 					"query": "rankType=个人",
 					"scene":""
+				},{
+					"id": -1,
+					"name": "发起PK",
+					"pathName": "pages/launch-pk/launch-pk",
+					"query": "rankType=个人",
+					"scene":""
+				},{
+					"id": -1,
+					"name": "统计",
+					"pathName": "pages/statistics/statistics",
+					"query": "id=1&customerType=浏览",
+					"scene":""
+				},{
+					"id": -1,
+					"name": "素材库",
+					"pathName": "pages/material-stock/material-stock",
+					"query": "",
+					"scene":""
 				}
 			]
 		}

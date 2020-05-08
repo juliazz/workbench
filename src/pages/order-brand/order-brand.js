@@ -6,7 +6,7 @@ Page({
    */
   data: {
     searchValue: '',
-    stickyOffsetTop: 120,
+    stickyOffsetTop: 50,
     scrollTop: 0,
     indexList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     brandList: [{

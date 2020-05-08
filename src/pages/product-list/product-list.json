@@ -4,8 +4,7 @@
     "usingComponents": {
       "w-search": "../../components/search/index",
       "van-toast": "../../miniprogram_npm/vant-weapp/toast",
-      "van-popup":"../../miniprogram_npm/vant-weapp/popup",
-      "w-currency": "../../components/currency/index"
+      "van-popup":"../../miniprogram_npm/vant-weapp/popup"
     }
   }
     

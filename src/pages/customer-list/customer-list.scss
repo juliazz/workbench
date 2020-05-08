@@ -1,0 +1,76 @@
+
+@import '../../assets/style/index';
+.pages-customer-list {
+    .content{
+        height: 100vh;
+        background-color: $g3c;
+        overflow-y: scroll;
+        .title{
+            // line-height: 80rpx;
+            background-color: $g3c;
+            color: $b3c;
+            margin-top: 30rpx;
+            padding-left: 30rpx;
+        }
+        .customer-list{
+            padding: 30rpx;
+            .item-box{
+                margin-bottom: 30rpx;
+            }
+            .components-item-box-lcr{
+                border-radius: 10rpx;
+                padding: 30rpx 20rpx;
+                background-color: #fff;
+            }
+            .left{
+                image{
+                    height: 120rpx;
+                    width: 120rpx;
+                    border-radius: 50%;
+                    background-color: red;
+                    overflow: hidden;
+                }
+            }
+            .center{
+                .time{
+                    color: $b3c;
+                }
+            }
+            .right{
+                .state{
+                    color: red;
+                    text-align: right;
+                    // margin-left: 30rpx;
+                }
+                .call,.service{
+                    @include flex-dire-column;
+                    align-items: center;
+                    margin-top: 10rpx;
+                    position: relative;
+                    height: 70rpx;
+                    color: $b3c;
+                    font-size: 20rpx;
+                    w-icon{
+                        margin-bottom: 7rpx;
+                    }
+                }
+
+                .button{
+                    background-color: transparent;
+                    border: none;
+                    height: 100%;
+                    width: 100%;
+                    position: absolute;
+                    display: inline;
+                    padding: 0;
+                    &::after{
+                        padding: 0;
+                        border: none;
+                    }
+                    
+                }
+            }
+
+        }
+    }
+}

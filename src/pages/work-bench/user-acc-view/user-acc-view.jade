@@ -1,0 +1,178 @@
+
+view(class="components-user-acc-view")
+    view.section.section-collpase.section-pk
+        view.title-1
+          view.left 某品牌
+          view.right
+            text 金币排名第
+            text.red-word 90
+            text 名
+            text.action(bindtap="$routeLink" data-path="rank-list?rankType={{type.typeId}}") 查看排行
+            text.arrow
+        view.section-content
+          view.user-kpi
+            view.left
+              text.user-kpi-title {{type.name}}阶段考核
+              text 任务完成可奖励
+              text.mt10 未完成任务考核
+            view.between
+              text 金币总额
+              text 预计收益
+              text.mt10(bindtap="popupShow" data-popup-type="goldCoin") 预计罚款
+            view.right
+              view.reword
+                view.quantity
+                  text.coin-quality 6000币
+                  view
+                    w-currency(value="100" class="money-quality red-word" type='num')
+                    text.red-word 元
+                view.arrow(bindtap="popupShow" data-popup-type="reword")
+              view.fine
+                view.quantity.red-word
+                  text -
+                  w-currency(value="100" class="money-quality" type='num')
+                  text 元
+                view.arrow(bindtap="popupShow" data-popup-type="fine")
+        view.title-2
+          view.left {{type.name}}金币
+          view.right(bindtap="popupShow" data-popup-type="goldCoin")
+            text.action {{type.name}}金币规则
+            w-icon(size="small" type="warn")
+        //- 品牌金币
+        view.section-content.myCoin
+          view.coinItem
+            text.num.font-theme-grey 5人
+            text 新客浏览
+            text.font-theme-grey 50币
+          view.coinItem
+            text.num.font-theme-grey 5人
+            text 裂变客户
+            text.font-theme-grey 50币
+          view.coinItem
+            text.num.font-theme-grey 5次
+            text 分享
+            text.font-theme-grey 50币
+          view.coinItem
+            text.num.font-theme-grey 5户
+            text 报名
+            text.font-theme-grey 50币
+          view.coinItem
+            text.num.font-theme-grey 5户
+            text 售卡
+            text.font-theme-grey 50币
+          view.coinItem
+            text.num.font-theme-grey 5单
+            text 订单
+            text.font-theme-grey 50币
+          view.coinItem
+            text.num.font-theme-grey 5人
+            text 进直播间
+            text.font-theme-grey 50币
+          view.coinItem
+            text.num.font-theme-grey 5单
+            text 直播订单
+            text.font-theme-grey 50币
+        //- 品牌PK秀
+        view.title-2
+          view.left {{type.name}}PK秀
+          view.right(bindtap="$routeLink" data-path="launch-pk?pkType={{type.typeId}}")
+            text.action 发起PK
+            view.arrow
+        view.section-content.userPK(class="{{type.expandState?'active':''}}")
+          view.PKItem
+            view.PKProject PK项目：XXXX
+            view.PKStage PK阶段：XXXX
+            view.PKView
+              view.left.imageBox
+                w-icon(class='crown' type='crown' size='xlarge')
+                image(src="")
+                text.name 婷婷
+                text.score 200分
+              view.center
+                w-icon( type='vs' size='vs')
+              view.right.imageBox
+                image(src="")
+                text.name 多多
+                text.score 200分
+          view.PKItem
+            view.PKProject PK项目：XXXX
+            view.PKStage PK阶段：XXXX
+            view.PKView
+              view.left.imageBox
+                w-icon(class='crown' type='crown' size='xlarge')
+                image(src="")
+                text.name 婷婷
+                text.score 200分
+              view.center
+                w-icon( type='vs' size='vs')
+              view.right.imageBox
+                image(src="")
+                text.name 多多
+                text.score 200分
+        view.view-more(bindtap="viewMore" data-index='0' wx:if!="{{!unfoldStateList[0].state}}")
+          text 查看更多
+        //- 我的任务
+        view.title-2
+          view.left {{type.name}}任务
+        view.section-content.myJob
+          scroll-view(scroll-x="true" bindscroll="scroll" style="width: 100%")
+            view.myJobList
+              view.jobItem
+                van-circle(
+                  type="2d"
+                value='{{30}}' text=""
+                color="#2955FF" layer-color="#919191"
+                size="75"
+                )
+                  slots(class="circle-in-text")
+                    view 30%
+                    view 进入直播间
+                view 2/50
+                text 未完成
+              view.jobItem
+                van-circle(
+                  type="2d"
+                value='{{30}}' text=""
+                color="#2955FF" layer-color="#919191"
+                size="75"
+                )
+                  slots(class="circle-in-text")
+                    view 30%
+                    view 进入直播间
+                view 2/50
+                text 未完成
+              view.jobItem
+                van-circle(
+                  type="2d"
+                  value='{{30}}' text=""
+                  color="#2955FF" layer-color="#919191"
+                  size="75"
+                )
+                  slots(class="circle-in-text")
+                    view 30%
+                    view 进入直播间
+                view 2/50
+                text 未完成
+              view.jobItem
+                van-circle(
+                  type="2d"
+                value='{{30}}' text=""
+                color="#2955FF" layer-color="#919191"
+                size="75"
+                )
+                  slots(class="circle-in-text")
+                    view 30%
+                    view 进入直播间
+                view 2/50
+                text 未完成
+              view.jobItem
+                van-circle(
+                  type="2d"
+                value='{{30}}' text=""
+                color="#2955FF" layer-color="#919191"
+                size="75"
+                )
+                  slots(class="circle-in-text")
+                    view 30%
+                    view 进入直播间
+    

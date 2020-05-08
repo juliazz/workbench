@@ -9,22 +9,62 @@ w-page(
       image(src="../../assets/image/icon/cup.png")
     view.top-info
       view.section.section-1
-        view.line1 
-          view.left 活动阶段: 春暖花开
-          view.right
-            text 阶段切换
-            w-icon(type="down-orange" size="small")
-        view.line2 2020.4.1 8:00-2020.4.10 20:00
+        text.step 活动阶段:
+        text.time 2020.4.1 8:00-2020.4.10 20:00
+      van-dropdown-menu.van-dropdown-menu(active-color="#ffbe97" title-class="title-class")
+        van-dropdown-item(value="{{ stepValue }}" options="{{ stepOption }}" )
       view.section.section-2
         view.search-input
-          van-search(value="{{searchValue}}" placeholder="员工姓名或品牌名称")
+          van-search(value="{{searchValue}}" placeholder="员工姓名或品牌名称" use-right-icon-slot="{{false}}")
           vant-button( type="default" size="small" class="search-btn" custom-class="custom-class")
             text 搜索
-        view.rule-title
+        view.rule-title(bindtap="popupShow" data-popup-type="rewordRule" )
           text 奖励规则
           w-icon(type="question" size="normal")
-          
-          
   view(slot="content" class="content")
-    text 
+    view.line.content-title()
+      view.item
+        text.prizeTitle 奖金总额
+        text.prize 3000元
+      view.item
+        text.prizeTitle 有效金币总数
+        text.prize 30000币
+      view.item
+        text.prizeTitle 当前金币价值
+        text.prize 0.15/币
+    scroll-view(scroll-y="true" style="height: 60vh")
+      view.person-list(wx:for="1234567" wx:key="index" wx:for-index="personIndex")
+        view.line
+          view.rank
+            text 1
+          view.avator
+            w-image(url='') 
+          view.main-info
+            text.name 小星星
+            text 某品牌
+            text 金币：30000
+          view.income
+            text 预计收入：4500
+            view.view-num(bindtap="collapseEventer" data-index="{{personIndex}}")
+              text() 查看数据
+              w-icon(type="down-blue" size="smaller" class!="down-blue {{personIndex==expandIndex?'active':''}}" )
+        view.num-box( class="{{personIndex==expandIndex?'show':''}}")
+          view.num-box-in
+            view.num-item(wx:for="12345678" wx:key="itemIndex")
+              text 5人
+              text 新客浏览
+              text 50币
   view(slot="footer" class="footer")
+//-奖励规则弹窗
+w-popup-module(
+  class="w-popup pop-reword-rule"
+  show="{{popupType=='rewordRule'}}"
+  type="center"
+  closeIcon="true"
+  closeBottom="true"
+  headTitle="奖励规则"
+)
+  view(slot="content" class="content")
+    view.line(wx:for="1234456" wx:key="index")
+      text {{index}}. 
+      text  元旦放假而后VG发eve范围Vedi 回复的说法放国际法比热女儿童、fbf

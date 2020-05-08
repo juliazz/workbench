@@ -1,0 +1,35 @@
+
+w-loading(id="w-loading")
+w-page(
+  class="w-page pages-customer-list"
+)
+  view(slot="header" class="header")
+  view(slot="content" class="content")
+    view.title {{customerType}}客户
+    view.customer-list
+      view.item-box(wx:for="123456")
+        w-item-box.w-item-box()
+          view.left(slot="left")
+            image()
+          view.center(slot="center" centerWidth="500")
+            text.customer-name 客户姓名：王俊凯
+            text.customer-tel 联系电话：1879638748
+            text.invite-name 邀请人：婷婷
+            text.belong-name 归属员工：欧派
+            text.time 浏览时间：2020.6.1 12：00
+          view.right(slot="right")
+            text.state 有效
+            view.call
+              w-icon(type="phone" size="small" bindtap='makePhoneCall' data-phone-number='18796083422') 
+              text 一键拨打
+            view.service()
+              button(
+                open-type="contact"
+                bindcontact="sendContact"
+                class="button"
+              )
+              w-icon(type="chat" size="small")
+              text 客服对话
+
+
+  view(slot="footer" class="footer")

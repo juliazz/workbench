@@ -25,35 +25,44 @@ page{
         }
         .top-info{
             margin-top: 10rpx;
+            position: relative;
+            .title-class{
+                background-color: red;
+            }
             .section{
                 background: #fff;
                 &-1{
+                    position: absolute;
+                    width: 100vw;
+                    height: 130rpx;
+                    box-sizing: border-box;
                     border-bottom: 2rpx solid $g3c;
-                    padding: 15rpx 30rpx;
-                    .line1{
-                        @include flex-just-between;
-                        .left{
-                            font-size: 30rpx;
-                        }
-                        .right{
-                            color: #ffbe97;
-                            @include flex-align-center;
-                        }
-                        margin-bottom: 5rpx;
+                    padding: 0 30rpx 20rpx;
+                    font-size: 28rpx;
+                    .step{
+                        position: absolute;
+                        left: 30rpx;
+                        // width: 70vw;
+                        top: 29.5rpx;
                     }
-                    .line2{
-                        font-size: 28rpx;
+                    .time{
+                        position: absolute;
+                        top: 65rpx;
+
                     }
                 }
                 &-2{
                     padding-right: 30rpx;
                     @include flex-just-between;
                     align-items: center;
-
+                    margin-top: 30rpx;
                     .search-input,.rule-title{
                         @include flex-align-center;
                     }
                     .search-input{
+                        van-search{
+                            width: 450rpx;
+                        }
                         vant-button{
                             button{
                                 min-width: 50rpx;
@@ -74,5 +83,102 @@ page{
             }
             
         }
+    }
+    .content{
+        
+        margin-top: 20rpx;
+        background-color: #fff;
+        .content-title{
+            font-size: 30rpx;
+            .prize{
+                font-size: 26rpx;
+                color: #FFC800;
+                display: block;
+            }
+        }
+        .line{
+            @include flex-just-between;
+            align-items: center;
+            padding: 30rpx;
+            border-bottom: 2rpx solid $g3c;
+            .item{
+                text-align: center;
+            }
+        }
+        .person-list{
+            font-weight: 400;
+            font-size: 26rpx;
+            .rank{
+                @include flex-align-center;
+            }
+            .avator{
+                background-color: red;
+                border-radius: 50%;
+                image{
+                    height: 90rpx;
+                    width: 90rpx;
+                }
+            }
+            .main-info{
+                width: 300rpx;
+                .name{
+                    font-weight: 500;
+                }
+            }
+            .main-info,.income{
+                @include flex-dire-column;
+            }
+            .income{
+                height: 130rpx;
+                justify-content: flex-start;
+                align-items: center;
+                .view-num{
+                    @include flex-align-center;
+                    color: #0A7FEA;
+                    margin-top: 30rpx;
+                    .down-blue{
+                        margin-left:30rpx;
+                    }
+                }
+                .active{
+                    transform: rotate(180deg);
+                }
+
+            }
+            .num-box{
+                height: 0;
+                overflow: hidden;
+                box-sizing: border-box;
+                transition: height 0.5s;
+                .num-box-in{
+                    display: flex;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    padding: 30rpx 50rpx;
+                }
+                .num-item{
+                    margin-bottom: 20rpx;
+                    width: 140rpx;
+                    text-align: center;
+                    color: $b3c;
+                    @include flex-dire-column;
+                }
+                border-bottom: 10rpx solid $g3c;
+            }
+            .show{
+                height: 326rpx;
+            }
+
+        }
+
+    }
+}
+.pop-reword-rule{
+    .content{
+        .line{
+            padding: 15rpx 30rpx;
+            font-size: 26rpx;
+            border-bottom: 2rpx solid $g3c;
+        } 
     }
 }

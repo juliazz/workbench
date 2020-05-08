@@ -106,7 +106,7 @@ w-page(
               maxlength="30"
           )
           view.arr-box
-            text.right-arrow(bindtap="popupShow" data-popup-type="guideList")
+            text.right-arrow()
             picker(
               mode="multiSelector"
               data-type="guide"
@@ -143,14 +143,14 @@ van-calendar(
    bind:close="onClose" bind:confirm="onConfirm"
   )
   //- 签单人弹窗
-w-popup-module(
-  class="w-popup date-picker"
-  show="{{popupType=='guideList'}}"
-  type="center"
-  closeIcon="true"
-  closeBottom="true"
-  headTitle=""
-)
-  view(slot="content" class="content")
+//- w-popup-module(
+//-   class="w-popup date-picker"
+//-   show="{{popupType=='guideList'}}"
+//-   type="center"
+//-   closeIcon="true"
+//-   closeBottom="true"
+//-   headTitle=""
+//- )
+//-   view(slot="content" class="content")
     
     

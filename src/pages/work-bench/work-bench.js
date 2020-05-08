@@ -1,6 +1,8 @@
+import api from '../../api/index.js'
+// import { getSetting } from '../../utils/getSetting.js'
 const fetch = async (options) => {
   try {
-    return await Promise.resolve({code: 0})
+    return await api.accountLogin()
   } catch (err) {
     return {}
   }
@@ -12,7 +14,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    popupType: 'pop-changeActive',
+    popupType: '',
     activeList: [
       {
         name: '5.1-5.5 [欧派]全国直播',
@@ -53,8 +55,12 @@ Page({
     }, {
       state: false
     }
-    ]// 展开状态数组
-
+    ], // 展开状态数组
+    userAreaData: { // 个人区域数据
+      name: '个人',
+      typeId: 1,
+      expandState: false
+    }
 
   },
   onPreLoad: fetch,
@@ -67,6 +73,12 @@ Page({
     const result = await this.$getPreload(fetch, options)
     console.log(result)
     this.$hideLoading()
+    // 检查授权
+    //  getSetting().then((res) => {
+    //   this.setData({
+    //     authSaveAlbum: res['scope.writePhotosAlbum']
+    //   })
+    // })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -100,6 +112,23 @@ Page({
       popupType: ''
     })
   },
+  $onOpenSetting(e) {
+    const { authSetting } = e.detail
+    if (authSetting['scope.writePhotosAlbum'] === true) {
+      this.setData({
+        authSaveAlbum: true
+      })
+    } else {
+      this.setData({
+        authSaveAlbum: false
+      })
+      wx.showModal({
+        title: '提示',
+        content: '获取权限失败，将无法保存到相册哦~',
+        showCancel: false
+      })
+    }
+  },
   // 选择海报 或 直播邀请
   choosePost(eve) {
     const {index, type} = eve.currentTarget.dataset
@@ -114,6 +143,56 @@ Page({
     this.setData({
       [`unfoldStateList[${index}].state`]: !unfoldStateList[index].state
     })
+  },
+  // 点击开始的时间
+  timestart: function(e) {
+    this.setData({ timestart: e.timeStamp });
+  },
+  // 点击结束的时间
+  timeend: function(e) {
+    this.setData({ timeend: e.timeStamp });
+    this.savePhoto()
+  },
+  savePhoto() {
+    let times = this.data.timeend - this.data.timestart;
+    let _that = this;
+    if (times > 1000) {
+      console.log('this.data.tempFilePath===', this.data.tempFilePath)
+      wx.downloadFile({
+        url: 'https://api.fmlesson.cn/upload/20200421/8dc1e6a77a1f8245ad999265b2413c64.jpg',
+        success: async(res) => {
+          console.log('res===', res)
+          console.log(res.tempFilePath)
+          this.setData({
+            tempFilePath: res.tempFilePath
+          })
+          const { errMsg } = await wx.$saveImageToPhotosAlbum({
+            filePath: res.tempFilePath
+          })
+          if (errMsg == 'saveImageToPhotosAlbum:ok') {
+            this.$showToast('图片已保存至本地')
+          }
+          // 图片保存到本地
+          // wx.saveImageToPhotosAlbum({
+          //   filePath: this.data.tempFilePath,
+          //   success: function(data) {
+          //     _that.setData({ savePopupShow: true, saveSucess: true });
+          //   },
+          //   fail: function(err) {
+          //     console.log(err);
+          //     _that.setData({ savePopupShow: true, saveSucess: false });
+          //     // if (err.errMsg === 'saveImageToPhotosAlbum:fail auth deny') {
+          //     // }
+          //   },
+          //   complete(res) {
+          //     console.log(res);
+          //   }
+          // });
+        },
+        fail: (params) => {
+        }
+      });
+    }
   },
   // 核销码输入
   bindinput(e) {
@@ -171,6 +250,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-
+    return {
+      title: '',
+      path: '/pages/home/home',
+      imageUrl: '../../assets/images/share-img.jpg'
+    }
   }
 })

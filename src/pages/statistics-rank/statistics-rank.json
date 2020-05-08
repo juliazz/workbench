@@ -1,0 +1,11 @@
+
+{
+  "navigationBarTitleText": "排行榜",
+  "usingComponents": {
+    "van-dropdown-menu":"../../miniprogram_npm/vant-weapp/dropdown-menu/index",
+    "van-dropdown-item":"../../miniprogram_npm/vant-weapp/dropdown-item/index",
+    "van-cell":"../../miniprogram_npm/vant-weapp/cell/index",
+    "van-progress":"../../miniprogram_npm/vant-weapp/progress/index"
+  }
+}
+  

@@ -6,12 +6,12 @@
   right: 0;
   z-index: 1001;
   height: 110rpx;
-  background: rgba(#fff, 1);
+  background: rgba($g3c, 1);
   display: flex;
   padding-bottom: env(safe-area-inset-bottom);
 
   .tab-bar-border {
-    background-color: #fff;
+    background-color: $b4c;
     position: absolute;
     left: 0;
     top: 0;

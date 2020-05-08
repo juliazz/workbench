@@ -1,0 +1,29 @@
+
+w-loading(id="w-loading")
+w-page(
+  class="w-page pages-widthdraw"
+)
+  view(slot="header" class="header")
+  view(slot="content" class="content")
+    view.recharge-content
+      view.coin-title
+        image(src="../../assets/image/icon/coin.png")
+        text 零钱
+      view.main-area
+        view.title 充值金额
+        view.input-area
+          text ￥
+          input(
+            type="number"
+            value="{{rechargeNum}}"
+            bindinput="bindinput"
+          )
+        view.tips 
+          text 可用余额
+          w-currency(value="100" type='num')
+          text 元
+      view.btn-box
+        vant-button(type="primary" block custom-class="action-btn"  bind:click="nextEventer" )
+          text 预计两小时到账，确认提现
+
+  view(slot="footer" class="footer")

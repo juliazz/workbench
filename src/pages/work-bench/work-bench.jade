@@ -11,14 +11,14 @@ w-page(
           view.avator()
             open-data.avator(type="userAvatarUrl" )
           view.activity-info
-            view.title 
+            view.title
               text 5.1-5.6 【欧派】全国直播
             view.content-info
               text 南通市心心橱柜
               text 南通商场心心旗
-            view.name 
+            view.name
               text 某某某
-        view.right(bindtap="popupShow" data-popup-type="changeActive") 
+        view.right(bindtap="popupShow" data-popup-type="changeActive")
           text.change 活动切换
           w-icon(type="down-orange" size="small")
       view.section.section-1
@@ -54,7 +54,7 @@ w-page(
           view.action-item(bindtap="$routeLink" data-path="order-type-in")
             image(src="../../assets/image/icon/hexiao.png" mode="widthFix")
             text 订单录入
-          view.action-item
+          view.action-item(bindtap="$routeLink" data-path="material-stock")
             image(src="../../assets/image/icon/haibao.png" mode="widthFix")
             text 活动素材库
           view.action-item
@@ -63,14 +63,17 @@ w-page(
       view.section.section-2
         view.active-stage 活动阶段:春暖花开
         view.active-time 春暖花开 2020.4.1 8：00 -2020.4.4 20：00
-        view.active-left-time 
+        view.active-left-time
           text 距离本活动阶段结束还有
-          text.time 10 
+          text.time 10
           text 天
           text.time 10
           text 时
           text.time 19
           text 分
+      user-acc-view(
+        type="{{userAreaData}}"
+      )
       //- 用户区域
       view.section.section-pk
         view.title-1
@@ -87,7 +90,7 @@ w-page(
               text.user-kpi-title 个人阶段考核
               text 任务完成可奖励
               text.mt10 未完成任务考核
-            view.between 
+            view.between
               text 金币总额
               text 预计收益
               text.mt10 预计罚款
@@ -98,16 +101,16 @@ w-page(
                   view
                     w-currency(value="100" class="money-quality red-word" type='num')
                     text.red-word 元
-                view.arrow
+                view.arrow(bindtap="popupShow" data-popup-type="reword")
               view.fine
                 view.quantity.red-word
                   text -
                   w-currency(value="100" class="money-quality" type='num')
                   text 元
-                view.arrow
+                view.arrow(bindtap="popupShow" data-popup-type="fine")
         view.title-2
           view.left 我的金币
-          view.right 
+          view.right(bindtap="popupShow" data-popup-type="goldCoin")
             text.action 员工金币规则
             w-icon(size="small" type="warn")
         //- 我的金币
@@ -147,7 +150,7 @@ w-page(
         //- 我的PK秀
         view.title-2
           view.left 我的PK秀
-          view.right 
+          view.right(bindtap="$routeLink" data-path="launch-pk?pkType=对象")
             text.action 发起PK
             view.arrow
         view.section-content.userPK
@@ -175,11 +178,11 @@ w-page(
               view.jobItem
                 van-circle(
                 type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 88%
                     view 浏览+裂变
                 view 2/50
@@ -187,11 +190,11 @@ w-page(
               view.jobItem
                 van-circle(
                 type="{{type}}"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 39%
                     view 浏览+裂变
                 view 2/50
@@ -199,11 +202,11 @@ w-page(
               view.jobItem
                 van-circle(
                 type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 66%
                     view 浏览+裂变
                 view 2/50
@@ -211,11 +214,11 @@ w-page(
               view.jobItem
                 van-circle(
                 type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 30%
                     view 新用户报名
                 view 2/50
@@ -223,11 +226,11 @@ w-page(
               view.jobItem
                 van-circle(
                 type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 30%
                     view 售卡
                 view 2/50
@@ -235,11 +238,11 @@ w-page(
               view.jobItem
                 van-circle(
                 type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 30%
                     view 进入直播间
                 view 2/50
@@ -252,18 +255,18 @@ w-page(
             text 金币排名第
             text.red-word 90
             text 名
-            text.action 查看排行
+            text.action(bindtap="$routeLink" data-path="rank-list?rankType=品牌") 查看排行
             text.arrow
         view.section-content
           view.user-kpi
             view.left
-              text.user-kpi-title 个人阶段考核
+              text.user-kpi-title 品牌阶段考核
               text 任务完成可奖励
               text.mt10 未完成任务考核
-            view.between 
+            view.between
               text 金币总额
               text 预计收益
-              text.mt10 预计罚款
+              text.mt10(bindtap="popupShow" data-popup-type="goldCoin") 预计罚款
             view.right
               view.reword
                 view.quantity
@@ -271,16 +274,16 @@ w-page(
                   view
                     w-currency(value="100" class="money-quality red-word" type='num')
                     text.red-word 元
-                view.arrow
+                view.arrow(bindtap="popupShow" data-popup-type="reword")
               view.fine
                 view.quantity.red-word
                   text -
                   w-currency(value="100" class="money-quality" type='num')
                   text 元
-                view.arrow
+                view.arrow(bindtap="popupShow" data-popup-type="fine")
         view.title-2
           view.left 品牌金币
-          view.right 
+          view.right(bindtap="popupShow" data-popup-type="goldCoin")
             text.action 品牌金币规则
             w-icon(size="small" type="warn")
         //- 品牌金币
@@ -320,7 +323,7 @@ w-page(
         //- 品牌PK秀
         view.title-2
           view.left 品牌PK秀
-          view.right 
+          view.right(bindtap="$routeLink" data-path="launch-pk?pkType=品牌")
             text.action 发起PK
             view.arrow
         view.section-content.userPK(class="{{unfoldStateList[0].state?'active':''}}")
@@ -358,18 +361,18 @@ w-page(
           text 查看更多
         //- 我的任务
         view.title-2
-          view.left 我的任务
+          view.left 品牌任务
         view.section-content.myJob
           scroll-view(scroll-x="true" bindscroll="scroll" style="width: 100%")
             view.myJobList
               view.jobItem
                 van-circle(
                   type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 30%
                     view 进入直播间
                 view 2/50
@@ -377,11 +380,11 @@ w-page(
               view.jobItem
                 van-circle(
                   type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 30%
                     view 进入直播间
                 view 2/50
@@ -389,11 +392,11 @@ w-page(
               view.jobItem
                 van-circle(
                   type="2d"
-                  value='{{30}}' text="" 
+                  value='{{30}}' text=""
                   color="#2955FF" layer-color="#919191"
                   size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 30%
                     view 进入直播间
                 view 2/50
@@ -401,11 +404,11 @@ w-page(
               view.jobItem
                 van-circle(
                   type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 30%
                     view 进入直播间
                 view 2/50
@@ -413,11 +416,11 @@ w-page(
               view.jobItem
                 van-circle(
                   type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 30%
                     view 进入直播间
       //- 某部门
@@ -428,15 +431,15 @@ w-page(
             text 金币排名第
             text.red-word 90
             text 名
-            text.action 查看排行
+            text.action(bindtap="$routeLink" data-path="rank-list?rankType=部门") 查看排行
             text.arrow
         view.section-content
           view.user-kpi
             view.left
-              text.user-kpi-title 个人阶段考核
+              text.user-kpi-title 部门阶段考核
               text 任务完成可奖励
               text.mt10 未完成任务考核
-            view.between 
+            view.between
               text 金币总额
               text 预计收益
               text.mt10 预计罚款
@@ -447,16 +450,16 @@ w-page(
                   view
                     w-currency(value="100" class="money-quality red-word" type='num')
                     text.red-word 元
-                view.arrow
+                view.arrow(bindtap="popupShow" data-popup-type="reword")
               view.fine
                 view.quantity.red-word
                   text -
                   w-currency(value="100" class="money-quality" type='num')
                   text 元
-                view.arrow
+                view.arrow(bindtap="popupShow" data-popup-type="fine")
         view.title-2
           view.left 部门金币
-          view.right 
+          view.right(bindtap="popupShow" data-popup-type="goldCoin")
             text.action 部门金币规则
             w-icon(size="small" type="warn")
         //- 我的金币
@@ -496,7 +499,7 @@ w-page(
         //- 我的PK秀
         view.title-2
           view.left 部门PK秀
-          view.right 
+          view.right(bindtap="$routeLink" data-path="launch-pk?pkType=部门")
             text.action 发起PK
             view.arrow
         view.section-content.userPK(class="{{unfoldStateList[1].state?'active':''}}")
@@ -534,18 +537,18 @@ w-page(
           text 查看更多
         //- 我的任务
         view.title-2
-          view.left 我的任务
+          view.left 部门任务
         view.section-content.myJob
           scroll-view(scroll-x="true" bindscroll="scroll" style="width: 100%")
             view.myJobList
               view.jobItem
                 van-circle(
                   type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 30%
                     view 进入直播间
                 view 2/50
@@ -553,11 +556,11 @@ w-page(
               view.jobItem
                 van-circle(
                   type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 30%
                     view 进入直播间
                 view 2/50
@@ -565,11 +568,11 @@ w-page(
               view.jobItem
                 van-circle(
                   type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 30%
                     view 进入直播间
                 view 2/50
@@ -577,11 +580,11 @@ w-page(
               view.jobItem
                 van-circle(
                   type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 30%
                     view 进入直播间
                 view 2/50
@@ -594,15 +597,15 @@ w-page(
             text 金币排名第
             text.red-word 90
             text 名
-            text.action 查看排行
+            text.action(bindtap="$routeLink" data-path="rank-list?rankType=战区") 查看排行
             text.arrow
         view.section-content
           view.user-kpi
             view.left
-              text.user-kpi-title 个人阶段考核
+              text.user-kpi-title 战区阶段考核
               text 任务完成可奖励
               text.mt10 未完成任务考核
-            view.between 
+            view.between
               text 金币总额
               text 预计收益
               text.mt10 预计罚款
@@ -613,16 +616,16 @@ w-page(
                   view
                     w-currency(value="100" class="money-quality red-word" type='num')
                     text.red-word 元
-                view.arrow
+                view.arrow(bindtap="popupShow" data-popup-type="reword")
               view.fine
                 view.quantity.red-word
                   text -
                   w-currency(value="100" class="money-quality" type='num')
                   text 元
-                view.arrow
+                view.arrow(bindtap="popupShow" data-popup-type="fine")
         view.title-2
           view.left 战区金币
-          view.right 
+          view.right(bindtap="popupShow" data-popup-type="goldCoin")
             text.action 战区金币规则
             w-icon(size="small" type="warn")
         //- 我的金币
@@ -662,7 +665,7 @@ w-page(
         //- 我的PK秀
         view.title-2
           view.left 战区PK秀
-          view.right 
+          view.right(bindtap="$routeLink" data-path="launch-pk?pkType=战区")
             text.action 发起PK
             view.arrow
         view.section-content.userPK(class="{{unfoldStateList[2].state?'active':''}}")
@@ -700,18 +703,18 @@ w-page(
           text 查看更多
         //- 我的任务
         view.title-2
-          view.left 我的任务
+          view.left 战区任务
         view.section-content.myJob
           scroll-view(scroll-x="true" bindscroll="scroll" style="width: 100%")
             view.myJobList
               view.jobItem
                 van-circle(
                   type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 30%
                     view 进入直播间
                 view 2/50
@@ -719,11 +722,11 @@ w-page(
               view.jobItem
                 van-circle(
                   type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 30%
                     view 进入直播间
                 view 2/50
@@ -731,11 +734,11 @@ w-page(
               view.jobItem
                 van-circle(
                   type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 30%
                     view 进入直播间
                 view 2/50
@@ -743,11 +746,11 @@ w-page(
               view.jobItem
                 van-circle(
                   type="2d"
-                value='{{30}}' text="" 
+                value='{{30}}' text=""
                 color="#2955FF" layer-color="#919191"
                 size="75"
                 )
-                  slots(class="circle-in-text") 
+                  slots(class="circle-in-text")
                     view 30%
                     view 进入直播间
                 view 2/50
@@ -779,33 +782,36 @@ w-popup-module(
 w-popup(
   class="w-popup popChoosePoster"
   show="{{popupType=='choosePoster'}}"
-  type="right"
+  type="center"
   name="choosePoster"
   centerBg="#RRGGBB"
   closeIcon="true"
 )
   view(slot="content" class="content")
-    view.bigPoster
-      swiper.swiper(
-        current="{{postCurrent}}"
-      )
-        block(
-          wx:for="{{posterImgs}}"
-          wx:key="index"
+    view.content-in
+      view.bigPoster
+        swiper.swiper(
+          current="{{postCurrent}}"
         )
-          swiper-item
-            image(
-              mode = "aspectFill"
-              src="{{item.imgUrl}}"
-            )
-    view.tips() 长按图片发送至朋友圈或保存至相册
-    view.smallPoster
-      scroll-view(scroll-x="true" style="width: 100%")
-        view.smallPosterList
-          view.album(
+          block(
             wx:for="{{posterImgs}}"
-            wx:key="index")
-            image(src="{{item.imgUrl}}" bindtap="choosePost" data-index="{{index}}" data-type="postCurrent")
+            wx:key="index"
+          )
+            swiper-item
+              image(
+                bindtouchstart='timestart'
+                bindtouchend='timeend'
+                mode="aspectFill"
+                src="{{item.imgUrl}}"
+              )
+      view.tips() 长按图片发送至朋友圈或保存至相册
+      view.smallPoster
+        scroll-view(scroll-x="true" style="width: 100%")
+          view.smallPosterList
+            view.album(
+              wx:for="{{posterImgs}}"
+              wx:key="index")
+              image(src="{{item.imgUrl}}" bindtap="choosePost" data-index="{{index}}" data-type="postCurrent")
 //- 接待逛店弹窗
 w-popup-module(
   class="w-popup pop-shopping"
@@ -825,33 +831,36 @@ w-popup-module(
 w-popup(
   class="w-popup popChoosePoster"
   show="{{popupType=='liveInvite'}}"
-  type="right"
+  type="center"
   name="liveInvite"
   centerBg="#RRGGBB"
   closeIcon="true"
 )
   view(slot="content" class="content")
-    view.bigPoster
-      swiper.swiper(
-        current="{{liveCurrent}}"
-      )
-        block(
-          wx:for="{{posterImgs}}"
-          wx:key="index"
+    view.content-in
+      view.bigPoster
+        swiper.swiper(
+          current="{{liveCurrent}}"
         )
-          swiper-item
-            image(
-              mode = "aspectFill"
-              src="{{item.imgUrl}}"
-            )
-    view.tips() 长按图片发送至朋友圈或保存至相册2
-    view.smallPoster
-      scroll-view(scroll-x="true" style="width: 100%")
-        view.smallPosterList
-          view.album(
+          block(
             wx:for="{{posterImgs}}"
-            wx:key="index")
-            image(src="{{item.imgUrl}}" bindtap="choosePost" data-index="{{index}}" data-type="liveCurrent")
+            wx:key="index"
+          )
+            swiper-item
+              image(
+                bindtouchstart='timestart'
+                bindtouchend='timeend'
+                mode = "aspectFill"
+                src="{{item.imgUrl}}"
+              )
+      view.tips() 长按图片发送至朋友圈或保存至相册2
+      view.smallPoster
+        scroll-view(scroll-x="true" style="width: 100%")
+          view.smallPosterList
+            view.album(
+              wx:for="{{posterImgs}}"
+              wx:key="index")
+              image(src="{{item.imgUrl}}" bindtap="choosePost" data-index="{{index}}" data-type="liveCurrent")
 //- 注册码弹窗
 w-popup-module(
   class="w-popup pop-shopping"
@@ -900,3 +909,95 @@ w-popup-module(
         view.right
           w-icon(type="scan" size="large")
           tetx 扫一扫
+//- 金币规则弹窗
+w-popup-module(
+  class="w-popup pop-gold-coin-rule"
+  show="{{popupType=='goldCoin'}}"
+  type="center"
+  closeIcon="true"
+  closeBottom="true"
+  headTitle="金币规则"
+)
+  view(slot="content" class="content")
+    scroll-view(scroll-y="true" style="height: 60vh")
+      view.line(wx:for="123445689" wx:key="index")
+        text {{index}}.
+        text  元旦放假而后VG发eve范围Vedi 回复的说法放国际法比热女儿童、fbf
+//- 奖励弹窗
+w-popup(
+  class="w-popup reword"
+  show="{{popupType=='reword'}}"
+  type="center"
+  closeIcon="true"
+)
+  view(slot="content" class="content")
+    view.top
+      view.item
+        text 奖金总额
+        text 3000元
+      view.item
+        text 有效金币总数
+        text 3000币
+      view.item
+        text 当前金币价值
+        text 0.15 / 币
+    view.center
+      view.pic
+        image.avator(
+          src=""
+        )
+      view.main-info
+        text 某品牌
+      view.prize
+        text 金币: 30000
+        text 预计收入: 4500
+    view.bottom
+      w-coin-card()
+//- 罚款弹窗
+w-popup(
+  class="w-popup fine"
+  show="{{popupType=='fine'}}"
+  type="center"
+  closeIcon="true"
+)
+  view(slot="content" class="content")
+    view.top
+      view.pic
+        image.avator(
+          src=""
+        )
+      view.main-info
+        text 某品牌
+      view.prize
+        text 预计罚款:
+        w-currency(value="100" class="prize")
+    view.line
+      view.left
+        view.view-num
+          text 新客户浏览： 
+          text.blue 2 
+          text /20 
+          view.state 未完成
+      view.right
+        text 预计罚款:
+        w-currency(value="100" class="prize")
+    view.line
+      view.left
+        view.view-num
+          text 新客户浏览： 
+          text.blue 2 
+          text /20 
+          view.state 未完成
+      view.right
+        text 预计罚款:
+        w-currency(value="100" class="prize")
+    view.line
+      view.left
+        view.view-num
+          text 新客户浏览： 
+          text.blue 2 
+          text /20 
+          view.state 未完成
+      view.right
+        text 预计罚款:
+        w-currency(value="100" class="prize")

@@ -1,0 +1,55 @@
+
+@import '../../assets/style/index';
+.pages-my-material {
+    .tabs{
+        padding: 30rpx 70rpx;
+        .tab-btn{
+            border: 2rpx solid $pc;
+            background-color: #fff;
+            border-radius: 30rpx;
+            color: $pc;
+        }
+        .active{
+            background-color: $pc;
+            color: #fff;
+        }
+    }
+    .material-list{
+        .pad-30-20{
+            padding: 20rpx 30rpx;
+        }
+        font-size: 28rpx;
+        .title{
+            line-height: 80rpx;
+            padding-left: 30rpx;
+            border-bottom: 2rpx solid $g1c;
+            border-top: 2rpx solid $g1c;
+            color: $g1c;
+        }
+        .main-info{
+            .words{
+                margin-bottom: 30rpx;
+            }
+        }
+        .van-grid{
+            .van-grid{
+                border-bottom: 2rpx solid $g3c;
+            }
+            .no-boder-bottom{
+                border-bottom: none;
+            }
+            van-grid-item{
+                .grid-item{
+                    padding: 0;
+                    height:  210rpx;
+                    width:  210rpx;
+                    image{
+                        height: 210rpx;
+                        width: 210rpx;
+                    }
+                }
+            }
+        }
+    }
+
+}

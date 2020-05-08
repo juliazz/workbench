@@ -41,6 +41,11 @@
     width: 28rpx;
     height: 20rpx;
     background-size: 100% 100%;
+}
+  &-recommend{
+    width: 26rpx;
+    height: 30rpx;
+    background-size: 100% 100%;
   }
 }
 
@@ -70,4 +75,28 @@
 }
 .icon-down-orange{
   background-image: url('../../assets/image/icon/down-orange.png');
+}
+.icon-down-blue{
+  background-image: url('../../assets/image/icon/down-blue.png');
+}
+.icon-notice{
+  background-image: url('../../assets/image/icon/notice.jpg');
+}
+.icon-phone{
+  background-image: url('../../assets/image/icon/phone.png');
+}
+.icon-chat{
+  background-image: url('../../assets/image/icon/chat.png');
+}
+.icon-recommend{
+  background-image: url('../../assets/image/icon/recommend.png');
+}
+.icon-share{
+  background-image: url('../../assets/image/icon/share.png');
+}
+.icon-save{
+  background-image: url('../../assets/image/icon/save.png');
+}
+.icon-pyq{
+  background-image: url('../../assets/image/icon/pyq.png');
 }

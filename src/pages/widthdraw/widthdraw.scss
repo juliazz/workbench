@@ -1,0 +1,53 @@
+
+@import '../../assets/style/index';
+.pages-widthdraw {
+    .recharge-content{
+        background-color: $g3c;
+        min-height: 100vh;
+        .main-area{
+            padding: 30rpx 40rpx;
+            background-color: #fff;
+            .input-area{
+                @include flex-just-between;
+                align-items: flex-end;
+                margin-top: 30rpx;
+                text{
+                    width: 50rpx;
+                    font-size: 50rpx;
+                }
+                input{
+                    width: 670rpx;
+                    margin-left: 30rpx;
+                    font-size: 36rpx;
+                    height: 70rpx;
+                }
+            }
+            .tips{
+                border-top: 2rpx solid $g3c;
+                padding-top: 30rpx;
+            }
+        }
+        .coin-title{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 30rpx;
+            background-color: #fff;
+            margin-bottom: 30rpx;
+            image{
+                height: 66rpx;
+                width: 66rpx;
+            }
+            text{
+                margin-left: 50rpx;
+            }
+        }
+    }
+    .btn-box{
+        padding:0 30rpx;
+        .action-btn{
+            margin-top: 50rpx;
+            background-color: #29BF63;
+        }
+    }
+}

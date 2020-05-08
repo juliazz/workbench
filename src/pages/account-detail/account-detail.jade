@@ -1,0 +1,24 @@
+
+w-loading(id="w-loading")
+w-page(
+  class="w-page pages-account-detail"
+)
+  view(slot="header" class="header")
+    view.search-area
+      view.total-amount
+        text 总收入：
+        w-currency(value="100" class="oderPrize")
+      vant-button( type="default" size="small" class="search-btn" custom-class="custom-class")
+        text 导出订单
+  view(slot="content" class="content")
+    view.customer-list
+      view.item-box(wx:for="123456")
+        view.left
+          view.title 直播签单
+          view.time 2020.05.01
+        view.right
+          w-currency(value="-100" class="oderPrize")
+          
+          
+        
+  view(slot="footer" class="footer")

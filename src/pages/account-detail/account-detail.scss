@@ -1,0 +1,45 @@
+
+@import '../../assets/style/index';
+.pages-account-detail {
+    .header{
+        border-bottom: 20rpx solid $g3c;
+        padding: 40rpx 30rpx;
+        .search-area{
+            @include flex-just-between;
+            align-items: center;
+            .total-amount{
+                flex: 2;
+            }
+            vant-button{
+                flex: 1;
+            }
+            .custom-class{
+                width: 200rpx;
+            }
+            
+        }
+        
+    }
+    .content{
+        .customer-list{
+            .item-box{
+                border-bottom: 10rpx solid $g3c;
+                padding: 30rpx 40rpx;
+                font-size: 28rpx;
+                @include flex-just-between;
+                .left{
+                    .time{
+                        color: $b3c;
+                    }
+                }
+                .right{
+                    text{
+                        color: red;
+                    }
+                }
+            }
+         
+
+        }
+    }
+}

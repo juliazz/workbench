@@ -86,7 +86,8 @@
     "import/no-named-as-default": 0,
     "import/no-named-as-default-member": 0,
     "import/first": 0,
-    "default-case":"off"
+    "default-case":"off",
+    "import/prefer-default-export":0
   }
 }
 

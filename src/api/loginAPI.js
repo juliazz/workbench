@@ -4,7 +4,7 @@ import config from '../config';
  * 登录接口
  */
 const accountLogin = async (params = {}) => request.post({
-  url: '/salesAssistant/salesAssistantLogin',
+  url: 'test',
   data: params
 });
 

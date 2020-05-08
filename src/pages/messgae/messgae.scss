@@ -1,0 +1,33 @@
+
+@import '../../assets/style/index';
+.pages-messgae {
+    .content{
+        .message-list{
+            font-size: 28rpx;
+            .message-item{
+                @include flex-just-between;
+                border-bottom: 2rpx solid $g3c;
+                padding: 30rpx 40rpx;
+                .main-info{
+                    width: 400rpx;
+                    margin: 0 30rpx;
+                }
+                .main-info,.mess-time-num{
+                    @include flex-dire-column;
+                }
+                .mess-time-num{
+                    align-items: center;
+                    .num{
+                        text-align: center;
+                        background-color: red;
+                        padding:0rpx 5rpx;
+                        color: #fff;
+                        min-width: 25rpx;
+                        font-size: 24rpx;
+                        border-radius: 17rpx;
+                    }
+                }
+            }
+        }
+    }
+}

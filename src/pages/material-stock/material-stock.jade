@@ -1,0 +1,101 @@
+
+w-loading(id="w-loading")
+w-page(
+  class="w-page pages-material-stock"
+)
+  view(slot="header" class="header")
+  view(slot="content" class="content")
+    van-tabs.van-tabs(active="{{ activeTabIndex }}" bind:change="onTabChange" color="{{$themColor}}" )
+      van-tab.vantab(
+        wx:for="{{ tabs }}"
+        wx:key="*this"
+        wx:for-index="tabIndex"
+        title="{{item }}"
+      )
+    vant-cell(title="我的素材({{tabs.length}})" is-link value="点击查看" link-type="navigateTo" url="/pages/my-material/my-material")
+    view.material-list.wx()
+      view.material-item(wx:for="{{viewMaterialList}}" wx:key="*this")
+        view.header.flex-just-between
+          view.left.flex-just-start
+            view.avator
+              image(src="")
+            view.material-info
+              view.material-name 小星星
+              view.share-num 100人分享
+              view.times 2020.06.01
+          view.recommend.flex-just-start
+            w-icon(type='recommend' size='recommend')
+            text 推荐发圈
+        view.words(class="{{viewMaterialList[index].collState?'higer':''}}") 文案文案的的温度计危废物吧是呢粉粉磁轭我内测发件人v文案文案的的温度计危废物吧是呢粉粉磁轭我内测发件人v文案文案的的温度计危废物吧是呢粉粉磁轭我内测发件人v文案文案的的温度计危废物吧是呢粉粉磁轭我内测发件人v文案文案的的温度计危废物吧是呢粉粉磁轭我内测发件人v文案文案的的温度计危废物吧是呢粉粉磁轭我内测发件人v文案文案的的温度计危废物吧是呢粉粉磁轭我内测发件人v 单价恩负迦尔纳法尔范耐热今年发女宝充分发热芙蓉王北方网方法
+          text.view-more(bindtap="expandEventer" data-index="{{index}}" wx:if="{{!viewMaterialList[index].collState}}") 查看全文
+        van-grid(column-num="3" gutter="{{ 5 }}" square custom-class="van-grid {{activeTabIndex==1?'no-boder-bottom':''}}" border="{{false}}")
+          van-grid-item(use-slot wx:for="1233456"  text="8888" wx:key="*this" content-class="grid-item")
+            view.grid-item()
+              image(
+                src='https://api.fmlesson.cn/upload/20200421/8dc1e6a77a1f8245ad999265b2413c64.jpg'
+                mode="heightFix"
+              )
+        //- w-media(
+        //-   url="https://stream7.iqilu.com/10339/article/202002/18/2fca1c77730e54c7b500573c2437003f.mp4"
+        //- )
+        view.btns.flex-just-end(wx:if="{{activeTabIndex==0}}")
+          vant-button( type="default" size="small" color="{{$themColor}}" round plain custom-class="save" data-index="{{index}}" data-type="image" bind:click="savePhoto")
+            view.btns-slots
+              w-icon(type='save' size='small')
+              text 保存
+          vant-button( type="default" size="small" color="{{$themColor}}" round custom-class="share"  data-index="{{index}}" data-type="video" bind:click="savePhoto")
+            view.btns-slots
+              w-icon(type='share' size='small')
+              text 分享
+          vant-icon.question-icon(name="question" color="{{$themColor}}" size="24px" indtap="popupShow" data-popup-type="specification")
+    view.add-material
+      view.add-box.flex-align-center(data-path='add-material'
+          bindtap="$routeLink" )
+        vant-icon(name="add-o" color="#fff" size="25px")
+        text 发布素材
+      
+  view(slot="footer" class="footer")
+van-action-sheet(
+  show="{{ shareShow }}"
+  bind:cancel="onCancel"
+  cancel-text="关闭"
+)
+  view.content
+    view.tips.line1.flex-just-between
+      view.flex-align-center.item
+        vant-icon(name="checked" color="#666" size="20px")
+        text 文案已复制
+      view.flex-align-center.item
+        vant-icon(name="checked" color="#666" size="20px")
+        text 图片已保存相册
+    view.tips.line2.flex-just-between
+      view.line
+      view.line-tips
+        view 转发好友或
+        view 分享朋友圈
+      view.line
+    view.line3.flex-just-between
+      view.step1.step
+        text.num 1
+        text 关闭小程序
+      view.step1.step
+        text.num 2
+        text 粘贴文案/选择图片
+      view.step1.step
+        text.num 3
+        text 分享
+//- 说明弹窗
+w-popup-module(
+  class="w-popup specification"
+  show="{{popupType=='specification'}}"
+  type="center"
+  closeIcon="true"
+  closeBottom="true"
+  headTitle="说明"
+)
+  view(slot="content" class="content")
+    scroll-view(scroll-y="true" style="height: 60vh")
+      view.line(wx:for="123445689" wx:key="index")
+        text {{index}}.
+        text  元旦放假而后VG发eve范围Vedi 回复的说法放国际法比热女儿童、fbf      
+      
