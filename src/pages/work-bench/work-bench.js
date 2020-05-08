@@ -57,9 +57,7 @@ Page({
     }
     ], // 展开状态数组
     userAreaData: { // 个人区域数据
-      name: '个人',
-      typeId: 1,
-      expandState: false
+      
     }
 
   },
@@ -137,13 +135,13 @@ Page({
       [`${type}`]: index
     })
   },
-  viewMore: function(eve) {
-    const { index } = eve.currentTarget.dataset
-    let { unfoldStateList } = this.data
-    this.setData({
-      [`unfoldStateList[${index}].state`]: !unfoldStateList[index].state
-    })
-  },
+  // viewMore: function(eve) {
+  //   const { index } = eve.currentTarget.dataset
+  //   let { unfoldStateList } = this.data
+  //   this.setData({
+  //     [`unfoldStateList[${index}].state`]: !unfoldStateList[index].state
+  //   })
+  // },
   // 点击开始的时间
   timestart: function(e) {
     this.setData({ timestart: e.timeStamp });

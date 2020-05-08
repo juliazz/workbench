@@ -7,12 +7,12 @@ view(class="components-user-acc-view")
             text 金币排名第
             text.red-word 90
             text 名
-            text.action(bindtap="$routeLink" data-path="rank-list?rankType={{type.typeId}}") 查看排行
+            text.action(bindtap="$routeLink" data-path="rank-list?rankType={{type}}") 查看排行
             text.arrow
         view.section-content
           view.user-kpi
             view.left
-              text.user-kpi-title {{type.name}}阶段考核
+              text.user-kpi-title {{name}}阶段考核
               text 任务完成可奖励
               text.mt10 未完成任务考核
             view.between
@@ -34,9 +34,9 @@ view(class="components-user-acc-view")
                   text 元
                 view.arrow(bindtap="popupShow" data-popup-type="fine")
         view.title-2
-          view.left {{type.name}}金币
+          view.left {{name}}金币
           view.right(bindtap="popupShow" data-popup-type="goldCoin")
-            text.action {{type.name}}金币规则
+            text.action {{name}}金币规则
             w-icon(size="small" type="warn")
         //- 品牌金币
         view.section-content.myCoin
@@ -74,11 +74,11 @@ view(class="components-user-acc-view")
             text.font-theme-grey 50币
         //- 品牌PK秀
         view.title-2
-          view.left {{type.name}}PK秀
-          view.right(bindtap="$routeLink" data-path="launch-pk?pkType={{type.typeId}}")
+          view.left {{name}}PK秀
+          view.right(bindtap="$routeLink" data-path="launch-pk?pkType={{type}}")
             text.action 发起PK
             view.arrow
-        view.section-content.userPK(class="{{type.expandState?'active':''}}")
+        view.section-content.userPK(class="{{expandState?'active':''}}")
           view.PKItem
             view.PKProject PK项目：XXXX
             view.PKStage PK阶段：XXXX
@@ -109,11 +109,11 @@ view(class="components-user-acc-view")
                 image(src="")
                 text.name 多多
                 text.score 200分
-        view.view-more(bindtap="viewMore" data-index='0' wx:if!="{{!unfoldStateList[0].state}}")
+        view.view-more(bindtap="viewMore" data-index='0' wx:if!="{{expandState}}")
           text 查看更多
         //- 我的任务
         view.title-2
-          view.left {{type.name}}任务
+          view.left {{name}}任务
         view.section-content.myJob
           scroll-view(scroll-x="true" bindscroll="scroll" style="width: 100%")
             view.myJobList
@@ -175,4 +175,17 @@ view(class="components-user-acc-view")
                   slots(class="circle-in-text")
                     view 30%
                     view 进入直播间
-    
+//- 金币规则弹窗
+w-popup-module(
+  class="w-popup pop-gold-coin-rule"
+  show="{{popupType=='goldCoin'}}"
+  type="center"
+  closeIcon="true"
+  closeBottom="true"
+  headTitle="金币规则"
+)
+  view(slot="content" class="content")
+    scroll-view(scroll-y="true" style="height: 60vh")
+      view.line(wx:for="123445689" wx:key="index")
+        text {{index}}.
+        text  元旦放假而后VG发eve范围Vedi 回复的说法放国际法比热女儿童、fbf

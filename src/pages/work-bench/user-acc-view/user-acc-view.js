@@ -3,11 +3,18 @@ Component({
   behaviors: [],
   properties: {
     type: {
-      type: Object,
+      type: Number,
+      value: 1 // 身份type 1个人 2部门 3品牌 4战区
+    },
+    name: {
+      type: String,
       value: {
-        name: '',
-        typeId: null // 身份type 1个人 2部门 3品牌 4战区
+        name: '个人'
       }
+    },
+    expandState: { // 展开状态
+      type: Boolean,
+      value: false
     },
     viewData: { // 页面视图数据
       type: Object,
@@ -17,7 +24,9 @@ Component({
       }
     }
   },
-  data: {},
+  data: {
+    popupType:''
+  },
   lifetimes: {
     attached: function () { },
     moved: function () { },
@@ -31,9 +40,22 @@ Component({
     resize: function () { }
   },
   methods: {
-    popupShow(event) {
-      console.log(event)
-      this.triggerEvent('emiteventer', event)
+    popupShow: function(eve) {
+      const { popupType } = eve.currentTarget.dataset
+      this.setData({
+        popupType
+      })
+    },
+    closePopup: function(eve) {
+      this.setData({
+        popupType: ''
+      })
+    },
+    viewMore: function(eve) {
+      let { expandState } = this.data
+      this.setData({
+        expandState: !expandState
+      })
     }
   }
 })
