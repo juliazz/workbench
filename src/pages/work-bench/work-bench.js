@@ -1,4 +1,6 @@
 import api from '../../api/index.js'
+import util from '../../utils/utils'
+import storangeMange from '../../utils/storage-manage';
 // import { getSetting } from '../../utils/getSetting.js'
 const fetch = async (options) => {
   try {
@@ -7,7 +9,7 @@ const fetch = async (options) => {
     return {}
   }
 }
-
+let Timer
 Page({
   $route: 'pages/work-bench/work-bench',
   /**
@@ -57,19 +59,24 @@ Page({
     }
     ], // 展开状态数组
     userAreaData: { // 个人区域数据
-      
+
     }
 
   },
-  onPreLoad: fetch,
+  // onPreLoad: fetch,
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
     this.$showLoading()
-    // this.getTabBar().hideTabBar();
-    const result = await this.$getPreload(fetch, options)
-    console.log(result)
+    await storangeMange.setActivityId(1)
+    // const result = await this.$getPreload(fetch, options)
+    // console.log(result)
+    // 模拟倒计时 接口来了在接口返回时间处调用
+    let oDate2 = new Date().getTime();// 现在
+    let oDate3 = new Date('2020-5-30 00:00').getTime();// 凌晨就是5月12号
+    console.log(oDate3 - oDate2)
+    this.showTimeDown(1754026643)
     this.$hideLoading()
     // 检查授权
     //  getSetting().then((res) => {
@@ -83,6 +90,31 @@ Page({
    */
   onReady: function() {
 
+  },
+  // 倒计时
+  showTimeDown(time) {
+    console.log(time)
+    if (time > 0) {
+      let activeEndTime = util.formatDuring(time)
+      console.log(activeEndTime)
+      this.setData({ activeEndTime })
+    }
+    if (time < 0) {
+      clearInterval(Timer)
+      return
+    }
+    Timer = setInterval(() => {
+      time = time - 60000
+      if (time > 0) {
+        let activeEndTime = util.formatDuring(time)
+        console.log(activeEndTime)
+        this.setData({ activeEndTime })
+      }
+      if (time < 0) {
+        clearInterval(Timer)
+        this.setData({ activeEndTime: 0 })
+      }
+    }, 6000)
   },
   changeActive: function(eve) {
     const { activeId } = eve.currentTarget.dataset
@@ -196,6 +228,15 @@ Page({
   bindinput(e) {
     console.log(e)
   },
+  openScan() {
+    wx.scanCode({
+      onlyFromCamera: true,
+      success: (ev) => {
+        console.log('scanCode->', ev)
+        // this.scanCode(ev)
+      }
+    })
+  },
 
   /**
    * 生命周期函数--监听页面显示
@@ -220,14 +261,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function() {
-
+    if (Timer) clearInterval(Timer)
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
+    if (Timer) clearInterval(Timer)
   },
 
   /**

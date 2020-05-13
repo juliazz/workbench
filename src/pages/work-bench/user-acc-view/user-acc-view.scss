@@ -246,6 +246,106 @@
         .line{
             padding: 15rpx 30rpx;
             font-size: 26rpx;
+            text{
+                display: block;
+                line-height: 40rpx;
+                margin-left: 20rpx;
+            }
         } 
+    }
+}
+.avator{
+    height: 90rpx;
+    width: 90rpx;
+    border-radius: 50%;
+}
+// 奖励弹窗
+.reword{
+    .content{
+        width: 650rpx;
+    }
+    .top{
+        font-size: 28rpx;
+        .item{
+            text-align: center;
+            text:last-child{
+                display: block;
+                color: #FFC800;
+            }
+        }
+        border-bottom: 2px solid $g3c;
+    }
+    .top,.center{
+        padding: 30rpx 20rpx;
+        @include flex-just-between;
+        border-bottom: 2px solid $g3c;
+    }
+    .center{
+        align-items: center;
+        image{
+            background-color: red;
+        }
+        .main-info{
+            margin-left: 30rpx;
+            width: 400rpx;
+            font-weight: 500;
+        }
+        .prize{
+            font-size: 28rpx;
+            width: 300rpx;
+            align-items: flex-end;
+            @include flex-dire-column;
+        }
+    }
+}
+// 惩罚弹窗
+.fine{
+    .content{
+        width: 650rpx;
+    }
+    .top{
+        
+        image{
+            height: 90rpx;
+            width: 90rpx;
+            border-radius: 50%;
+            background-color: red;
+        }
+        .main-info{
+            margin-left: 30rpx;
+            width: 400rpx;
+            font-weight: 500;
+        }
+        .prize{
+            font-size: 28rpx;
+            width: 300rpx;
+            text-align: right;
+        }
+        .prize{
+            text{
+                clear: red;
+            }
+        }
+    }
+    .line,.top{
+        padding: 30rpx 20rpx;
+        @include flex-just-between;
+        align-items: center;
+        border-bottom: 2px solid $g3c;
+       
+    }
+    .line{
+        font-size: 28rpx;
+        .state{
+            text-align: right;
+            color: red;
+        }
+        
+        .right{
+            text-align: right;
+            text{
+                display: block;
+            }
+        }
     }
 }

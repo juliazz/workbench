@@ -18,9 +18,9 @@ w-page(
           view.words 我独自走在郊外的田野上 要把糕点带给外婆尝一尝
           //- 只有一个视频
             wx:if="{{item.type=='video'}}"
-          //- w-media(
-          //-   url="https://stream7.iqilu.com/10339/article/202002/18/2fca1c77730e54c7b500573c2437003f.mp4"
-          //- )
+          w-media(
+            url="https://stream7.iqilu.com/10339/article/202002/18/2fca1c77730e54c7b500573c2437003f.mp4"
+          )
           van-grid(wx:if="{{item.type=='image'}}" column-num="3" gutter="{{ 5 }}" square custom-class="van-grid" border="{{false}}")
             van-grid-item(use-slot wx:for="1233456"  text="8888" wx:key="*this" content-class="grid-item")
               view.grid-item()

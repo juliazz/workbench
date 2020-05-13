@@ -18,10 +18,10 @@ export default {
   getLoginStatus: async () => storage.get(`${PREFIX}LOGINSTATUS`),
   clearLoginStatus: async () => storage.remove(`${PREFIX}LOGINSTATUS`),
 
-  // 用户会员信息
-  setCaInFo: async (value) => storage.set(`${PREFIX}CAIINFO`, value, 24 * 30),
-  getCaInFo: async () => storage.get(`${PREFIX}CAIINFO`),
-  clearCaInFo: async () => storage.remove(`${PREFIX}CAIINFO`),
+  // 活动id
+  setActivityId: async (value) => storage.set(`${PREFIX}ACTIVITYID`, value, 24 * 30),
+  getActivityId: async () => storage.get(`${PREFIX}ACTIVITYID`),
+  clearActivityId: async () => storage.remove(`${PREFIX}ACTIVITYID`),
 
   // 推荐单商品数据
   setRemoteoducts: async value => storage.set(`${PREFIX}REMOTEPRODUCTS`, value, 24 * 7),

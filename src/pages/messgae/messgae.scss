@@ -8,6 +8,13 @@
                 @include flex-just-between;
                 border-bottom: 2rpx solid $g3c;
                 padding: 30rpx 40rpx;
+                .volume-box{
+                    height: 90rpx;
+                    width: 90rpx;
+                    justify-content: center;
+                    border-radius: 15rpx;
+                    background-color: red;
+                }
                 .main-info{
                     width: 400rpx;
                     margin: 0 30rpx;

@@ -1,28 +1,23 @@
 import { VantComponent } from '../common/component';
-
 VantComponent({
   field: true,
   relation: {
     name: 'radio',
     type: 'descendant',
+    current: 'radio-group',
     linked(target) {
-      this.children = this.children || [];
-      this.children.push(target);
       this.updateChild(target);
     },
-    unlinked(target) {
-      this.children = this.children.filter((child) => child !== target);
-    }
   },
   props: {
     value: {
       type: null,
-      observer: 'updateChildren'
+      observer: 'updateChildren',
     },
     disabled: {
       type: Boolean,
-      observer: 'updateChildren'
-    }
+      observer: 'updateChildren',
+    },
   },
   methods: {
     updateChildren() {
@@ -30,10 +25,10 @@ VantComponent({
     },
     updateChild(child) {
       const { value, disabled } = this.data;
-      child.set({
+      child.setData({
         value,
-        disabled: disabled || child.data.disabled
+        disabled: disabled || child.data.disabled,
       });
-    }
-  }
+    },
+  },
 });

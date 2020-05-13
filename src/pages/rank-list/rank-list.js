@@ -1,3 +1,4 @@
+import ruleList from './rule'
 
 const fetch = async (options) => {
   try {
@@ -20,17 +21,21 @@ Page({
     ],
     popupType: '',
     expandIndex: null, // 查看数据展开的index
-    stepValue: 0 // 活动阶段
+    stepValue: 0, // 活动阶段
+    ruleList: []
   },
   onPreLoad: fetch,
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    const {rankType } = options
-    console.log(options)
+    const {rankType, ruleId } = options
+    const rule = ruleList[Number(ruleId) - 1]
+    console.log(Number(ruleId))
+    console.log(rule, '=================')
     this.setData({
-      rankType
+      rankType,
+      ruleList: rule
     })
   },
   popupShow: function(eve) {

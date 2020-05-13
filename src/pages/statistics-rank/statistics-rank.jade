@@ -5,7 +5,7 @@ w-page(
 )
   view(slot="header" class="header")
   view(slot="content" class="content")
-    van-dropdown-menu.van-dropdown-menu( wx:if="{{isFirstStep==1}}" active-color="{{$themColor}}" title-class="title-class")
+    van-dropdown-menu.van-dropdown-menu( wx:if="{{isFirstStep==1}}" active-color="{{$themColor}}" )
       van-dropdown-item(value="{{ stepValue }}" options="{{ stepList }}" title="时间切换" bind:change="timeChangeEventer")
     view.time-title( wx:if="{{isFirstStep==1}}") {{timeTitle}}
     view.num-title
@@ -28,16 +28,16 @@ w-page(
             view.left
               text.name 姓名
               text.brand 品牌
-            view.arrow-box(bindtap="$routeLink" data-path='statistics-rank?customerType={{item.name}}&id={{item.id}}')
+            view.arrow-box(
+              wx:if="{{isFirstStep==0}}"
+              bindtap="$routeLink" data-path='statistics-rank?customerType={{item.name}}&id={{item.id}}')
               text.right-arrow
           view.progress
             van-progress(
-              percentage="60" stroke-width="30"
+              percentage="60" stroke-width="10"
               show-pivot="{{false}}"
               color="#FF7E00"
             )
             text 3000人
-            
-          
         //- van-cell(title="{{listItem}}" wx:for="{{item.list}}" bindtap="selectEvent" data-Index="{{index}}" wx:for-item="listItem" wx:key="listIndex")
   view(slot="footer" class="footer")

@@ -1,0 +1,10 @@
+view(class="module-authorization")
+  button(
+    open-type="getUserInfo"
+    bindgetuserinfo="bindgetuserinfo"
+    class!="{{disabled ? 'disabled' : ''}}"
+    class!="{{isTransparentAuth?'bg-transparent':''}}"
+    disabled="{{ disabled }}"
+  )
+    slot(name="before")
+

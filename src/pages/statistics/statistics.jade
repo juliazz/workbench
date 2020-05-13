@@ -7,16 +7,16 @@ w-page(
     van-tabs(active="{{ activeTabIndex }}" bind:change="onChange" color="{{$themColor}}")
       van-tab(
         wx:for="{{ tabs }}"
-        wx:key="*this"
+        wx:key="tabId"
         wx:for-index="tabIndex"
-        title="{{item}}排行榜"
+        title="{{item.name}}排行榜"
       )
         view.rank-list
           view.rank-item(
             class!="{{activeTabIndex==tabIndex&&activeRankItemIndex==index?'active':''}}"
             wx:for="{{rankList}}" wx:key="index" wx:for-item="rankItem"
-            bindtap="rankItemClick" data-rank-index="{{index}}" data-tab-index="{{tabIndex}}")
-            text {{rankItem}} 
+            bindtap="rankItemClick" data-rank-name="{{rankItem.name}}" data-rank-index="{{index}}" data-rank-id="{{rankItem.rankId}}")
+            text {{rankItem.name}} 
   view(slot="content" class="content")
     view.data-area
       view.title 数据总览

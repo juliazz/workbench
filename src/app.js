@@ -1,15 +1,8 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable  import/order */
 import {
   logger,
   tokenManage,
-  storageManage,
-  utils
+  storageManage
 } from './utils/index'
-
-const {
-  compareVersion
-} = utils;
 
 App({
   async onLaunch() {
@@ -32,28 +25,6 @@ App({
       }
     }
   },
-  navigateToMiniProgram_ (path, extraData = {
-    recommendedNo: '',
-    caCode: '',
-    storeCode: '',
-    from: ''
-  }) {
-    console.log(extraData)
-    wx.navigateToMiniProgram({
-      appId: 'wxcc92c871c0188fe5',
-      path: path,
-      extraData: extraData,
-      envVersion: 'trial', // release
-      success(res) {
-        // 打开成功
-      },
-      fail(err) {
-        console.log(extraData)
-      }
-    })
-  },
   data: {
-    from: '',
-    unionId: ''
   }
 });

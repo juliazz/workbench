@@ -2,7 +2,9 @@
   {
     "component": true,
     "usingComponents": {
-      "van-circle": "../../../miniprogram_npm/vant-weapp/circle"
+      "van-circle": "../../../miniprogram_npm/vant-weapp/circle",
+      "w-coin-card": "../../components/coin-card/coin-card",
+      "w-popup":"../../../components/popup/index"
     }
   }
       

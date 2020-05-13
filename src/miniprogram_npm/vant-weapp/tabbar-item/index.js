@@ -1,20 +1,18 @@
 import { VantComponent } from '../common/component';
-
 VantComponent({
   props: {
     info: null,
+    name: null,
     icon: String,
     dot: Boolean,
-    name: {
-      type: [String, Number]
-    }
   },
   relation: {
     name: 'tabbar',
-    type: 'ancestor'
+    type: 'ancestor',
+    current: 'tabbar-item',
   },
   data: {
-    active: false
+    active: false,
   },
   methods: {
     onClick() {
@@ -45,6 +43,6 @@ VantComponent({
       return Object.keys(patch).length > 0
         ? this.set(patch)
         : Promise.resolve();
-    }
-  }
+    },
+  },
 });

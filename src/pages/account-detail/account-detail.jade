@@ -8,11 +8,14 @@ w-page(
       view.total-amount
         text 总收入：
         w-currency(value="100" class="oderPrize")
-      vant-button( type="default" size="small" class="search-btn" custom-class="custom-class")
+      vant-button(
+        color="{{$themColor}}" size="normal" 
+        custom-class="search-btn" bind:click="exportOrder"
+        )
         text 导出订单
   view(slot="content" class="content")
     view.customer-list
-      view.item-box(wx:for="123456")
+      view.item-box(wx:for="123456" wx:key="index")
         view.left
           view.title 直播签单
           view.time 2020.05.01

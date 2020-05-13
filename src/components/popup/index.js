@@ -14,6 +14,10 @@ export default Component({
       type: Boolean,
       value: true
     },
+    upClose: {
+      type: Boolean,
+      value: false
+    },
     closeOnClickBackdrop: {
       type: Boolean,
       value: true

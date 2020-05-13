@@ -2,7 +2,7 @@
 
 <view
   class="custom-class {{ classPrefix }} {{ isImageName ? 'van-icon--image' : classPrefix + '-' + name }}"
-  style="color: {{ color }};{{ size ? 'font-size: ' + size + ';' : '' }};{{ customStyle }}"
+  style="color: {{ color }};font-size: {{ utils.addUnit(size) }};{{ customStyle }}"
   bind:tap="onClick"
 >
   <van-info

@@ -7,8 +7,8 @@ view(class="components-user-acc-view")
             text 金币排名第
             text.red-word 90
             text 名
-            text.action(bindtap="$routeLink" data-path="rank-list?rankType={{type}}") 查看排行
-            text.arrow
+            text.action(bindtap="$routeLink" data-path="rank-list?rankType={{name}}&ruleId={{type}}") 查看排行
+            text.arrow(bindtap="$routeLink" data-path="rank-list?rankType={{name}}&ruleId={{type}}")
         view.section-content
           view.user-kpi
             view.left
@@ -75,7 +75,7 @@ view(class="components-user-acc-view")
         //- 品牌PK秀
         view.title-2
           view.left {{name}}PK秀
-          view.right(bindtap="$routeLink" data-path="launch-pk?pkType={{type}}")
+          view.right(bindtap="$routeLink" data-path="launch-pk?pkType={{name}}")
             text.action 发起PK
             view.arrow
         view.section-content.userPK(class="{{expandState?'active':''}}")
@@ -109,13 +109,13 @@ view(class="components-user-acc-view")
                 image(src="")
                 text.name 多多
                 text.score 200分
-        view.view-more(bindtap="viewMore" data-index='0' wx:if!="{{expandState}}")
+        view.view-more(bindtap="viewMore" data-index='0' wx:if!="{{!expandState}}")
           text 查看更多
         //- 我的任务
         view.title-2
           view.left {{name}}任务
         view.section-content.myJob
-          scroll-view(scroll-x="true" bindscroll="scroll" style="width: 100%")
+          scroll-view(scroll-x="true" style="width: 100%")
             view.myJobList
               view.jobItem
                 van-circle(
@@ -132,9 +132,9 @@ view(class="components-user-acc-view")
               view.jobItem
                 van-circle(
                   type="2d"
-                value='{{30}}' text=""
-                color="#2955FF" layer-color="#919191"
-                size="75"
+                  value='{{30}}' text=""
+                  color="#2955FF" layer-color="#919191"
+                  size="75"
                 )
                   slots(class="circle-in-text")
                     view 30%
@@ -186,6 +186,84 @@ w-popup-module(
 )
   view(slot="content" class="content")
     scroll-view(scroll-y="true" style="height: 60vh")
-      view.line(wx:for="123445689" wx:key="index")
-        text {{index}}.
-        text  元旦放假而后VG发eve范围Vedi 回复的说法放国际法比热女儿童、fbf
+      view.line(wx:for="{{coinRule}}" wx:key="index")
+        view.main-line(wx:for="{{item.mainLine}}" wx:key="mainIndex" wx:for-item="mainItem") {{mainItem}}
+        text.sub-title(wx:for="{{item.subLine}}"  wx:key="subIndex" wx:for-item="subItem") {{subItem}}
+//- 奖励弹窗
+w-popup(
+  class="w-popup reword"
+  show="{{popupType=='reword'}}"
+  type="center"
+  upClose="true"
+)
+  view(slot="content" class="content")
+    view.top
+      view.item
+        text 奖金总额
+        text 3000元
+      view.item
+        text 有效金币总数
+        text 3000币
+      view.item
+        text 当前金币价值
+        text 0.15 / 币
+    view.center
+      view.pic
+        image.avator(
+          src=""
+        )
+      view.main-info
+        text 某品牌
+      view.prize
+        text 金币: 30000
+        text 预计收入: 4500
+    view.bottom
+      w-coin-card()
+//- 罚款弹窗
+w-popup(
+  class="w-popup fine"
+  show="{{popupType=='fine'}}"
+  type="center"
+  upClose="true"
+)
+  view(slot="content" class="content")
+    view.top
+      view.pic
+        image.avator(
+          src=""
+        )
+      view.main-info
+        text 某品牌
+      view.prize
+        text 预计罚款:
+        w-currency(value="100" class="prize")
+    view.line
+      view.left
+        view.view-num
+          text 新客户浏览： 
+          text.blue 2 
+          text /20 
+          view.state 未完成
+      view.right
+        text 预计罚款:
+        w-currency(value="100" class="prize")
+    view.line
+      view.left
+        view.view-num
+          text 新客户浏览： 
+          text.blue 2 
+          text /20 
+          view.state 未完成
+      view.right
+        text 预计罚款:
+        w-currency(value="100" class="prize")
+    view.line
+      view.left
+        view.view-num
+          text 新客户浏览： 
+          text.blue 2 
+          text /20 
+          view.state 未完成
+      view.right
+        text 预计罚款:
+        w-currency(value="100" class="prize")

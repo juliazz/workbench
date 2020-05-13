@@ -7,7 +7,8 @@ w-page(
   view(slot="content" class="content")
     view.message-list
       view.message-item(wx:for="123456" wx:key="index")
-        w-icon(type="question" size="xlarge")
+        view.volume-box.flex-align-center
+          vant-icon(name="volume" size="30px" color="#fff")
         view.main-info
           text.mess-title 系统消息
           text.tips 好有发来一体哦洗涤壶的看法和

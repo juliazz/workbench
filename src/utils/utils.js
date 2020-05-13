@@ -79,7 +79,18 @@ const hidePhoneNumber = (phone) =>{
   let tel1 = phone.replace(reg, "$1****$2")
   return tel1
 }
-
+// 时间转换天 时 分
+const formatDuring= (mss) =>{
+  let days = parseInt(mss / (1000 * 60 * 60 * 24));
+  days = days.toString().length>1?days:'0'+days.toString()
+  let hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  hours = hours.toString().length>1?hours:'0'+hours.toString()
+  let minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60));
+  minutes = minutes.toString().length>1?minutes:'0'+minutes.toString()
+  // var seconds = (mss % (1000 * 60)) / 1000;
+  // return days + " 天 " + hours + " 小时 " + minutes + " 分钟 ";
+  return { days, hours, minutes }
+}
 /**
  * 格式链接
  * @param url
@@ -376,5 +387,6 @@ export default {
   myTime,
   myTime2,
   hidePhoneNumber,
-  getNowFormatDate
+  getNowFormatDate,
+  formatDuring
 };

@@ -21,128 +21,70 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    console.log('login页面参数onLoad', options)
+    this.getLoginStatus()
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function(option) {
-    console.log('login页面参数onshow1', option)
-    this.isHasToken()
   },
-  async isHasToken() {
-    wx.showLoading({
-      title: '加载中'
-    })
+  async getLoginStatus() {
+    this.$showLoading()
+    this.$hideLoading()
     const { code} = await wx.$login();
     console.log(code)
-    // todo 用户静默登录
-    let unionId_ = app.data.unionId || '' // 从微商城带来的unionId
-    console.log('url', `/member/caOnLogin/${code}/${config.wechatId}/${config.shopWechatId}?unionId=${unionId_}`)
-    const result = await request.get({
-      url: `/member/caOnLogin/${code}/${config.wechatId}/${config.shopWechatId}?unionId=${unionId_}`,
-      auth: true
-    });
-    wx.hideLoading()
-    const { data, resultCode } = result
-    if (resultCode != '1') throw new Error('Token fetch failed');
-    const { token, unionid } = data;
-    await tokenManage.set(token);
-    console.log(unionid, 'unionid')
-    if (unionid) {
-      await storageManage.setUnionId(unionid);
-      const loginStatus = await storageManage.getLoginStatus();
-      if (loginStatus) {
-        this.$routeTo('product-list', 'switchTab')
+    // const result = await request.get({
+    //   url: 'getopenid',
+    //   auth: true
+    // });
+    wx.request({
+      url: `${config.baseUrl}getopenid`,
+      data: {
+        code
+      },
+      method: 'POST',
+      success: (res) => {
+        const response = res.data
+        console.log(response)
+        // const { token, openId } = response.data
+        // if (response.resultCode == 1) {
+        // 缓存token两小时
+        // localStorage.set('token', token, 120)
+        // // 用于跟踪用户行为
+        // wx.setStorageSync('openId', openId)
+        // // ca推荐单浏览数据
+        // wx.setStorageSync('nickName', nickName)
+        // // 缓存用户手机号
+        // wx.setStorageSync('phone', phone);
+        // cb && cb();
+        // wx.setOpenid(openId)
+        // wx.init()
+        // }
+      },
+      fail: (err) => {
+      },
+      complete: (res) => {
+        // callBackQueue.forEach(cb => cb && typeof(cb) === 'function' && cb())
+        // callBackQueue = []
       }
-      // 如果是EC跳转回来,就去密码登录passWordLogin
-      const {from} = app.data
-      if (from == 'ECback') {
-        console.log('from', from)
-        this.passWordLogin()
-      }
-    }
-  },
-  accountInput(e) {
-    const { value } = e.detail
-    this.setData({
-      'ca.account': value
     })
+    // wx.hideLoading()
+    // const { data, resultCode } = result
+    // if (resultCode != '1') throw new Error('Token fetch failed');
+    // const { token, unionid } = data;
+    // await tokenManage.set(token);
+    // console.log(unionid, 'unionid')
+    // if (unionid) {
+    // await storageManage.setUnionId(unionid);
+    // const loginStatus = await storageManage.getLoginStatus();
+    // if (loginStatus) {
+    //   this.$routeTo('product-list', 'switchTab')
+    // }
+    // }
   },
-  passwordInput(e) {
-    const { value } = e.detail
-    this.setData({
-      'ca.password': value
-    })
-  },
-  async submitEventer(e) {
-    const { ca} = this.data
-    console.log(ca)
-    if (!ca.password || !ca.account) {
-      wx.showToast({
-        title: '账号或密码不能为空\r\n .......',
-        icon: 'none',
-        duration: 2000
-      })
-      return
-    }
-    const unionid = await storageManage.getUnionId();
-    if (!unionid) {
-      wx.showToast({
-        title: '因您没有登录过微商城，现在将跳转至杰尼亚微商城进行授权',
-        icon: 'none',
-        duration: 2000
-      })
-      setTimeout(() => {
-        let data = {
-          path: 'pages/auth-user-info/auth-user-info',
-          extraData: {
-            from: 'CAlogin'
-          }
-        }
-        app.navigateToMiniProgram_(data.path, data.extraData)
-      }, 1500)
-    } else {
-      this.passWordLogin()
-    }
-  },
-  // 密码登录
-  async passWordLogin() {
-    const {ca } = this.data
-    let { account, password } = ca
-    if (!password || !account) {
-      wx.showToast({
-        title: '账号或密码不能为空\r\n .......',
-        icon: 'none',
-        duration: 2000
-      })
-      return
-    }
-    let encode = Base64.encode(password)
-    // 对编码的字符串转化base64
-    const par = {
-      number: account,
-      password: encode
-    }
-    if (password && account) {
-      // 调用账号密码登录接口
-      const result = await api.accountLogin(par)
-      const { msg, resultCode, data} = result
-      console.log(resultCode)
-      if (resultCode == 11006) return this.$showToast('密码错误，请重新输入\r\n ......');
-      if (resultCode != 1) return this.$showToast(msg);
-      const { name, number, storeCode} = data
-      await storageManage.setLoginStatus(true)
-      const caInfo = {
-        caname: name,
-        cacode: number,
-        storeCode
-      }
-      // setCaInFo
-      await storageManage.setCaInFo(caInfo)
-      this.$routeTo('product-list', 'switchTab')
-    }
+  getUserInfoEventer(eve) {
+    console.log(eve)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

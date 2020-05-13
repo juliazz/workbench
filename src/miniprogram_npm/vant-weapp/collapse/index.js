@@ -1,32 +1,23 @@
 import { VantComponent } from '../common/component';
-
 VantComponent({
   relation: {
     name: 'collapse-item',
     type: 'descendant',
-    linked(child) {
-      this.children.push(child);
-    },
-    unlinked(child) {
-      this.children = this.children.filter((item) => item !== child);
-    }
+    current: 'collapse',
   },
   props: {
     value: {
       type: null,
-      observer: 'updateExpanded'
+      observer: 'updateExpanded',
     },
     accordion: {
       type: Boolean,
-      observer: 'updateExpanded'
+      observer: 'updateExpanded',
     },
     border: {
       type: Boolean,
-      value: true
-    }
-  },
-  beforeCreate() {
-    this.children = [];
+      value: true,
+    },
   },
   methods: {
     updateExpanded() {
@@ -45,6 +36,6 @@ VantComponent({
       }
       this.$emit('change', name);
       this.$emit('input', name);
-    }
-  }
+    },
+  },
 });

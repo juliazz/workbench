@@ -1,16 +1,15 @@
 import { isObj } from '../common/utils';
-
 const defaultOptions = {
   type: 'text',
   mask: false,
   message: '',
   show: true,
   zIndex: 1000,
-  duration: 3000,
+  duration: 2000,
   position: 'middle',
   forbidClick: false,
   loadingType: 'circular',
-  selector: '#van-toast'
+  selector: '#van-toast',
 };
 let queue = [];
 let currentOptions = Object.assign({}, defaultOptions);
@@ -22,7 +21,10 @@ function getContext() {
   return pages[pages.length - 1];
 }
 function Toast(toastOptions) {
-  const options = Object.assign({}, currentOptions, parseOptions(toastOptions));
+  const options = Object.assign(
+    Object.assign({}, currentOptions),
+    parseOptions(toastOptions)
+  );
   const context = options.context || getContext();
   const toast = context.selectComponent(options.selector);
   if (!toast) {
@@ -32,28 +34,29 @@ function Toast(toastOptions) {
   delete options.context;
   delete options.selector;
   toast.clear = () => {
-    toast.set({ show: false });
+    toast.setData({ show: false });
     if (options.onClose) {
       options.onClose();
     }
   };
   queue.push(toast);
-  toast.set(options);
+  toast.setData(options);
   clearTimeout(toast.timer);
   if (options.duration > 0) {
     toast.timer = setTimeout(() => {
       toast.clear();
-      queue = queue.filter(item => item !== toast);
+      queue = queue.filter((item) => item !== toast);
     }, options.duration);
   }
   return toast;
 }
-const createMethod = (type) => (options) => Toast(Object.assign({ type }, parseOptions(options)));
+const createMethod = (type) => (options) =>
+  Toast(Object.assign({ type }, parseOptions(options)));
 Toast.loading = createMethod('loading');
 Toast.success = createMethod('success');
 Toast.fail = createMethod('fail');
 Toast.clear = () => {
-  queue.forEach(toast => {
+  queue.forEach((toast) => {
     toast.clear();
   });
   queue = [];

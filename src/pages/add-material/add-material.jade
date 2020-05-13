@@ -19,11 +19,12 @@ w-page(
     )
     view.upload
       view.upload-tips
-        text 上传一个图片或视频
+        text 上传多张图片或一个视频
       view.upload-image
         van-uploader(
           file-list="{{ imageList }}" bind:after-read="afterRead"
           name="image"
+          disabled="{{videoList.length}}"
           accept="image" preview-image bind:delete="delete"
         )
       view.upload-video
@@ -31,6 +32,7 @@ w-page(
           dta
           file-list="{{ videoList }}" bind:after-read="afterRead"
           name="video"
+          disabled="{{imageList.length}}"
           accept="video" preview-image bind:delete="delete"
         )
           view.upload-w.flex-align-center

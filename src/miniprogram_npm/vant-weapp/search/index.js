@@ -1,5 +1,5 @@
 import { VantComponent } from '../common/component';
-
+import { canIUseModel } from '../common/version';
 VantComponent({
   field: true,
   classes: ['field-class', 'input-class', 'cancel-class'],
@@ -12,52 +12,67 @@ VantComponent({
     inputAlign: String,
     showAction: Boolean,
     useActionSlot: Boolean,
+    useLeftIconSlot: Boolean,
+    useRightIconSlot: Boolean,
+    leftIcon: {
+      type: String,
+      value: 'search',
+    },
+    rightIcon: String,
     placeholder: String,
     placeholderStyle: String,
+    actionText: {
+      type: String,
+      value: '取消',
+    },
     background: {
       type: String,
-      value: '#ffffff'
+      value: '#ffffff',
     },
     maxlength: {
       type: Number,
-      value: -1
+      value: -1,
     },
     shape: {
       type: String,
-      value: 'square'
+      value: 'square',
     },
     clearable: {
       type: Boolean,
-      value: true
-    }
+      value: true,
+    },
   },
   methods: {
     onChange(event) {
-      this.set({ value: event.detail });
+      if (canIUseModel()) {
+        this.setData({ value: event.detail });
+      }
       this.$emit('change', event.detail);
     },
     onCancel() {
       /**
-             * 修复修改输入框值时，输入框失焦和赋值同时触发，赋值失效
-             * // https://github.com/youzan/vant-weapp/issues/1768
-             */
+       * 修复修改输入框值时，输入框失焦和赋值同时触发，赋值失效
+       * https://github.com/youzan/@vant/weapp/issues/1768
+       */
       setTimeout(() => {
-        this.set({ value: '' });
+        if (canIUseModel()) {
+          this.setData({ value: '' });
+        }
         this.$emit('cancel');
         this.$emit('change', '');
       }, 200);
     },
-    onSearch() {
-      this.$emit('search', this.data.value);
+    onSearch(event) {
+      this.$emit('search', event.detail);
     },
-    onFocus() {
-      this.$emit('focus');
+    onFocus(event) {
+      this.$emit('focus', event.detail);
     },
-    onBlur() {
-      this.$emit('blur');
+    onBlur(event) {
+      this.$emit('blur', event.detail);
     },
-    onClear() {
-      this.$emit('clear');
-    }
-  }
+    onClear(event) {
+      this.$emit('clear', event.detail);
+    },
+  },
 });

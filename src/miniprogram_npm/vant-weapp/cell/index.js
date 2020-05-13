@@ -1,13 +1,12 @@
 import { link } from '../mixins/link';
 import { VantComponent } from '../common/component';
-
 VantComponent({
   classes: [
     'title-class',
     'label-class',
     'value-class',
     'right-icon-class',
-    'hover-class'
+    'hover-class',
   ],
   mixins: [link],
   props: {
@@ -26,13 +25,13 @@ VantComponent({
     useLabelSlot: Boolean,
     border: {
       type: Boolean,
-      value: true
-    }
+      value: true,
+    },
   },
   methods: {
     onClick(event) {
       this.$emit('click', event.detail);
       this.jumpLink();
-    }
-  }
+    },
+  },
 });

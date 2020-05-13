@@ -28,10 +28,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    const {isFirstStep} = options
+    const {isFirstStep, rankTitle, tabIndex} = options
     console.log(options)
     console.log(isFirstStep)
+    // 是否还有下一级
     if (isFirstStep) this.setData({isFirstStep})
+    // if(rankTitle) wx.setNavigationBarTitle({title: rankTitle })
+    // if(tabIndex){}
+    //
     // this.$wLoading.show()
     const result = await this.$getPreload(fetch, options)
     console.log(result)

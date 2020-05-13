@@ -1,7 +1,6 @@
 
 @import '../../assets/style/index';
 .pages-order-type-in {
-    padding-bottom: 100rpx;
     .title{
         color: $g4c;
         background-color: $g5c;
@@ -11,7 +10,9 @@
     }
     .content{
         font-size: 28rpx;
-        
+        .section-content{
+            padding-bottom: 100rpx;
+        }
         .field{
             position: relative;
             // height: 80rpx;
@@ -43,9 +44,14 @@
             // line-height: 90rpx;
         }
         .upload{
-            display: flex;
-            padding: 30rpx 50rpx;
-            align-items: flex-start;
+            font-size: 26rpx;
+            padding: 30rpx 20rpx;
+            .tips{
+                margin-bottom: 30rpx;
+            }
+            van-uploader{
+                margin-left: 70rpx;
+            }
         }
         .button{
              button{

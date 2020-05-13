@@ -1,5 +1,4 @@
 import { VantComponent } from '../common/component';
-
 function emit(target, value) {
   target.$emit('input', value);
   target.$emit('change', value);
@@ -9,12 +8,7 @@ VantComponent({
   relation: {
     name: 'checkbox-group',
     type: 'ancestor',
-    linked(target) {
-      this.parent = target;
-    },
-    unlinked() {
-      this.parent = null;
-    }
+    current: 'checkbox',
   },
   classes: ['icon-class', 'label-class'],
   props: {
@@ -26,8 +20,15 @@ VantComponent({
     labelDisabled: Boolean,
     shape: {
       type: String,
-      value: 'round'
-    }
+      value: 'round',
+    },
+    iconSize: {
+      type: null,
+      value: 20,
+    },
+  },
+  data: {
+    parentDisabled: false,
   },
   methods: {
     emitChange(value) {
@@ -38,14 +39,14 @@ VantComponent({
       }
     },
     toggle() {
-      const { disabled, value } = this.data;
-      if (!disabled) {
+      const { parentDisabled, disabled, value } = this.data;
+      if (!disabled && !parentDisabled) {
         this.emitChange(!value);
       }
     },
     onClickLabel() {
-      const { labelDisabled, disabled, value } = this.data;
-      if (!disabled && !labelDisabled) {
+      const { labelDisabled, parentDisabled, disabled, value } = this.data;
+      if (!disabled && !labelDisabled && !parentDisabled) {
         this.emitChange(!value);
       }
     },
@@ -68,6 +69,6 @@ VantComponent({
           emit(parent, parentValue);
         }
       }
-    }
-  }
+    },
+  },
 });

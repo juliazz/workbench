@@ -4,41 +4,15 @@ w-page(
   class="w-page pages-login"
 )
   view(slot="header" class="header")
-    view.image-box
-      image.header-image(
-        src='../../assets/image/zegna_black_logo.png'
-      )
-    view.title-header 登录
   view(slot="content" class="content")
-    view.input-area
-      form.form(
-        bindsubmit="submitEventer"
-        report-submit="true"
-      )
-        view.section
-          view.label CA CODE
-          input.cacode( 
-            name="account"
-            maxlength="30"
-            placeholder="" value="{{ca.account}}"
-            bindinput="accountInput"
-          )
-        view.section
-          view.label 初始密码
-          input.cacode( 
-            password
-            maxlength="30"
-            name="password"
-            bindinput="passwordInput"
-            placeholder="" value ="{{ca.password}}" 
-          )
-        view.tips 
-          text 亲爱的杰尼亚店员，请输入您的账号密码,
-          text 登录成功后方可进行下一步操作。
-        view.button-box
-          button(
-            class="submit"
-            text="结算"
-            formType="submit"
-          ) 立即登录
+    view.word-content
+      view.text.title 亲爱的导购,
+      view.text 因您没有登录过,现在需要您对小程序进行授权。
+    w-authorization.w-authorization(
+      bindcallback="getUserInfoEventer"
+      type='avatarUrl'
+    )
+      view(class="user-section" slot="before")
+        text 点击授权
+      
   view(slot="footer" class="footer")

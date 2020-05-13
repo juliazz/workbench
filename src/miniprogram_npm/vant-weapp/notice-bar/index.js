@@ -1,63 +1,67 @@
 import { VantComponent } from '../common/component';
-
 const FONT_COLOR = '#ed6a0c';
 const BG_COLOR = '#fffbe8';
 VantComponent({
   props: {
     text: {
       type: String,
-      value: ''
+      value: '',
+      observer() {
+        wx.nextTick(() => {
+          this.init();
+        });
+      },
     },
     mode: {
       type: String,
-      value: ''
+      value: '',
     },
     url: {
       type: String,
-      value: ''
+      value: '',
     },
     openType: {
       type: String,
-      value: 'navigate'
+      value: 'navigate',
     },
     delay: {
       type: Number,
-      value: 1
+      value: 1,
     },
     speed: {
       type: Number,
-      value: 50
+      value: 50,
+      observer() {
+        wx.nextTick(() => {
+          this.init();
+        });
+      },
     },
     scrollable: {
       type: Boolean,
-      value: true
+      value: true,
     },
     leftIcon: {
       type: String,
-      value: ''
+      value: '',
     },
     color: {
       type: String,
-      value: FONT_COLOR
+      value: FONT_COLOR,
     },
     backgroundColor: {
       type: String,
-      value: BG_COLOR
+      value: BG_COLOR,
     },
-    wrapable: Boolean
+    wrapable: Boolean,
   },
   data: {
-    show: true
-  },
-  watch: {
-    text() {
-      this.set({}, this.init);
-    }
+    show: true,
   },
   created() {
     this.resetAnimation = wx.createAnimation({
       duration: 0,
-      timingFunction: 'linear'
+      timingFunction: 'linear',
     });
   },
   destroyed() {
@@ -67,13 +71,15 @@ VantComponent({
     init() {
       Promise.all([
         this.getRect('.van-notice-bar__content'),
-        this.getRect('.van-notice-bar__wrap')
+        this.getRect('.van-notice-bar__wrap'),
       ]).then((rects) => {
         const [contentRect, wrapRect] = rects;
-        if (contentRect == null
-                    || wrapRect == null
-                    || !contentRect.width
-                    || !wrapRect.width) {
+        if (
+          contentRect == null ||
+          wrapRect == null ||
+          !contentRect.width ||
+          !wrapRect.width
+        ) {
           return;
         }
         const { speed, scrollable, delay } = this.data;
@@ -85,7 +91,7 @@ VantComponent({
           this.animation = wx.createAnimation({
             duration,
             timingFunction: 'linear',
-            delay
+            delay,
           });
           this.scroll();
         }
@@ -94,18 +100,18 @@ VantComponent({
     scroll() {
       this.timer && clearTimeout(this.timer);
       this.timer = null;
-      this.set({
+      this.setData({
         animationData: this.resetAnimation
           .translateX(this.wrapWidth)
           .step()
-          .export()
+          .export(),
       });
       setTimeout(() => {
-        this.set({
+        this.setData({
           animationData: this.animation
             .translateX(-this.contentWidth)
             .step()
-            .export()
+            .export(),
         });
       }, 20);
       this.timer = setTimeout(() => {
@@ -115,10 +121,10 @@ VantComponent({
     onClickIcon() {
       this.timer && clearTimeout(this.timer);
       this.timer = null;
-      this.set({ show: false });
+      this.setData({ show: false });
     },
     onClick(event) {
       this.$emit('click', event);
-    }
-  }
+    },
+  },
 });

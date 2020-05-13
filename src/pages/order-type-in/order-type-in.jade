@@ -74,13 +74,37 @@ w-page(
               bindblur="bindblur"
               maxlength="30"
           )
-        w-field(class="field" prop="signing" label="签单人:")
+        w-field(class="field" prop="sign" label="签单部门:")
           w-input(
               class="w-input"
-              name="signing"
+              name="signBranch"
+              placeholder="请选择签单人所属部门"
+              value="{{order.signBranch}}"
+              disabled
+              data-type="signBranch"
+              bindblur="bindblur"
+              maxlength="30"
+          )
+          view.arr-box
+            text.right-arrow()
+            picker(
+              mode="multiSelector"
+              data-type="signBranch"
+              bindchange="bindMultiPickerChange"
+              bindcolumnchange="bindMultiPickerColumnChange" 
+              value="{{multiIndexsignBranch}}" 
+              range-key="name"
+              range="{{multiArray}}"
+            )
+              view.picker  占位
+        w-field(class="field" prop="sign" label="签单人:")
+          w-input(
+              class="w-input"
+              name="sign"
+              disabled
               placeholder="请选择签单人"
-              value="{{order.signing}}"
-              data-type="signing"
+              value="{{order.sign}}"
+              data-type="sign"
               bindblur="bindblur"
               maxlength="30"
           )
@@ -91,10 +115,11 @@ w-page(
               data-type="sign"
               bindchange="bindMultiPickerChange"
               bindcolumnchange="bindMultiPickerColumnChange" 
-              value="{{multiIndex}}" range="{{multiArray}}"
+              value="{{multiIndexsign}}" 
+              range-key="name"
+              range="{{multiArray}}"
             )
               view.picker  占位
-              
         w-field(class="field" prop="guide" label="带单人:")
           w-input(
               class="w-input"
@@ -105,16 +130,17 @@ w-page(
               bindblur="bindblur"
               maxlength="30"
           )
-          view.arr-box
-            text.right-arrow()
-            picker(
-              mode="multiSelector"
-              data-type="guide"
-              bindchange="bindMultiPickerChange"
-              bindcolumnchange="bindMultiPickerColumnChange" 
-              value="{{multiIndex}}" range="{{multiArray}}"
-            )
-              view.picker  占位
+          //- view.arr-box
+          //-   text.right-arrow()
+          //-   picker(
+          //-     mode="multiSelector"
+          //-     data-type="guide"
+          //-     bindchange="bindMultiPickerChange"
+          //-     range-key="name"
+          //-     bindcolumnchange="bindMultiPickerColumnChange" 
+          //-     value="{{multiIndexguide}}" range="{{multiArray}}"
+          //-   )
+          //-     view.picker  占位
         w-field(class="field" prop="remark" label="备注:")
           w-input(
               class="w-input"
@@ -126,8 +152,11 @@ w-page(
               maxlength="30"
           )
         view.upload
-          text 上传凭证：
-          van-uploader( file-list="{{ fileList }}" bind:after-read="afterRead")
+          view.tips 上传凭证：
+          van-uploader(
+            file-list="{{ fileList }}" bind:after-read="afterRead"
+            preview-image
+          )
         view(class="button")
           button(form-type="submit")
               text 提交

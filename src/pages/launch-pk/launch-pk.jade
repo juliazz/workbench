@@ -7,22 +7,48 @@ w-page(
   view(slot="content" class="content")
     vant-cell( title="pk阶段:" is-link value="{{stepValue}}" value-class="value-class" bind:click="popupShow" data-popup-type="pkStep")
     vant-cell( title="pk项目:" is-link value="{{projectValue}}"  value-class="value-class" bind:click="popupShow" data-popup-type="project")
-    view.cell-picker
-      vant-cell( title="pk上级:"  value="{{areaValue}}" value-class="value-class" custom-class="custom-class")
+    //- 个人三级联动
+    view.cell-picker(wx:if="{{identity=='个人'}}")
+      vant-cell( title="pk上级:"  value="{{areaValue.name}}" value-class="value-class" custom-class="custom-class")
       view.arr-box
         vant-icon(name="arrow" color="#999" size="18px")
         picker(
           mode="multiSelector"
-          data-type="guide"
+          range-key="name"
           bindchange="bindMultiPickerChange"
           bindcolumnchange="bindMultiPickerColumnChange" 
           value="{{multiIndex}}" range="{{multiArray}}"
+        )
+          view.picker .
+    //- 品牌二级联动
+    view.cell-picker(wx:if="{{identity=='品牌'}}")
+      vant-cell( title="pk上级:"  value="{{areaValue.name}}" value-class="value-class" custom-class="custom-class")
+      view.arr-box
+        vant-icon(name="arrow" color="#999" size="18px")
+        picker(
+          mode="multiSelector"
+          range-key="name"
+          bindchange="bindSecondPickerChange"
+          bindcolumnchange="secondPickerColumnChange" 
+          value="{{multiIndexSecond}}" range="{{multiArraySecond}}"
+        )
+          view.picker .
+    //- 品牌一级联动
+    view.cell-picker(wx:if="{{identity=='部门'}}")
+      vant-cell( title="pk上级:"  value="{{areaValue.name}}" value-class="value-class" custom-class="custom-class")
+      view.arr-box
+        vant-icon(name="arrow" color="#999" size="18px")
+        picker(
+          range-key="name"
+          bindchange="bindPickerChange"
+          value="{{indexOne}}" range="{{arrayOne}}"
         )
           view.picker .
     vant-cell( title="{{pkCellTitle}}" is-link value="{{endChoiceValue}}" value-class="value-class" bind:click="popupShow" data-popup-type="end")
     vant-field( 
       value="{{ pkPrice }}"  label="金额:" 
       placeholder="请输入PK金额"
+      input-class="input-class"
       type="number"
       input-align="center"
       bind:click-icon="onClickIcon" value-class="value-class")

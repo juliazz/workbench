@@ -20,10 +20,41 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    this.$wLoading.show()
+    // this.$wLoading.show()
     const result = await this.$getPreload(fetch, options)
     console.log(result)
-    this.$wLoading.hide()
+    // this.$wLoading.hide()
+  },
+  exportOrder: function() {
+    wx.downloadFile({
+      url: 'https://cynthianc.github.io/images/123.pdf',
+      success: function (res) {
+        let filePath = res.tempFilePath
+        wx.openDocument({
+          filePath: filePath,
+          success: function (res) {
+            console.log('打开文档成功')
+            console.log(res)
+          },
+          fail: function(res) {
+            console.log('fail')
+            console.log(res)
+          },
+          complete: function(res) {
+            console.log('complete')
+            console.log(res)
+          }
+        })
+      },
+      fail: function(res) {
+        console.log('fail')
+        console.log(res)
+      },
+      complete: function(res) {
+        console.log('complete')
+        console.log(res)
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

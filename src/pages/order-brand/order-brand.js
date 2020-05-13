@@ -1,3 +1,16 @@
+import api from '../../api/index.js'
+
+const fetch = async (options) => {
+  try {
+    const par = {
+      activity_id: 1
+    }
+    return await api.brandList(par)
+  } catch (err) {
+    return {}
+  }
+}
+let brandList_ = []
 
 Page({
   $route: 'pages/order-brand/order-brand',
@@ -9,46 +22,46 @@ Page({
     stickyOffsetTop: 50,
     scrollTop: 0,
     indexList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    brandList: [{
-      index: 'A',
-      list: ['欧派橱柜a', '欧派橱柜']
-    }, {
-      index: 'B',
-      list: ['欧派橱柜b', '欧派橱柜']
-    }, {
-      index: 'C',
-      list: ['欧派橱柜c', '欧派橱柜']
-    }, {
-      index: 'D',
-      list: ['欧派橱柜d', '欧派橱柜']
-    }, {
-      index: 'E',
-      list: ['欧派橱柜d', '欧派橱柜']
-    }, {
-      index: 'F',
-      list: ['欧派橱柜F', '欧派橱柜']
-    }, {
-      index: 'G',
-      list: ['欧派橱柜', '欧派橱柜']
-    }, {
-      index: 'H',
-      list: ['欧派橱柜', '欧派橱柜']
-    }, {
-      index: 'I',
-      list: ['欧派橱柜', '欧派橱柜']
-    }]
+    brandList: []
   },
 
+  onPreLoad: fetch,
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-
+  onLoad: async function(options) {
+    this.$showLoading();
+    const result = await this.$getPreload(fetch)
+    this.$hideLoading();
+    const {status, data, msg} = result
+    if (status != '200') return this.$showToast(msg);
+    brandList_ = data // 将列表存起来搜索用
+    this.setData({brandList: data})
   },
   selectEvent(e) {
-    console.log(e)
+    const { brandId, brandName } = e.currentTarget.dataset
+    this.$routeTo(`order-type-in?brandId=${brandId}&brandName=${brandName}`)
   },
-
+  async onSearch(e) {
+    const {detail} = e
+    console.log(detail)
+    const brandList = await this.filterBySearch(detail)
+    console.log(brandList)
+    this.setData({brandList})
+  },
+  // 搜索框搜索
+  filterBySearch(keyWord) {
+    let filterRes = {};
+    return new Promise((resolve, reject) => {
+      for (let i in brandList_) {
+        let filterbrand = brandList_[i].filter((v) => {
+          return v.name.indexOf(keyWord) > -1
+        })
+        if (filterbrand.length) filterRes[i] = brandList_[i]
+      }
+      resolve(filterRes)
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

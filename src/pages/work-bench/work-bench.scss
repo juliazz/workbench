@@ -135,13 +135,16 @@ page{
                 margin-top: 80rpx;
                 justify-content: space-between;
                 font-size: 26rpx;
+                text{
+                    white-space:nowrap;
+                }
                 .action-item{
                     display: flex;
                     flex-direction: column;
                     width: 130rpx;
                     align-items: center;
                     justify-content: center;
-                    padding: 20rpx;
+                    padding: 10rpx;
                     image{
                        width: 42rpx; 
                        height: 42rpx;
@@ -161,7 +164,11 @@ page{
                     text-align: center;
                     color: #fff;
                 }
+                .end{
+                    color: red;
+                }
             }
+
         }
         &-pk{
             .user-kpi{

@@ -5,13 +5,14 @@ export const basic = Behavior({
     },
     set(data, callback) {
       this.setData(data, callback);
-      return new Promise(resolve => wx.nextTick(resolve));
+      return new Promise((resolve) => wx.nextTick(resolve));
     },
     getRect(selector, all) {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         wx.createSelectorQuery()
-          .in(this)[all ? 'selectAll' : 'select'](selector)
-          .boundingClientRect(rect => {
+          .in(this)
+          [all ? 'selectAll' : 'select'](selector)
+          .boundingClientRect((rect) => {
             if (all && Array.isArray(rect) && rect.length) {
               resolve(rect);
             }
@@ -21,6 +22,6 @@ export const basic = Behavior({
           })
           .exec();
       });
-    }
-  }
+    },
+  },
 });

@@ -11,12 +11,12 @@ w-page(
       view.section.section-1
         text.step 活动阶段:
         text.time 2020.4.1 8:00-2020.4.10 20:00
-      van-dropdown-menu.van-dropdown-menu(active-color="#ffbe97" title-class="title-class")
+      van-dropdown-menu.van-dropdown-menu(active-color="#ffbe97" )
         van-dropdown-item(value="{{ stepValue }}" options="{{ stepOption }}" )
       view.section.section-2
         view.search-input
           van-search(value="{{searchValue}}" placeholder="员工姓名或品牌名称" use-right-icon-slot="{{false}}")
-          vant-button( type="default" size="small" class="search-btn" custom-class="custom-class")
+          vant-button( color="{{$themColor}}" size="small" custom-class="search-btn")
             text 搜索
         view.rule-title(bindtap="popupShow" data-popup-type="rewordRule" )
           text 奖励规则
@@ -65,6 +65,6 @@ w-popup-module(
   headTitle="奖励规则"
 )
   view(slot="content" class="content")
-    view.line(wx:for="1234456" wx:key="index")
-      text {{index}}. 
-      text  元旦放假而后VG发eve范围Vedi 回复的说法放国际法比热女儿童、fbf
+    view.line(wx:for="{{ruleList}}" wx:key="index")
+      text {{item.index}}. 
+      text {{item.line}}

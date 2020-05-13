@@ -159,6 +159,7 @@ export default {
     let [route, query] = path.split('?')
     if (query) {
       query = query.replace(/\//g, '%2F')
+      query = query.replace(/&amp;/g, '&')
       path = `${route}?${query}`
     }
     if (path.split('/').length == 1) {

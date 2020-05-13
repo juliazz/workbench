@@ -1,0 +1,16 @@
+@import '../../assets/style/index';
+.module-authorization{
+  button{
+    @include reset-button();
+    font-size: 28rpx;
+    background-color: #000;
+    color: #fff;
+    padding: 0;
+  }
+  .bg-transparent{
+    background-color: transparent;
+    background: none;
+  }
+}
+
+

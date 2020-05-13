@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "w-button": "../../miniprogram_npm/vant-weapp/button/index"
+  },
+  "component": true
+}

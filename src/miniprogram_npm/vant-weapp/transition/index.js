@@ -1,6 +1,5 @@
 import { VantComponent } from '../common/component';
 import { transition } from '../mixins/transition';
-
 VantComponent({
   classes: [
     'enter-class',
@@ -8,7 +7,7 @@ VantComponent({
     'enter-to-class',
     'leave-class',
     'leave-active-class',
-    'leave-to-class'
+    'leave-to-class',
   ],
-  mixins: [transition(true)]
+  mixins: [transition(true)],
 });

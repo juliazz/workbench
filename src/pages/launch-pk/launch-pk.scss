@@ -29,14 +29,19 @@
                 width: 100%;
                 color: #fff;
             }
+            .value-class{
+                margin-left: -50rpx;
+            }
         }
         .value-class{
             flex:4;
             text-align: center;
-           
         }
         .title-class{
             min-width: 50rpx;
+        }
+        .input-class{
+            margin-left: -50rpx;
         }
         .btn{
             margin-top: 10vh;

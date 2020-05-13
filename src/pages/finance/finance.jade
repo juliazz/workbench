@@ -152,9 +152,9 @@ w-popup-module(
 )
   view(slot="content" class="content")
     view.activeListBox
-      view.lineItem(wx:for="1234" wx:key="index" bindtap="changeActive" data-active-id="{{item.id}}")
+      view.lineItem(wx:for="{{explainRule}}" wx:key="index")
         view.title
-          text {{index}}.
-          text 推广费用金额:
+          //- text {{index}}.
+          text {{item.title}}
         view 
-          text 阅读红包。阅读红包。阅读红包。阅读红包。阅读红包。
+          text {{item.content}}

@@ -16,11 +16,13 @@ Page({
     activeTabIndex: 1,
     activeNumViewTab: 1, // 数据总览切换
     activeRankItemIndex: null,
-    tabs: ['个人', '部门', '品牌', '战区'],
+    tabs: [{name: '个人', tabId: 1}, {name: '部门', tabId: 2}, {name: '品牌', tabId: 3}, {name: '战区', tabId: 4}],
     numViewTabs: ['主办方', '品牌'],
-    rankList: [
-      '浏览', '海报裂变', '报名', '售卡', '爆款秒杀订单', '自签单', '贡献签单', '逛店', '贡献逛店', '线下签到', '直播预约', '直播签到', '直播订单', '转单数量', '转单金额', '金币', '奖金', '考核扣罚', '售卡签单率'
-    ],
+    rankList: [{name: '浏览', rankId: 1}, {name: '海报裂变', rankId: 2}, {name: '报名', rankId: 3}, {name: '售卡', rankId: 4},
+      {name: '爆款秒杀订单', rankId: 5}, {name: '自签单', rankId: 6}, {name: '贡献签单', rankId: 7}, {name: '逛店', rankId: 8},
+      {name: '贡献逛店', rankId: 9}, {name: '线下签到', rankId: 10}, {name: '直播预约', rankId: 11}, {name: '直播签到', rankId: 12},
+      {name: '直播订单', rankId: 13}, {name: '转单数量', rankId: 14}, {name: '转单金额', rankId: 15}, {name: '金币', rankId: 16},
+      {name: '奖金', rankId: 17}, {name: '考核扣罚', rankId: 18}, {name: '售卡签单率', rankId: 19}],
     dataList: [{
       num: 100,
       title: '浏览人数'
@@ -125,12 +127,15 @@ Page({
     })
   },
   rankItemClick(eve) {
-    const {rankIndex} = eve.currentTarget.dataset
-    const {activeTabIndex} = this.data
+    const {rankName, rankId, rankIndex} = eve.currentTarget.dataset
+    const {activeTabIndex, tabs } = this.data
+    const rankTitle = tabs[activeTabIndex].name + `${rankName}`
+    console.log(rankTitle)
     this.setData({
       activeRankItemIndex: rankIndex
     })
-    this.$routeTo(`statistics-rank?tabIndex=${activeTabIndex}&rankItemIndex=${rankIndex}&isFirstStep=1`)
+    let isFirstStep = activeTabIndex == 0 ? 1 : 0
+    this.$routeTo(`statistics-rank?tabIndex=${activeTabIndex}&rankItemIndex=${rankId}&isFirstStep=${isFirstStep}&rankTitle=${rankTitle}`)
   },
   onNumViewChange(event) {
     wx.showToast({

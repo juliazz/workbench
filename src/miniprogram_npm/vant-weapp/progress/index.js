@@ -1,23 +1,27 @@
 import { VantComponent } from '../common/component';
 import { BLUE } from '../common/color';
-
 VantComponent({
   props: {
     inactive: Boolean,
     percentage: Number,
     pivotText: String,
     pivotColor: String,
+    trackColor: String,
     showPivot: {
       type: Boolean,
-      value: true
+      value: true,
     },
     color: {
       type: String,
-      value: BLUE
+      value: BLUE,
     },
     textColor: {
       type: String,
-      value: '#fff'
-    }
-  }
+      value: '#fff',
+    },
+    strokeWidth: {
+      type: null,
+      value: 4,
+    },
+  },
 });

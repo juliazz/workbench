@@ -3,6 +3,7 @@ import config from '../config';
 import utils from './utils';
 import logger from './logger';
 import tokenManage from './token-manage';
+import storangeMange from './storage-manage';
 import httpCode from './http-code';
 
 const {
@@ -63,15 +64,15 @@ const interceptors = {
     async handleHttpError(options, result) {
       if (result.statusCode === 200) {
         // todo 处理鉴权失败
-        const {
-          resultCode
-        } = result.data;
-        console.log('resultCode=======', resultCode)
-        if (resultCode === -1) {
-          await tokenManage.clear();
-          await tokenManage.get()
-          // result = await request.send(options);
-        }
+        // const {
+        //   status
+        // } = result.data;
+        // console.log('status=======', status)
+        // if (status === 250) {
+        // await tokenManage.clear();
+        // await tokenManage.get()
+        // result = await request.send(options);
+        // }
       } else if (result.statusCode >= 400 && result.statusCode < 500) {
         throw new Error('Bad Request.', result.data);
       } else if (result.statusCode >= 500) {
@@ -94,8 +95,8 @@ const request = {
     let _opts = options;
     const baseUrl = config.baseUrl;
     _opts.url = combinUrl(baseUrl, _opts.url);
+    _opts.data.activity_id = await storangeMange.getActivityId() || '';
     _opts = await this.execBeforeHook(_opts);
-
     let result = {};
     try {
       result = await wx.$request(_opts);
@@ -109,6 +110,7 @@ const request = {
       }
     }
     result = await this.execAfterHook(_opts, result);
+    console.log(result)
     return result;
   },
   async execBeforeHook(options) {

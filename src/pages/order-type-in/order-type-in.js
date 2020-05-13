@@ -1,5 +1,12 @@
 
 const timeNow = new Date()
+import api from '../../api/index.js'
+
+let userListRes = [] // 完整的签单人列表
+let multiIndexsignBranch = []; //临时选项id存贮
+let order; //
+let brandId; let
+  brandName;
 Page({
   $route: 'pages/order-type-in/order-type-in',
   /**
@@ -12,8 +19,9 @@ Page({
     fileList: [
 
     ], // 上传文件列表
-    multiArray: [['无脊柱动物名字很长很长', '脊柱动物'], ['扁性动物', '线形动物', '环节动物', '软体动物', '节肢动物'], ['猪肉绦虫', '吸血虫']],
-    multiIndex: [0, 0, 0],
+    multiArray: [0, 0, 0],
+    multiIndexsignBranch: [0, 0, 0],
+    multiIndexguide: [0, 0, 0],
     calendarConfig: {
       minDate: new Date(2020, 0, 1).getTime(),
       maxDate: new Date(2025, 0, 31).getTime(),
@@ -27,7 +35,80 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    console.log('pace')
+    console.log('options======', options)
+    // 选择品牌后带回来的参数
+    brandId = options.brandId ? options.brandId : null
+    this.setData({
+      'order.brand': options.brandName ? options.brandName : null
+    })
+    this.getUserList()
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function(options) {
+  },
+  getUserList: async function() {
+    let { multiArray} = this.data
+    let userList = await api.getUserList()
+    userListRes = userList // 将完整数据存起来
+    const arr1 = userList.map((i) => {
+      return {
+        name: i.name,
+        id: i.id
+      }
+    })
+    multiArray[0] = arr1
+    // ，默认选择第一项
+    multiArray[1] = this.findArr2List(arr1[0].id)
+    multiArray[2] = this.findArr3List(multiArray[1], multiArray[1][0].id)
+    this.setData({multiArray})
+  },
+  // 获取数组第二项内容
+  findArr2List(index) {
+    const arr2 = userListRes.filter((i) => {
+      return i.id == index
+    })
+    return arr2[0].children
+  },
+  // 获取数组第三项内容
+  findArr3List(list, index) {
+    const arr3 = list.filter((i) => {
+      return i.id == index
+    })
+    return arr3[0].children
+  },
+  // 点击确定时
+  bindMultiPickerChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    const multiIndex = e.detail.value
+    const {type} = e.currentTarget.dataset
+    const {name, id} = this.data.multiArray[multiIndex[0]][multiIndex[1]]
+    console.log(type, name, id)
+    this.setData({
+      [`multiIndex${type}`]: multiIndex,
+      [`order.${type}`]: name,
+      [`order.${type}Id`]: id
+    })
+  },
+  // 滚动选择列时
+  bindMultiPickerColumnChange: function (e) {
+    console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+    const { column, value} = e.detail
+    const {type} = e.currentTarget.dataset
+    let { multiArray } = this.data
+    if (column == 0) {
+      multiArray[column + 1] = this.findArr2List(userListRes[value].id)
+      // 第一列动了 第二列 也要跟着一起改，默认选择上一次选择的第二列index
+      // multiArray[column + 2] = this.findArr3List(multiArray[1],multiIndexsignBranch[1])
+      multiArray[column + 2] = []
+    }else if(column == 1){
+      multiArray[column + 1] = this.findArr3List(multiArray[1],multiArray[1][value].id)
+    }
+    const {name,id} = multiArray[column][value]
+    console.log(name,id)
+    this.setData({multiArray})
   },
   bindblur(event) {
     const { type } = event.currentTarget.dataset;
@@ -37,6 +118,8 @@ Page({
   },
   afterRead(event) {
     const { file } = event.detail;
+    const {fileList} = this.data
+    this.setData({ fileList: fileList.concat(file) });
     // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
     wx.uploadFile({
       url: 'https://example.weixin.qq.com/upload', // 仅为示例，非真实的接口地址
@@ -62,80 +145,7 @@ Page({
     // this.createOrder(value);
     // });
   },
-  bindMultiPickerChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    console.log(e)
-    const multiIndex = e.detail.value
-    this.setData({
-      multiIndex,
-      'order.signing': this.data.multiArray[2][multiIndex[2]]
-    })
-  },
-  bindMultiPickerColumnChange: function (e) {
-    console.log(e)
-    console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
-    let data = {
-      multiArray: this.data.multiArray,
-      multiIndex: this.data.multiIndex
-    };
-    data.multiIndex[e.detail.column] = e.detail.value;
-    switch (e.detail.column) {
-    case 0:
-      switch (data.multiIndex[0]) {
-      case 0:
-        data.multiArray[1] = ['扁性动物', '线形动物', '环节动物', '软体动物', '节肢动物'];
-        data.multiArray[2] = ['猪肉绦虫', '吸血虫'];
-        break;
-      case 1:
-        data.multiArray[1] = ['鱼', '两栖动物', '爬行动物'];
-        data.multiArray[2] = ['鲫鱼', '带鱼'];
-        break;
-      }
-      data.multiIndex[1] = 0;
-      data.multiIndex[2] = 0;
-      break;
-    case 1:
-      switch (data.multiIndex[0]) {
-      case 0:
-        switch (data.multiIndex[1]) {
-        case 0:
-          data.multiArray[2] = ['猪肉绦虫', '吸血虫'];
-          break;
-        case 1:
-          data.multiArray[2] = ['蛔虫'];
-          break;
-        case 2:
-          data.multiArray[2] = ['蚂蚁', '蚂蟥'];
-          break;
-        case 3:
-          data.multiArray[2] = ['河蚌', '蜗牛', '蛞蝓'];
-          break;
-        case 4:
-          data.multiArray[2] = ['昆虫', '甲壳动物', '蛛形动物', '多足动物'];
-          break;
-        }
-        break;
-      case 1:
-        switch (data.multiIndex[1]) {
-        case 0:
-          data.multiArray[2] = ['鲫鱼', '带鱼'];
-          break;
-        case 1:
-          data.multiArray[2] = ['青蛙', '娃娃鱼'];
-          break;
-        case 2:
-          data.multiArray[2] = ['蜥蜴', '龟', '壁虎'];
-          break;
-        }
-        break;
-      }
 
-      data.multiIndex[2] = 0;
-      console.log(data.multiIndex);
-      break;
-    }
-    this.setData(data);
-  },
   popupShow: function(eve) {
     const { popupType } = eve.currentTarget.dataset
     this.setData({
@@ -170,12 +180,6 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-  },
 
   /**
    * 生命周期函数--监听页面隐藏

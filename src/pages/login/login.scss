@@ -1,73 +1,26 @@
 
 @import '../../assets/style/index';
 .pages-login {
-    .header{
-        height: 262rpx;
-    }
-    .image-box{
-        width: 100vw;
-        height: 180rpx;
+    .content{
+        height: 63vh;
+        padding: 7vh 6vw 30vh;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        .header-image{
-            height: 33rpx;
-            width: 273rpx;
+        justify-content: space-between;
+        flex-direction: column;
+        .word-content{
+            .text{
+        
+            }
+            .title{
+            line-height: 100rpx;
+            }
+        }
+        .w-authorization{
+            button{
+            background-color: #000;
+            color: #fff;
+            height: 80rpx;
+            }
         }
     }
-        .title-header{
-            border-bottom: 1rpx solid #000;
-            line-height: 80rpx;
-            text-align: center;
-            letter-spacing: 4rpx;
-            font-size: 30rpx;
-            border-top: 1rpx solid #000;
-        }
-        p{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-           
-        }
-        .content{
-            .input-area{
-                padding: 7vh 60rpx 10vh;
-            }
-            .form{
-                .section{
-                    padding-top: 10rpx;
-                    .label{
-                        font-size: 28rpx;
-                        line-height: 60rpx;
-                    }
-                    input{
-                        padding-left: 20rpx;
-                        line-height: 100rpx;
-                        height: 80rpx;
-                        border: 1rpx solid gray;
-                    }
-        
-                }
-                .tips{
-                    margin-top: 40rpx;
-                    text-align: center;
-                    line-height: 40rpx;
-                    text{
-                        display: block;
-                    }
-                }
-                .button-box{
-                    position: fixed;
-                    bottom: 20vh;
-                    width: 630rpx;
-                    // padding-top:7vh;
-                    button{
-                        background-color: #000;
-                        color: #fff;
-                    }
-                    
-                }
-            }
-
-        }
 }

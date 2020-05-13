@@ -27,6 +27,7 @@ function getButtonDisabled(type, currentDate) {
   if (type === 'multiple') {
     return !currentDate.length;
   }
+
   return !currentDate;
 }
 

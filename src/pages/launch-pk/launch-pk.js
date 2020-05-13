@@ -1,3 +1,6 @@
+import api from '../../api/index.js'
+
+let userListRes = [] // 完整的签单人列表
 Page({
   $route: 'pages/launch-pk/launch-pk',
   /**
@@ -6,54 +9,184 @@ Page({
   data: {
     popupType: '',
     stepValue: '选择战区',
-    areaValue: '某品牌,某部门',
     projectValue: '选择项目',
     endChoiceValue: '',
     pkPrice: null,
     list: ['a', 'b', 'c'],
     result: ['a', 'b'],
-    activeIndex: {
+    activeIndex: { // 页面选中展示
       step: 0,
       project: 0,
       people: [1, 4]
-    }, // 页面选中展示
-    multiArray: [['无脊柱动物名字很长很长', '脊柱动物'], ['扁性动物', '线形动物', '环节动物', '软体动物', '节肢动物'], ['猪肉绦虫', '吸血虫']],
-    multiIndex: [0, 0, 0]
+    },
+    multiArray: [], // 三级联动数据======
+    multiIndex: [0, 0, 0],
+    areaValue: {
+      name: '选择pk对象上级' // 三级联动数据=======
+    },
+    multiArraySecond: [], // 二级联动数据======
+    multiIndexSecond: [0, 0],
+    arrayOne: [], // 一级联动数据=======
+    indexOne: 0
   },
   activeIndex: {
     step: null,
     project: null,
     people: []
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
     const {pkType } = options
+    const identity = '个人'
     this.setData({
-      pkCellTitle: `pk${pkType}:`,
-      endChoiceValue: `选择${pkType}`
+      pkCellTitle: `pk${pkType}:`, // 根据对象进来cell文案
+      endChoiceValue: `选择${pkType}`, // input框占位文案
+      identity // 进来时的身份  假设是品牌
+    })
+    if (identity == '个人') {
+      this.getUserList()
+    } else if (identity == '品牌') {
+      this.getUserListSecond()
+    } else if (identity == '部门') {
+      this.getUserListOne()
+    }
+  },
+  // =========================== 三级联动 ============================
+  // 获取pk对象数组
+  getUserList: async function() {
+    let { multiArray} = this.data
+    let userList = await api.getUserList()
+    userListRes = userList // 将完整数据存起来
+    const arr1 = userList.map((i) => {
+      return {
+        name: i.name,
+        id: i.id
+      }
+    })
+    multiArray[0] = arr1
+    // 默认选择第一项
+    multiArray[1] = this.findArr2List(arr1[0].id)
+    multiArray[2] = this.findArr3List(multiArray[1], multiArray[1][0].id)
+    this.setData({multiArray})
+  },
+  // 获取数组第二项内容
+  findArr2List(index) {
+    const arr2 = userListRes.filter((i) => {
+      return i.id == index
+    })
+    return arr2[0].children
+  },
+  // 获取数组第三项内容
+  findArr3List(list, index) {
+    const arr3 = list.filter((i) => {
+      return i.id == index
+    })
+    return arr3[0].children
+  },
+  // 级联选择确定
+  bindMultiPickerChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    const multiIndex = e.detail.value
+    let { multiArray} = this.data
+    const {name, id} = multiArray[2][multiIndex[2]]
+    this.setData({
+      multiIndex,
+      areaValue: {
+        name,
+        id
+      }
     })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-  },
-  popupShow: function(eve) {
-    const { popupType } = eve.currentTarget.dataset
+  // 级联滚动时
+  bindMultiPickerColumnChange: function (e) {
+    console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+    const { column, value} = e.detail
+    let { multiArray, multiIndex } = this.data
+    multiIndex[column] = value;
+    switch (column) {
+    // 第0列
+    case 0:
+      multiArray[column + 1] = this.findArr2List(userListRes[value].id)
+      multiArray[column + 2] = []
+      multiIndex[1] = 0;
+      multiIndex[2] = 0;
+      break;
+    case 1:
+      multiArray[column + 1] = this.findArr3List(multiArray[1], multiArray[1][value].id)
+      multiIndex[2] = 0;
+      break;
+    }
     this.setData({
-      popupType
+      multiArray,
+      multiIndex
+    });
+  },
+  // ==========================  二级联动区域  ===========================
+  getUserListSecond: async function() {
+    let { multiArraySecond} = this.data
+    let userList = await api.getUserList()
+    userListRes = userList // 将完整数据存起来
+    const arr1 = userList.map((i) => {
+      return {
+        name: i.name,
+        id: i.id
+      }
+    })
+    multiArraySecond[0] = arr1
+    // ，默认选择第一项
+    multiArraySecond[1] = this.findArr2List(arr1[0].id)
+    this.setData({multiArraySecond})
+  },
+  secondPickerColumnChange(e) {
+    console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+    const { column, value} = e.detail
+    let { multiArraySecond, multiIndexSecond } = this.data
+    multiIndexSecond[column] = value
+    multiArraySecond[1] = this.findArr2List(userListRes[value].id)
+    this.setData({multiArraySecond})
+  },
+  // 点击确定时
+  bindSecondPickerChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    const multiIndexSecond = e.detail.value
+    const {name, id} = this.data.multiArraySecond[1][multiIndexSecond[1]]
+    this.setData({
+      multiIndexSecond,
+      areaValue: {
+        name,
+        id
+      }
+    })
+  },
+  // ==========================  一级联动区域  ===========================
+  getUserListOne: async function() {
+    // 临时  模拟获取到的一维数组
+    let { multiArraySecond} = this.data
+    let userList = await api.getUserList()
+    userListRes = userList // 将完整数据存起来
+    const arr1 = userList.map((i) => {
+      return {
+        name: i.name,
+        id: i.id
+      }
+    })
+    multiArraySecond[0] = arr1
+    // 默认选择第一项
+    const arrayOne = this.findArr2List(arr1[0].id)
+    this.setData({arrayOne})
+  },
+  bindPickerChange(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    const indexOne = e.detail.value
+    const {name, id} = this.data.arrayOne[indexOne]
+    this.setData({
+      indexOne,
+      areaValue: {
+        name,
+        id
+      }
     })
   },
   onConfirm(event) {
@@ -86,6 +219,27 @@ Page({
       popupType: ''
     })
   },
+
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {
+
+  },
+  popupShow: function(eve) {
+    const { popupType } = eve.currentTarget.dataset
+    this.setData({
+      popupType
+    })
+  },
   // 多选
   onChangeEnd(event) {
     this.setData({
@@ -108,81 +262,7 @@ Page({
       popupType: ''
     })
   },
-  // 级联选择
-  bindMultiPickerChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    console.log(e)
-    const multiIndex = e.detail.value
-    this.setData({
-      multiIndex,
-      'order.signing': this.data.multiArray[2][multiIndex[2]]
-    })
-  },
-  bindMultiPickerColumnChange: function (e) {
-    console.log(e)
-    console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
-    let data = {
-      multiArray: this.data.multiArray,
-      multiIndex: this.data.multiIndex
-    };
-    data.multiIndex[e.detail.column] = e.detail.value;
-    switch (e.detail.column) {
-    case 0:
-      switch (data.multiIndex[0]) {
-      case 0:
-        data.multiArray[1] = ['扁性动物', '线形动物', '环节动物', '软体动物', '节肢动物'];
-        data.multiArray[2] = ['猪肉绦虫', '吸血虫'];
-        break;
-      case 1:
-        data.multiArray[1] = ['鱼', '两栖动物', '爬行动物'];
-        data.multiArray[2] = ['鲫鱼', '带鱼'];
-        break;
-      }
-      data.multiIndex[1] = 0;
-      data.multiIndex[2] = 0;
-      break;
-    case 1:
-      switch (data.multiIndex[0]) {
-      case 0:
-        switch (data.multiIndex[1]) {
-        case 0:
-          data.multiArray[2] = ['猪肉绦虫', '吸血虫'];
-          break;
-        case 1:
-          data.multiArray[2] = ['蛔虫'];
-          break;
-        case 2:
-          data.multiArray[2] = ['蚂蚁', '蚂蟥'];
-          break;
-        case 3:
-          data.multiArray[2] = ['河蚌', '蜗牛', '蛞蝓'];
-          break;
-        case 4:
-          data.multiArray[2] = ['昆虫', '甲壳动物', '蛛形动物', '多足动物'];
-          break;
-        }
-        break;
-      case 1:
-        switch (data.multiIndex[1]) {
-        case 0:
-          data.multiArray[2] = ['鲫鱼', '带鱼'];
-          break;
-        case 1:
-          data.multiArray[2] = ['青蛙', '娃娃鱼'];
-          break;
-        case 2:
-          data.multiArray[2] = ['蜥蜴', '龟', '壁虎'];
-          break;
-        }
-        break;
-      }
 
-      data.multiIndex[2] = 0;
-      console.log(data.multiIndex);
-      break;
-    }
-    this.setData(data);
-  },
   noop() {},
   /**
    * 生命周期函数--监听页面隐藏
