@@ -2,8 +2,6 @@
 	"pages": [
 		"pages/work-bench/work-bench",
 		"pages/login/login",
-		"pages/reset-passworld/reset-passworld",
-		"pages/product-list/product-list",
 		"pages/order-type-in/order-type-in",
 		"pages/order-brand/order-brand",
 		"pages/rank-list/rank-list",
@@ -21,7 +19,8 @@
 		"pages/recharge/recharge",
 		"pages/material-stock/material-stock",
 		"pages/my-material/my-material",
-		"pages/add-material/add-material"
+		"pages/add-material/add-material",
+		"pages/message-detail/message-detail"
 	],
 	"window": {
 		"navigationStyle": "default",
@@ -57,10 +56,10 @@
 	"usingComponents": {
 		"w-navbar": "./custom-nav-bar/index",
 		"w-tabbar": "./custom-tab-bar/index",
-		"w-icon": "./components/icon/index",
 		"w-popup-module": "./components/popup-module/popup-module",
 		"w-page": "./components/page/index",
 		"w-image": "./components/image/index",
+		"w-icon": "./components/icon/index",
 		"w-currency": "./components/currency/index",
 		"vant-button": "./miniprogram_npm/vant-weapp/button/index",
 		"vant-icon": "./miniprogram_npm/vant-weapp/icon/index",
@@ -79,7 +78,5 @@
 		"scope.userLocation": {
 			"desc": "您的位置信息将用于匹配专卖店地址。"
 		}
-	},
-	"navigateToMiniProgramAppIdList": [
-	]
+	}
 }

@@ -14,6 +14,7 @@ Component({
       let toast = ''
       fields.forEach(field => {
         const { prop } = field.data
+        console.log(prop)
         const rule = rules[prop]
         const value = options[prop]
         if (!rule) return
@@ -35,7 +36,9 @@ Component({
         }
         if (type == 'String' || type == 'Object') {
           _exit = !!value
+          
         }
+        console.log(_exit)
         // 校验，只限内容是否符合规则
         if (!require) {
           if (_exit && validator && !validator(value)) {

@@ -34,13 +34,15 @@ Page({
     const result = await this.$getPreload(fetch)
     this.$hideLoading();
     const {status, data, msg} = result
+    console.log(result)
     if (status != '200') return this.$showToast(msg);
     brandList_ = data // 将列表存起来搜索用
     this.setData({brandList: data})
   },
   selectEvent(e) {
     const { brandId, brandName } = e.currentTarget.dataset
-    this.$routeTo(`order-type-in?brandId=${brandId}&brandName=${brandName}`)
+    wx.setStorageSync('brandInfo',{brandId,brandName})
+    this.$navigateBack()
   },
   async onSearch(e) {
     const {detail} = e

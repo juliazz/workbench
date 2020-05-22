@@ -1,0 +1,38 @@
+
+@import '../../assets/style/index';
+.pages-message-detail {
+    .message-detail-list{
+        padding: 30rpx;
+        .item-box{
+            margin-bottom: 30rpx;
+        }
+        .components-item-box-lcr{
+            border-radius: 10rpx;
+            padding: 30rpx 20rpx;
+            background-color: #fff;
+        }
+        .left{
+            image{
+                height: 120rpx;
+                width: 120rpx;
+                border-radius: 50%;
+                margin-right: 10rpx;
+                background-color: red;
+                overflow: hidden;
+            }
+        }
+        .center{
+            
+        }
+        .right{
+            min-width: 120rpx;
+            justify-content: space-between;
+            align-self: stretch;
+            .detail-btn{
+                height: 60rpx;
+                margin-bottom: 20rpx;
+            }
+        }
+
+    }
+}

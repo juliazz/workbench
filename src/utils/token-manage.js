@@ -68,10 +68,10 @@ const token = {
       }, this.limitTime * 1000);
     }
     // 累计次数
-    // this.count += 1;
-    // const { code} = await wx.$login();
-    // console.log(code)
-    // // todo 用户静默登录refresh
+    this.count += 1;
+    const { code} = await wx.$login();
+    console.log(code)
+    // todo 用户静默登录refresh
     // const result = await request.get({
     //   url: `getopenid`,
     //   auth: true
@@ -80,9 +80,13 @@ const token = {
     // console.log(result)
     // if (resultCode != 1) throw new Error('Token fetch failed');
     // const { token } = data;
-    // console.log(token)
-    // await this.set(token);
-    // return result;
+    const result = {
+      data: {
+        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6InN4cy00ZjFnMjNhMTJhYSJ9.eyJqdGkiOiJzeHMtNGYxZzIzYTEyYWEiLCJpYXQiOjE1ODk5NjUxMjksImV4cCI6MTYyMTUwMTEyOSwidWlkIjoxfQ.hIi8L2jJ4nq_AUctfKQv0qlv6UYOtrWILAKz0HVDdrg'
+      }
+    }
+    await this.set(result.data.token);
+    return result;
   },
   complete(type, result) {
     this.status = false;

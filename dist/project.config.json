@@ -4,9 +4,25 @@
 		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
+		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
-		"uglifyFileName": false
+		"coverView": true,
+		"nodeModules": false,
+		"autoAudits": true,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"uglifyFileName": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.10.1",
@@ -36,10 +52,6 @@
 		"game": {
 			"list": []
 		},
-		"gamePlugin": {
-			"current": -1,
-			"list": []
-		},
 		"miniprogram": {
 			"current": 2,
 			"list": [
@@ -65,11 +77,11 @@
 					"scene": ""
 				},
 				{
-					"id": 3,
+					"id": -1,
 					"name": "发起PK",
 					"pathName": "pages/launch-pk/launch-pk",
-					"query": "pkType=个人",
-					"scene": null
+					"query": "rankType=个人",
+					"scene": ""
 				},
 				{
 					"id": -1,

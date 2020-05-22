@@ -1,13 +1,12 @@
 
 @import '../../assets/style/index';
-page{
-}
 // 头像
 .avator{
-    height: 90rpx;
-    width: 90rpx;
+    height: 70rpx;
+    width: 70rpx;
     border-radius: 50%;
 }
+
 .pages-work-bench {
     height: 90vh;
     width: 100vw;
@@ -20,41 +19,61 @@ page{
         width: 75px;
         z-index: 1;
     }
+    .content{
+        padding: 20rpx 30rpx;
+    }
     .header{
         overflow: visible;
-        position: relative;
         margin-top: -100rpx;
-        display: flex;
-        padding: 150rpx 30rpx 80rpx;
+        padding: 130rpx 20rpx 0rpx;
         font-size: 26rpx;
-        color: #fff;
-        background-color: $pc;
-        .left{
-            width: 580rpx;
-            @include flex-align-center;
-            .avator{
-                height: 150rpx;
-                width: 150rpx;
-                min-width: 150rpx;
-                border-radius: 50%;
-                overflow: hidden;
+        background-color: #fff;
+        .title-info{
+            display: flex;
+            .left{
+                width: 580rpx;
+                @include flex-align-center;
+                .avator{
+                    height: 120rpx;
+                    width: 120rpx;
+                    min-width: 100rpx;
+                    border-radius: 50%;
+                    overflow: hidden;
+                }
+                .activity-info{
+                    margin-left: 20rpx;
+                    .name{
+                        font-size: 30rpx;
+                    }
+                    .title{
+                        color: $pc;
+                    }
+                }
             }
-            .activity-info{
-                margin-left: 20rpx;
-                
+            .right{
+                @include flex-align-center;
+                justify-content: flex-end;
+                margin-left: 15rpx;
+                color: #FFBE97;
+                .change{
+                    white-space: nowrap;
+                    width: 105rpx;
+                }
             }
         }
-        .right{
-            @include flex-align-center;
-            justify-content: flex-end;
-            margin-left: 15rpx;
-            color: #FFBE97;
-            .change{
-                white-space: nowrap;
-                width: 105rpx;
+        .price-box{
+            box-sizing: border-box;
+            background-color: #fff;
+            display: flex;
+            padding: 20rpx;
+            font-size: 24rpx;
+            justify-content: space-between;
+            border-radius: 15rpx;
+            text{
+                margin-top: 10rpx;
             }
+            .prize{font-size: 38rpx;text-align: center;}
         }
-
     }
     .content{
         // height: 80vh;
@@ -62,10 +81,11 @@ page{
         background-color: #F2F2F2;
     }
     .section{
-        padding: 40rpx 30rpx;
+        padding: 30rpx;
         background-color: #fff;
         position: relative;
         font-size: 26rpx;
+        border-radius: 5rpx;
         margin-bottom: 30rpx;
         .red-word{
             color: red;
@@ -110,29 +130,10 @@ page{
             padding: 30rpx 20rpx;
         }
         &-1{
-            .price-box{
-                box-sizing: border-box;
-                background-color: #fff;
-                position: absolute;
-                left: 5%;
-                top: -50rpx;
-                display: flex;
-                padding: 20rpx;
-                font-size: 24rpx;
-                justify-content: space-between;
-                border-radius: 15rpx;
-                width: 90%;
-                box-shadow: 0 5px 5px #F2F2F2;
-                text{
-                    text-align: center;
-                    display: block;
-                    margin-top: 10rpx;
-                }
-            }
+            margin-top: 30rpx;
             .action-list{
                 display: flex;
                 flex-wrap: wrap;
-                margin-top: 80rpx;
                 justify-content: space-between;
                 font-size: 26rpx;
                 text{
@@ -141,169 +142,51 @@ page{
                 .action-item{
                     display: flex;
                     flex-direction: column;
-                    width: 130rpx;
+                    width: 180rpx;
                     align-items: center;
                     justify-content: center;
                     padding: 10rpx;
                     image{
-                       width: 42rpx; 
-                       height: 42rpx;
+                       width: 64rpx; 
+                       height: 64rpx;
                        margin-bottom: 20rpx;
                     }
                 }
             }
         }
         &-2{
-            text-align: center;
-            line-height: 50rpx;
+            text-align: left;
+            line-height: 70rpx;
+            color: $b3c;
+            .activity-title{
+                image{
+                    height: 26rpx;
+                    width: 28rpx;
+                    margin-right: 20rpx;
+                }
+                font-size: 30rpx;
+            }
+
             .active-left-time{
                 .time{
-                    background-color: $pc;
                     margin: 0 8rpx;
-                    padding: 0 5rpx;
+                    min-width: 50rpx;
+                    height: 50rpx;
+                    line-height: 48rpx;
                     text-align: center;
                     color: #fff;
-                }
+                    display: inline-block;
+                    border-radius: 10rpx;
+                    margin-top: 5rpx;
+                    background-color: $b2c;
+                    }
                 .end{
                     color: red;
                 }
             }
 
         }
-        &-pk{
-            .user-kpi{
-                display: flex;
-                justify-content: space-between;
-                border-left: 10rpx solid $pc;
-                padding-left: 15rpx;
-                line-height: 45rpx;
-                .mt10{
-                    margin-top: 10rpx;
-                }
-                text{
-                    display: block;
-                }
-                .right{
-                    .reword,.quantity{
-                        display: flex;
-                        align-items: center;
-                    }
-                    .reword{
-                        .quantity{
-                            flex-direction: column;
-                        }
-                        .coin-quality{
-                            color: #919191;
-                        }
-                    }
-                    .quantity{
-                        text{
-                            display: inline-block;
-                        }
-                    }
-                    .fine{
-                        display: flex;
-                        align-items: center;
-                    }
-                }
-            }
-            .myCoin{
-                flex-wrap: wrap;
-                @include flex-just-between;
-                .coinItem{
-                    width: 135rpx;
-                    display: flex;
-                    @include flex-dire-column;
-                    line-height: 50rpx;
-                    align-items: center;
-                    margin-bottom: 35rpx;
-                }
-                .coinItem:nth-last-child(-n+4){
-                    margin-bottom: 0;
-                }
-            }
-            // 我的PK
-            .userPK{
-                .PKItem{
-                    border-bottom: 2rpx solid #F2F2F2;
-                    text-align: center;
-                    font-size: 28rpx;
-                    margin-top: 20rpx;
-                    .PKView{
-                        @include flex-just-between;
-                        padding: 30rpx 80rpx;
-                        .imageBox{
-                            background-color: red;
-                            position: relative;
-                            padding: 5rpx;
-                            border-radius: 15rpx;
-                            font-size: 26rpx;
-                            color: #fff;
-                            @include flex-dire-column;
-                            align-items: center;
-                            .crown{
-                                position: absolute;
-                                left: -40rpx;
-                                top: -40rpx;
-                            }
-                            image{
-                                height: 160rpx;
-                                width: 160rpx;
-                                margin-bottom: 10rpx;
-                                border-radius: 10rpx;
-                                overflow: hidden;
-                                background-color: salmon;
-                            }
-                        }
-                        .center{
-                            @include flex-align-center;
-                        }
-                        .right{
-                            background-color: $lpc;
-                        }
-                    }
-                }
-                .PKItem:nth-last-child(1){
-                    border-bottom: none;
-                }
-            }
-            // 我的任务
-            .myJob{
-                overflow: hidden;
-                padding: 30rpx 0;
-                .myJobList{
-                    display: flex;
-                    flex-wrap: nowrap;
-                    .jobItem{
-                        @include flex-dire-column;
-                        align-items: center;
-                        margin-right: 24rpx;
-                        justify-content: space-between;
-                    }
-                }
-            }
-
-        }
-        &-collpase{
-            .view-more{
-                text-align: center;
-                height: 100rpx;
-                text{
-                    background-color: $lpc;
-                    border-radius: 15rpx;
-                    color: #fff;
-                    padding: 10rpx 20rpx;
-                }
-            }
-            .userPK{
-                max-height: 380rpx;
-                transition: max-height 0.5s;
-                overflow: hidden;
-            }
-            .active{
-                max-height: 1000rpx;
-            }
-        }
+       
     }
 
 }

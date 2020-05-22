@@ -1,2 +1,4 @@
 text(wx:if="{{type=='num'}}") {{text}}
-text(wx:else) ￥{{text}}
+view(wx:else) 
+    text.icon ￥
+    text.prize {{text}}

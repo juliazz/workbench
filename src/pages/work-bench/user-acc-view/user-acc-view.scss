@@ -17,77 +17,81 @@
             margin-left: 20rpx;
             @include right-arrow;
         }
-        .title-1{
-            font-weight: 500;
+        .pk-title{
             font-size: 30rpx;
+            margin-bottom: 20rpx;
+            image{
+                height: 28rpx;
+                width: 26rpx;
+                margin-right: 20rpx;
+            }
+            .part{
+                height: 28rpx;
+                width: 30rpx;
+            }
+            .brand{
+                width: 28rpx;
+                height: 22rpx;
+            }
+            .regin{
+                width: 36rpx;
+                height: 42rpx;
+            }
+
+        }
+        .title-1{
             padding-bottom: 25rpx;
-            border-bottom: 2rpx solid #F2F2F2;
             @include flex-just-between;
+            align-items: center;
+            font-size: 28rpx;
+            .name{
+                font-size: 36rpx;
+                font-weight: 500;
+                margin-right: 20rpx;
+            }
             .right{
-                font-size: 28rpx;
-                font-weight: normal;
+                
             }
         }
         .action{
-            color: #919191;
-            margin-left:20rpx;
+            color: $pc;
+            text-decoration: underline;
         }
         .title-2{
-            font-size: 28rpx;
+            font-size: 30rpx;
             padding: 25rpx 0;
             border-top: 2px solid #F2F2F2;
-            border-bottom: 2rpx solid #F2F2F2;
             @include flex-just-between;
             .right{
                 display: flex;
                 align-items: center;
-                .action{
-                    margin-right: 20rpx;
-                }
             }
         }
         .section-content{
             padding: 30rpx 20rpx;
         }
-        &-1{
-            .price-box{
-                box-sizing: border-box;
-                background-color: #fff;
-                position: absolute;
-                left: 5%;
-                top: -50rpx;
-                display: flex;
-                padding: 20rpx;
-                font-size: 24rpx;
-                justify-content: space-between;
-                border-radius: 15rpx;
-                width: 90%;
-                box-shadow: 0 5px 5px #F2F2F2;
+        .item-box{
+            padding: 20rpx 0;
+            .left,.center,.right{
+                flex: 1;
+                text-align: center;
                 text{
-                    text-align: center;
                     display: block;
-                    margin-top: 10rpx;
+                    &:nth-child(2){
+                        font-size: 30rpx;
+                        line-height: 50rpx;
+                    };
                 }
+                .step-tips{
+                    color: $b4c;
+                }
+                text:first-child{
+                    font-size: 39rpx;
+                }
+               
             }
-            .action-list{
-                display: flex;
-                flex-wrap: wrap;
-                margin-top: 80rpx;
-                justify-content: space-between;
-                font-size: 26rpx;
-                .action-item{
-                    display: flex;
-                    flex-direction: column;
-                    width: 130rpx;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 20rpx;
-                    image{
-                       width: 42rpx; 
-                       height: 42rpx;
-                       margin-bottom: 20rpx;
-                    }
-                }
+            .coin{
+                color: $pc;
             }
         }
         &-2{
@@ -161,38 +165,56 @@
                     border-bottom: 2rpx solid #F2F2F2;
                     text-align: center;
                     font-size: 28rpx;
-                    margin-top: 20rpx;
+                    .PKStage{
+                        color: red;
+                    }
+                    .PKProject{
+                        margin-top: 20rpx;
+                        font-size: 32rpx;
+                    }
                     .PKView{
                         @include flex-just-between;
-                        padding: 30rpx 80rpx;
+                        padding: 30rpx;
                         .imageBox{
-                            background-color: red;
+                            color: red;
                             position: relative;
                             padding: 5rpx;
-                            border-radius: 15rpx;
                             font-size: 26rpx;
-                            color: #fff;
                             @include flex-dire-column;
                             align-items: center;
                             .crown{
                                 position: absolute;
-                                left: -40rpx;
-                                top: -40rpx;
+                                left: -20rpx;
+                                top: -20rpx;
                             }
                             image{
-                                height: 160rpx;
-                                width: 160rpx;
+                                height: 180rpx;
+                                width: 180rpx;
                                 margin-bottom: 10rpx;
-                                border-radius: 10rpx;
+                                border-radius: 50%;
                                 overflow: hidden;
+                                border: 1rpx solid $g2c;
                                 background-color: salmon;
                             }
                         }
+                        .square{
+                            .crown{
+                                left: -30rpx;
+                                top: -30rpx;
+                            }
+                            image{
+                                border-radius: 15rpx;
+                            }
+                        }
                         .center{
-                            @include flex-align-center;
+                            padding:0 20rpx;
+                            .vs{
+                                margin-top: -60rpx;
+                            }
+
                         }
                         .right{
-                            background-color: $lpc;
+                            color: #000;
                         }
                     }
                 }
@@ -203,28 +225,25 @@
             // 我的任务
             .myJob{
                 overflow: hidden;
-                padding: 30rpx 0;
-                .myJobList{
-                    display: flex;
-                    flex-wrap: nowrap;
-                    .jobItem{
-                        @include flex-dire-column;
-                        align-items: center;
-                        margin-right: 24rpx;
-                        justify-content: space-between;
+                padding: 0;
+                .swiper{
+                    swiper-item{
+                        .progress{
+                            .left,.van-progress{
+                                flex: 1;
+                            }
+                            margin-bottom: 20rpx;
+                        }
                     }
                 }
             }
-
         }
         &-collpase{
             .view-more{
                 text-align: center;
                 height: 100rpx;
                 text{
-                    background-color: $lpc;
-                    border-radius: 15rpx;
-                    color: #fff;
+                    color: $lpc;
                     padding: 10rpx 20rpx;
                 }
             }

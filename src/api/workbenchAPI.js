@@ -1,25 +1,34 @@
 import request from '../utils/request';
 /**
- * 更新用户信息
+ * 用户活动列表
  * @parentId
  */
-const salesAssistant = async (params = {}) => request.post({
+const getUserActivities = async (params = {}) => request.post({
   data: params,
-  url: 'salesAssistant/update'
+  url: 'kpi/getUserActivities'
 });
-const updateUserInfo = async(params = {}) => request.post({
+
+// 获取活动信息
+const getActivityInfo = async(params = {}) => request.post({
   data: params,
-  url: '/member/update'
+  url: 'kpi/getActivityInfo'
 })
+// 扫码核销
+const checkOffCode = async(params = {}) => request.post({
+  data: params,
+  url: 'kpi/checkOffCode'
+})
+
+
 // 获取带单人  签单人信息
 const getUserList = async(params = {}) => request.post({
   data: params,
-  url: 'getusercat'
+  url: 'kpi/getUserCat'
 })
 
-
 export default {
-  salesAssistant,
-  updateUserInfo,
+  getUserActivities,
+  getActivityInfo,
+  checkOffCode,
   getUserList
 };

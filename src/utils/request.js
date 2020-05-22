@@ -22,7 +22,8 @@ const interceptors = {
     async setToken(options) {
       const token = await tokenManage.get();
       options.header = options.header || {};
-      options.header.token = `${token}`;
+      // options.header.token = `${token}`;
+      options.header['x-feimi-token'] = `${token}`;
       return options;
     },
     // 检查网络
@@ -68,10 +69,10 @@ const interceptors = {
         //   status
         // } = result.data;
         // console.log('status=======', status)
-        // if (status === 250) {
-        // await tokenManage.clear();
-        // await tokenManage.get()
-        // result = await request.send(options);
+        // if (status === 401) {
+        //   await tokenManage.clear();
+        //   await tokenManage.get()
+        //   result = await request.send(options);
         // }
       } else if (result.statusCode >= 400 && result.statusCode < 500) {
         throw new Error('Bad Request.', result.data);

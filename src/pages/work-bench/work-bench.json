@@ -5,7 +5,6 @@
   "usingComponents": {
     "van-progress":"../../miniprogram_npm/vant-weapp/progress",
     "w-popup":"../../components/popup/index",
-    "van-circle": "../../miniprogram_npm/vant-weapp/circle",
     "w-coin-card": "../../components/coin-card/coin-card",
     "user-acc-view":"./user-acc-view/user-acc-view"
   }

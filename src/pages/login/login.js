@@ -32,43 +32,43 @@ Page({
   async getLoginStatus() {
     this.$showLoading()
     this.$hideLoading()
-    const { code} = await wx.$login();
-    console.log(code)
+    // const { code} = await wx.$login();
+    // console.log(code)
     // const result = await request.get({
     //   url: 'getopenid',
     //   auth: true
     // });
-    wx.request({
-      url: `${config.baseUrl}getopenid`,
-      data: {
-        code
-      },
-      method: 'POST',
-      success: (res) => {
-        const response = res.data
-        console.log(response)
-        // const { token, openId } = response.data
-        // if (response.resultCode == 1) {
-        // 缓存token两小时
-        // localStorage.set('token', token, 120)
-        // // 用于跟踪用户行为
-        // wx.setStorageSync('openId', openId)
-        // // ca推荐单浏览数据
-        // wx.setStorageSync('nickName', nickName)
-        // // 缓存用户手机号
-        // wx.setStorageSync('phone', phone);
-        // cb && cb();
-        // wx.setOpenid(openId)
-        // wx.init()
-        // }
-      },
-      fail: (err) => {
-      },
-      complete: (res) => {
-        // callBackQueue.forEach(cb => cb && typeof(cb) === 'function' && cb())
-        // callBackQueue = []
-      }
-    })
+    // wx.request({
+    //   url: `${config.baseUrl}getopenid`,
+    //   data: {
+    //     code
+    //   },
+    //   method: 'POST',
+    //   success: (res) => {
+    //     const response = res.data
+    //     console.log(response)
+    // const { token, openId } = response.data
+    // if (response.resultCode == 1) {
+    // 缓存token两小时
+    // localStorage.set('token', token, 120)
+    // // 用于跟踪用户行为
+    // wx.setStorageSync('openId', openId)
+    // // ca推荐单浏览数据
+    // wx.setStorageSync('nickName', nickName)
+    // // 缓存用户手机号
+    // wx.setStorageSync('phone', phone);
+    // cb && cb();
+    // wx.setOpenid(openId)
+    // wx.init()
+    // }
+    // },
+    // fail: (err) => {
+    // },
+    // complete: (res) => {
+    // callBackQueue.forEach(cb => cb && typeof(cb) === 'function' && cb())
+    // callBackQueue = []
+    //   }
+    // })
     // wx.hideLoading()
     // const { data, resultCode } = result
     // if (resultCode != '1') throw new Error('Token fetch failed');

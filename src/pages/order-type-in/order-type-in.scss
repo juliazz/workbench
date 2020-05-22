@@ -15,15 +15,15 @@
         }
         .field{
             position: relative;
-            // height: 80rpx;
-            // line-height: 80rpx;
+            height: 45rpx;
+            line-height: 45rpx;
             .arr-box{
                 height: 70rpx;
                 line-height: 70rpx;
                 width: 50rpx;
                 position: absolute;
                 left: 91vw;
-                top: 8rpx;
+                top: 14rpx;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -36,6 +36,9 @@
                 height: 100%;
                 width: 100%;
                 color: #fff;
+                .picker{
+                    height: 70rpx;
+                }
             }
         }
         input{
@@ -69,4 +72,15 @@
         width: 300rpx;
     }
 
+}
+.guide{
+    .content{
+        .title{
+            text-align: center;
+            font-weight: 500;
+            line-height: 90rpx;
+            font-size: 30rpx;
+        }
+        padding-bottom: 30rpx;
+    }
 }

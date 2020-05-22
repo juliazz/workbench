@@ -1,7 +1,9 @@
 import api from '../../api/index.js'
 import util from '../../utils/utils'
+import fileHelper from '../../utils/fileHelper.js'
 import storangeMange from '../../utils/storage-manage';
-// import { getSetting } from '../../utils/getSetting.js'
+const {base64src} = fileHelper
+
 const fetch = async (options) => {
   try {
     return await api.accountLogin()
@@ -9,27 +11,15 @@ const fetch = async (options) => {
     return {}
   }
 }
-let Timer
+let Timer; let user_id;
 Page({
   $route: 'pages/work-bench/work-bench',
   /**
    * 页面的初始数据
    */
   data: {
+    showPage: false,
     popupType: '',
-    activeList: [
-      {
-        name: '5.1-5.5 [欧派]全国直播',
-        id: 1
-      },
-      {
-        name: '5.6-5.10 [欧派]全国直播',
-        id: 2
-      },
-      {name: '5.10-5.15 [欧派]全国直播',
-        id: 3
-      }
-    ],
     posterImgs: [{
       imgUrl: '../../assets/image/poster1.jpg'
     }, {
@@ -49,7 +39,7 @@ Page({
     type: '2d',
     postCurrent: 0,
     liveCurrent: 0,
-    activeId: 1,
+    activeId: null,
     unfoldStateList: [{
       state: false
     }, {
@@ -69,14 +59,16 @@ Page({
    */
   onLoad: async function(options) {
     this.$showLoading()
-    await storangeMange.setActivityId(1)
+    user_id = 1
+    this.getUserActivities()
+
     // const result = await this.$getPreload(fetch, options)
     // console.log(result)
     // 模拟倒计时 接口来了在接口返回时间处调用
-    let oDate2 = new Date().getTime();// 现在
-    let oDate3 = new Date('2020-5-30 00:00').getTime();// 凌晨就是5月12号
-    console.log(oDate3 - oDate2)
-    this.showTimeDown(1754026643)
+    // let oDate2 = new Date().getTime();// 现在
+    // let oDate3 = new Date('2020-5-30 00:00').getTime();// 凌晨就是5月12号
+    // console.log(oDate3 - oDate2)
+    // this.showTimeDown(1754026643)
     this.$hideLoading()
     // 检查授权
     //  getSetting().then((res) => {
@@ -90,6 +82,53 @@ Page({
    */
   onReady: function() {
 
+  },
+  async getUserActivities() {
+    const result = await api.getUserActivities({user_id, auth: true})
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    const activeId = data[0].activity_id
+    // 默认选中第一个活动
+    this.getActivityData(activeId)
+    this.setData({activeList: data, activeId})
+  },
+  // 根据活动id查活动数据
+  async getActivityData(activeId) {
+    this.$showLoading()
+    const result = await api.getActivityInfo({activity_id: activeId})
+    this.$hideLoading()
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    await storangeMange.setActivityId(activeId)
+    let {info, period, fund, poster ,live_qrcode, activity_reg_qrcode} = data
+    info.start_date = util.getMouthDay(info.start_date)
+    info.end_date = util.getMouthDay(info.end_date)
+    period.start_datetime = util.formatDate2(period.start_datetime)
+    period.end_datetime = util.formatDate2(period.end_datetime)
+    this.showTimeDown(period.end_time * 1000 - period.current_time * 1000)
+    // 海报数据、
+    const activeCode = await this.getBase64ImageUrl(activity_reg_qrcode)
+    console.log('activeCode======',activeCode)
+    this.setData({
+      activityData: {info, period, fund},
+      poster,
+      live_qrcode,
+      activeCode,
+      showPage: true
+    })
+  },
+  // 点击列表更改选中activeId
+  changeActive: function(eve) {
+    const { activeId } = eve.currentTarget.dataset
+    this.setData({
+      activeId
+    })
+  },
+  // 点击确认后请求对应活动数据
+  sureChangeActive: function() {
+    const { activeId } = this.data
+    this.getActivityData(activeId)
+    this.setData({popupType: ''})
   },
   // 倒计时
   showTimeDown(time) {
@@ -114,20 +153,9 @@ Page({
         clearInterval(Timer)
         this.setData({ activeEndTime: 0 })
       }
-    }, 6000)
+    }, 60000)
   },
-  changeActive: function(eve) {
-    const { activeId } = eve.currentTarget.dataset
-    this.setData({
-      activeId
-    })
-  },
-  // 点击确认后请求对应活动数据
-  sureChangeActive: function() {
-    const { activeId } = this.data
-    this.$showLoading()
-    this.$hideLoading()
-  },
+
   popupShow: function(eve) {
     const { popupType } = eve.currentTarget.dataset
     if (popupType == 'choosePoster' || popupType == 'liveInvite') { this.getTabBar().hideTabBar(); }
@@ -142,23 +170,6 @@ Page({
       popupType: ''
     })
   },
-  $onOpenSetting(e) {
-    const { authSetting } = e.detail
-    if (authSetting['scope.writePhotosAlbum'] === true) {
-      this.setData({
-        authSaveAlbum: true
-      })
-    } else {
-      this.setData({
-        authSaveAlbum: false
-      })
-      wx.showModal({
-        title: '提示',
-        content: '获取权限失败，将无法保存到相册哦~',
-        showCancel: false
-      })
-    }
-  },
   // 选择海报 或 直播邀请
   choosePost(eve) {
     const {index, type} = eve.currentTarget.dataset
@@ -167,32 +178,35 @@ Page({
       [`${type}`]: index
     })
   },
-  // viewMore: function(eve) {
-  //   const { index } = eve.currentTarget.dataset
-  //   let { unfoldStateList } = this.data
-  //   this.setData({
-  //     [`unfoldStateList[${index}].state`]: !unfoldStateList[index].state
-  //   })
-  // },
   // 点击开始的时间
   timestart: function(e) {
     this.setData({ timestart: e.timeStamp });
   },
   // 点击结束的时间
   timeend: function(e) {
+    const {url} = e.currentTarget.dataset
     this.setData({ timeend: e.timeStamp });
-    this.savePhoto()
+    this.savePhoto(url)
   },
-  savePhoto() {
+  //把base64转换成图片
+  async getBase64ImageUrl(data) {
+    return new Promise((resolve, reject)=>{
+      base64src(data,(res)=>{
+        resolve(res)
+      })
+    })
+    // return base64ImgUrl
+    /// 刷新数据
+  //   this.setData({
+  //     baseImgUrl:base64ImgUrl
+  //   })
+  },
+  savePhoto(url) {
     let times = this.data.timeend - this.data.timestart;
-    let _that = this;
     if (times > 1000) {
-      console.log('this.data.tempFilePath===', this.data.tempFilePath)
       wx.downloadFile({
-        url: 'https://api.fmlesson.cn/upload/20200421/8dc1e6a77a1f8245ad999265b2413c64.jpg',
+        url,
         success: async(res) => {
-          console.log('res===', res)
-          console.log(res.tempFilePath)
           this.setData({
             tempFilePath: res.tempFilePath
           })
@@ -202,61 +216,46 @@ Page({
           if (errMsg == 'saveImageToPhotosAlbum:ok') {
             this.$showToast('图片已保存至本地')
           }
-          // 图片保存到本地
-          // wx.saveImageToPhotosAlbum({
-          //   filePath: this.data.tempFilePath,
-          //   success: function(data) {
-          //     _that.setData({ savePopupShow: true, saveSucess: true });
-          //   },
-          //   fail: function(err) {
-          //     console.log(err);
-          //     _that.setData({ savePopupShow: true, saveSucess: false });
-          //     // if (err.errMsg === 'saveImageToPhotosAlbum:fail auth deny') {
-          //     // }
-          //   },
-          //   complete(res) {
-          //     console.log(res);
-          //   }
-          // });
         },
         fail: (params) => {
+          console.log(params)
         }
       });
     }
   },
   // 核销码输入
   bindinput(e) {
-    console.log(e)
+    this.setData({
+      barCodeNum:e.detail.value
+    })
   },
   openScan() {
     wx.scanCode({
       onlyFromCamera: true,
       success: (ev) => {
         console.log('scanCode->', ev)
-        // this.scanCode(ev)
+        let { errMsg, result } = ev
+        if (errMsg != 'scanCode:ok') {
+           return this.$showToast('扫码失败')
+        }
+        result = JSON.parse(result)
+        this.scanCode(result)
       }
     })
   },
-
+  async scanCode(result){
+    const getResult = await api.checkOffCode(result)
+    const { msg, data, status } = getResult;
+    if (status != '200') return this.$showToast(msg);
+    getApp().globalData.scanRes = data
+    this.$routeTo(`order-type-in`)
+  },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
 
   },
-  onPageScroll: function(event) {
-    const { scrollTop } = event
-    console.log(event)
-    console.log(scrollTop)
-    if (scrollTop <= 0) {
-      this.setData({_fixed: true})
-      return
-    }
-    this.setData({
-      _fixed: false
-    })
-  },
-
   /**
    * 生命周期函数--监听页面隐藏
    */

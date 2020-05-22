@@ -6,6 +6,7 @@ import {
 
 App({
   async onLaunch() {
+    await tokenManage.set('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6InN4cy00ZjFnMjNhMTJhYSJ9.eyJqdGkiOiJzeHMtNGYxZzIzYTEyYWEiLCJpYXQiOjE1ODk5NjUxMjksImV4cCI6MTYyMTUwMTEyOSwidWlkIjoxfQ.hIi8L2jJ4nq_AUctfKQv0qlv6UYOtrWILAKz0HVDdrg');
     // await tokenManage.get()
     const getSystemInfo = wx.getSystemInfoSync();
     console.log('getSystemInfo===', getSystemInfo);
@@ -20,8 +21,8 @@ App({
     } catch (error) {
       logger.warn('session_key 已经失效');
       if (storageManage.getAccessToken()) {
-        // await tokenManage.clear();
-        // await tokenManage.get()
+        await tokenManage.clear();
+        await tokenManage.get()
       }
     }
   },

@@ -1,0 +1,7 @@
+
+{
+  "navigationBarTitleText": "消息",
+  "usingComponents": {
+    "w-item-box":"../../components/item-box-lcr/item-box-lcr"
+  }
+} 

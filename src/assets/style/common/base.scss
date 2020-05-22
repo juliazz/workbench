@@ -34,6 +34,9 @@
     display: flex;
     justify-content: flex-end;
 }
+.bor-bottom{
+    border-bottom:2rpx solid #e5e5e5; 
+}
 @mixin line{
     width: 100%;
     content: '';

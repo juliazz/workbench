@@ -1,6 +1,6 @@
 import api from '../../api/index.js'
 
-let userListRes = [] // 完整的签单人列表
+let userListRes = [] // 完整的员工列表
 Page({
   $route: 'pages/launch-pk/launch-pk',
   /**

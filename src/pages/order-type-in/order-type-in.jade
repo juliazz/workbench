@@ -43,13 +43,13 @@ w-page(
               class="w-input"
               name="brand"
               placeholder="请选择订单品牌"
-              value="{{order.brand}}"
+              value="{{order.brand.brandName}}"
               data-type="brand"
               bindblur="bindblur"
               maxlength="30"
           )
-          view.arr-box
-            text.right-arrow(bindtap="$routeLink" data-path="order-brand")
+          view.arr-box(bindtap="$routeLink" data-path="order-brand")
+            text.right-arrow
         w-field(class="field" prop="date" label="订单日期:")
           w-input(
               class="w-input"
@@ -61,12 +61,12 @@ w-page(
               bindblur="bindblur"
               maxlength="30"
           )
-          view.arr-box
-            text.right-arrow(bindtap="popupShow" data-popup-type="datePicker")
+          view.arr-box(bindtap="popupShow" data-popup-type="datePicker")
+            text.right-arrow
         w-field(class="field" prop="price" label="订单金额:")
           w-input(
               class="w-input"
-              name="date"
+              name="price"
               type="digit"
               placeholder="请输入订单金额"
               value="{{order.price}}"
@@ -74,36 +74,13 @@ w-page(
               bindblur="bindblur"
               maxlength="30"
           )
-        w-field(class="field" prop="sign" label="签单部门:")
-          w-input(
-              class="w-input"
-              name="signBranch"
-              placeholder="请选择签单人所属部门"
-              value="{{order.signBranch}}"
-              disabled
-              data-type="signBranch"
-              bindblur="bindblur"
-              maxlength="30"
-          )
-          view.arr-box
-            text.right-arrow()
-            picker(
-              mode="multiSelector"
-              data-type="signBranch"
-              bindchange="bindMultiPickerChange"
-              bindcolumnchange="bindMultiPickerColumnChange" 
-              value="{{multiIndexsignBranch}}" 
-              range-key="name"
-              range="{{multiArray}}"
-            )
-              view.picker  占位
         w-field(class="field" prop="sign" label="签单人:")
           w-input(
               class="w-input"
               name="sign"
               disabled
               placeholder="请选择签单人"
-              value="{{order.sign}}"
+              value="{{order.sign.name}}"
               data-type="sign"
               bindblur="bindblur"
               maxlength="30"
@@ -111,36 +88,26 @@ w-page(
           view.arr-box
             text.right-arrow()
             picker(
-              mode="multiSelector"
               data-type="sign"
-              bindchange="bindMultiPickerChange"
-              bindcolumnchange="bindMultiPickerColumnChange" 
-              value="{{multiIndexsign}}" 
+              bindchange="bindPickerChange"
+              value="{{indexOne}}" 
               range-key="name"
-              range="{{multiArray}}"
+              range="{{arrayOne}}"
             )
               view.picker  占位
         w-field(class="field" prop="guide" label="带单人:")
           w-input(
               class="w-input"
               name="guide"
+              disabled
               placeholder="请选择带单人"
-              value="{{order.guide}}"
+              value="{{order.guide.name}}"
               data-type="guide"
               bindblur="bindblur"
               maxlength="30"
           )
-          //- view.arr-box
-          //-   text.right-arrow()
-          //-   picker(
-          //-     mode="multiSelector"
-          //-     data-type="guide"
-          //-     bindchange="bindMultiPickerChange"
-          //-     range-key="name"
-          //-     bindcolumnchange="bindMultiPickerColumnChange" 
-          //-     value="{{multiIndexguide}}" range="{{multiArray}}"
-          //-   )
-          //-     view.picker  占位
+          view.arr-box(bindtap="popupShow" data-popup-type="guide")
+            text.right-arrow
         w-field(class="field" prop="remark" label="备注:")
           w-input(
               class="w-input"
@@ -154,6 +121,7 @@ w-page(
         view.upload
           view.tips 上传凭证：
           van-uploader(
+            bind:before-read="beforeRead" use-before-read="{{true}}"
             file-list="{{ fileList }}" bind:after-read="afterRead"
             preview-image
           )
@@ -171,15 +139,29 @@ van-calendar(
   round="{{calendarConfig.round}}"
    bind:close="onClose" bind:confirm="onConfirm"
   )
-  //- 签单人弹窗
-//- w-popup-module(
-//-   class="w-popup date-picker"
-//-   show="{{popupType=='guideList'}}"
-//-   type="center"
-//-   closeIcon="true"
-//-   closeBottom="true"
-//-   headTitle=""
-//- )
-//-   view(slot="content" class="content")
+  //- 带单人弹窗
+w-popup-module(
+  class="w-popup guide"
+  show="{{popupType=='guide'}}"
+  type="bottom"
+  closeIcon="{{false}}"
+  closeBottom="true"
+  bindcallback="closeGuidePop"
+  headTitle=""
+)
+  view(slot="content" class="content")
+    view.title 带单人
+    van-steps(steps="{{ steps }}" active="{{ active }}" active-color="{{$themColor}}")
+    view.step-list
+      vant-cell(
+        wx:for="{{currentStepList}}" title="{{item.name}}" wx:key="index"
+        data-index="{{index}}" data-id="{{item.id}}" bind:click="nextStep"
+        border="{{false}}"
+      )
+        vant-icon( wx:if="{{activeIndex==index}}" 
+          name="success"  slot="right-icon" 
+          class="custom-icon" color="{{$themColor}}" 
+        )
+        
     
     

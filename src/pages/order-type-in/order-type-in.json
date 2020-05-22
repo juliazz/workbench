@@ -5,8 +5,11 @@
     "w-field": "../../components/field/index",
     "w-input": "../../components/input/index",
     "van-calendar": "../../miniprogram_npm/vant-weapp/calendar/index",
-    "van-uploader": "../../miniprogram_npm/vant-weapp/uploader"
-    
+    "w-field":"../../components/field/index",
+    "w-field-group":"../../components/field-group/index",
+    "w-input":"../../components/input/index",
+    "van-uploader": "../../miniprogram_npm/vant-weapp/uploader",
+    "van-steps": "../../miniprogram_npm/vant-weapp/steps/index"
   }
 }
   

@@ -1,4 +1,7 @@
 export default Component({
+  options: {
+    addGlobalClass: true // 页面影响组件样式
+  },
   properties: {
     value: {
       type: String,

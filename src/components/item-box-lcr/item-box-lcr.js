@@ -2,7 +2,7 @@
 Component({
   behaviors: [],
   options: {
-    multipleSlots: true,
+    multipleSlots: true, // 在组件定义时的选项中启用多slot支持
     addGlobalClass: true // 页面影响组件样式
   },
   properties: {

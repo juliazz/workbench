@@ -1,73 +1,77 @@
-
-w-loading(id="w-loading")
 w-page(
   class="w-page pages-work-bench"
+  showPage="{{showPage}}"
 )
   view(slot="content" class="content")
     scroll-view( scroll-y="true" style="height: 90vh")
       view(class="header")
-        view.placebg
-        view.left
-          view.avator()
-            open-data.avator(type="userAvatarUrl" )
-          view.activity-info
-            view.title
-              text 5.1-5.6 【欧派】全国直播
-            view.content-info
-              text 南通市心心橱柜
-              text 南通商场心心旗
-            view.name
-              text 某某某
-        view.right(bindtap="popupShow" data-popup-type="changeActive")
-          text.change 活动切换
-          w-icon(type="down-orange" size="small")
-      view.section.section-1
+        view.title-info
+          view.left
+            view.avator()
+              open-data.avator(type="userAvatarUrl" )
+            view.activity-info
+              view
+                tex.name 某某某 
+                text 南通市心心橱柜
+              view.title
+                text {{activityData.info.start_date}}-{{activityData.info.end_date}} {{activityData.info.name}}
+          view.right(bindtap="popupShow" data-popup-type="changeActive")
+            vant-button( type="info" icon='exchange' size="small" round)
+              text.change 活动切换
         view.price-box
           view.price-item
-            w-currency(value="100" class="oderPrize")
+            w-currency(value="{{activityData.fund.reward}}" class="oderPrize")
             text 奖励总额
           view.price-item
-            w-currency(value="100" class="oderPrize")
+            w-currency(value="{{activityData.fund.recharge}}" class="oderPrize")
             text 已提取余额
           view.price-item
-            w-currency(value="100" class="oderPrize")
+            w-currency(value="{{activityData.fund.punish}}" class="oderPrize")
             text 罚款金额
           view.price-item
-            w-currency(value="100" class="oderPrize")
+            w-currency(value="{{activityData.fund.money}}" class="oderPrize")
             text 账户余额
+      view.section.section-1
         view.action-list
           view.action-item(bindtap="popupShow" data-popup-type="choosePoster")
-            image(src="../../assets/image/icon/haibao.png" mode="widthFix")
+            image(src="../../assets/image/icon/wall-photo.png" mode="widthFix")
             text 推广海报
           view.action-item(bindtap="popupShow" data-popup-type="shopping")
-            image(src="../../assets/image/icon/jiedai.png" mode="widthFix")
+            image(src="../../assets/image/icon/shopping.png" mode="widthFix")
             text 接待逛店
+          view.action-item( bindtap="popupShow" data-popup-type="groupCode" )
+            image(src="../../assets/image/icon/group-bar.png" mode="widthFix")
+            text 群二维码
           view.action-item( bindtap="popupShow" data-popup-type="liveInvite" )
-            image(src="../../assets/image/icon/zhibo.png" mode="widthFix")
+            image(src="../../assets/image/icon/live-invite.png" mode="widthFix")
             text 直播邀请
           view.action-item(bindtap="popupShow" data-popup-type="register")
-            image(src="../../assets/image/icon/haibao.png" mode="widthFix")
+            image(src="../../assets/image/icon/activity-sign-in.png" mode="widthFix")
             text 活动注册码
           view.action-item(bindtap="popupShow" data-popup-type="verification" )
-            image(src="../../assets/image/icon/hexiao.png" mode="widthFix")
+            image(src="../../assets/image/icon/scan-code.png" mode="widthFix")
             text 核销扫码
-          view.action-item(bindtap="$routeLink" data-path="order-type-in")
-            image(src="../../assets/image/icon/hexiao.png" mode="widthFix")
+          view.action-item(bindtap="$routeLink"  data-path="order-type-in")
+            image(src="../../assets/image/icon/order-brand-in.png" mode="widthFix")
             text 订单录入
           view.action-item(bindtap="$routeLink" data-path="material-stock")
-            image(src="../../assets/image/icon/haibao.png" mode="widthFix")
+            image(src="../../assets/image/icon/material.png" mode="widthFix")
             text 活动素材库
           view.action-item
-            image(src="../../assets/image/icon/hexiao.png" mode="widthFix")
+            image(src="../../assets/image/icon/activitymanger.png" mode="widthFix")
             text 活动管理
       view.section.section-2
-        view.active-stage 活动阶段:春暖花开
-        view.active-time 春暖花开 2020.4.1 8：00 -2020.4.4 20：00
-        view.active-left-time
-          view(wx:if="{{activeEndTime==0}}")
-            text.end 已结束
-          view(wx:else)
-            text 距离本活动阶段结束还有
+        view.activity-title
+          image.flag(src='../../assets/image/icon/flag.png')
+          text 活动信息
+        view.active-stage.bor-bottom 当前活动: {{activityData.period.perid_name}}
+        view.active-stage.bor-bottom 活动阶段: {{activityData.period.perid_name}}
+        view.active-time.bor-bottom  活动期限: {{activityData.period.start_datetime}}-{{activityData.period.end_datetime}}
+        view.active-left-time.bor-bottom
+          //- view(wx:if="{{activeEndTime==0}}")
+          //-   text.end 已结束
+          view()
+            text 活动结束倒计时:
             text.time {{activeEndTime.days}}
             text 天
             text.time {{activeEndTime.hours}}
@@ -100,7 +104,7 @@ w-page(
       user-acc-view(
         type="{{4}}"
         name="战区"
-        expandState="{{true}}"
+        expandState="{{false}}}"
         viewData="{{userAreaData}}"
       )
   view(slot="footer" class="footer")
@@ -117,9 +121,10 @@ w-popup-module(
   view(slot="content" class="content")
     view.line1 活动切换
     view.activeListBox
-      view.lineItem(wx:for="{{activeList}}" wx:key="index" bindtap="changeActive" data-active-id="{{item.id}}")
+      view.lineItem(
+        wx:for="{{activeList}}" wx:key="index" bindtap="changeActive" data-active-id="{{item.activity_id}}")
         text {{item.name}}
-        w-icon(type='right' size='right' wx:if="{{item.id==activeId}}")
+        w-icon(type='right' size='right' wx:if="{{item.activity_id==activeId}}")
     view(class="bottom")
         view.close(bindtap="sureChangeActive") 确定
 //- 选择海报弹窗
@@ -138,24 +143,25 @@ w-popup(
           current="{{postCurrent}}"
         )
           block(
-            wx:for="{{posterImgs}}"
+            wx:for="{{poster}}"
             wx:key="index"
           )
             swiper-item
               image(
                 bindtouchstart='timestart'
                 bindtouchend='timeend'
+                data-url="{{item}}"
                 mode="aspectFill"
-                src="{{item.imgUrl}}"
+                src="{{item}}"
               )
       view.tips() 长按图片发送至朋友圈或保存至相册
       view.smallPoster
         scroll-view(scroll-x="true" style="width: 100%")
           view.smallPosterList
             view.album(
-              wx:for="{{posterImgs}}"
+              wx:for="{{poster}}"
               wx:key="index")
-              image(src="{{item.imgUrl}}" bindtap="choosePost" data-index="{{index}}" data-type="postCurrent")
+              image(src="{{item}}" bindtap="choosePost" data-index="{{index}}" data-type="postCurrent")
 //- 接待逛店弹窗
 w-popup-module(
   class="w-popup pop-shopping"
@@ -187,24 +193,25 @@ w-popup(
           current="{{liveCurrent}}"
         )
           block(
-            wx:for="{{posterImgs}}"
+            wx:for="{{live_qrcode}}"
             wx:key="index"
           )
             swiper-item
               image(
+                data-url="{{}}"
                 bindtouchstart='timestart'
                 bindtouchend='timeend'
                 mode = "aspectFill"
-                src="{{item.imgUrl}}"
+                src="{{item.image}}"
               )
       view.tips() 长按图片发送至朋友圈或保存至相册2
       view.smallPoster
         scroll-view(scroll-x="true" style="width: 100%")
           view.smallPosterList
             view.album(
-              wx:for="{{posterImgs}}"
+              wx:for="{{live_qrcode}}"
               wx:key="index")
-              image(src="{{item.imgUrl}}" bindtap="choosePost" data-index="{{index}}" data-type="liveCurrent")
+              image(src="{{item.image}}" bindtap="choosePost" data-index="{{index}}" data-type="liveCurrent")
 //- 注册码弹窗
 w-popup-module(
   class="w-popup pop-shopping"
@@ -217,9 +224,24 @@ w-popup-module(
   view(slot="content" class="content")
     view.tips1 逛店二维码
     image(
-      src=""
+      src="{{activeCode}}"
     )
     view.tips2 长按识别二维码注册
+//- 群二维码弹窗
+w-popup-module(
+  class="w-popup pop-shopping"
+  show="{{popupType=='groupCode'}}"
+  type="center"
+  closeIcon="true"
+  closeBottom="true"
+  headTitle="群二维码"
+)
+  view(slot="content" class="content")
+    //- view.tips1 群二维码
+    image(
+      src="{{activeCode}}"
+    )
+    view.tips2 扫码加入群
 //- 核销扫码弹窗
 w-popup-module(
   class="w-popup pop-cancel-verification"
@@ -249,6 +271,30 @@ w-popup-module(
       view.area-scan
         view.left
           text.line1 1.扫码核销
+          text.line2 点开扫一扫,扫描客户个人中心待核销订单的二维码进行核销
+        view.right(bindtap="openScan")
+          w-icon(type="scan" size="large")
+          tetx 扫一扫
+//- 选择录单方式
+w-popup-module(
+  class="w-popup pop-cancel-verification"
+  show="{{popupType=='orderTypeIn'}}"
+  type="center"
+  closeIcon="true"
+  closeBottom="true"
+  headTitle="选择录单方式"
+)
+  view(slot="content" class="content")
+    view.title 以下两种方式均可使用
+    view.input-cancel.box
+      view.title-input(bindtap="$routeLink" data-path="order-type-in")
+        text.line1 1.手动录入
+        text.line2 
+      
+    view.scan-cancel.box
+      view.area-scan
+        view.left
+          text.line1 1.扫码录单
           text.line2 点开扫一扫,扫描客户个人中心待核销订单的二维码进行核销
         view.right(bindtap="openScan")
           w-icon(type="scan" size="large")

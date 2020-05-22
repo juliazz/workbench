@@ -1,0 +1,31 @@
+
+w-loading(id="w-loading")
+w-page(
+  class="w-page pages-message-detail"
+)
+  view(slot="header" class="header")
+  view(slot="content" class="content")
+    view.message-detail-list
+      view.item-box(wx:for="123456" wx:key="index")
+        w-item-box.w-item-box()
+          view.left(slot="left")
+            image()
+          view.center(slot="center" centerWidth="500")
+            text.customer-name 客户姓名：王俊凯
+            text.customer-tel 阶段：1879638748
+            text.invite-name 项目：婷婷
+            text.belong-name 金额：欧派
+            text 浏览时间：2020.6.1 12：00
+          view.right.flex-dire-column(slot="right")
+            vant-button( type="info"  round="{{true}}"
+              custom-class="detail-btn" color="${{themColor}}" 
+              bind:click="acceptEventer" 
+            )
+              text 接受
+            vant-button( type="info"  round="{{true}}" plain
+              custom-class="detail-btn" color="${{themColor}}" 
+              bind:click="rejectEventer" 
+            )
+              text 拒绝
+
+  view(slot="footer" class="footer")

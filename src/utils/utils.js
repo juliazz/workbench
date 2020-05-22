@@ -35,17 +35,35 @@ const formatDate = (time) => {
   const year = time.getFullYear();
   const month = time.getMonth() + 1;
   const day = time.getDate();
-
   const hour = time.getHours();
   const minute = time.getMinutes();
   const second = time.getSeconds();
   const millisecond = time.getMilliseconds();
-
   const date = [year, month, day].map(formatNum).join('/');
   time = [hour, minute, second].map(formatNum).join(':');
-
   return `${date} ${time}.${millisecond}`;
 };
+//2020-05-18 14:32:57 ==>  2020-5-30 00:00  参数2020-05-18 14:32:57
+const formatDate2 = (time) => {
+  let time_ = new Date(time);
+  const year = time_.getFullYear();
+  const month = time_.getMonth() + 1;
+  const day = time_.getDate();
+  const hour = time_.getHours();
+  const minute = time_.getMinutes();
+  const date = [year, month, day].map(formatNum).join('.');
+  time = [hour, minute].map(formatNum).join(':');
+  return `${date} ${time}`;
+};
+// 2020-05-18 14:32:57 ==> 05.19  参数2020-05-18 14:32:57
+const getMouthDay = (time) => {
+  let date = new Date(time);
+  let seperator1 = ".";
+  let month = date.getMonth() + 1;
+  let strDate = date.getDate();
+  let mouthDay =  month + seperator1 + strDate;
+  return mouthDay;
+}
 // 获取当前时间2018/05/19
 const getNowFormatDate = () => {
   let date = new Date();
@@ -136,7 +154,6 @@ const parseUrl = (url) => {
 const currency = (value ,type) => {
   if (typeof value == 'string') value = parseFloat(value)
   if (isNaN(value)) return value
-  console.log(value, type)
   return `${(value.toFixed(2) + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')}`
 }
 
@@ -368,7 +385,9 @@ export default {
   ...accounting,
   ...validator,
   formatTime,
+  formatDate2,
   normalizeUrl,
+  getMouthDay,
   parseUrl,
   debounce,
   throttle,
