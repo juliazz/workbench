@@ -15,12 +15,12 @@ w-page(
         text 导出订单
   view(slot="content" class="content")
     view.customer-list
-      view.item-box(wx:for="123456" wx:key="index")
+      view.item-box(wx:for="{{personDetailList}}" wx:key="index")
         view.left
-          view.title 直播签单
-          view.time 2020.05.01
+          view.title {{item.des}}
+          view.time {{item.time}}
         view.right
-          w-currency(value="-100" class="oderPrize")
+          w-currency(value="{{item.changes}}" class="oderPrize")
           
           
         

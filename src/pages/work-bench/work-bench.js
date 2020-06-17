@@ -4,10 +4,10 @@ import fileHelper from '../../utils/fileHelper.js'
 import storangeMange from '../../utils/storage-manage';
 
 const {base64src} = fileHelper
-
+const app = getApp()
 const fetch = async (options) => {
   try {
-    return await api.accountLogin()
+    return await api.getUserActivities(options)
   } catch (err) {
     return {}
   }
@@ -19,25 +19,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    showPage: false,
+    showPage: true,
     popupType: '',
-    posterImgs: [{
-      imgUrl: '../../assets/image/poster1.jpg'
-    }, {
-      imgUrl: '../../assets/image/poster2.jpg'
-    }, {
-      imgUrl: '../../assets/image/poster2.jpg'
-    }, {
-      imgUrl: '../../assets/image/poster2.jpg'
-    }, {
-      imgUrl: '../../assets/image/poster2.jpg'
-    }, {
-      imgUrl: '../../assets/image/poster2.jpg'
-    }, {
-      imgUrl: '../../assets/image/poster2.jpg'
-    }
-    ],
-    type: '2d',
     postCurrent: 0,
     liveCurrent: 0,
     activeId: null,
@@ -52,46 +35,39 @@ Page({
     userAreaData: { // 个人区域数据
 
     }
-
   },
-  // onPreLoad: fetch,
+  onPreLoad: fetch,
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
+    console.log('work-bench---------------onLoad')
+    // 一进来先判断有没有注册过
+    user_id = await storangeMange.getUserId()
+    console.log(user_id)
+    // if (!user_id) { this.$routeTo('webview') }
+    // 在判断有没有授权过
+    const userInfo = await storangeMange.getUserInfo()
+    // if(!userInfo){this.setData({popupType:'getUserInfo'})}
     this.$showLoading()
-    user_id = 1
-    this.getUserActivities()
-
-    // const result = await this.$getPreload(fetch, options)
-    // console.log(result)
-    // 模拟倒计时 接口来了在接口返回时间处调用
-    // let oDate2 = new Date().getTime();// 现在
-    // let oDate3 = new Date('2020-5-30 00:00').getTime();// 凌晨就是5月12号
-    // console.log(oDate3 - oDate2)
-    // this.showTimeDown(1754026643)
+    const result = await this.$getPreload(fetch, {user_id, auth: true})
+    this.getRankInfo()
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    const activeId = data[0].activity_id
+    // const activeId = 1
+    await storangeMange.setActivityId(activeId)
+    // await storangeMange.setActivityId(1)
+    // 默认选中第一个活动
+    this.getActivityData(activeId)
+    this.setData({activeList: data, activeId, showPage: true})
     this.$hideLoading()
-    // 检查授权
-    //  getSetting().then((res) => {
-    //   this.setData({
-    //     authSaveAlbum: res['scope.writePhotosAlbum']
-    //   })
-    // })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
 
-  },
-  async getUserActivities() {
-    const result = await api.getUserActivities({user_id, auth: true})
-    const { msg, data, status } = result;
-    if (status != '200') return this.$showToast(msg);
-    const activeId = data[0].activity_id
-    // 默认选中第一个活动
-    this.getActivityData(activeId)
-    this.setData({activeList: data, activeId})
   },
   // 根据活动id查活动数据
   async getActivityData(activeId) {
@@ -101,21 +77,40 @@ Page({
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
     await storangeMange.setActivityId(activeId)
-    let {info, period, fund, poster, live_qrcode, activity_reg_qrcode} = data
+    let {info, period, rights, fund, poster, live_qrcode, activity_reg_qrcode, view_shop} = data
     info.start_date = util.getMouthDay(info.start_date)
     info.end_date = util.getMouthDay(info.end_date)
     period.start_datetime = util.formatDate2(period.start_datetime)
     period.end_datetime = util.formatDate2(period.end_datetime)
     this.showTimeDown(period.end_time * 1000 - period.current_time * 1000)
-    // 海报数据、
+    // 成员注册码、
     const activeCode = await this.getBase64ImageUrl(activity_reg_qrcode)
     console.log('activeCode======', activeCode)
+    // 用户等级 及等级信息（订单录入）
+    getApp().globalData.orderInType = rights
     this.setData({
-      activityData: {info, period, fund},
+      info,
+      period,
+      fund,
+      rights,
       poster,
       live_qrcode,
       activeCode,
-      showPage: true
+      view_shop
+    })
+  },
+  async getRankInfo() {
+    const result = await api.getRankInfo()
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    const {list, rule} = data
+    const {apartment, brand, person, zone} = list[0]
+    app.globalData.coinRule = rule
+    this.setData({
+      person,
+      apartment, // 部门
+      brand,
+      zone // 战区
     })
   },
   // 点击列表更改选中activeId
@@ -196,11 +191,6 @@ Page({
         resolve(res)
       })
     })
-    // return base64ImgUrl
-    // / 刷新数据
-  //   this.setData({
-  //     baseImgUrl:base64ImgUrl
-  //   })
   },
   savePhoto(url) {
     let times = this.data.timeend - this.data.timestart;
@@ -225,11 +215,18 @@ Page({
     }
   },
   // 核销码输入
-  bindinput(e) {
+  bindblur(e) {
+    const {value } = e.detail
     this.setData({
-      barCodeNum: e.detail.value
+      barCodeNum: value
     })
+    const par = {
+      hx_code: value,
+      type: 'order'
+    }
+    this.scanCode(par)
   },
+
   openScan() {
     wx.scanCode({
       onlyFromCamera: true,
@@ -244,12 +241,17 @@ Page({
       }
     })
   },
+  // 获取马信息
   async scanCode(result) {
     const getResult = await api.checkOffCode(result)
     const { msg, data, status } = getResult;
     if (status != '200') return this.$showToast(msg);
-    getApp().globalData.scanRes = data
-    this.$routeTo('order-type-in')
+    app.globalData.scanRes = data
+    console.log('app.globalData.scanRes', app.globalData.scanRes)
+    this.setData({
+      popupType: ''
+    })
+    this.$routeTo('order-type-in?type=bar')
   },
   /**
    * 生命周期函数--监听页面显示
@@ -263,36 +265,22 @@ Page({
   onHide: function() {
     if (Timer) clearInterval(Timer)
   },
-
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
     if (Timer) clearInterval(Timer)
   },
-
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
 
   },
-
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
 
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-    return {
-      title: '',
-      path: '/pages/home/home',
-      imageUrl: '../../assets/images/share-img.jpg'
-    }
   }
 })
