@@ -4,9 +4,10 @@ const timeNow = new Date()
 import api from '../../api/index.js'
 import fileHelper from '../../utils/fileHelper.js'
 import rules from './helper';
+
 const {upLoadFile} = fileHelper
 let userListRes = []; // 完整的签单人列表 未分类
-let photoFileList = []; //后台返回的接口照片id
+let photoFileList = []; // 后台返回的接口照片id
 let isUpLoading = false
 let brandId; let brandName;
 Page({
@@ -57,8 +58,8 @@ Page({
   onLoad: async function(options) {
     console.log('options======', options)
     // 选择品牌后带回来的参数
-    
-   
+
+
     this.getUserList() // 获取签单人列表
   },
 
@@ -66,7 +67,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    const brandInfo = wx.getStorageSync('brandInfo')||{}
+    const brandInfo = wx.getStorageSync('brandInfo') || {}
     this.setData({
       'order.brand': brandInfo
     })
@@ -207,11 +208,11 @@ Page({
     console.log('event', value, this.data.order);
   },
   // 上传前验证上一张是否上传完毕
-  beforeRead(event){
+  beforeRead(event) {
     const { file, callback } = event.detail;
-    console.log('isUpLoading=========',isUpLoading)
+    console.log('isUpLoading=========', isUpLoading)
     callback(isUpLoading === false);
-    isUpLoading&&this.$showToast('图片上传中请稍后');
+    isUpLoading && this.$showToast('图片上传中请稍后');
   },
   // 图片读取后
   async afterRead(event) {
@@ -225,7 +226,7 @@ Page({
     if (status != '200') return this.$showToast(msg);
     const { fileList = [] } = this.data;
     photoFileList.push(data.resource_id)
-    console.log(photoFileList,'photoFileList===========')
+    console.log(photoFileList, 'photoFileList===========')
     fileList.push({ ...file});
     isUpLoading = false
     this.setData({ fileList });
@@ -233,16 +234,16 @@ Page({
   bindsubmit(event) {
     const { value } = event.detail;
     const {order } = this.data
-    let options = Object.assign({...value,sign:order.sign.id,guide:order.guide.id,cert:photoFileList})
+    let options = Object.assign({...value, sign: order.sign.id, guide: order.guide.id, cert: photoFileList})
     console.log(options)
     const component = this.selectComponent('#field-group');
     component.validateEventer(rules, options, async valid => {
       if (!valid) return this.$showToast('请完善订单信息');
-      if(!options.cert.length) return this.$showToast('请上传凭证!')
+      if (!options.cert.length) return this.$showToast('请上传凭证!')
       // this.orderBrandIn(options);
     });
   },
-  async orderBrandIn(options){
+  async orderBrandIn(options) {
     const res = await api.submitOrder(options)
   },
   popupShow: function(eve) {

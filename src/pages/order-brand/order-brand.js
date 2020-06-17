@@ -41,7 +41,7 @@ Page({
   },
   selectEvent(e) {
     const { brandId, brandName } = e.currentTarget.dataset
-    wx.setStorageSync('brandInfo',{brandId,brandName})
+    wx.setStorageSync('brandInfo', {brandId, brandName})
     this.$navigateBack()
   },
   async onSearch(e) {

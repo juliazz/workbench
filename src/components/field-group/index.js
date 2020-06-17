@@ -36,7 +36,6 @@ Component({
         }
         if (type == 'String' || type == 'Object') {
           _exit = !!value
-          
         }
         console.log(_exit)
         // 校验，只限内容是否符合规则

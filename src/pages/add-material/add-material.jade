@@ -20,20 +20,19 @@ w-page(
     view.upload
       view.upload-tips
         text 上传多张图片或一个视频
-      view.upload-image
+      view.upload-image(wx:if="{{videoList.length==0}}")
         van-uploader(
           file-list="{{ imageList }}" bind:after-read="afterRead"
-          name="image"
-          disabled="{{videoList.length}}"
-          accept="image" preview-image bind:delete="delete"
+          bind:before-read="beforeRead" use-before-read="{{true}}" 
+          disabled="{{imageList.length == 9}}" name="image" accept="image" 
+          preview-image="preview-image" bind:delete="delete"
         )
       view.upload-video
         van-uploader(
-          dta
-          file-list="{{ videoList }}" bind:after-read="afterRead"
-          name="video"
-          disabled="{{imageList.length}}"
-          accept="video" preview-image bind:delete="delete"
+           bind:before-read="beforeRead" use-before-read="{{true}}"
+         file-list="{{ videoList }}" bind:after-read="afterRead" name="video" 
+         disabled="{{videoList.length == 1}}" accept="video" preview-image="preview-image"
+          bind:delete="delete"
         )
           view.upload-w.flex-align-center
             vant-icon(name="video-o" color="#888" size="24px")
@@ -44,6 +43,6 @@ w-page(
       disabled!="{{(!imageList.length) && (!videoList.length)}}"
       custom-class="issue-btn" color="{{$themColor}}" 
       data-path='income-detail?type=normal'
-      bind:click="" 
+      bind:click="comfirmUpLoad" 
     )
       text 确定发布

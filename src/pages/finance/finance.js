@@ -1,20 +1,24 @@
+import api from '../../api/index.js'
+import util from '../../utils/utils'
 
-const fetch = async (options) => {
+const fetch = async () => {
   try {
-    return await Promise.resolve({code: 0})
+    return await api.getFinanceInfo()
   } catch (err) {
     return {}
   }
 }
-
+let personIndex = 1;// 个人页数
+let totalPage;
+let totalData = [];
 Page({
   $route: 'pages/finance/finance',
   /**
    * 页面的初始数据
    */
   data: {
-    activeTabIndex: 1,
-    personDetailShow: true,
+    activeTabIndex: 0,
+    personDetailShow: false,
     popupType: '',
     tabs: ['品牌财务', '个人财务'],
     explainRule: [{
@@ -23,15 +27,60 @@ Page({
     }, {
       title: '2.推广费用均摊支出',
       content: ' 推广总费用／品牌数'
-    }]
+    }],
+    personDetailList: []
   },
   onPreLoad: fetch,
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function(options) {
-    const result = await this.$getPreload(fetch, options)
-    console.log(result)
+  onLoad: function() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: async function() {
+    this.$showLoading()
+    const result = await this.$getPreload(fetch)
+    this.$hideLoading()
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    const { brand, personal} = data
+    this.setData({brand, personal})
+  },
+  // 个人查看详情
+  showPersonDetail: function() {
+    this.setData({personDetailShow: true})
+    this.getPersonalFinaceDetail()
+    this.getPersonalFundInfo()
+  },
+  // 个人详情头部信息
+  async getPersonalFundInfo() {
+    this.$showLoading()
+    const result = await api.getPersonalFundInfo()
+    this.$hideLoading()
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    this.setData({personCount: data})
+  },
+  async getPersonalFinaceDetail() {
+    if (personIndex > totalPage) return this.$showToast('没有更多数据啦！');
+    const par = {
+      page: personIndex,
+      limit: 10
+    }
+    const result = await api.getPersonalCashLog(par)
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    totalPage = data.last_page
+    const personDetailList = data.data.map((i) => {
+      i.time = util.myTime(i.time)
+      return i
+    })
+    totalData = totalData.concat(personDetailList)
+    this.setData({personDetailList: totalData})
   },
   onChange: function(eve) {
     const {index} = eve.detail
@@ -39,8 +88,11 @@ Page({
       activeTabIndex: index
     })
   },
-  showPersonDetail: function() {
-    this.setData({personDetailShow: true})
+  toWidthDraw() {
+    this.$routeTo(`widthdraw?value=${this.data.brand.money}`)
+  },
+  toRecharge() {
+    this.$routeTo('recharge')
   },
   popupShow: function(eve) {
     this.setData({
@@ -59,12 +111,6 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-  },
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -91,13 +137,9 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
+    if(!this.data.personDetailShow){ return}
+    personIndex++
+    console.log('personIndex', personIndex)
+    this.getPersonalFinaceDetail()
   }
 })

@@ -72,20 +72,29 @@ const token = {
     const { code} = await wx.$login();
     console.log(code)
     // todo 用户静默登录refresh
-    // const result = await request.get({
-    //   url: `getopenid`,
-    //   auth: true
-    // });
-    // const { data, resultCode } = result
-    // console.log(result)
-    // if (resultCode != 1) throw new Error('Token fetch failed');
-    // const { token } = data;
-    const result = {
-      data: {
-        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6InN4cy00ZjFnMjNhMTJhYSJ9.eyJqdGkiOiJzeHMtNGYxZzIzYTEyYWEiLCJpYXQiOjE1ODk5NjUxMjksImV4cCI6MTYyMTUwMTEyOSwidWlkIjoxfQ.hIi8L2jJ4nq_AUctfKQv0qlv6UYOtrWILAKz0HVDdrg'
-      }
-    }
-    await this.set(result.data.token);
+    const result = await request.get({
+      url: `sso/login?app_id=${config.appid}&code=${code}`,
+      auth: true
+    });
+    console.log(result)
+    // wx.request({
+    //   url:`http://192.168.1.120:8000/api/sso/login?app_id=${config.appid}&code=${code}`,
+    //   success:(res)=>{
+    //     console.log(res)
+    //   },
+    //   fail: (err) => {
+    //     console.log(err)
+    //   }
+    // })
+
+    const { data, status } = result
+    if (status != 200) throw new Error('Token fetch failed');
+    const { token, user_info } = data;
+    const {openid, unionid, user_id} = user_info
+    storageManage.setOpenId(openid);
+    storageManage.setUnionId(unionid);
+    storageManage.setUserId(user_id);
+    await this.set(token);
     return result;
   },
   complete(type, result) {

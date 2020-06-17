@@ -1,11 +1,8 @@
-
-const fetch = async (options) => {
-  try {
-    return await Promise.resolve({code: 0})
-  } catch (err) {
-    return {}
-  }
-}
+let currentPage = 1;
+let totalPage;
+let totalData = [];
+let type;
+import api from '../../api/index.js'
 
 Page({
   $route: 'pages/account-detail/account-detail',
@@ -15,16 +12,37 @@ Page({
   data: {
     title: 'account-detail'
   },
-  onPreLoad: fetch,
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    // this.$wLoading.show()
-    const result = await this.$getPreload(fetch, options)
-    console.log(result)
-    // this.$wLoading.hide()
+    console.log(options)
+    console.log('onLoad=======currentPage', currentPage)
+    type = options.type
+    this.getPersonalAccountDetail()
   },
+  async getPersonalAccountDetail() {
+    this.$showLoading()
+    if (currentPage > totalPage) return this.$showToast('没有更多数据啦！');
+    const par = {
+      page: currentPage,
+      limit: 10
+    }
+    console.log(type)
+    const result = await api[`${type}`](par)
+    this.$hideLoading()
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    totalPage = data.last_page
+    const personDetailList = data.data.map((i) => {
+      let arr = i.time.split('T');
+      i.time = arr[0]
+      return i
+    })
+    totalData = totalData.concat(personDetailList)
+    this.setData({personDetailList: totalData})
+  },
+
   exportOrder: function() {
     wx.downloadFile({
       url: 'https://cynthianc.github.io/images/123.pdf',
@@ -81,7 +99,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
+    currentPage = 1;
+    console.log('onUnloadonUnloadonUnload=======,currentPage', currentPage)
+    totalData = [];
   },
 
   /**
@@ -95,13 +115,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
+    currentPage++
+    this.getPersonalAccountDetail()
   }
 })

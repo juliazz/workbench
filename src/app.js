@@ -3,11 +3,11 @@ import {
   tokenManage,
   storageManage
 } from './utils/index'
+import api from './api/index'
 
 App({
   async onLaunch() {
-    await tokenManage.set('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6InN4cy00ZjFnMjNhMTJhYSJ9.eyJqdGkiOiJzeHMtNGYxZzIzYTEyYWEiLCJpYXQiOjE1ODk5NjUxMjksImV4cCI6MTYyMTUwMTEyOSwidWlkIjoxfQ.hIi8L2jJ4nq_AUctfKQv0qlv6UYOtrWILAKz0HVDdrg');
-    // await tokenManage.get()
+    await tokenManage.get()
     const getSystemInfo = wx.getSystemInfoSync();
     console.log('getSystemInfo===', getSystemInfo);
   },
@@ -26,6 +26,20 @@ App({
       }
     }
   },
+  async getStepList() {
+    const {stepList} = this.data
+    if (stepList) { return stepList }
+    const result = await api.getPeriodList()
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    this.data.stepList = data
+    return data
+  },
+
   data: {
+  },
+  globalData: {
+    scanRes: {},
+    coinRule: {}
   }
 });
