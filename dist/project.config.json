@@ -3,10 +3,27 @@
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
+		"enhance": true,
 		"postcss": true,
+		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
-		"uglifyFileName": false
+		"coverView": true,
+		"nodeModules": false,
+		"autoAudits": true,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"uglifyFileName": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.10.1",
@@ -94,8 +111,8 @@
 				},
 				{
 					"id": -1,
-					"name": "pages/short-message-material/short-message-material",
-					"pathName": "pages/short-message-material/short-message-material",
+					"name": "pages/num-export/num-export",
+					"pathName": "pages/num-export/num-export",
 					"scene": null
 				}
 			]

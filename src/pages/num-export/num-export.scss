@@ -1,0 +1,18 @@
+
+@import '../../assets/style/index';
+.pages-num-export {
+    .content{
+        padding: 30rpx 40rpx;
+    }
+    .title{
+        font-size: 34rpx;
+        line-height: 80rpx;
+    }
+    .custom-class{
+        border: 2rpx solid $g3c;
+        margin-bottom: 30rpx;
+    }
+    .check-custom{
+        justify-content: flex-end;
+    }
+}

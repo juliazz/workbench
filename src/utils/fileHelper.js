@@ -1,10 +1,11 @@
-import {tokenManage} from './index'
+import {storageManage} from './index'
 
 const upLoadFile = async (path) => {
-  const token = await tokenManage.get()
+  const token = await storageManage.getAccessToken()
+  console.log(path, token)
   return new Promise((resolve, reject) => {
     wx.uploadFile({
-      url: 'https://api.fmlesson.cn/api/upload',
+      url: 'https://api.fmcd.feimi0513.xyz/api/kpi/upload',
       filePath: path,
       header: {'x-feimi-token': token},
       name: 'file',

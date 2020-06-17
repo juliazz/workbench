@@ -32,6 +32,7 @@ Page({
   async afterRead(event) {
     const { file, name } = event.detail;
     isUpLoading = true
+    console.log(file)
     this.setData({isUpLoading})
     const res = await upLoadFile(file.path, name)
     let result = JSON.parse(res)

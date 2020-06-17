@@ -1,6 +1,7 @@
 export default Component({
   options: {
-    multipleSlots: true
+    multipleSlots: true,
+    addGlobalClass: true // 页面影响组件样式
   },
   properties: {
     // 是否显示Page

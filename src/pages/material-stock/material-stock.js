@@ -1,7 +1,7 @@
 import api from '../../api/index.js'
 
 let materialType = 1 // 1 微信素材  2其他素材
-let limit = 10
+let limit = 3
 let currentPage = 1
 let totalPage;
 let totalData = [];
@@ -21,21 +21,19 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function(options) {
-    // this.$wLoading.show()
-    const result = await this.getMaterialList()
-    console.log(result)
-
-    // this.$wLoading.hide()
+  onLoad: function(options) {
+    this.getMaterialList()
   },
   // tab切换
   onTabChange: function(eve) {
     const {index} = eve.detail
     materialType = index + 1
     currentPage = 1
+    totalData = []
     this.setData({
       activeTabIndex: index
     })
+    this.getMaterialList()
   },
   async getMaterialList() {
     if (currentPage > totalPage) return this.$showToast('没有更多数据啦！');
@@ -44,17 +42,18 @@ Page({
       type: materialType,
       limit
     }
+    this.$showLoading()
     const result = await api.getMaterialList(par)
+    this.$hideLoading()
     const { msg, data, status } = result;
-    // if (status != '200') return this.$showToast(msg);
-    // totalPage = data.last_page
-    // const personDetailList = data.data.map((i) => {
-    //   i.time = util.myTime(i.time)
-    //   return i
-    // })
-    // totalData = totalData.concat(personDetailList)
-    // this.setData({personDetailList: totalData})
-    this.addCollpaseState()
+    if (status != '200') return this.$showToast(msg);
+    totalPage = data.last_page
+    const personDetailList = data.data.map((i) => {
+      i.collState = false;
+      return i
+    })
+    totalData = totalData.concat(personDetailList)
+    this.setData({personDetailList: totalData})
   },
 
   // 分享弹窗关闭
@@ -83,16 +82,16 @@ Page({
   // 文字展开折叠
   expandEventer(event) {
     const {index} = event.currentTarget.dataset
-    const {viewMaterialList} = this.data
+    const {personDetailList} = this.data
     this.setData({
-      [`viewMaterialList[${index}].collState`]: !viewMaterialList[index].collState
+      [`personDetailList[${index}].collState`]: !personDetailList[index].collState
     })
   },
   savePhoto: async function (event) {
-    let _that = this;
-    const {type} = event.currentTarget.dataset
+    const {index} = event.currentTarget.dataset
+    const item = this.data.personDetailList[index]
     // if (type == 'image') {
-    const copyText = '这里是剪贴板的内容z,这里是剪贴板的内容z,这里是剪贴板的内容z'
+    const copyText = item.content
     wx.setClipboardData({
       data: copyText,
       success (res) {
@@ -195,6 +194,6 @@ Page({
   onReachBottom: function() {
     currentPage++
     console.log('currentPage', currentPage)
-    this.getPersonalFinaceDetail()
+    this.getMaterialList()
   }
 })

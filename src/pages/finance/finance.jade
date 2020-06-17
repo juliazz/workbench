@@ -105,11 +105,11 @@ w-page(
                 w-currency(value="{{personal.money}}" )
               vant-icon(name="question" color="#888" size="24px" bind:click="popupShow")
             view.btns
-              vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="inviteEventer" )
+              vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="toWidthDraw" )
                 text 提现
-              vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="inviteEventer" )
+              vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="toRecharge" )
                 text 去充值
-        view.person-detail
+        view.person-detail(wx:else)
           view.title.flex-just-between.padding-area.bod-bottom
             view.left 收支明细
             view.right 
@@ -119,17 +119,17 @@ w-page(
                 text 提现
           view.money-type-list.flex-just-between.bod-bottom
             view.type-item
-              w-currency(value="{{personCount.reward}}" class="oderPrize")
-              text 奖励总额
+              w-currency(value="{{personCount.reward}}" )
+              text.tie 奖励总额
             view.type-item
-              w-currency(value="{{personCount.withdraw}}" class="oderPrize")
-              text 已提取金额
+              w-currency(value="{{personCount.withdraw}}" )
+              text.tie 已提取金额
             view.type-item
-              w-currency(value="{{personCount.punish}}" class="oderPrize")
-              text 罚款金额
+              w-currency(value="{{personCount.punish}}" )
+              text.tie 罚款金额
             view.type-item
-              w-currency(value="{{personCount.money}}" class="oderPrize")
-              text 账户余额
+              w-currency(value="{{personCount.money}}" )
+              text.tie 账户余额
           view.money-detail-list
             view.item-box.bod-bottom.padding-area.flex-just-between(wx:for="{{personDetailList}}")
               view.left

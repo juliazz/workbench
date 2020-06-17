@@ -1,0 +1,22 @@
+w-page(
+  class="w-page pages-num-export"
+)
+  view(slot="content" class="content")
+    view.title 选择导出报表项
+    vant-cell(
+      title="全选"
+      custom-class="custom-class"
+      clickable
+    )
+      vant-checkbox(catch:tap="noop" bind:change="onChangeAll" custom-class="check-custom"  class="checkboxes-all"  value="{{ allChecked }}" )
+    vant-checkbox-group(value="{{ result }}" bind:change="onChange" )
+        vant-cell(
+          data-index="{{ index }}"  wx:for="{{ list }}"
+          wx:key="index"
+          title="{{ item.title}}"
+          custom-class="custom-class"
+          clickable
+        )
+          vant-checkbox(catch:tap="noop"  custom-class="check-custom" class="checkboxes" name="{{ item.type }}")
+  
+  view(slot="footer" class="footer")

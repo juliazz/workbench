@@ -7,6 +7,7 @@ import pk from './pkAPI'
 import orderIn from './orderInAPI'
 import statisics from './statisticsAPI'
 import finance from './financeAPI'
+
 export default {
   ...login,
   ...product,

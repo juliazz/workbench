@@ -23,7 +23,7 @@ Page({
     console.log(rechargeNum)
     const result = await api.submitRecharge({
       amount: rechargeNum,
-      app_id: config.appid
+      app_id: config.storeid
     })
     this.$hideLoading()
     const { msg, data, status } = result;

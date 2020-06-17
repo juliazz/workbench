@@ -5,14 +5,14 @@ w-page(
   view(slot="header" class="header")
   view(slot="content" class="content")
     view.tabs.flex-just-between
-      vant-button( size="small" custom-class="tab-btn {{activeList=='audit'?'active':''}}" bind:click="changeEventer" data-type="audit")
-        text 已审核({{auditList.length}})
-      vant-button( size="small" custom-class="tab-btn {{activeList=='wait'?'active':''}}" bind:click="changeEventer" data-type="wait")
+      vant-button( size="small" custom-class="tab-btn {{activeList=='0'?'active':''}}" bind:click="changeEventer" data-type="0")
+        text 审核中({{auditList.length}})
+      vant-button( size="small" custom-class="tab-btn {{activeList=='1'?'active':''}}" bind:click="changeEventer" data-type="1")
         text 已审核({{wattingList.length}})
-      vant-button( size="small" custom-class="tab-btn {{activeList=='fail'?'active':''}}" bind:click="changeEventer" data-type="fail")
+      vant-button( size="small" custom-class="tab-btn {{activeList=='2'?'active':''}}" bind:click="changeEventer" data-type="2")
         text 未通过审核({{failLitst.length}})
     view.material-list
-      view.material-item(wx:for="{{myMaterialList.length}}" wx:key="index")
+      view.material-item(wx:for="{{myMaterialList}}" wx:key="index")
         view.title 提交时间: 2020-50-01
         view.main-info.pad-30-20
           view.words 我独自走在郊外的田野上 要把糕点带给外婆尝一尝
@@ -28,8 +28,4 @@ w-page(
                   src='https://api.fmlesson.cn/upload/20200421/8dc1e6a77a1f8245ad999265b2413c64.jpg'
                   mode="heightFix"
                 )
-          
-
-
-          
   view(slot="footer" class="footer")

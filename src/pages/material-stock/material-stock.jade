@@ -14,20 +14,20 @@ w-page(
       )
     vant-cell(title="我的素材({{tabs.length}})" is-link value="点击查看" link-type="navigateTo" url="/pages/my-material/my-material")
     view.material-list.wx()
-      view.material-item(wx:for="{{viewMaterialList}}" wx:key="*this")
+      view.material-item(wx:for="{{personDetailList}}" wx:key="id")
         view.header.flex-just-between
           view.left.flex-just-start
             view.avator
-              image(src="")
+              image(src="{{item.user_info.avatar}}")
             view.material-info
-              view.material-name 小星星
-              view.share-num 100人分享
-              view.times 2020.06.01
+              view.material-name {{item.user_info.name}}
+              view.share-num {{item.share_num}}人分享
+              view.times {{item.create_time}}
           view.recommend.flex-just-start
             w-icon(type='recommend' size='recommend')
             text 推荐发圈
-        view.words(class="{{viewMaterialList[index].collState?'higer':''}}") 文案文案的的温度计危废物吧是呢粉粉磁轭我内测发件人v文案文案的的温度计危废物吧是呢粉粉磁轭我内测发件人v文案文案的的温度计危废物吧是呢粉粉磁轭我内测发件人v文案文案的的温度计危废物吧是呢粉粉磁轭我内测发件人v文案文案的的温度计危废物吧是呢粉粉磁轭我内测发件人v文案文案的的温度计危废物吧是呢粉粉磁轭我内测发件人v文案文案的的温度计危废物吧是呢粉粉磁轭我内测发件人v 单价恩负迦尔纳法尔范耐热今年发女宝充分发热芙蓉王北方网方法
-          text.view-more(bindtap="expandEventer" data-index="{{index}}" wx:if="{{!viewMaterialList[index].collState}}") 查看全文
+        view.words(class="{{item.collState?'higer':''}}") {{item.content}}
+          text.view-more(bindtap="expandEventer" data-index="{{index}}" wx:if="{{!item.collState}}") 查看全文
         van-grid(column-num="3" gutter="{{ 5 }}" square custom-class="van-grid {{activeTabIndex==1?'no-boder-bottom':''}}" border="{{false}}")
           van-grid-item(use-slot wx:for="1233456"  text="8888" wx:key="*this" content-class="grid-item")
             view.grid-item()
