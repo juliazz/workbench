@@ -74,8 +74,8 @@ w-popup-module(
       text.comfirm(bindtap="onConfirm" data-type="step") 确认
     view.list-box
       scroll-view.list(scroll-y="true" style="height: 40vh")
-        view.line(wx:for="1234456" wx:key="index" bindtap="onChange" data-index="{{index}}" data-type="step")  
-          tetx 234
+        view.line(wx:for="{{stepList}}" wx:key="index" bindtap="onChange" data-index="{{index}}" data-name="{{item.name}}" data-type="step")  
+          tetx {{item.name}}
           vant-icon(name="checked" color="#2955FF" wx:if="{{activeIndex.step==index}}")
 //- pk项目
 w-popup-module(
@@ -94,8 +94,8 @@ w-popup-module(
       text.comfirm(bindtap="onConfirm" data-type="project") 确认
     view.list-box
       scroll-view.list(scroll-y="true" style="height: 40vh")
-        view.line(wx:for="1234456" wx:key="index" bindtap="onChange" data-index="{{index}}" data-type="project")  
-          tetx 234
+        view.line(wx:for="{{projectList}}" wx:key="index" bindtap="onChange" data-index="{{index}}" data-name="{{item.name}}" data-type="project")  
+          tetx {{item.name}}
           vant-icon(name="checked" color="#2955FF" wx:if="{{activeIndex.project==index}}")
 //- end
 w-popup-module(

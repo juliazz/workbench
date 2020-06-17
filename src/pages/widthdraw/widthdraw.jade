@@ -10,17 +10,15 @@ w-page(
         image(src="../../assets/image/icon/coin.png")
         text 零钱
       view.main-area
-        view.title 充值金额
+        view.title 提现金额
         view.input-area
           text ￥
           input(
-            type="number"
-            value="{{rechargeNum}}"
-            bindinput="bindinput"
+            type="digit" value="{{rechargeNum}}" bindblur="bindinput"
           )
         view.tips 
           text 可用余额
-          w-currency(value="100" type='num')
+          w-currency(value="{{value}}" type='num')
           text 元
       view.btn-box
         vant-button(type="primary" block custom-class="action-btn"  bind:click="nextEventer" )

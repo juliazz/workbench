@@ -20,9 +20,9 @@ const interceptors = {
   request: {
     // 设置token
     async setToken(options) {
-      const token = await tokenManage.get();
+      const token = await storangeMange.getAccessToken() || '';
+      console.log('token=========', token)
       options.header = options.header || {};
-      // options.header.token = `${token}`;
       options.header['x-feimi-token'] = `${token}`;
       return options;
     },
@@ -63,17 +63,18 @@ const interceptors = {
   response: {
     // 处理HttpError
     async handleHttpError(options, result) {
+      console.log('result===========', result)
       if (result.statusCode === 200) {
         // todo 处理鉴权失败
-        // const {
-        //   status
-        // } = result.data;
-        // console.log('status=======', status)
-        // if (status === 401) {
-        //   await tokenManage.clear();
-        //   await tokenManage.get()
-        //   result = await request.send(options);
-        // }
+        const {
+          status
+        } = result.data;
+        console.log('status=======', status)
+        if (status === 401) {
+          await tokenManage.clear();
+          await tokenManage.get()
+          result = await request.send(options);
+        }
       } else if (result.statusCode >= 400 && result.statusCode < 500) {
         throw new Error('Bad Request.', result.data);
       } else if (result.statusCode >= 500) {
@@ -96,7 +97,7 @@ const request = {
     let _opts = options;
     const baseUrl = config.baseUrl;
     _opts.url = combinUrl(baseUrl, _opts.url);
-    _opts.data.activity_id = await storangeMange.getActivityId() || '';
+
     _opts = await this.execBeforeHook(_opts);
     let result = {};
     try {
@@ -111,13 +112,13 @@ const request = {
       }
     }
     result = await this.execAfterHook(_opts, result);
-    console.log(result)
     return result;
   },
   async execBeforeHook(options) {
     options = await interceptors.request.checkNetwork(options);
     if (!options.auth) {
       options = await interceptors.request.setToken(options);
+      options.data.activity_id = await storangeMange.getActivityId() || '';
     }
     options = await interceptors.request.recordLog(options);
     this.beforeHooks.forEach(async (fn) => {

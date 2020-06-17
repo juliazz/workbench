@@ -8,7 +8,8 @@ w-page(
       view.info-box
         text( class="header-title") 短信素材
         text.header-title2 智能高效
-        image.go(src="../../assets/image/icon/go2.png")
+        image.go(src="../../assets/image/icon/go2.png" data-path='short-message-material'
+        bindtap="$routeLink" )
     view.image-box
       image.header-bg(src="../../assets/image/short-mes-bg2.png" mode="widthFix" )
       view.info-box
@@ -18,13 +19,23 @@ w-page(
   view(slot="content" class="content")
     view.message-list
       view.message-item.flex-dire-column
-        view.top
-          view.left 
+        view.top.flex-just-between
+          view.left.flex-align-center 
             image(src="../../assets/image/icon/live-customer.png")
             text.title 直播客户
           view.right
             text.timing 定时发送
         view.content
           view.mess dfhje不淋不到凤凰网if烘干her文化宫花覅无法的还是发好和龟儿哈个一是红日VBHRif
-          text.timing 定时发送
+          view.timing 定时发送
+      view.message-item.flex-dire-column
+        view.top.flex-just-between
+          view.left.flex-align-center 
+            image(src="../../assets/image/icon/link-customer.png")
+            text.title 链接客户
+          view.right
+            text.timing 实时发送
+        view.content
+          view.mess dfhje不淋不到凤凰网if烘干her文化宫花覅无法的还是发好和龟儿哈个一是红日VBHRif
+          view.timing 定时发送
   view(slot="footer" class="footer")

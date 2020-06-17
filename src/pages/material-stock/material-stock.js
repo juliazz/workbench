@@ -1,11 +1,10 @@
+import api from '../../api/index.js'
 
-const fetch = async (options) => {
-  try {
-    return await Promise.resolve({code: 0})
-  } catch (err) {
-    return {}
-  }
-}
+let materialType = 1 // 1 微信素材  2其他素材
+let limit = 10
+let currentPage = 1
+let totalPage;
+let totalData = [];
 
 Page({
   $route: 'pages/material-stock/material-stock',
@@ -19,25 +18,45 @@ Page({
     tabs: ['微信素材', '其他素材'],
     viewMaterialList: [{}, {}, {}] // 用于展示的素材列表
   },
-  onPreLoad: fetch,
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
     // this.$wLoading.show()
-    const result = await this.$getPreload(fetch, options)
+    const result = await this.getMaterialList()
     console.log(result)
-    this.addCollpaseState()
+
     // this.$wLoading.hide()
   },
   // tab切换
   onTabChange: function(eve) {
     const {index} = eve.detail
+    materialType = index + 1
+    currentPage = 1
     this.setData({
       activeTabIndex: index
-
     })
   },
+  async getMaterialList() {
+    if (currentPage > totalPage) return this.$showToast('没有更多数据啦！');
+    const par = {
+      page: currentPage,
+      type: materialType,
+      limit
+    }
+    const result = await api.getMaterialList(par)
+    const { msg, data, status } = result;
+    // if (status != '200') return this.$showToast(msg);
+    // totalPage = data.last_page
+    // const personDetailList = data.data.map((i) => {
+    //   i.time = util.myTime(i.time)
+    //   return i
+    // })
+    // totalData = totalData.concat(personDetailList)
+    // this.setData({personDetailList: totalData})
+    this.addCollpaseState()
+  },
+
   // 分享弹窗关闭
   onCancel() {
     this.setData({
@@ -174,13 +193,8 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
+    currentPage++
+    console.log('currentPage', currentPage)
+    this.getPersonalFinaceDetail()
   }
 })

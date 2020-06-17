@@ -12,7 +12,7 @@ w-page(
       text 总售卡
       text 1000人
     view.rank-list
-      view.rank-item(wx:for="12345" wx:key="index")
+      view.rank-item(wx:for="{{statisticsList}}" wx:key="index")
         view.reword-card(wx:if="{{index==0}}")
           image(src="../../assets/image/icon/medal1.png")
         view.reword-card(wx:elif="{{index==1}}")
@@ -26,18 +26,20 @@ w-page(
         view.progress-box
           view.main-info
             view.left
-              text.name 姓名
-              text.brand 品牌
+              text.name {{item.name}}
             view.arrow-box(
               wx:if="{{isFirstStep==0}}"
               bindtap="$routeLink" data-path='statistics-rank?customerType={{item.name}}&id={{item.id}}')
               text.right-arrow
-          view.progress
+          view.progress(wx:if="{{index==0}}")
             van-progress(
-              percentage="60" stroke-width="10"
-              show-pivot="{{false}}"
-              color="#FF7E00"
+              percentage="100" stroke-width="10" show-pivot="{{false}}" color="#FF7E00"
             )
-            text 3000人
+            text {{item.value}}{{unit}}
+          view.progress(wx:else)
+            van-progress(
+              percentage="{{item.value*10000/fullProgressNum}}" stroke-width="10" show-pivot="{{false}}" color="#FF7E00"
+            )
+            text {{item.value}}{{unit}}
         //- van-cell(title="{{listItem}}" wx:for="{{item.list}}" bindtap="selectEvent" data-Index="{{index}}" wx:for-item="listItem" wx:key="listIndex")
   view(slot="footer" class="footer")

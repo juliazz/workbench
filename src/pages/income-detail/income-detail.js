@@ -1,12 +1,8 @@
+import api from '../../api/index.js'
 
-const fetch = async (options) => {
-  try {
-    return await Promise.resolve({code: 0})
-  } catch (err) {
-    return {}
-  }
-}
-
+let currentPage = 1;// 当前页数
+let totalPage;
+let totalData = [];
 Page({
   $route: 'pages/income-detail/income-detail',
   /**
@@ -14,7 +10,6 @@ Page({
    */
   data: {
   },
-  onPreLoad: fetch,
   /**
    * 生命周期函数--监听页面加载
    */
@@ -23,8 +18,35 @@ Page({
     this.setData({
       type
     })
-    const result = await this.$getPreload(fetch, options)
-    console.log(result)
+    this.$showLoading()
+    switch (options.type) {
+    case 'live':
+      console.log('live======')
+      this.getLiveDetaildata('getLiveOrderList')
+      break;
+    case 'onlineOrder':
+      console.log('onlineOrder======')
+      // return await api.getLiveOrderList()
+      break;
+    case 'onlineSign':
+      this.getLiveDetaildata('getSignList')
+      console.log('onlineSign======')
+        // return await api.getLiveOrderList()
+    }
+    this.$hideLoading()
+  },
+  async getLiveDetaildata(type) {
+    if (currentPage > totalPage) return this.$showToast('没有更多数据啦！');
+    const par = {
+      page: currentPage,
+      limit: 10
+    }
+    const result = await api[`${type}`](par)
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    totalData = totalData.concat(data.data)
+    totalPage = data.last_page
+    this.setData({list: totalData, amount: data.amount})
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -65,13 +87,8 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
+    currentPage++
+    console.log('currentPage', currentPage)
+    this.getLiveDetaildata()
   }
 })

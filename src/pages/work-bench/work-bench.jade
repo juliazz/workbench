@@ -10,26 +10,29 @@ w-page(
             view.avator()
               open-data.avator(type="userAvatarUrl" )
             view.activity-info
-              view
-                tex.name 某某某 
-                text 南通市心心橱柜
+              view()
+                tex.name {{rights[0].name}} 
+                text {{rights[0].position}}
               view.title
-                text {{activityData.info.start_date}}-{{activityData.info.end_date}} {{activityData.info.name}}
+                text {{info.start_date}}-{{info.end_date}} {{info.name}}
           view.right(bindtap="popupShow" data-popup-type="changeActive")
             vant-button( type="info" icon='exchange' size="small" round)
               text.change 活动切换
         view.price-box
           view.price-item
-            w-currency(value="{{activityData.fund.reward}}" class="oderPrize")
+            w-currency(value="{{fund.reward}}" class="oderPrize")
             text 奖励总额
           view.price-item
-            w-currency(value="{{activityData.fund.recharge}}" class="oderPrize")
+            w-currency(value="{{fund.recharge}}" class="oderPrize")
+            text 充值余额
+          view.price-item
+            w-currency(value="{{fund.recharge}}" class="oderPrize")
             text 已提取余额
           view.price-item
-            w-currency(value="{{activityData.fund.punish}}" class="oderPrize")
+            w-currency(value="{{fund.punish}}" class="oderPrize")
             text 罚款金额
           view.price-item
-            w-currency(value="{{activityData.fund.money}}" class="oderPrize")
+            w-currency(value="{{fund.money}}" class="oderPrize")
             text 账户余额
       view.section.section-1
         view.action-list
@@ -39,15 +42,12 @@ w-page(
           view.action-item(bindtap="popupShow" data-popup-type="shopping")
             image(src="../../assets/image/icon/shopping.png" mode="widthFix")
             text 接待逛店
-          view.action-item( bindtap="popupShow" data-popup-type="groupCode" )
-            image(src="../../assets/image/icon/group-bar.png" mode="widthFix")
-            text 群二维码
           view.action-item( bindtap="popupShow" data-popup-type="liveInvite" )
             image(src="../../assets/image/icon/live-invite.png" mode="widthFix")
             text 直播邀请
           view.action-item(bindtap="popupShow" data-popup-type="register")
             image(src="../../assets/image/icon/activity-sign-in.png" mode="widthFix")
-            text 活动注册码
+            text 成员注册码
           view.action-item(bindtap="popupShow" data-popup-type="verification" )
             image(src="../../assets/image/icon/scan-code.png" mode="widthFix")
             text 核销扫码
@@ -58,20 +58,54 @@ w-page(
             image(src="../../assets/image/icon/material.png" mode="widthFix")
             text 活动素材库
           view.action-item
-            image(src="../../assets/image/icon/activitymanger.png" mode="widthFix")
-            text 活动管理
+            image(src="../../assets/image/icon/small-message.png" mode="widthFix")
+            text 短信管理
+          view.action-item
+            image(src="../../assets/image/icon/export.png" mode="widthFix")
+            text 数据导出
+      view.section.section-live-manger
+        view.activity-title
+          image.flag(src='../../assets/image/icon/live-manger.png')
+          text 直播管理
+        view.action-list
+          view.action-item(bindtap="popupShow" data-popup-type="choosePoster")
+            image(src="../../assets/image/icon/pro-manger.png" mode="widthFix")
+            text 直播商品管理
+          view.action-item(bindtap="popupShow" data-popup-type="shopping")
+            image(src="../../assets/image/icon/live-config.png" mode="widthFix")
+            text 直播间配置
+          view.action-item( bindtap="popupShow" data-popup-type="groupCode" )
+            image(src="../../assets/image/icon/key-word.png" mode="widthFix")
+            text 敏感词管理
+          view.action-item(bindtap="popupShow" data-popup-type="register")
+            image(src="../../assets/image/icon/material-manger.png" mode="widthFix")
+            text 互动素材管理
+      view.section.section-acti-manger
+        view.activity-title.flex-align-center
+          image.flag(src='../../assets/image/icon/activitymanger.png')
+          text 活动管理
+        view.action-list
+          view.action-item(bindtap="popupShow" data-popup-type="choosePoster")
+            image(src="../../assets/image/icon/pro-manger.png" mode="widthFix")
+            text 发布活动
+          view.action-item(bindtap="popupShow" data-popup-type="shopping")
+            image(src="../../assets/image/icon/live-config.png" mode="widthFix")
+            text 审核管理
+          view.action-item( bindtap="popupShow" data-popup-type="groupCode" )
+            image(src="../../assets/image/icon/group-code.png" mode="widthFix")
+            text 群二维码
       view.section.section-2
         view.activity-title
           image.flag(src='../../assets/image/icon/flag.png')
           text 活动信息
-        view.active-stage.bor-bottom 当前活动: {{activityData.period.perid_name}}
-        view.active-stage.bor-bottom 活动阶段: {{activityData.period.perid_name}}
-        view.active-time.bor-bottom  活动期限: {{activityData.period.start_datetime}}-{{activityData.period.end_datetime}}
+        view.active-stage.bor-bottom 当前活动: {{period.activity_name}}
+        view.active-stage.bor-bottom 活动阶段: {{period.name}}
+        view.active-time.bor-bottom 阶段期限: {{period.start_datetime}} - {{period.end_datetime}}
         view.active-left-time.bor-bottom
           //- view(wx:if="{{activeEndTime==0}}")
           //-   text.end 已结束
           view()
-            text 活动结束倒计时:
+            text 阶段结束倒计时:
             text.time {{activeEndTime.days}}
             text 天
             text.time {{activeEndTime.hours}}
@@ -84,29 +118,29 @@ w-page(
         type="{{1}}"
         name="个人"
         expandState="{{false}}"
-        viewData="{{userAreaData}}"
+        viewData="{{person}}"
       )
       //- 部门
-      user-acc-view(
-        type="{{2}}"
-        name="部门"
-        expandState="{{false}}"
-        viewData="{{userAreaData}}"
-      )
-      //-品牌
-      user-acc-view(
-        type="{{3}}"
-        name="品牌"
-        expandState="{{false}}"
-        viewData="{{userAreaData}}"
-      )
-      //- 战区
-      user-acc-view(
-        type="{{4}}"
-        name="战区"
-        expandState="{{false}}}"
-        viewData="{{userAreaData}}"
-      )
+      //- user-acc-view(
+      //-   type="{{2}}"
+      //-   name="部门"
+      //-   expandState="{{false}}"
+      //-   viewData="{{userAreaData}}"
+      //- )
+      //- //-品牌
+      //- user-acc-view(
+      //-   type="{{3}}"
+      //-   name="品牌"
+      //-   expandState="{{false}}"
+      //-   viewData="{{userAreaData}}"
+      //- )
+      //- //- 战区
+      //- user-acc-view(
+      //-   type="{{4}}"
+      //-   name="战区"
+      //-   expandState="{{false}}}"
+      //-   viewData="{{userAreaData}}"
+      //- )
   view(slot="footer" class="footer")
 
 //- 选择活动弹窗
@@ -174,7 +208,7 @@ w-popup-module(
   view(slot="content" class="content")
     view.tips1 逛店二维码
     image(
-      src=""
+      src="{{view_shop}}"
     )
     view.tips2 客户微信扫一扫,完成逛店
 //- 直播邀请弹窗
@@ -198,13 +232,13 @@ w-popup(
           )
             swiper-item
               image(
-                data-url="{{}}"
+                data-url="{{item}}"
                 bindtouchstart='timestart'
                 bindtouchend='timeend'
                 mode = "aspectFill"
                 src="{{item.image}}"
               )
-      view.tips() 长按图片发送至朋友圈或保存至相册2
+      view.tips() 长按图片发送至朋友圈或保存至相册
       view.smallPoster
         scroll-view(scroll-x="true" style="width: 100%")
           view.smallPosterList
@@ -263,7 +297,7 @@ w-popup-module(
             placeholder-class="placeholder"
             maxlength="40"
             text="number"
-            bindinput="bindinput"
+            bindblur="bindblur"
             placeholder="请输入商品核销码进行核销"
         )
         view.confirm(bindtap="bindconfirm") 确定
@@ -299,3 +333,21 @@ w-popup-module(
         view.right(bindtap="openScan")
           w-icon(type="scan" size="large")
           tetx 扫一扫
+//- 选择录单方式
+w-popup-module(
+  class="w-popup pop-getuser-info"
+  show="{{popupType=='getUserInfo'}}"
+  type="center"
+  closeBottom="true"
+)
+  view(slot="content" class="content")
+    view.word-content
+      view.text.title 亲爱的店员,
+      view.text 因您没有登录过,现在需要您对小程序进行授权。
+    w-authorization.w-authorization(
+      bindcallback="getUserInfoEventer"
+      type='avatarUrl'
+    )
+      view(class="user-section" slot="before")
+        text 点击授权
+      

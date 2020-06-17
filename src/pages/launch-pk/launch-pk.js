@@ -1,6 +1,14 @@
 import api from '../../api/index.js'
 
 let userListRes = [] // 完整的员工列表
+const fetch = async (options) => {
+  try {
+    return await api.launchPK(options)
+  } catch (err) {
+    return {}
+  }
+}
+
 Page({
   $route: 'pages/launch-pk/launch-pk',
   /**
@@ -8,12 +16,17 @@ Page({
    */
   data: {
     popupType: '',
-    stepValue: '选择战区',
-    projectValue: '选择项目',
-    endChoiceValue: '',
+    stepValue: {
+      name: '请选择PK阶段'
+    },
+    projectValue: {
+      name: '请选择PK项目'
+    },
+    endChoiceValue: {
+      name: '请选择PK对象'
+    },
     pkPrice: null,
-    list: ['a', 'b', 'c'],
-    result: ['a', 'b'],
+    endChoiceList: [], // pk 个人选中数组
     activeIndex: { // 页面选中展示
       step: 0,
       project: 0,
@@ -34,32 +47,44 @@ Page({
     project: null,
     people: []
   },
+  onPreLoad: fetch,
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: async function (options) {
     const {pkType } = options
+    this.$showLoading()
+    const result = await this.$getPreload(fetch, options)
+    this.$hideLoading()
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    const {pk_stage, pk_type, user_arr} = data
+
     const identity = '个人'
     this.setData({
       pkCellTitle: `pk${pkType}:`, // 根据对象进来cell文案
-      endChoiceValue: `选择${pkType}`, // input框占位文案
+      'endChoiceValue.name': `选择${pkType}`, // input框占位文案
+      stepList: pk_stage || [],
+      projectList: pk_type || [],
       identity // 进来时的身份  假设是品牌
     })
     if (identity == '个人') {
-      this.getUserList()
+      this.getUserList(user_arr)
     } else if (identity == '品牌') {
-      this.getUserListSecond()
+      // this.getUserListSecond()
     } else if (identity == '部门') {
-      this.getUserListOne()
+      // this.getUserListOne()
     }
   },
   // =========================== 三级联动 ============================
   // 获取pk对象数组
-  getUserList: async function() {
+  getUserList: async function(data) {
     let { multiArray} = this.data
-    let userList = await api.getUserList()
-    userListRes = userList // 将完整数据存起来
-    const arr1 = userList.map((i) => {
+    // let result = await api.getUserList()
+    // const { msg, data, status } = result;
+    // if (status != '200') return this.$showToast(msg);
+    userListRes = data // 将完整数据存起来
+    const arr1 = data.map((i) => {
       return {
         name: i.name,
         id: i.id
@@ -69,7 +94,10 @@ Page({
     // 默认选择第一项
     multiArray[1] = this.findArr2List(arr1[0].id)
     multiArray[2] = this.findArr3List(multiArray[1], multiArray[1][0].id)
-    this.setData({multiArray})
+
+    this.setData({
+      multiArray
+    })
   },
   // 获取数组第二项内容
   findArr2List(index) {
@@ -91,6 +119,7 @@ Page({
     const multiIndex = e.detail.value
     let { multiArray} = this.data
     const {name, id} = multiArray[2][multiIndex[2]]
+    this.getuserbycatid(id)
     this.setData({
       multiIndex,
       areaValue: {
@@ -191,36 +220,114 @@ Page({
   },
   onConfirm(event) {
     const { type } = event.currentTarget.dataset
-    const {activeIndex, result = []} = this.data
-    let value = activeIndex[type]
-    if (type == 'endChoice' && result.length) {
-      // value
-      let str = ''
-      result.map((i) => {
-        str += i + ','
-      })
-      value = str
+    const {activeIndex, endChoice = []} = this.data
+    // 假设获取到的阶段数组是 multiArray[2]
+    let listName = type + 'List'
+    const list = this.data[listName]
+    // const list = this.data.multiArray[2]
+    const currenIndex = activeIndex[`${type}`]
+    let value = list[currenIndex]
+    if (type == 'endChoice') {
+      if (endChoice.length) {
+        // value
+        let str = ''; let arr = []
+        list.filter(v => {
+          // if (endChoiceList.find((z) => { return v.id == z })) { return v }
+          return endChoice.find((z) => { return v.id == z })
+        }).map(x => {
+          str += x.name + ','
+          return str
+        })
+        value = {
+          name: str,
+          id: endChoice
+        }
+      } else {
+        this.setData({popupType: ''})
+        return
+      }
     }
+    console.log(value)
     this.setData({
-      [`${type}Value`]: value,
+      [`${type}Value`]: {
+        ...value
+      },
       popupType: ''
     })
-    console.log(`当前索引：${activeIndex}`, type);
+  },
+  async getuserbycatid(id) {
+    const result = await api.getuserbycatid({cat_id: id})
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    this.setData({endChoiceList: data})
   },
   onChange(eve) {
-    const { index, type} = eve.currentTarget.dataset
-    if (type != 'end') { this.setData({[`activeIndex.${type}`]: index }) }
-    console.log(`当前索引：${index}`);
+    const { index, type } = eve.currentTarget.dataset
+    if (type == 'end') return
+    this.setData({[`activeIndex.${type}`]: index })
   },
   onCancel(eve) {
     const { type} = eve.currentTarget.dataset
     this.setData({
-      [`activeIndex.${type}`]: null,
+      // [`activeIndex.${type}`]: null,
       popupType: ''
     })
   },
+  // 多选框事件================================
+  onChangeEnd(event) {
+    this.setData({
+      endChoice: event.detail
+    });
+  },
+  toggle(event) {
+    const { index } = event.currentTarget.dataset;
+    const checkbox = this.selectComponent(`.checkboxes-${index}`);
+    checkbox.toggle();
+  },
+  // 多选框事件================================
 
+  // 点击邀请
+  async inviteEventer (eve) {
+    const {stepValue, projectValue, areaValue, endChoiceValue, pkPrice} = this.data
+    // check Input
+    console.log(stepValue, projectValue, areaValue, endChoiceValue, pkPrice)
+    let parArr = []
+    parArr.push(stepValue, projectValue, areaValue, endChoiceValue)
+    console.log(parArr)
+    let isfull = parArr.every((i) => {
+      return i.name
+    }) && pkPrice
+    console.log(isfull)
+    if (!isfull) { return this.$showToast('请填写完整信息！') }
+    const par = {
+      bid: endChoiceValue.id,
+      stage_id: stepValue.id,
+      pk_type: projectValue.value,
+      amount: pkPrice
+    }
+    this.$showLoading()
+    const result = await api.addPK({...par})
+    this.$hideLoading()
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    // 去掉接口 接口成功后弹窗
+    this.popupShow(eve)
+  },
 
+  comfirmInvite() {
+    this.setData({
+      popupType: ''
+    })
+  },
+  priceInputEventer(e) {
+    this.setData({pkPrice: e.detail})
+  },
+  popupShow: function(eve) {
+    const { popupType } = eve.currentTarget.dataset
+    this.setData({
+      popupType
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -234,34 +341,7 @@ Page({
   onShow: function() {
 
   },
-  popupShow: function(eve) {
-    const { popupType } = eve.currentTarget.dataset
-    this.setData({
-      popupType
-    })
-  },
-  // 多选
-  onChangeEnd(event) {
-    this.setData({
-      result: event.detail
-    });
-  },
-  toggle(event) {
-    const { index } = event.currentTarget.dataset;
-    const checkbox = this.selectComponent(`.checkboxes-${index}`);
-    checkbox.toggle();
-  },
-  // 点击邀请
-  inviteEventer(eve) {
-    // 去掉接口 接口成功后弹窗
-    this.popupShow(eve)
-  },
 
-  comfirmInvite() {
-    this.setData({
-      popupType: ''
-    })
-  },
 
   noop() {},
   /**
@@ -284,18 +364,10 @@ Page({
   onPullDownRefresh: function() {
 
   },
-
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
 
   }
 })

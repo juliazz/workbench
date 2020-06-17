@@ -1,12 +1,6 @@
+import api from '../../api/index.js'
 
-const fetch = async (options) => {
-  try {
-    return await Promise.resolve({code: 0})
-  } catch (err) {
-    return {}
-  }
-}
-
+let value // 可用余额
 Page({
   $route: 'pages/widthdraw/widthdraw',
   /**
@@ -15,22 +9,31 @@ Page({
   data: {
     rechargeNum: null
   },
-  onPreLoad: fetch,
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    // this.$wLoading.show()
-    const result = await this.$getPreload(fetch, options)
-    console.log(result)
-    // this.$wLoading.hide()
+    value = +options.value
+    this.setData({value})
+    console.log(value)
   },
   bindinput(event) {
     const { value } = event.detail;
-    this.setData({ rechargeNum: value });
+    this.setData({ rechargeNum: +value });
   },
-  nextEventer() {
+  async nextEventer() {
+    this.$showLoading()
     const {rechargeNum } = this.data
+    if (rechargeNum > value) { return this.$showToast('提现金额超出余额!') }
+    const result = await api.submitWithdrawApply({amount: rechargeNum})
+    this.$hideLoading()
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    this.setData({value: data.money})
+    this.$showToast({title: '提现成功', icon: 'success'})
+    setTimeout(() => {
+      this.$navigateBack()
+    }, 1000)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -71,13 +74,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
 
   }
 })

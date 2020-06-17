@@ -1,11 +1,14 @@
+import api from '../../api/index.js'
 
-const fetch = async (options) => {
+const fetch = () => {
   try {
-    return await Promise.resolve({code: 0})
+    return getApp().getStepList()
   } catch (err) {
     return {}
   }
 }
+let tabIndex; let rankItemIndex;
+let statisicPar = {}
 
 Page({
   $route: 'pages/statistics-rank/statistics-rank',
@@ -13,11 +16,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    stepList: [
-      { text: '总排行', value: 0 },
-      { text: '昨日排行', value: 1 },
-      { text: '今日排行', value: 2 }
-    ],
     stepValue: 0,
     isFirstStep: null,
     timeTitle: '总排行'
@@ -28,24 +26,56 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    const {isFirstStep, rankTitle, tabIndex} = options
-    console.log(options)
-    console.log(isFirstStep)
+    if (!options.tabIndex || !options.rankItemIndex) { return this.$showToast('非法进入！') }
+    tabIndex = options.tabIndex
+    rankItemIndex = options.rankItemIndex
     // 是否还有下一级
-    if (isFirstStep) this.setData({isFirstStep})
+    // if (isFirstStep) this.setData({isFirstStep})
     // if(rankTitle) wx.setNavigationBarTitle({title: rankTitle })
     // if(tabIndex){}
     //
-    // this.$wLoading.show()
-    const result = await this.$getPreload(fetch, options)
-    console.log(result)
-    // this.$wLoading.hide()
+    this.$showLoading()
+    const stepResult = await this.$getPreload(fetch)
+    console.log(stepResult)
+    this.$hideLoading()
+    console.log(stepResult)
+    const stepList = stepResult.map((i) => Object.assign({}, {
+      text: i.period_name,
+      value: i.id
+    }))
+    const firstStep = stepList[0]
+    this.getStatisicsList(firstStep.id)
+    this.setData({timeTitle: firstStep.text, stepList})
+  },
+  async getStatisicsList(id) {
+    let par = {
+      search_content: rankItemIndex,
+      search_range: Number(tabIndex) + 1,
+      period_id: id
+    }
+    this.$showLoading()
+    const result = await api.getStatisics(par)
+    this.$hideLoading()
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    const { title, total, list, unit} = data
+    const fullProgressNum = list[0].value
+    this.setData({
+      statisticsList: list,
+      title,
+      total,
+      fullProgressNum,
+      unit
+    })
   },
   timeChangeEventer(eve) {
     const index = eve.detail
+    console.log(index)
     const timeTitle = this.data.stepList.find((i) => {
       return i.value == index
     })
+    console.log(timeTitle)
+    this.getStatisicsList(timeTitle.value)
     this.setData({timeTitle: timeTitle.text})
   },
   /**
@@ -82,18 +112,10 @@ Page({
   onPullDownRefresh: function() {
 
   },
-
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
 
   }
 })

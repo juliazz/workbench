@@ -1,4 +1,3 @@
-
 const timeNow = new Date()
 
 import api from '../../api/index.js'
@@ -8,8 +7,10 @@ import rules from './helper';
 const {upLoadFile} = fileHelper
 let userListRes = []; // 完整的签单人列表 未分类
 let photoFileList = []; // 后台返回的接口照片id
-let isUpLoading = false
+let isUpLoading = false; // 图片是否上传中
+let isFrombar = false; // 是否通过条码进来
 let brandId; let brandName;
+const app = getApp()
 Page({
   $route: 'pages/order-type-in/order-type-in',
   /**
@@ -17,7 +18,8 @@ Page({
    */
   data: {
     order: {
-      date: `${timeNow.getFullYear()}-${timeNow.getMonth() + 1}-${timeNow.getDate()}`
+      date: `${timeNow.getFullYear()}-${timeNow.getMonth() + 1}-${timeNow.getDate()}`,
+      guide: {}
     },
     fileList: [
     ], // 上传文件列表
@@ -58,7 +60,14 @@ Page({
   onLoad: async function(options) {
     console.log('options======', options)
     // 选择品牌后带回来的参数
-
+    isFrombar = options.type == 'bar' && !!app.globalData.scanRes
+    console.log('isFrombar=====', isFrombar)
+    if (isFrombar) {
+      this.setData({
+        'order.guide': app.globalData.scanRes.top_info[0],
+        'order.hx_code': app.globalData.scanRes.code_info.hx_code
+      })
+    }
 
     this.getUserList() // 获取签单人列表
   },
@@ -201,6 +210,7 @@ Page({
     const {active} = this.data
     if (active != 3) return this.$showToast('未选中到人')
   },
+  //  ===================================================
   bindblur(event) {
     const { type } = event.currentTarget.dataset;
     const { value } = event.detail;
@@ -217,8 +227,8 @@ Page({
   // 图片读取后
   async afterRead(event) {
     const { file } = event.detail;
-    this.setData({isUpLoading})
     isUpLoading = true
+    this.setData({isUpLoading})
     // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
     const res = await upLoadFile(file.path)
     let result = JSON.parse(res)
@@ -234,13 +244,35 @@ Page({
   bindsubmit(event) {
     const { value } = event.detail;
     const {order } = this.data
-    let options = Object.assign({...value, sign: order.sign.id, guide: order.guide.id, cert: photoFileList})
+    console.log(value)
+    let options = Object.assign({...value,
+      sign: 9, // 写死
+      brand: order.brand.brandId,
+      guide: order.guide.id || '',
+      cert: photoFileList,
+      hx_code: order.hx_code || ''
+    })
     console.log(options)
     const component = this.selectComponent('#field-group');
     component.validateEventer(rules, options, async valid => {
       if (!valid) return this.$showToast('请完善订单信息');
       if (!options.cert.length) return this.$showToast('请上传凭证!')
-      // this.orderBrandIn(options);
+      const par = {
+        client_name: options.othername,
+        client_phone: options.othertel,
+        client_address: options.otheradress,
+        brand: order.brand.brandId,
+        amount: value.price.$currency(),
+        cert: photoFileList,
+        hx_code: options.hx_code,
+        top_id: options.guide,
+        service_id: options.sign,
+        remark: value.remark
+      }
+      this.orderBrandIn(par);
+
+      // 清除订单信息
+      wx.setStorageSync('brandInfo', '')
     });
   },
   async orderBrandIn(options) {
@@ -248,10 +280,12 @@ Page({
   },
   popupShow: function(eve) {
     const { popupType } = eve.currentTarget.dataset
+    // 如果是扫码进来的带单人不可选
+    if (isFrombar && popupType == 'guide') return
+    if (popupType == 'guide') this.getCurrentStepList()
     this.setData({
       popupType
     })
-    if (popupType == 'guide') this.getCurrentStepList()
   },
   closePopup: function(eve) {
     this.setData({
@@ -306,13 +340,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
 
   }
 })

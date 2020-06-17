@@ -20,10 +20,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    this.$wLoading.show()
+    // this.$wLoading.show()
     const result = await this.$getPreload(fetch, options)
     console.log(result)
-    this.$wLoading.hide()
+    // this.$wLoading.hide()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

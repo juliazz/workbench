@@ -22,7 +22,7 @@ App({
       logger.warn('session_key 已经失效');
       if (storageManage.getAccessToken()) {
         await tokenManage.clear();
-        await tokenManage.get()
+        // await tokenManage.get()
       }
     }
   },
@@ -40,6 +40,7 @@ App({
   },
   globalData: {
     scanRes: {},
-    coinRule: {}
+    coinRule: {},
+    orderInType: null
   }
 });

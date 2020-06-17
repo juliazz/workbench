@@ -1,1 +1,1 @@
-export default {baseUrl: 'https://api.fmlesson.cn/api/', storeUrl: 'https://dev.estore.d1m.cn/api/v4/locator/core', cdnUrl: 'https://dev.estore.d1m.cn/attached', appid: 'wx5d9cfc80017e0c29', env: 'dev', version: '2.10.1', wechatId: 202, shopWechatId: 87}
+export default {baseUrl: 'https://api.fmcd.feimi0513.xyz/api/', appid: 'wx5d9cfc80017e0c29', env: 'dev', storeid: '10001', version: '2.10.1', wechatId: 202}

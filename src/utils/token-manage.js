@@ -40,11 +40,14 @@ const token = {
     this.status = true;
     try {
       const result = await this.refresh();
+      console.log('refresh=======result ======', result)
       const { data } = result
       this.complete('success', result);
       return data.token;
     } catch (err) {
+      console.log(err)
       logger.warn(`failed to get token: ${err}`);
+
       this.complete('fail', err);
       if (err.message == 'Token retrieval failed') {
         wx.showToast({
@@ -73,22 +76,16 @@ const token = {
     console.log(code)
     // todo 用户静默登录refresh
     const result = await request.get({
-      url: `sso/login?app_id=${config.appid}&code=${code}`,
+      url: `sso/login?app_id=${config.storeid}&code=${code}`,
       auth: true
     });
     console.log(result)
-    // wx.request({
-    //   url:`http://192.168.1.120:8000/api/sso/login?app_id=${config.appid}&code=${code}`,
-    //   success:(res)=>{
-    //     console.log(res)
-    //   },
-    //   fail: (err) => {
-    //     console.log(err)
-    //   }
-    // })
-
     const { data, status } = result
-    if (status != 200) throw new Error('Token fetch failed');
+    if (status != 200) {
+      storageManage.setLoginStatus(false)
+      throw new Error('Token fetch failed');
+    }
+
     const { token, user_info } = data;
     const {openid, unionid, user_id} = user_info
     storageManage.setOpenId(openid);

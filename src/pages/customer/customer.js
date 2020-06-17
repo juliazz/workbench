@@ -14,94 +14,90 @@ Page({
    */
   data: {
     customerList: [{
-      name: '浏览客户',
+      name: '裂变客户',
       id: 1,
-      type: '浏览'
+      icon: 'fission',
+      type: '裂变'
     }, {
-      name: '裂变海报客户',
-      id: 2,
-      type: '裂变海报'
-    },
-    {
       name: '报名客户',
-      id: 3,
+      id: 2,
+      icon: 'apply',
       type: '报名'
     },
     {
       name: '售卡客户',
-      id: 4,
+      id: 3,
+      icon: 'sale-card',
       type: '售卡'
     },
     {
-      name: '报名未关注公众号客户',
-      id: 5,
-      type: '报名未关注公众号'
-    },
-    {
-      name: '报名关注公众号客户',
-      id: 6,
-      type: '报名关注公众号'
-    },
-    {
       name: '爆款秒杀客户',
-      id: 7,
+      id: 4,
+      icon: 'seckill',
       type: '爆款秒杀'
     },
     {
-      name: '自签单客户',
-      id: 8,
-      type: '自签单'
-    },
-    {
-      name: '贡献签单客户',
-      id: 9,
-      type: '贡献签单'
-    },
-    {
-      name: '贡献逛店客户',
-      id: 10,
-      type: '贡献逛店'
-    },
-    {
       name: '逛店客户',
-      id: 11,
+      id: 5,
+      icon: 'shopping',
       type: '逛店'
     },
     {
-      name: '线下签到客户',
-      id: 12,
-      type: '线下签到'
+      name: '贡献逛店',
+      id: 6,
+      icon: 'contribution-shopping'
     },
     {
-      name: '直播预约客户',
-      id: 13,
+      type: '被贡献逛店',
+      id: 7,
+      icon: 'passi-contribution-shopping'
+    },
+    {
+      icon: 'order',
+      id: 8,
       type: '直播预约'
     },
     {
-      name: '未进直播间客户',
-      id: 14,
+      id: 9,
+      icon: 'live',
+      type: '直播间在线'
+    },
+    {
+      id: 10,
+      icon: 'un-in-live',
       type: '未进直播间'
     },
     {
-      name: '进直播间离线客户',
-      id: 15,
-      type: '进直播间离线'
-    },
-    {
-      name: '进直播间在线客户',
-      id: 16,
-      type: '进直播间在线'
-    },
-    {
-      name: '直播订单客户',
-      id: 17,
+      id: 11,
+      icon: 'live-order',
       type: '直播订单'
     },
     {
-      name: '转单客户',
-      id: 18,
-      type: '转单'
+      id: 12,
+      icon: 'change-order',
+      type: '转单客户'
+    },
+    {
+      id: 13,
+      icon: 'signself',
+      type: '自签单'
+    },
+    {
+      id: 14,
+      icon: 'contribution-sign',
+      type: '贡献签单'
+    },
+    {
+      icon: 'passi-contribution-sign',
+      id: 15,
+      type: '被贡献签单'
+    },
+    {
+      id: 16,
+      icon: 'outline-costumer',
+      type: '线下签到'
     }
+
     ]
   },
   onPreLoad: fetch,

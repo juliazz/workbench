@@ -75,6 +75,13 @@
 					"pathName": "pages/material-stock/material-stock",
 					"query": "",
 					"scene":""
+				},
+				{
+					"id": -1,
+					"name": "短信管理",
+					"pathName": "pages/short-message-mange/short-message-mange",
+					"query": "",
+					"scene": ""
 				}
 			]
 		}

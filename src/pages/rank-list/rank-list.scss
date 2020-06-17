@@ -67,13 +67,14 @@ page{
                     }
                     .search-input{
                         van-search{
-                            width: 450rpx;
+                            width: 500rpx;
                         }
                         vant-button{
                             button{
                                 min-width: 50rpx;
                             }
                         }
+                        .custom-class{padding:10rpx 20rpx}
                     }
                     .search-btn{
                         margin-left: -10rpx;

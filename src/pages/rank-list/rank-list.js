@@ -1,24 +1,22 @@
 import ruleList from './rule'
+import api from '../../api/index.js'
+import util from '../../utils/utils'
 
-const fetch = async (options) => {
+const fetch = () => {
   try {
-    return await Promise.resolve({code: 0})
+    return getApp().getStepList()
   } catch (err) {
     return {}
   }
 }
-
+let type;
+let filterList = [];
 Page({
   $route: 'pages/rank-list/rank-list',
   /**
    * 页面的初始数据
    */
   data: {
-    stepOption: [
-      { text: '春暖花开', value: 0 },
-      { text: '新款商品', value: 1 },
-      { text: '活动商品', value: 2 }
-    ],
     popupType: '',
     expandIndex: null, // 查看数据展开的index
     stepValue: 0, // 活动阶段
@@ -31,12 +29,74 @@ Page({
   onLoad: async function(options) {
     const {rankType, ruleId } = options
     const rule = ruleList[Number(ruleId) - 1]
-    console.log(Number(ruleId))
-    console.log(rule, '=================')
+    switch (Number(ruleId)) {
+    case 1:
+      type = 'person'
+      console.log('type', type)
+      break;
+    case 2:
+      type = 'brand'
+      break;
+    case 3:
+      type = 'department'
+      break;
+    case 4:
+      type = 'zone'
+      break;
+    }
+    this.$showLoading()
+    const stepResult = await this.$getPreload(fetch)
+    this.$hideLoading()
+    const stepList = stepResult.map((i) => Object.assign({}, {
+      text: i.period_name,
+      value: i.id,
+      start_datetime: util.formatDate2(i.start_datetime),
+      end_datetime: util.formatDate2(i.end_datetime)
+    }))
+    const firstStep = stepList[0]
+    this.getRankList(firstStep.value)
     this.setData({
       rankType,
+      stepList,
       ruleList: rule
     })
+  },
+  async getRankList(id) {
+    const par = {
+      type,
+      period_id: id
+    }
+    this.$showLoading()
+    const result = await api.getRankList(par)
+    this.$hideLoading()
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    const {current_data, info, list} = data
+    filterList = list
+    const timeTitle = this.data.stepList.find((i) => {
+      return i.value == id
+    })
+    this.setData({
+      timeTitle,
+      current_data,
+      info,
+      list: filterList
+    })
+  },
+  timeChangeEventer(eve) {
+    const index = eve.detail
+    this.getRankList(index)
+  },
+  filterBySearch(eve) {
+    console.log(eve)
+    const keyWord = eve.detail
+    console.log(keyWord)
+    let filterRes = filterList.filter((v) => {
+      if (v.name.indexOf(keyWord) > -1 || v.brand.indexOf(keyWord) > -1) {
+        return v
+      }
+    })
+    this.setData({list: filterRes})
   },
   popupShow: function(eve) {
     const { popupType } = eve.currentTarget.dataset
@@ -45,7 +105,6 @@ Page({
     })
   },
   closePopup: function(eve) {
-    const { popupType } = eve.currentTarget.dataset
     this.setData({
       popupType: ''
     })
@@ -97,13 +156,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
 
   }
 })

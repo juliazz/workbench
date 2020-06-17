@@ -1,29 +1,52 @@
+import api from '../../api/index.js'
+import util from '../../utils/utils'
 
-const fetch = async (options) => {
+const fetch = async () => {
   try {
-    return await Promise.resolve({code: 0})
+    return await api.pklist()
   } catch (err) {
     return {}
   }
 }
-
 Page({
   $route: 'pages/message-detail/message-detail',
   /**
    * 页面的初始数据
    */
   data: {
-    title: 'message-detail'
   },
   onPreLoad: fetch,
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
+    const id = options.id ? options.id : null
+    this.getMessageDetail()
+    this.changeRead(id)
+  },
+  async getMessageDetail(options) {
     this.$showLoading()
     const result = await this.$getPreload(fetch, options)
-    console.log(result)
     this.$hideLoading()
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    let data_ = data.map((i) => {
+      return Object.assign(i, {time: util.formatDate2(i.time)})
+    })
+    console.log(data_)
+    this.setData({
+      messageList: data_
+    })
+  },
+  async changeRead(id) {
+    const result = await api.readmessage({message_id: id})
+  },
+  async acceptEventer(eve) {
+    const {id, action} = eve.currentTarget.dataset
+    const result = await api.editpk({id, action})
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    this.getMessageDetail()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -64,13 +87,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
 
   }
 })

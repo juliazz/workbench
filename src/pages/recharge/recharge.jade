@@ -11,9 +11,7 @@ w-page(
         view.input-area
           text ￥
           input(
-            type="number"
-            value="{{rechargeNum}}"
-            bindinput="bindinput"
+            type="digit" value="{{rechargeNum}}" bindinput="bindinput"
           )
       view.btn-box
         vant-button(type="primary" block custom-class="action-btn"  bind:click="nextEventer" )

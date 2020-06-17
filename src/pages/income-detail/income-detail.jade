@@ -1,5 +1,4 @@
 
-w-loading(id="w-loading")
 w-page(
   class="w-page pages-income-detail"
 )
@@ -10,25 +9,25 @@ w-page(
         text 导出订单
     view.total-amount
       text 总收入：
-      w-currency(value="100" class="")
+      w-currency(value="{{amount}}" )
   view(slot="content" class="content")
     view.customer-list
-      view.item-box(wx:for="123456")
+      view.item-box(wx:for="{{list}}" wx:key="index")
         w-item-box.w-item-box()
           view.left(slot="left")
             image()
           view.center(slot="center" centerWidth="500")
-            text.customer-name 客户姓名：王俊凯
-            text.customer-tel 联系电话：1879638748
-            text.invite-name 邀请人：婷婷
-            text.belong-name 归属员工：欧派
+            text.customer-name 客户姓名：{{item.client_name}}
+            text.customer-tel 联系电话：{{item.client_mobile}}
+            text.invite-name 邀请人：{{item.share_name}}
+            text.belong-name 归属员工：{{item.top_name}}
           view.right(slot="right")
-            text.state(hidden!="{{type=='online'}}") 已核销
+            text.state(hidden!="{{type=='onlineSign'}}") 已核销
         view.bottom-info
-          view.pro-name(wx:if!="{{type!='online'}}")
-            text 商品名称：XXXX
+          view.pro-name(wx:if!="{{type!='onlineSign'}}")
+            text 商品名称：{{item.goods_name}}
             w-currency(value="100" class="order-price")
-          view(wx:if!="{{type!='online'}}") 订单编号：XXXXX
-          view.time 下单时间：2020.6.1 12：00
+          view(wx:if!="{{type!='online'}}") 订单编号：{{item.order_sn}}
+          view.time 下单时间：{{item.create_time}}
             
   view(slot="footer" class="footer")

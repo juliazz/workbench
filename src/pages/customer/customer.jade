@@ -10,6 +10,6 @@ w-page(
         wx:for="{{customerList}}" wx:key="index" 
         bindtap="$routeLink" data-path='customer-list?customerType={{item.name}}&id={{item.id}}'
       )
-        image(src="../../assets/image/icon/hexiao.png" mode="widthFix")
-        text {{item.name}}
+        image(src="../../assets/image/icon/customer/{{item.icon}}.png" mode="widthFix")
+        text {{item.type}}客户
   view(slot="footer" class="footer")

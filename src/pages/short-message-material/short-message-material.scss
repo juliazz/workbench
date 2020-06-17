@@ -1,3 +1,67 @@
 
 @import '../../assets/style/index';
-.pages-short-message-material {}
+.pages-short-message-material {
+    .content{
+        min-height: 100vh;
+        background: $g5c;
+        .add-material{
+            position: fixed;
+            bottom: 100rpx;
+            left: 50vw;
+            margin-left: -150rpx;
+            .add-box{
+                height: 90rpx;
+                width: 300rpx;
+                color: #fff;
+                border-radius: 45rpx;
+                background-color: $pc;
+                justify-content: center;
+                text{
+                    margin-left: 10rpx;
+                }
+                vant-icon{
+                    margin-top: 4rpx;
+                }
+            }
+    
+        }
+        .message-list{
+            .message-item{
+                background-color: #fff;
+                margin-bottom: 30rpx;
+                padding: 30rpx;
+               .left{
+                   image{
+                       height:40rpx;
+                       width: 47rpx;
+                       margin-right: 10rpx;
+                   }
+                   .title{
+                       font-size: 32rpx;
+                   }
+               }
+               .right{
+                   color: $pc;
+               }
+               .top{
+                   line-height: 80rpx;
+                   font-size: 28rpx;
+               }
+               .center{
+                   color: $b3c;
+                   font-size: 26rpx;
+               }
+               .timing{
+                   margin-top: 10rpx;
+                   text-align: right;
+               }
+               .bottom{
+                  vant-button{
+                      margin-right:30rpx;
+                  } 
+               }
+
+            }
+        }
+    }
+}

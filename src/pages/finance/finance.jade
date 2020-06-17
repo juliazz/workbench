@@ -16,25 +16,25 @@ w-page(
       view.income-List
         view.income-item.income-item-1
           view.title 直播签单收入
-          w-currency(value="100" class="oderPrize")
+          w-currency(value="{{brand.live_order_amount}}" class="oderPrize")
           vant-button( type="default"  round="{{true}}"
           custom-class="income-detail-btn" color="#fff" 
-          data-path='income-detail?type=normal'
+          data-path='income-detail?type=live'
           bind:click="$routeLink" 
           )
             text 查看明细
         view.income-item.income-item-2
-          view.title 直播签单收入
-          w-currency(value="100" class="oderPrize")
+          view.title 线上订单收入
+          w-currency(value="{{brand.order_amount}}" class="oderPrize")
           vant-button( type="default" round custom-class="income-detail-btn" color="#fff"
-          data-path='income-detail?type=normal'
+          data-path='income-detail?type=onlineOrder'
           bind:click="$routeLink" )
             text 查看明细
         view.income-item.income-item-3
-          view.title 直播签单收入
-          w-currency(value="100" class="oderPrize")
+          view.title 线上报名收入
+          w-currency(value="{{brand.sign_count}}" class="oderPrize")
           vant-button( type="default" round custom-class="income-detail-btn" color="#fff"
-          data-path='income-detail?type=online'
+          data-path='income-detail?type=onlineSign'
           bind:click="$routeLink" )
             text 查看明细
       view.section-List
@@ -42,37 +42,37 @@ w-page(
           view.title
             view.left
               text 品牌账户余额
-            view.right(bindtap="$routeLink" data-path="account-detail")
+            view.right(bindtap="$routeLink" data-path="account-detail?type=getBrandCashList")
               text 查看明细
               text.arr-box
                 text.right-arrow
           view.section-content
             view.line1
               text 共计
-              w-currency(value="100" class="oderPrize")
+              w-currency(value="{{brand.money}}" class="oderPrize")
             view.btns
-              vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="inviteEventer" )
+              vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="toWidthDraw" )
                 text 提现
-              vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="inviteEventer" )
+              vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="toRecharge" )
                 text 去充值
-        view.section-2.section
-          view.title
-            view.left
-              text 推广费用余额
-            view.right(bindtap="$routeLink" data-path="account-detail")
-              text 查看明细
-              text.arr-box
-                text.right-arrow
-          view.section-content
-            view.line1
-              text 推广费用均摊支出金额
-              vant-icon(name="question" color="#888" size="24px" bind:click="popupShow")
-            w-currency(value="-100" class="oderPrize")
+        //- view.section-2.section
+        //-   view.title
+        //-     view.left
+        //-       text 推广费用余额
+        //-     view.right(bindtap="$routeLink" data-path="account-detail")
+        //-       text 查看明细
+        //-       text.arr-box
+        //-         text.right-arrow
+        //-   view.section-content
+        //-     view.line1
+        //-       text 推广费用均摊支出金额
+        //-       vant-icon(name="question" color="#888" size="24px" bind:click="popupShow")
+        //-     w-currency(value="-100" class="oderPrize")
         view.section-3.section
           view.title
             view.left
               text 品牌阶段活动金币兑换收入
-            view.right(bindtap="$routeLink" data-path="account-detail")
+            view.right(bindtap="$routeLink" data-path="account-detail?type=getPointExchangeList")
               text 查看明细
               text.arr-box
                 text.right-arrow
@@ -102,7 +102,7 @@ w-page(
             view.line1
               view.price
                 text 共计
-                w-currency(value="100" )
+                w-currency(value="{{personal.money}}" )
               vant-icon(name="question" color="#888" size="24px" bind:click="popupShow")
             view.btns
               vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="inviteEventer" )
@@ -114,31 +114,29 @@ w-page(
             view.left 收支明细
             view.right 
               view.extract-prize
-                text (可提取金额：
-                w-currency(value="-100" type="num" class="oderPrize")
-                text )
+                text (可提取金额：{{personCount.money}})
               vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="inviteEventer" )
                 text 提现
           view.money-type-list.flex-just-between.bod-bottom
             view.type-item
-              w-currency(value="100" class="oderPrize")
+              w-currency(value="{{personCount.reward}}" class="oderPrize")
               text 奖励总额
             view.type-item
-              w-currency(value="100" class="oderPrize")
+              w-currency(value="{{personCount.withdraw}}" class="oderPrize")
               text 已提取金额
             view.type-item
-              w-currency(value="100" class="oderPrize")
+              w-currency(value="{{personCount.punish}}" class="oderPrize")
               text 罚款金额
             view.type-item
-              w-currency(value="100" class="oderPrize")
+              w-currency(value="{{personCount.money}}" class="oderPrize")
               text 账户余额
           view.money-detail-list
-            view.item-box.bod-bottom.padding-area.flex-just-between(wx:for="123456")
+            view.item-box.bod-bottom.padding-area.flex-just-between(wx:for="{{personDetailList}}")
               view.left
-                view.title 直播签单
-                view.time 2020.05.01
+                view.title {{item.des}}
+                view.time {{item.time}}
               view.right
-                w-currency(value="-100" type="num" class="oderPrize")
+                text {{item.changes}}
             
               
   view(slot="footer" class="footer")
