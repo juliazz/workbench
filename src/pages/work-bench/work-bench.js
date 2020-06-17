@@ -2,6 +2,7 @@ import api from '../../api/index.js'
 import util from '../../utils/utils'
 import fileHelper from '../../utils/fileHelper.js'
 import storangeMange from '../../utils/storage-manage';
+
 const {base64src} = fileHelper
 
 const fetch = async (options) => {
@@ -100,7 +101,7 @@ Page({
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
     await storangeMange.setActivityId(activeId)
-    let {info, period, fund, poster ,live_qrcode, activity_reg_qrcode} = data
+    let {info, period, fund, poster, live_qrcode, activity_reg_qrcode} = data
     info.start_date = util.getMouthDay(info.start_date)
     info.end_date = util.getMouthDay(info.end_date)
     period.start_datetime = util.formatDate2(period.start_datetime)
@@ -108,7 +109,7 @@ Page({
     this.showTimeDown(period.end_time * 1000 - period.current_time * 1000)
     // 海报数据、
     const activeCode = await this.getBase64ImageUrl(activity_reg_qrcode)
-    console.log('activeCode======',activeCode)
+    console.log('activeCode======', activeCode)
     this.setData({
       activityData: {info, period, fund},
       poster,
@@ -188,15 +189,15 @@ Page({
     this.setData({ timeend: e.timeStamp });
     this.savePhoto(url)
   },
-  //把base64转换成图片
+  // 把base64转换成图片
   async getBase64ImageUrl(data) {
-    return new Promise((resolve, reject)=>{
-      base64src(data,(res)=>{
+    return new Promise((resolve, reject) => {
+      base64src(data, (res) => {
         resolve(res)
       })
     })
     // return base64ImgUrl
-    /// 刷新数据
+    // / 刷新数据
   //   this.setData({
   //     baseImgUrl:base64ImgUrl
   //   })
@@ -226,7 +227,7 @@ Page({
   // 核销码输入
   bindinput(e) {
     this.setData({
-      barCodeNum:e.detail.value
+      barCodeNum: e.detail.value
     })
   },
   openScan() {
@@ -236,19 +237,19 @@ Page({
         console.log('scanCode->', ev)
         let { errMsg, result } = ev
         if (errMsg != 'scanCode:ok') {
-           return this.$showToast('扫码失败')
+          return this.$showToast('扫码失败')
         }
         result = JSON.parse(result)
         this.scanCode(result)
       }
     })
   },
-  async scanCode(result){
+  async scanCode(result) {
     const getResult = await api.checkOffCode(result)
     const { msg, data, status } = getResult;
     if (status != '200') return this.$showToast(msg);
     getApp().globalData.scanRes = data
-    this.$routeTo(`order-type-in`)
+    this.$routeTo('order-type-in')
   },
   /**
    * 生命周期函数--监听页面显示

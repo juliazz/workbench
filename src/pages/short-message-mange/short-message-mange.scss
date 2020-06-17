@@ -1,0 +1,56 @@
+
+@import '../../assets/style/index';
+.pages-short-message-mange {
+    .header{
+        padding: 30rpx;
+        height: 200rpx;
+        .image-box{
+            position: relative;
+            width: 49%;
+            .header-bg{
+                width: 100%;
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+            .go{
+                height: 37rpx;
+                width: 72rpx;
+            }
+        }
+        .info-box{
+            padding: 30rpx 40rpx;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+        text{
+            color: #4890CC;
+            display: block;
+        }
+        .header-title{
+            font-size: 34rpx;
+            margin-bottom: 10rpx;
+        }
+        .header-title2{
+            font-size: 26rpx;
+            margin-bottom: 5rpx;
+        }
+    }
+    .content{
+        .message-list{
+            padding: 30rpx;
+            .message-item{
+                border-radius: 15rpx;
+               box-shadow: 0px 0px 36px 0px rgba(179, 179, 179, 0.35);
+               .left{
+                   image{
+                       height: 32rpx;
+                       width: 32rpx;
+                   }
+               }
+
+            }
+        }
+    }
+}
