@@ -28,16 +28,17 @@ w-page(
             text 推荐发圈
         view.words(class="{{item.collState?'higer':''}}") {{item.content}}
           text.view-more(bindtap="expandEventer" data-index="{{index}}" wx:if="{{!item.collState}}") 查看全文
-        van-grid(column-num="3" gutter="{{ 5 }}" square custom-class="van-grid {{activeTabIndex==1?'no-boder-bottom':''}}" border="{{false}}")
-          van-grid-item(use-slot wx:for="1233456"  text="8888" wx:key="*this" content-class="grid-item")
+        van-grid(column-num="3"  wx:if="{{item.attach_type=='image'}}" gutter="{{ 5 }}" square custom-class="van-grid {{activeTabIndex==1?'no-boder-bottom':''}}" border="{{false}}")
+          van-grid-item(use-slot wx:for="{{item.file_list}}" wx:for-item="file"  wx:key="file" content-class="grid-item")
             view.grid-item()
               image(
-                src='https://api.fmlesson.cn/upload/20200421/8dc1e6a77a1f8245ad999265b2413c64.jpg'
+                src='{{file.url}}'
                 mode="aspectFill"
               )
-        //- w-media(
-        //-   url="https://stream7.iqilu.com/10339/article/202002/18/2fca1c77730e54c7b500573c2437003f.mp4"
-        //- )
+        w-media(
+          wx:if="{{item.attach_type=='video'}}"
+          url="{{item.file_list[0].url}}"
+        )
         view.btns.flex-just-end(wx:if="{{activeTabIndex==0}}")
           vant-button( type="default" size="small" color="{{$themColor}}" round plain custom-class="save" data-index="{{index}}" data-type="image" bind:click="savePhoto")
             view.btns-slots
@@ -53,7 +54,6 @@ w-page(
           bindtap="$routeLink" )
         vant-icon(name="add-o" color="#fff" size="25px")
         text 发布素材
-      
   view(slot="footer" class="footer")
 van-action-sheet(
   show="{{ shareShow }}"

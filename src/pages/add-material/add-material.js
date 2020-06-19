@@ -71,8 +71,10 @@ Page({
     const { msg, data, status } = result
     console.log(msg, data, status)
     if (status != '200') return this.$showToast(msg);
-
-    // 请求发布接口
+    this.$showToast("上传成功，请等待审核！")
+    setTimeout(()=>{
+      this.$navigateBack()
+    },1500)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

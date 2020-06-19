@@ -1,6 +1,9 @@
 
 {
-  "navigationBarTitleText": "",
-  "usingComponents": {}
+  "navigationBarTitleText": "导出报表",
+  "usingComponents": {
+    "w-popup":"../../components/popup/index",
+    "w-input":"../../components/input/index"
+  }
 }
   

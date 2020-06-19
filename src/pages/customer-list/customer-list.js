@@ -1,7 +1,20 @@
-
+import api from '../../api/index.js'
+let par;
+let currentPage = 1;// 个人页数
+let totalPage;
+let totalData = [];
+let limit =5;
+let type ;
 const fetch = async (options) => {
   try {
-    return await Promise.resolve({code: 0})
+    type = options.id
+    par={
+      type,
+      page: currentPage,
+      limit: limit
+    }
+    
+    return await api.getClientList(par)
   } catch (err) {
     return {}
   }
@@ -16,16 +29,21 @@ Page({
   },
   onPreLoad: fetch,
   /**
-   * 生命周期函数--监听页面加载
+   * 生命周期函数--监听页面加载h
    */
   onLoad: async function(options) {
     const {customerType, id} = options
     this.setData({
       customerType
     })
-    // this.$wLoading.show()
-    const result = await this.$getPreload(fetch, options)
+    console.log('id=========',id,'customerType=====',customerType)
+    this.$showLoading()
+    const result = await this.$getPreload(fetch)
+    this.$hideLoading()
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
     console.log(result)
+    this.setData({customerList:data.data})
     // this.$wLoading.hide()
   },
   /**

@@ -20,16 +20,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function() {
-    const result = await this.$getPreload(fetch)
-    const { msg, data, status } = result;
-    if (status != '200') return this.$showToast(msg);
-    let data_ = data.map((i) => {
-      return Object.assign(i, {time: util.getMouthDay(i.time)})
-    })
-    this.setData({
-      messageList: data_
-    })
+  onLoad:function() {
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -41,8 +32,16 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
-
+  onShow: async function() {
+    const result = await this.$getPreload(fetch)
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    let data_ = data.map((i) => {
+      return Object.assign(i, {time: util.getMouthDay(i.time)})
+    })
+    this.setData({
+      messageList: data_
+    })
   },
 
   /**

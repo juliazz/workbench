@@ -379,7 +379,16 @@ const  getUnixTime = (dateStr) =>{
   let time_str = date.getTime().toString();
   return time_str.substr(0, 10);
 }
-
+/**
+* @param {string} 正则邮箱
+*/
+const isEmail = (value) => {
+  return /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(value)
+}
+// 判断是否是手机号
+const isPhone = (value) => {
+  return /(^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8})$/.test(value)
+}
 export default {
   ...lodash,
   ...accounting,
@@ -396,6 +405,8 @@ export default {
   formatDate,
   combinUrl,
   randomId,
+  isEmail,
+  isPhone,
   getPlatform,
   compareVersion,
   convertQuery,

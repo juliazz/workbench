@@ -3,20 +3,43 @@ w-page(
 )
   view(slot="content" class="content")
     view.title 选择导出报表项
-    vant-cell(
-      title="全选"
-      custom-class="custom-class"
-      clickable
-    )
-      vant-checkbox(catch:tap="noop" bind:change="onChangeAll" custom-class="check-custom"  class="checkboxes-all"  value="{{ allChecked }}" )
+    //- vant-cell(
+    //-   title="全选"
+    //-   custom-class="custom-class"
+    //-   clickable
+    //- )
+    //-   vant-checkbox(catch:tap="noop" bind:change="onChangeAll" custom-class="check-custom"  class="checkboxes-all"  value="{{ allChecked }}" )
     vant-checkbox-group(value="{{ result }}" bind:change="onChange" )
-        vant-cell(
-          data-index="{{ index }}"  wx:for="{{ list }}"
-          wx:key="index"
-          title="{{ item.title}}"
-          custom-class="custom-class"
-          clickable
-        )
-          vant-checkbox(catch:tap="noop"  custom-class="check-custom" class="checkboxes" name="{{ item.type }}")
-  
+      vant-cell(
+        data-index="{{ index }}"  wx:for="{{ typeCellList }}"
+        wx:key="index"
+        title="{{ item.text}}"
+        custom-class="custom-class"
+        clickable
+      )
+        vant-checkbox(catch:tap="noop"  custom-class="check-custom" class="checkboxes" name="{{ item.item_id }}")
+    view.btn
+      vant-button( type="default"  block round custom-class="action-btn" color="#0f8eef" bind:click="popupShow" )
+        text 确认导出
   view(slot="footer" class="footer")
+w-popup(
+  class="w-popup"
+  show="{{popupShow}}"
+  type="center"
+  closeIcon="{{false}}"
+  centerBg="#RRGGBB"
+)
+  view(slot="content" class="content")
+    view.content-in
+      image(src="../../assets/image/email-bg.png")
+      view.input-area.flex-dire-column
+        view 导出数据须填写
+        w-input(
+          class="w-input"
+          placeholder="请填写邮箱地址"
+          value="{{email}}"
+          bindblur="bindblur"
+          maxlength="30"
+        )
+        vant-button( type="default"  block round custom-class="action-btn" color="#0f8eef" bind:click="comfirmExport" )
+          text 确认导出

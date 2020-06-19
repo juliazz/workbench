@@ -15,6 +15,13 @@ const getuserbycatid = async (params = {}) => request.post({
   data: params
 });
 /**
+ * 获取最后一层列表数据接口
+ */
+const getUserListByCatId = async (params = {}) => request.post({
+  url: 'kpi/getUserListByCatId',
+  data: params
+});
+/**
  * 消息列表接口
  */
 const pklist = async (params = {}) => request.post({
@@ -49,6 +56,7 @@ export default {
   messagelist,
   readmessage,
   getuserbycatid,
+  getUserListByCatId,
   pklist,
   editpk
 }

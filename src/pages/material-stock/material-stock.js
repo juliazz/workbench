@@ -90,23 +90,18 @@ Page({
   savePhoto: async function (event) {
     const {index} = event.currentTarget.dataset
     const item = this.data.personDetailList[index]
-    // if (type == 'image') {
     const copyText = item.content
     wx.setClipboardData({
       data: copyText,
       success (res) {
-        // wx.getClipboardData({
-        //   success (res) {
-        //     console.log(res.data) // data
-        //   }
-        // })
       }
     })
-    let testlist = ['https://api.fmlesson.cn/upload/20200421/8dc1e6a77a1f8245ad999265b2413c64.jpg', 'https://api.fmlesson.cn/upload/20200421/8dc1e6a77a1f8245ad999265b2413c64.jpg', 'https://api.fmlesson.cn/upload/20200421/8dc1e6a77a1f8245ad999265b2413c64.jpg', 'https://api.fmlesson.cn/upload/20200421/8dc1e6a77a1f8245ad999265b2413c64.jpg', 'https://api.fmlesson.cn/upload/20200421/8dc1e6a77a1f8245ad999265b2413c64.jpg', 'https://api.fmlesson.cn/upload/20200421/8dc1e6a77a1f8245ad999265b2413c64.jpg', 'https://api.fmlesson.cn/upload/20200421/8dc1e6a77a1f8245ad999265b2413c64.jpg', 'https://api.fmlesson.cn/upload/20200421/8dc1e6a77a1f8245ad999265b2413c64.jpg']
-    // let testlist = ['https://stream7.iqilu.com/10339/article/202002/18/2fca1c77730e54c7b500573c2437003f.mp4']
+if (item.attach_type == 'image') {
+    
+    let testlist = item.file_list
     let times = 0;
     testlist = testlist.map(async(i) => {
-      const tempFilePath = await this.downloadFileSync(i)
+      const tempFilePath = await this.downloadFileSync(i.url)
       const { errMsg } = await wx.$saveImageToPhotosAlbum({
         filePath: tempFilePath
       })
@@ -122,15 +117,20 @@ Page({
           this.$showToast('图片已保存至本地')
         }
       }
+     
+    })
+    } else {
+      const tempFilePath = await this.downloadFileSync(item.file_list[0].url)
+      const { errMsg } = await wx.$saveVideoToPhotosAlbum({
+        filePath: tempFilePath
+      })
       if (errMsg == 'saveVideoToPhotosAlbum:ok') {
         this.$showToast('视频已保存至本地')
+        this.setData({
+          shareShow: true
+        })
       }
-    })
-    // } else {
-    //   let url = 'https://stream7.iqilu.com/10339/article/202002/18/2fca1c77730e54c7b500573c2437003f.mp4'
-    //   const tempFilePath = await this.downloadFileSync(url)
-
-    // }
+    }
   },
   // 下载小程序码
   downloadFileSync: function (url) {

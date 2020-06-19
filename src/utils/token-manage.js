@@ -1,9 +1,7 @@
 import logger from './logger.js';
 import config from '../config';
 import storageManage from './storage-manage';
-
 let request;
-
 const store = {
   async getter() {
     return storageManage.getAccessToken();
@@ -85,7 +83,6 @@ const token = {
       storageManage.setLoginStatus(false)
       throw new Error('Token fetch failed');
     }
-
     const { token, user_info } = data;
     const {openid, unionid, user_id} = user_info
     storageManage.setOpenId(openid);

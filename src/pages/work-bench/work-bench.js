@@ -41,8 +41,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    console.log('work-bench---------------onLoad')
     // 一进来先判断有没有注册过
+    await this.isRegister()
+    console.log('work-bench---------------onLoad')
     user_id = await storangeMange.getUserId()
     console.log(user_id)
     // if (!user_id) { this.$routeTo('webview') }
@@ -69,6 +70,25 @@ Page({
   onReady: function() {
 
   },
+  async isRegister() {
+    const loginStatus = await storangeMange.getLoginStatus()
+    console.log('loginStatus======', loginStatus)
+    if (loginStatus) {
+      return
+    }
+    const register = await api.getUserResiInfo()
+    const { msg, data, status } = register;
+    if (status != '200') return this.$showToast(msg);
+    // 是否有进入小程序的权限
+    console.log(data)
+    console.log('!data.forward', !data.forward)
+    if (!data.forward) {
+      this.$routeTo('widthdraw')
+      return
+    }
+    //  是否是主办方
+    storangeMange.setLoginStatus(data)
+  },
   // 根据活动id查活动数据
   async getActivityData(activeId) {
     this.$showLoading()
@@ -85,7 +105,6 @@ Page({
     this.showTimeDown(period.end_time * 1000 - period.current_time * 1000)
     // 成员注册码、
     const activeCode = await this.getBase64ImageUrl(activity_reg_qrcode)
-    console.log('activeCode======', activeCode)
     // 用户等级 及等级信息（订单录入）
     getApp().globalData.orderInType = rights
     this.setData({
@@ -131,7 +150,6 @@ Page({
     console.log(time)
     if (time > 0) {
       let activeEndTime = util.formatDuring(time)
-      console.log(activeEndTime)
       this.setData({ activeEndTime })
     }
     if (time < 0) {
@@ -142,7 +160,6 @@ Page({
       time = time - 60000
       if (time > 0) {
         let activeEndTime = util.formatDuring(time)
-        console.log(activeEndTime)
         this.setData({ activeEndTime })
       }
       if (time < 0) {

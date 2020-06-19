@@ -21,8 +21,11 @@ Page({
    */
   onLoad: async function(options) {
     const id = options.id ? options.id : null
+    const isRead = options.isRead ? options.isRead : null
     this.getMessageDetail()
-    this.changeRead(id)
+    if(!isRead){
+      this.changeRead(id)
+    }
   },
   async getMessageDetail(options) {
     this.$showLoading()
@@ -30,7 +33,7 @@ Page({
     this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    let data_ = data.map((i) => {
+    let data_ = data.list.map((i) => {
       return Object.assign(i, {time: util.formatDate2(i.time)})
     })
     console.log(data_)

@@ -5,7 +5,7 @@ const upLoadFile = async (path) => {
   console.log(path, token)
   return new Promise((resolve, reject) => {
     wx.uploadFile({
-      url: 'https://api.fmcd.feimi0513.xyz/api/kpi/upload',
+      url: 'https://api.fmcd.feimi0513.xyz/api/upload',
       filePath: path,
       header: {'x-feimi-token': token},
       name: 'file',

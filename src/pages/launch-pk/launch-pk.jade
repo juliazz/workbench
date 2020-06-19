@@ -5,10 +5,10 @@ w-page(
 )
   view(slot="header" class="header")
   view(slot="content" class="content")
-    vant-cell( title="pk阶段:" is-link value="{{stepValue}}" value-class="value-class" bind:click="popupShow" data-popup-type="pkStep")
-    vant-cell( title="pk项目:" is-link value="{{projectValue}}"  value-class="value-class" bind:click="popupShow" data-popup-type="project")
+    vant-cell( title="pk阶段:" is-link value="{{stepValue.name}}" value-class="value-class" bind:click="popupShow" data-popup-type="pkStep")
+    vant-cell( title="pk项目:" is-link value="{{projectValue.name}}"  value-class="value-class" bind:click="popupShow" data-popup-type="project")
     //- 个人三级联动
-    view.cell-picker(wx:if="{{identity=='个人'}}")
+    view.cell-picker(wx:if="{{pickerLevel=='2'}}")
       vant-cell( title="pk上级:"  value="{{areaValue.name}}" value-class="value-class" custom-class="custom-class")
       view.arr-box
         vant-icon(name="arrow" color="#999" size="18px")
@@ -21,7 +21,7 @@ w-page(
         )
           view.picker .
     //- 品牌二级联动
-    view.cell-picker(wx:if="{{identity=='品牌'}}")
+    view.cell-picker(wx:if="{{pickerLevel=='1'}}")
       vant-cell( title="pk上级:"  value="{{areaValue.name}}" value-class="value-class" custom-class="custom-class")
       view.arr-box
         vant-icon(name="arrow" color="#999" size="18px")
@@ -34,7 +34,7 @@ w-page(
         )
           view.picker .
     //- 品牌一级联动
-    view.cell-picker(wx:if="{{identity=='部门'}}")
+    view.cell-picker(wx:if="{{pickerLevel=='0'}}")
       vant-cell( title="pk上级:"  value="{{areaValue.name}}" value-class="value-class" custom-class="custom-class")
       view.arr-box
         vant-icon(name="arrow" color="#999" size="18px")
@@ -44,12 +44,13 @@ w-page(
           value="{{indexOne}}" range="{{arrayOne}}"
         )
           view.picker .
-    vant-cell( title="{{pkCellTitle}}" is-link value="{{endChoiceValue}}" value-class="value-class" bind:click="popupShow" data-popup-type="end")
+    vant-cell( title="{{pkCellTitle}}" is-link value="{{endChoiceValue.name}}" value-class="value-class" bind:click="popupShow" data-popup-type="end")
     vant-field( 
       value="{{ pkPrice }}"  label="金额:" 
       placeholder="请输入PK金额"
       input-class="input-class"
       type="number"
+      bind:change="priceInputEventer"
       input-align="center"
       bind:click-icon="onClickIcon" value-class="value-class")
     view.btn
@@ -114,17 +115,17 @@ w-popup-module(
       text.comfirm(bindtap="onConfirm" data-type="endChoice") 确认
     view.list-box
       scroll-view.list(scroll-y="true" style="height: 40vh")
-        vant-checkbox-group(value="{{ result }}" bind:change="onChangeEnd")
+        vant-checkbox-group(value="{{ endChoice }}" bind:change="onChangeEnd")
           vant-cell-group()
             vant-cell(
-              data-index="{{ index }}" bind:click="toggle" wx:for="{{ list }}"
+              data-index="{{ index }}" bind:click="toggle" wx:for="{{ endChoiceList }}"
               wx:key="index"
-              title="复选框 {{ item }}"
+              title="{{ item.name }}"
               title-class="title-class"
               value-class="value-class"
               clickable
             )
-              vant-checkbox(catch:tap="noop" class="checkboxes-{{ index }}" name="{{ item }}")
+              vant-checkbox(catch:tap="noop" class="checkboxes-{{ index }}" name="{{ item.id }}")
 
 //- comfirm invite
 w-popup-module(

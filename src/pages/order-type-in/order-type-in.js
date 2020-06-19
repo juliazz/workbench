@@ -59,6 +59,23 @@ Page({
    */
   onLoad: async function(options) {
     console.log('options======', options)
+    const rights = getApp().globalData.orderInType[0]
+    console.log('rights', rights)
+    // 获取签单人列表
+    // 0 代表当前员工  1代表身份是主管
+    if (rights.type == 0) {
+      this.setData({
+        'order.sign': {
+          name: rights,
+          id: rights.id
+        }
+      })
+    } else if (rights.type == 1) {
+      console.log('rights', rights)
+      this.getSignUserList() // 获取签单人列表
+    }
+    // 获取带单人列表
+    this.getLeaderUserList()
     // 选择品牌后带回来的参数
     isFrombar = options.type == 'bar' && !!app.globalData.scanRes
     console.log('isFrombar=====', isFrombar)
@@ -68,8 +85,6 @@ Page({
         'order.hx_code': app.globalData.scanRes.code_info.hx_code
       })
     }
-
-    this.getUserList() // 获取签单人列表
   },
 
   /**
@@ -81,8 +96,13 @@ Page({
       'order.brand': brandInfo
     })
   },
+  async getSignUserList() {
+    const result = await api.getTopUserList()
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+  },
   //   =========     签单人选择  ============
-  getUserList: async function() {
+  getLeaderUserList: async function() {
     // 临时  模拟获取到的一维数组
     // let { multiArraySecond} = this.data
     // const result = await api.getUserList({})
@@ -99,13 +119,15 @@ Page({
     // // 默认选择第一项
     // const arrayOne = this.findArr2List(arr1[0].id)
     // this.setData({arrayOne})
-    const result = await api.getUserList()
+    const result = await api.getServiceUserList()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
     userListRes = data // 将完整数据存起来
     // 带单人数据  模拟此处获取  后面替换 *****getStepList ---》 getCurrentStepList 顺序不能换
     this.getStepList() // 获取每个步骤列表
     this.getCurrentStepList() // 获取当前步骤列表
+
+    // ===============================================
   },
   findArr2List(index) {
     const arr2 = userListRes.filter((i) => {

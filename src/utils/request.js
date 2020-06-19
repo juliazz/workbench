@@ -21,7 +21,6 @@ const interceptors = {
     // 设置token
     async setToken(options) {
       const token = await storangeMange.getAccessToken() || '';
-      console.log('token=========', token)
       options.header = options.header || {};
       options.header['x-feimi-token'] = `${token}`;
       return options;
@@ -63,13 +62,12 @@ const interceptors = {
   response: {
     // 处理HttpError
     async handleHttpError(options, result) {
-      console.log('result===========', result)
       if (result.statusCode === 200) {
         // todo 处理鉴权失败
         const {
           status
         } = result.data;
-        console.log('status=======', status)
+        console.log('result===========', result.data)
         if (status === 401) {
           await tokenManage.clear();
           await tokenManage.get()

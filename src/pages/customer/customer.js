@@ -1,11 +1,4 @@
 
-const fetch = async (options) => {
-  try {
-    return await Promise.resolve({code: 0})
-  } catch (err) {
-    return {}
-  }
-}
 
 Page({
   $route: 'pages/customer/customer',
@@ -100,15 +93,10 @@ Page({
 
     ]
   },
-  onPreLoad: fetch,
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function(options) {
-    // this.$wLoading.show()
-    const result = await this.$getPreload(fetch, options)
-    console.log(result)
-    // this.$wLoading.hide()
+  onLoad: function(options) {
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

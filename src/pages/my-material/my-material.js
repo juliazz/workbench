@@ -5,18 +5,6 @@ let totalPage;
 let limit = 3;
 let status_ = 0;
 let totalData = [];
-const fetch = async (options) => {
-  try {
-    const par = {
-      page: currentPage,
-      status: 0,
-      limit
-    }
-    return await api.getUserMaterialList(par)
-  } catch (err) {
-    return {}
-  }
-}
 
 Page({
   $route: 'pages/my-material/my-material',
@@ -25,7 +13,7 @@ Page({
    */
   data: {
     tabs: ['微信素材', '其他素材'],
-    activeList: 'audit',
+    activeList: '0',
     myMaterialList: [{}, {}],
     auditList: [{}, {}],
     wattingList: [{}],
@@ -37,7 +25,7 @@ Page({
    */
   onLoad: async function(options) {
     this.$showLoading()
-    const result = await this.$getPreload(fetch, options)
+    const result = await this.getMaterialList()
     console.log(result)
     this.$hideLoading()
   },
@@ -53,13 +41,18 @@ Page({
     this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    totalPage = data.last_page
-    const personDetailList = data.data.map((i) => {
+    console.log(data)
+    const {status_list, last_page, per_page} = data
+    totalPage = last_page
+    const myMaterialList = data.data.map((i) => {
       i.collState = false;
       return i
     })
-    totalData = totalData.concat(personDetailList)
-    this.setData({personDetailList: totalData})
+    totalData = totalData.concat(myMaterialList)
+    this.setData({
+      myMaterialList: totalData,
+      status_list
+    })
   },
   changeEventer(event) {
     totalData = []
@@ -98,26 +91,11 @@ Page({
   onUnload: function() {
 
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
     currentPage++
     this.getMaterialList()
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
   }
 })

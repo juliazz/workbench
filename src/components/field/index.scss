@@ -24,6 +24,7 @@
     overflow: hidden;
     transition: height .3s;
     font-size: 20rpx;
+    padding-left: 50rpx;
     line-height: 40rpx;
     &.active {
       height: 40rpx;

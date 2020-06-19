@@ -27,7 +27,7 @@ w-page(
           disabled="{{imageList.length == 9}}" name="image" accept="image" 
           preview-image="preview-image" bind:delete="delete"
         )
-      view.upload-video
+      view.upload-video(wx:if="{{imageList.length==0}}")
         van-uploader(
            bind:before-read="beforeRead" use-before-read="{{true}}"
          file-list="{{ videoList }}" bind:after-read="afterRead" name="video" 

@@ -15,4 +15,28 @@
     .check-custom{
         justify-content: flex-end;
     }
+    .btn{
+        margin-top: 20rpx;
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+.w-popup{
+    .content-in{
+        position: relative;
+    }
+    image{
+        height: 676rpx;
+        width: 560rpx;
+    }
+    .input-area{
+        justify-content: space-between;
+        position: absolute;
+        left: 10%; 
+        top: 50%;
+        width: 80%;
+        height: 40%;
+
+    }
 }

@@ -1,5 +1,13 @@
 import request from '../utils/request';
 /**
+ *判断有没有注册过小程序
+ * @parentId
+ */
+const getUserResiInfo = async (params = {}) => request.post({
+  data: params,
+  url: 'kpi/getUserRegInfo'
+});
+/**
  * 用户活动列表
  * @parentId
  */
@@ -44,9 +52,15 @@ const exportData = async(params = {}) => request.post({
   data: params,
   url: 'kpi/export'
 })
+// 可导出数据清单
+const getExportList = async(params = {}) => request.post({
+  data: params,
+  url: 'kpi/getExportList'
+})
 
 
 export default {
+  getUserResiInfo,
   getUserActivities,
   getActivityInfo,
   checkOffCode,
@@ -54,5 +68,6 @@ export default {
   getRankInfo,
   getRankList,
   launchPK,
+  getExportList,
   exportData
 };
