@@ -1,5 +1,4 @@
 
-w-loading(id="w-loading")
 w-page(
   class="w-page pages-customer"
 )
@@ -8,7 +7,7 @@ w-page(
     view.customer-list
       view.customer-item(
         wx:for="{{customerList}}" wx:key="index" 
-        bindtap="$routeLink" data-path='customer-list?customerType={{item.name}}&id={{item.id}}'
+        bindtap="$routeLink" data-path='customer-list?customerType={{item.type}}&id={{item.id}}'
       )
         image(src="../../assets/image/icon/customer/{{item.icon}}.png" mode="widthFix")
         text {{item.type}}客户

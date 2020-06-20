@@ -42,11 +42,11 @@ const getUserList = async(params = {}) => request.post({
   data: params,
   url: 'kpi/getUserCat'
 })
-// 获取排行榜列表
-const getRankList = async(params = {}) => request.post({
-  data: params,
-  url: 'kpi/getRankList'
-})
+// // 获取排行榜列表
+// const getRankList = async(params = {}) => request.post({
+//   data: params,
+//   url: 'kpi/getRankList'
+// })
 // 导出数据
 const exportData = async(params = {}) => request.post({
   data: params,
@@ -66,7 +66,6 @@ export default {
   checkOffCode,
   getUserList,
   getRankInfo,
-  getRankList,
   launchPK,
   getExportList,
   exportData

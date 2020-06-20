@@ -96,29 +96,27 @@ Page({
       success (res) {
       }
     })
-if (item.attach_type == 'image') {
-    
-    let testlist = item.file_list
-    let times = 0;
-    testlist = testlist.map(async(i) => {
-      const tempFilePath = await this.downloadFileSync(i.url)
-      const { errMsg } = await wx.$saveImageToPhotosAlbum({
-        filePath: tempFilePath
-      })
-      console.log(errMsg)
-      if (errMsg == 'saveImageToPhotosAlbum:ok') {
-        times += 1
-        console.log(times)
-        if (times == testlist.length) {
-          this.setData({
-            shareShow: true
-          })
-          console.log('全部下载完成')
-          this.$showToast('图片已保存至本地')
+    if (item.attach_type == 'image') {
+      let testlist = item.file_list
+      let times = 0;
+      testlist = testlist.map(async(i) => {
+        const tempFilePath = await this.downloadFileSync(i.url)
+        const { errMsg } = await wx.$saveImageToPhotosAlbum({
+          filePath: tempFilePath
+        })
+        console.log(errMsg)
+        if (errMsg == 'saveImageToPhotosAlbum:ok') {
+          times += 1
+          console.log(times)
+          if (times == testlist.length) {
+            this.setData({
+              shareShow: true
+            })
+            console.log('全部下载完成')
+            this.$showToast('图片已保存至本地')
+          }
         }
-      }
-     
-    })
+      })
     } else {
       const tempFilePath = await this.downloadFileSync(item.file_list[0].url)
       const { errMsg } = await wx.$saveVideoToPhotosAlbum({

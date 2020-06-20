@@ -2,7 +2,7 @@
 @import '../../assets/style/index';
 .pages-customer-list {
     .content{
-        height: 100vh;
+        min-height: 100vh;
         background-color: $g3c;
         overflow-y: scroll;
         .title{
@@ -17,10 +17,18 @@
             .item-box{
                 margin-bottom: 30rpx;
             }
-            .components-item-box-lcr{
+            .w-item-box{
                 border-radius: 10rpx;
-                padding: 30rpx 20rpx;
                 background-color: #fff;
+            }
+            .bottom{
+                border-top: 2rpx solid $g4c;
+                color: $b5c;
+                padding: 20rpx;
+            }
+            .components-item-box-lcr{
+                padding: 30rpx 20rpx;
+               
             }
             .left{
                 image{
@@ -35,6 +43,9 @@
                 .time{
                     color: $b3c;
                 }
+                .customer-name{
+                    margin-right: 20rpx;
+                }
             }
             .right{
                 .state{
@@ -47,7 +58,7 @@
                     align-items: center;
                     margin-top: 10rpx;
                     position: relative;
-                    height: 70rpx;
+                    height: 80rpx;
                     color: $b3c;
                     font-size: 20rpx;
                     w-icon{

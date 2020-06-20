@@ -1,6 +1,7 @@
 import logger from './logger.js';
 import config from '../config';
 import storageManage from './storage-manage';
+
 let request;
 const store = {
   async getter() {

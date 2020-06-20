@@ -10,5 +10,5 @@ const getClientList = async (params = {}) => request.post({
 
 
 export default {
-    getClientList
+  getClientList
 }

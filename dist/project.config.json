@@ -93,9 +93,9 @@
 					"scene": ""
 				},
 				{
-					"id": 7,
-					"name": "pages/num-export/num-export",
-					"pathName": "pages/num-export/num-export",
+					"id": -1,
+					"name": "pages/customer/customer",
+					"pathName": "pages/customer/customer",
 					"query": "",
 					"scene": null
 				}

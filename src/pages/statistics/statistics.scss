@@ -3,6 +3,9 @@
 .pages-statistics {
     .header{
         background-color: $g3c;
+        .van-tab-custom{
+            
+        }
         .rank-list{
             background-color: #fff;
             margin-top: 20rpx;
@@ -10,18 +13,21 @@
             @include flex-just-start;
             flex-wrap: wrap;
             .rank-item{
-                width: 170rpx;
+                width: 200rpx;
                 color: $b3c;
+                box-sizing: border-box;
                 background-color: $g3c;
                 line-height: 70rpx;
+                height: 70rpx;
                 font-size: 26rpx;
                 padding: 0 15rpx;
-                border-radius: 15rpx;
-                margin: 15rpx 25rpx;
+                margin: 15rpx 20rpx;
                 text-align: center;
             }
             .active{
-                background-color: #C4D8FE;
+                background-color: #E9F3FF;
+                border: 2rpx solid $pc;
+                color: $pc;
             }
         }
     }

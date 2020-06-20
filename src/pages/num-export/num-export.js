@@ -98,7 +98,7 @@ Page({
     const {result, email} = this.data
     if (!email) { return }
     const par = {
-      item_ids:result,
+      item_ids: result,
       email: email
     }
     this.$showLoading()
@@ -122,12 +122,12 @@ Page({
     let result = !!isEmail(value)
     if (!result) { this.$showToast('请填写正确的邮箱地址！') }
     this.setData({
-      email:value
+      email: value
     })
   },
 
   popupShow: function(eve) {
-    if(!this.data.result.length){return this.$showToast("请勾选至少一项报表项！")}
+    if (!this.data.result.length) { return this.$showToast('请勾选至少一项报表项！') }
     this.setData({
       popupShow: true
     })

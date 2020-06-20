@@ -38,7 +38,8 @@ Page({
     {
       name: '贡献逛店',
       id: 6,
-      icon: 'contribution-shopping'
+      icon: 'contribution-shopping',
+      type: '贡献逛店'
     },
     {
       type: '被贡献逛店',

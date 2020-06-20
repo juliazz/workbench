@@ -1,22 +1,22 @@
 
-w-loading(id="w-loading")
 w-page(
   class="w-page pages-statistics"
 )
   view(slot="header" class="header")
     van-tabs(active="{{ activeTabIndex }}" bind:change="onChange" color="{{$themColor}}")
       van-tab(
-        wx:for="{{ tabs }}"
-        wx:key="tabId"
+        wx:for="{{ menu_list }}"
+        wx:key="id"
+        custom-class="van-tab-custom"
         wx:for-index="tabIndex"
-        title="{{item.name}}排行榜"
+        title="{{item.name}}"
       )
         view.rank-list
           view.rank-item(
             class!="{{activeTabIndex==tabIndex&&activeRankItemIndex==index?'active':''}}"
-            wx:for="{{rankList}}" wx:key="index" wx:for-item="rankItem"
-            bindtap="rankItemClick" data-rank-name="{{rankItem.name}}" data-rank-index="{{index}}" data-rank-id="{{rankItem.rankId}}")
-            text {{rankItem.name}} 
+            wx:for="{{menu_list[tabIndex].menu}}" wx:key="index" wx:for-item="rankItem"
+            bindtap="rankItemClick" data-rank-name="{{rankItem.value}}" data-rank-index="{{index}}" data-rank-id="{{rankItem.tag}}")
+            text {{rankItem.value}} 
   view(slot="content" class="content")
     view.data-area
       view.title 数据总览
@@ -28,13 +28,15 @@ w-page(
           color="{{$themColor}}"
           title="{{item}}"
         )
-      view.data-table
-        van-grid(column-num="4"  square)
-          van-grid-item(use-slot wx:for="{{ dataList }}"  text="8888" wx:key="*this")
-            view.grid-item()
-              text.num {{item.num}}
-              text.text {{item.title}}
-              
-              
-          
+          view.data-table
+            van-grid(column-num="4"  square wx:if!="{{activeNumViewTab==0&&isPageReady}}")
+              van-grid-item(use-slot wx:for="{{ brand_rank }}"  wx:key="value")
+                view.grid-item()
+                  text.num {{item.value}}
+                  text.text {{item.name}}
+            van-grid(column-num="4"  square wx:if!="{{activeNumViewTab==1&&isPageReady}}")
+              van-grid-item(use-slot wx:for="{{ host_rank }}" wx:key="value")
+                view.grid-item()
+                  text.num {{item.value}}
+                  text.text {{item.name}}
   view(slot="footer" class="footer")

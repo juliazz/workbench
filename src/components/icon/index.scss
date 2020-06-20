@@ -47,6 +47,11 @@
     height: 30rpx;
     background-size: 100% 100%;
   }
+  &-effective{
+    width: 85rpx;
+    height: 43rpx;
+    background-size: 100% 100%;
+  }
 }
 
 .icon-calendar{
@@ -99,4 +104,7 @@
 }
 .icon-pyq{
   background-image: url('../../assets/image/icon/pyq.png');
+}
+.icon-effective{
+  background-image: url('../../assets/image/icon/effective.png');
 }

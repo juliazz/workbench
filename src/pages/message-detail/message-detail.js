@@ -23,7 +23,7 @@ Page({
     const id = options.id ? options.id : null
     const isRead = options.isRead ? options.isRead : null
     this.getMessageDetail()
-    if(!isRead){
+    if (!isRead) {
       this.changeRead(id)
     }
   },
