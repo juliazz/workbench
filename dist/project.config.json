@@ -94,9 +94,8 @@
 				},
 				{
 					"id": -1,
-					"name": "pages/customer/customer",
-					"pathName": "pages/customer/customer",
-					"query": "",
+					"name": "pages/challenge/challenge",
+					"pathName": "pages/challenge/challenge",
 					"scene": null
 				}
 			]

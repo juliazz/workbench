@@ -100,8 +100,8 @@ Page({
     const result = await api.getTopUserList()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    console.log('data.user_list=====',data.user_list)
-    this.setData({arrayOne:data[0].user_list})
+    console.log('data.user_list=====', data.user_list)
+    this.setData({arrayOne: data[0].user_list})
   },
   //   =========     签单人选择  ============
   getLeaderUserList: async function() {

@@ -1,0 +1,26 @@
+
+w-page(
+  class="w-page pages-challenge"
+)
+  view(slot="header" class="header")
+  view(slot="content" class="content")
+    view.item-box(wx:for="2324")
+      view.header.flex-align-center
+        w-icon(type="chat" size="large")
+        text.title 挑战名称：关于6.18家具单日销量挑战
+      view.main-info
+        view.step 挑战阶段：单品排第几二法
+        view.prize.flex-just-start
+          view.bonus.fl1 挑战奖金：9999元
+          view.capital.fl1 
+            text 挑战本金：
+            text.red 5000元
+        view.project.flex-just-start
+          text.bonus.fl1 挑战项目：浏览
+          text.prize.fl1 挑战目标：9999
+        view.bottom.flex-just-between
+          text.blue 截止日期：2020.09.08
+          vant-button( type="default" round size="small" custom-class="challenge-btn" color="#0f8eef" bind:click="" )
+            text 我要挑战
+    //- text {{title}}
+  view(slot="footer" class="footer")

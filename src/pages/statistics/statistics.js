@@ -1,7 +1,8 @@
 import api from '../../api/index.js'
+
 const fetch = async (options) => {
   try {
-    return await  api.getStaticHomeData()
+    return await api.getStaticHomeData()
   } catch (err) {
     return {}
   }
@@ -27,7 +28,7 @@ Page({
     const result = await this.$getPreload(fetch, options)
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    const {brand_rank,host_rank, menu_list} = data
+    const {brand_rank, host_rank, menu_list} = data
     this.setData({
       brand_rank,
       host_rank,
@@ -58,7 +59,7 @@ Page({
   },
   onNumViewChange(event) {
     this.setData({
-      activeNumViewTab:event.detail.index
+      activeNumViewTab: event.detail.index
     })
     wx.showToast({
       title: `切换到数据总览 ${event.detail.index + 1}`,

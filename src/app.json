@@ -26,7 +26,8 @@
 		"pages/short-message-edit/short-message-edit",
 		"pages/short-messgae-send/short-messgae-send",
 		"pages/short-mess-success/short-mess-success",
-		"pages/num-export/num-export"
+		"pages/num-export/num-export",
+		"pages/challenge/challenge"
 	],
 	"window": {
 		"navigationStyle": "default",
@@ -68,8 +69,8 @@
 		"w-icon": "./components/icon/index",
 		"w-currency": "./components/currency/index",
 		"vant-button": "./miniprogram_npm/vant-weapp/button/index",
-		"vant-checkbox":"../../miniprogram_npm/vant-weapp/checkbox/index",
-		"vant-checkbox-group":"../../miniprogram_npm/vant-weapp/checkbox-group/index",
+		"vant-checkbox": "../../miniprogram_npm/vant-weapp/checkbox/index",
+		"vant-checkbox-group": "../../miniprogram_npm/vant-weapp/checkbox-group/index",
 		"vant-icon": "./miniprogram_npm/vant-weapp/icon/index",
 		"vant-cell": "./miniprogram_npm/vant-weapp/cell/index",
 		"vant-cell-group": "./miniprogram_npm/vant-weapp/cell-group/index",

@@ -146,9 +146,8 @@
             }
             .myCoin{
                 flex-wrap: wrap;
-                @include flex-just-between;
                 .coinItem{
-                    width: 135rpx;
+                    width: 145rpx;
                     display: flex;
                     @include flex-dire-column;
                     line-height: 50rpx;

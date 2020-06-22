@@ -2,7 +2,7 @@ import api from '../../api/index.js'
 
 let par;
 let currentPage = 1;// 个人页数
-let totalPage =1;
+let totalPage = 1;
 let totalData = [];
 let limit = 5;
 let type;
@@ -18,9 +18,9 @@ Page({
    * 生命周期函数--监听页面加载h
    */
   onLoad: async function(options) {
-    console.log('totalData=============',totalData)
+    console.log('totalData=============', totalData)
     const {customerType, id} = options
-    type =id
+    type = id
     this.setData({
       customerType
     })
@@ -40,7 +40,7 @@ Page({
   onReady: function() {
 
   },
-  async getCustomerList(){
+  async getCustomerList() {
     console.log('=============getCustomerList===============')
     par = {
       type,
@@ -77,9 +77,8 @@ Page({
    */
   onUnload: function() {
     currentPage = 1;// 个人页数
-    totalPage =1;
+    totalPage = 1;
     totalData = [];
-
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -87,7 +86,7 @@ Page({
   onPullDownRefresh: function() {
 
   },
-   /**
+  /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {

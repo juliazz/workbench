@@ -19,8 +19,15 @@ Component({
     viewData: { // 页面视图数据
       type: Object,
       value: {
-        name: '',
-        type: null //
+      },
+      observer(value) {
+        const {pk_list,rank_info,record_info} = value.data
+        this.setData({
+          pk_list,
+          rank_info,
+          record_info
+        })
+        console.log(pk_list,rank_info,record_info)
       }
     }
   },

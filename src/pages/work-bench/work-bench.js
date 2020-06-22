@@ -55,8 +55,8 @@ Page({
     this.getRankInfo()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    const activeId = data[0].activity_id
-    // const activeId = 1
+    // const activeId = data[0].activity_id
+    const activeId = 1
     await storangeMange.setActivityId(activeId)
     // await storangeMange.setActivityId(1)
     // 默认选中第一个活动
@@ -122,14 +122,14 @@ Page({
     const result = await api.getRankInfo()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    const {list, rule} = data
-    const {apartment, brand, person, zone} = list[0]
-    app.globalData.coinRule = rule
+    // const {list, rule} = data
+    // const {apartment, brand, person, zone} = list
+    // app.globalData.coinRule = rule
     this.setData({
-      person,
-      apartment, // 部门
-      brand,
-      zone // 战区
+      person:data[0],
+      apartment:data[1], // 部门
+      brand:data[2],
+      zone:data[3]// 战区
     })
   },
   // 点击列表更改选中activeId

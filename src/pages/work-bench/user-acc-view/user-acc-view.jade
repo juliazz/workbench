@@ -1,22 +1,16 @@
 
 view(class="components-user-acc-view")
     view.section.section-collpase.section-pk
-        view.pk-title(wx:if="{{type==1}}")
-          image(src='../../../assets/image/icon/people.png')
-          text 我的战绩
-        view.pk-title(wx:elif="{{type==2}}")
-          image.part(src='../../../assets/image/icon/diamond.png')
-          text 部门战绩
-        view.pk-title(wx:elif="{{type==3}}")
-          image.brand(src='../../../assets/image/icon/team.png')
-          text 品牌战绩
-        view.pk-title(wx:elif="{{type==4}}")
-          image.regin(src='../../../assets/image/icon/region.png')
-          text 战区战绩
+        view.pk-title()
+          image(wx:if="{{type==1}}" src='../../../assets/image/icon/people.png')
+          image.part( wx:elif="{{type==2}}" src='../../../assets/image/icon/diamond.png')
+          image.brand(wx:elif="{{type==3}}" src='../../../assets/image/icon/team.png')
+          image.regin(wx:elif="{{type==4}}" src='../../../assets/image/icon/region.png')
+          text {{viewData.name}}
         view.title-1
           view.left 
             text.name 某品牌
-            text 金币排名:90
+            text 金币排名:{{pk_list.my_rank}}
           view.right
             text.action(bindtap="$routeLink" data-path="rank-list?rankType={{name}}&ruleId={{type}}") 查看排行
         view.item-box.flex-just-between
@@ -37,11 +31,7 @@ view(class="components-user-acc-view")
           view.right(bindtap="popupShow" data-popup-type="goldCoin")
             text.action 金币规则
         //- 品牌金币
-        view.section-content.myCoin
-          view.coinItem
-            text.num.font-theme-grey +25
-            text 50人
-            text 浏览
+        view.section-content.myCoin.flex-just-start
           view.coinItem
             text.num.font-theme-grey +25
             text 50人

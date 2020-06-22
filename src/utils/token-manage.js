@@ -89,7 +89,8 @@ const token = {
     storageManage.setOpenId(openid);
     storageManage.setUnionId(unionid);
     storageManage.setUserId(user_id);
-    await this.set(token);
+    await this.set('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6InN4cy00ZjFnMjNhMTJhYSJ9.eyJqdGkiOiJzeHMtNGYxZzIzYTEyYWEiLCJpYXQiOjE1OTE5NDExODYsImV4cCI6MTYyMzQ3NzE4NiwidWlkIjoxN30.qKadRS9C6rMwgO0r6ExCg-KRPysQAouA7i2wA_7q6uM');
+    // await this.set(token);
     return result;
   },
   complete(type, result) {
