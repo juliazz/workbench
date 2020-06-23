@@ -1,5 +1,5 @@
 import login from './loginAPI'
-import product from './productAPI'
+import rank from './rankAPI'
 import person from './workbenchAPI'
 import common from './commonAPI'
 import material from './material'
@@ -11,7 +11,7 @@ import customer from './customerAPI'
 
 export default {
   ...login,
-  ...product,
+  ...rank,
   ...common,
   ...person,
   ...orderIn,

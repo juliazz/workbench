@@ -7,17 +7,22 @@ const getStaticHomeData = async (params = {}) => request.post({
   url: 'kpi/getRankList',
   data: params
 });
-const getStatisics = async (params = {}) => request.post({
-  url: 'kpi/statisics',
-  data: params
-});
+
+// 获取阶段数据
 const getPeriodList = async (params = {}) => request.post({
   url: 'kpi/getPeriodList',
   data: params
 });
-
+/**
+ * 获取排行数据
+ * @parentId
+ */
+const getRankList= async (params = {}) => request.post({
+  data: params,
+  url: `kpi/getRankListByTag`
+});
 export default {
   getStaticHomeData,
-  getStatisics,
+  getRankList,
   getPeriodList
 }

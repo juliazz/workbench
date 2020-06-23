@@ -84,7 +84,7 @@ w-page(
           view.title
             view.left
               text 扣罚明细
-            view.right
+            view.right(bindtap="$routeLink" data-path="account-detail?type=getPunishCashLog")
               text 查看明细
               text.arr-box
                 text.right-arrow(bindtap="$routeLink" data-path="order-brand")
@@ -115,8 +115,8 @@ w-page(
             view.right 
               view.extract-prize
                 text (可提取金额：{{personCount.money}})
-              vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="inviteEventer" )
-                text 提现
+              vant-button( type="default" round custom-class="action-btn" color="#0f8eef" bind:click="hidePersonDetail" )
+                text 收起明细
           view.money-type-list.flex-just-between.bod-bottom
             view.type-item
               w-currency(value="{{personCount.reward}}" )

@@ -18,16 +18,22 @@ Component({
     },
     viewData: { // 页面视图数据
       type: Object,
-      value: {
-      },
       observer(value) {
-        const {pk_list,rank_info,record_info} = value.data
+        const can_pk = value.can_pk
+        const cat_type_id = value.cat_type_id
+        const {pk_list, rank_info, record_info} = value.data
+        const {activity_period_project_list} = rank_info.record
+        const period_swiper1 = activity_period_project_list.slice(0, 4)
+        const period_swiper2 = activity_period_project_list.slice(4, 8)
         this.setData({
           pk_list,
           rank_info,
-          record_info
+          can_pk,
+          cat_type_id,
+          record_info,
+          period_swiper1,
+          period_swiper2
         })
-        console.log(pk_list,rank_info,record_info)
       }
     }
   },

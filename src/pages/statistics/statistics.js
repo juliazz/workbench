@@ -14,8 +14,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    activeTabIndex: 1,
-    activeNumViewTab: 1, // 数据总览切换
+    activeTabIndex: 0,
+    activeNumViewTab: 0, // 数据总览切换
     activeRankItemIndex: null,
     numViewTabs: ['主办方', '品牌']
   },
@@ -34,28 +34,28 @@ Page({
       host_rank,
       menu_list
     })
+    setTimeout(() => {
+      this.setData({
+        isPageReady: true
+      })
+      this.$hideLoading()
+    }, 1000)
     console.log(result)
-    this.$hideLoading()
   },
   onChange(event) {
-    wx.showToast({
-      title: `切换到标签 ${event.detail.index + 1}`,
-      icon: 'none'
-    });
     this.setData({
-      activeTabIndex: event.detail.index
+      activeTabIndex: this.data.menu_list[event.detail.index].id
     })
   },
   rankItemClick(eve) {
     const {rankName, rankId, rankIndex} = eve.currentTarget.dataset
-    const {activeTabIndex, tabs } = this.data
-    const rankTitle = tabs[activeTabIndex].name + `${rankName}`
+    const {activeTabIndex, menu_list } = this.data
+    const rankTitle = menu_list[activeTabIndex].name + `${rankName}`
     console.log(rankTitle)
     this.setData({
       activeRankItemIndex: rankIndex
     })
-    let isFirstStep = activeTabIndex == 0 ? 1 : 0
-    // this.$routeTo(`statistics-rank?tabIndex=${activeTabIndex}&rankItemIndex=${rankId}&isFirstStep=${isFirstStep}&rankTitle=${rankTitle}`)
+    this.$routeTo(`statistics-rank?tabIndex=${activeTabIndex}&rankItemIndex=${rankId}&rankTitle=${rankTitle}`)
   },
   onNumViewChange(event) {
     this.setData({

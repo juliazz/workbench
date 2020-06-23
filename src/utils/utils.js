@@ -105,9 +105,9 @@ const formatDuring= (mss) =>{
   hours = hours.toString().length>1?hours:'0'+hours.toString()
   let minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60));
   minutes = minutes.toString().length>1?minutes:'0'+minutes.toString()
-  // var seconds = (mss % (1000 * 60)) / 1000;
+  var seconds = (mss % (1000 * 60)) / 1000;
   // return days + " 天 " + hours + " 小时 " + minutes + " 分钟 ";
-  return { days, hours, minutes }
+  return { days, hours, minutes ,seconds}
 }
 /**
  * 格式链接

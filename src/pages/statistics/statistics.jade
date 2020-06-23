@@ -23,19 +23,19 @@ w-page(
       van-tabs(active="{{ activeNumViewTab }}" type="card" bind:change="onNumViewChange" color="{{$themColor}}")
         van-tab(
           wx:for="{{ numViewTabs }}"
-          wx:key="numViewIndex"
+          wx:key="index"
           tab-class="special-tab"
           color="{{$themColor}}"
           title="{{item}}"
         )
           view.data-table
             van-grid(column-num="4"  square wx:if!="{{activeNumViewTab==0&&isPageReady}}")
-              van-grid-item(use-slot wx:for="{{ brand_rank }}"  wx:key="value")
+              van-grid-item(use-slot wx:for="{{ brand_rank }}"  wx:key="gridIndex")
                 view.grid-item()
                   text.num {{item.value}}
                   text.text {{item.name}}
             van-grid(column-num="4"  square wx:if!="{{activeNumViewTab==1&&isPageReady}}")
-              van-grid-item(use-slot wx:for="{{ host_rank }}" wx:key="value")
+              van-grid-item(use-slot wx:for="{{ host_rank }}" wx:key="gridIndex")
                 view.grid-item()
                   text.num {{item.value}}
                   text.text {{item.name}}

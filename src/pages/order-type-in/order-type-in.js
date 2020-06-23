@@ -124,12 +124,13 @@ Page({
     const result = await api.getServiceUserList()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    userListRes = data // 将完整数据存起来
-    // 带单人数据  模拟此处获取  后面替换 *****getStepList ---》 getCurrentStepList 顺序不能换
-    this.getStepList() // 获取每个步骤列表
-    this.getCurrentStepList() // 获取当前步骤列表
-
-    // ===============================================
+    const {level, list} = data
+    userListRes = list // 将完整数据存起来
+    if (level == 3) {
+      // 带单人数据  模拟此处获取  后面替换 *****getStepList ---》 getCurrentStepList 顺序不能换
+      this.getStepList() // 获取每个步骤列表
+      this.getCurrentStepList() // 获取当前步骤列表
+    }
   },
   findArr2List(index) {
     const arr2 = userListRes.filter((i) => {
@@ -164,14 +165,16 @@ Page({
       let res3;
       let res4;
       //  遍历品牌
-      i.children.map((v) => {
+      console.log(i)
+      i.child.map((v) => {
+        console.log(v)
         // 遍历部门
-        v.children.map((x) => {
+        v.child.map((x) => {
           // 遍历员工
-          res4 = x.user_arr.map((z) => {
-            res4 = {name: z.name, id: z.id, parent_id: z.parent_id }
-            Step4List.push(res4)
-          })
+          // res4 = x.user_arr.map((z) => {
+          //   res4 = {name: z.name, id: z.id, parent_id: z.parent_id }
+          //   Step4List.push(res4)
+          // })
           res3 = {name: x.name, id: x.id, parent_id: x.parent_id }
           Step3List.push(res3)
         })
@@ -180,7 +183,7 @@ Page({
       })
       return {name: i.name, id: i.id}
     })
-    stepList.push(Step1List, Step2List, Step3List, Step4List)
+    stepList.push(Step1List, Step2List, Step3List)
     this.setData({stepList})
   },
   getCurrentStepList(id) {

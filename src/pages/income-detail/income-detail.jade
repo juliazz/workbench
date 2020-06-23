@@ -3,11 +3,11 @@ w-page(
   class="w-page pages-income-detail"
 )
   view(slot="header" class="header")
-    view.search-area
+    //- view.search-area
       van-search(value="{{searchValue}}" placeholder="客户姓名或电话" use-right-icon-slot="{{false}}")
-      vant-button( type="default" size="small" class="search-btn" custom-class="custom-class")
-        text 导出订单
-    view.total-amount
+      //- vant-button( type="default" size="small" class="search-btn" custom-class="custom-class")
+      //-   text 导出订单
+    view.total-amount(wx:if="{{amount}}")
       text 总收入：
       w-currency(value="{{amount}}" )
   view(slot="content" class="content")
@@ -15,7 +15,7 @@ w-page(
       view.item-box(wx:for="{{list}}" wx:key="index")
         w-item-box.w-item-box()
           view.left(slot="left")
-            image()
+            image(src="{{item.avatar}}")
           view.center(slot="center" centerWidth="500")
             text.customer-name 客户姓名：{{item.client_name}}
             text.customer-tel 联系电话：{{item.client_mobile}}
@@ -29,5 +29,4 @@ w-page(
             w-currency(value="100" class="order-price")
           view(wx:if!="{{type!='online'}}") 订单编号：{{item.order_sn}}
           view.time 下单时间：{{item.create_time}}
-            
   view(slot="footer" class="footer")

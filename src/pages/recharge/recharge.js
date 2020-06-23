@@ -28,13 +28,13 @@ Page({
     this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    const {timestamp, nonce_str, sign_type, prepay_id, pay_sign } = data
+    const {timeStamp, nonceStr, signType,paySign } = data
     const par = {
-      timeStamp: timestamp + '',
-      nonceStr: nonce_str,
-      package: prepay_id,
-      signType: sign_type,
-      paySign: pay_sign
+      timeStamp: timeStamp + '',
+      nonceStr: nonceStr,
+      package: data.package,
+      signType: signType,
+      paySign: paySign
     }
     console.log(par)
     wx.requestPayment({
@@ -45,19 +45,19 @@ Page({
           this.$showToast({title: '充值成功', icon: 'success'})
           setTimeout(() => {
             this.$navigateBack()
-          }, 2000)
+          }, 1500)
         } else {
           this.$showToast('充值失败稍后再试！')
           setTimeout(() => {
             this.$navigateBack()
-          }, 20000)
+          }, 1500)
         }
       },
       fail: (err) => {
         console.log(err, 'err')
         setTimeout(() => {
           this.$navigateBack()
-        }, 2000)
+        }, 1500)
       }
     });
   },

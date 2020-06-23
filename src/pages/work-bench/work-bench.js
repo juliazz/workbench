@@ -33,7 +33,6 @@ Page({
     }
     ], // 展开状态数组
     userAreaData: { // 个人区域数据
-
     }
   },
   onPreLoad: fetch,
@@ -68,7 +67,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
   },
   async isRegister() {
     const loginStatus = await storangeMange.getLoginStatus()
@@ -126,10 +124,10 @@ Page({
     // const {apartment, brand, person, zone} = list
     // app.globalData.coinRule = rule
     this.setData({
-      person:data[0],
-      apartment:data[1], // 部门
-      brand:data[2],
-      zone:data[3]// 战区
+      person: data[0],
+      apartment: data[1], // 部门
+      brand: data[2],
+      zone: data[3]// 战区
     })
   },
   // 点击列表更改选中activeId
@@ -147,9 +145,8 @@ Page({
   },
   // 倒计时
   showTimeDown(time) {
-    console.log(time)
     if (time > 0) {
-      let activeEndTime = util.formatDuring(time)
+      const activeEndTime = util.formatDuring(time)
       this.setData({ activeEndTime })
     }
     if (time < 0) {
@@ -157,16 +154,16 @@ Page({
       return
     }
     Timer = setInterval(() => {
-      time = time - 60000
+      time = time - 1000
       if (time > 0) {
-        let activeEndTime = util.formatDuring(time)
+        const activeEndTime = util.formatDuring(time)
         this.setData({ activeEndTime })
       }
       if (time < 0) {
         clearInterval(Timer)
         this.setData({ activeEndTime: 0 })
       }
-    }, 60000)
+    }, 1000)
   },
 
   popupShow: function(eve) {
@@ -287,17 +284,5 @@ Page({
    */
   onUnload: function() {
     if (Timer) clearInterval(Timer)
-  },
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
   }
 })

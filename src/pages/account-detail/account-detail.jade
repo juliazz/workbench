@@ -7,21 +7,18 @@ w-page(
     view.search-area
       view.total-amount
         text 总收入：
-        w-currency(value="100" class="oderPrize")
-      vant-button(
-        color="{{$themColor}}" size="normal" 
-        custom-class="search-btn" bind:click="exportOrder"
-        )
-        text 导出订单
+        w-currency(value="{{amount}}" class="oderPrize")
+      //- vant-button(
+      //-   color="{{$themColor}}" size="normal" 
+      //-   custom-class="search-btn" bind:click="exportOrder"
+      //-   )
+      //-   text 导出订单
   view(slot="content" class="content")
-    view.customer-list
-      view.item-box(wx:for="{{personDetailList}}" wx:key="index")
+    view.customer-list 
+      view.item-box(wx:for="{{personDetailList}}" wx:key="id" ) 
         view.left
-          view.title {{item.des}}
+          view.title() {{item.des?item.des:item.point}}
           view.time {{item.time}}
         view.right
-          w-currency(value="{{item.changes}}" class="oderPrize")
-          
-          
-        
+          w-currency(value="{{item.money}}" class="oderPrize")
   view(slot="footer" class="footer")

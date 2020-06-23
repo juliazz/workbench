@@ -5,9 +5,9 @@ w-page(
 )
   view(slot="header" class="header")
   view(slot="content" class="content")
-    van-dropdown-menu.van-dropdown-menu( wx:if="{{isFirstStep==1}}" active-color="{{$themColor}}" )
+    van-dropdown-menu.van-dropdown-menu(  active-color="{{$themColor}}" )
       van-dropdown-item(value="{{ stepValue }}" options="{{ stepList }}" title="时间切换" bind:change="timeChangeEventer")
-    view.time-title( wx:if="{{isFirstStep==1}}") {{timeTitle}}
+    view.time-title() {{timeTitle}}
     view.num-title
       text 总售卡
       text 1000人
@@ -27,10 +27,6 @@ w-page(
           view.main-info
             view.left
               text.name {{item.name}}
-            view.arrow-box(
-              wx:if="{{isFirstStep==0}}"
-              bindtap="$routeLink" data-path='statistics-rank?customerType={{item.name}}&id={{item.id}}')
-              text.right-arrow
           view.progress(wx:if="{{index==0}}")
             van-progress(
               percentage="100" stroke-width="10" show-pivot="{{false}}" color="#FF7E00"

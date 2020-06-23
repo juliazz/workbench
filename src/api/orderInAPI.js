@@ -12,7 +12,7 @@ const getTopUserList = async (params = {}) => request.post({
  */
 const getServiceUserList = async (params = {}) => request.post({
   data: params,
-  url: 'kpi/getServiceUserList'
+  url: 'kpi/getServiceCatList'
 });
 
 /**

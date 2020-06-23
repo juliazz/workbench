@@ -56,6 +56,11 @@ Page({
     this.getPersonalFinaceDetail()
     this.getPersonalFundInfo()
   },
+  hidePersonDetail() {
+    this.setData({
+      personDetailShow: false
+    })
+  },
   // 个人详情头部信息
   async getPersonalFundInfo() {
     this.$showLoading()
@@ -82,6 +87,7 @@ Page({
     totalData = totalData.concat(personDetailList)
     this.setData({personDetailList: totalData})
   },
+  
   onChange: function(eve) {
     const {index} = eve.detail
     this.setData({

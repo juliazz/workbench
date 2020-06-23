@@ -36,6 +36,13 @@ const getSignList = async (params = {}) => request.post({
   data: params
 });
 /**
+ * 线上订单明细收入
+ */
+const getOnlineOrderList = async (params = {}) => request.post({
+  url: 'kpi/getOnlineOrderList',
+  data: params
+});
+/**
  * 线上报名明细收入
  */
 const getBrandCashList = async (params = {}) => request.post({
@@ -47,6 +54,13 @@ const getBrandCashList = async (params = {}) => request.post({
  */
 const getPointExchangeList = async (params = {}) => request.post({
   url: 'kpi/getPointExchangeList',
+  data: params
+});
+/**
+ * 扣罚明细
+ */
+const getPunishCashLog = async (params = {}) => request.post({
+  url: 'kpi/getPunishCashLog',
   data: params
 });
 /**
@@ -67,6 +81,8 @@ const submitRecharge = async (params = {}) => request.post({
 
 export default {
   getPersonalCashLog,
+  getPunishCashLog,
+  getOnlineOrderList,
   getFinanceInfo,
   getPersonalFundInfo,
   getLiveOrderList,

@@ -94,8 +94,9 @@
 				},
 				{
 					"id": -1,
-					"name": "pages/challenge/challenge",
-					"pathName": "pages/challenge/challenge",
+					"name": "pages/finance/finance",
+					"pathName": "pages/finance/finance",
+					"query": "",
 					"scene": null
 				}
 			]

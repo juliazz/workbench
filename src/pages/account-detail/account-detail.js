@@ -35,12 +35,17 @@ Page({
     if (status != '200') return this.$showToast(msg);
     totalPage = data.last_page
     const personDetailList = data.data.map((i) => {
-      let arr = i.time.split('T');
+      let arr = i.time.split('');
       i.time = arr[0]
       return i
     })
     totalData = totalData.concat(personDetailList)
-    this.setData({personDetailList: totalData})
+    this.setData({
+      personDetailList: totalData,
+      type,
+      amount:data.amount
+    })
+    console.log('personDetailList======', this.data.personDetailList)
   },
 
   exportOrder: function() {

@@ -1,7 +1,7 @@
 import ruleList from './rule'
 import api from '../../api/index.js'
 import util from '../../utils/utils'
-
+let cat_type_id
 const fetch = () => {
   try {
     return getApp().getStepList()
@@ -28,6 +28,7 @@ Page({
    */
   onLoad: async function(options) {
     const {rankType, ruleId } = options
+    cat_type_id= options.cat_type_id
     const rule = ruleList[Number(ruleId) - 1]
     switch (Number(ruleId)) {
     case 1:
@@ -48,38 +49,39 @@ Page({
     const stepResult = await this.$getPreload(fetch)
     this.$hideLoading()
     const stepList = stepResult.map((i) => Object.assign({}, {
-      text: i.period_name,
+      text: i.name,
       value: i.id,
       start_datetime: util.formatDate2(i.start_datetime),
       end_datetime: util.formatDate2(i.end_datetime)
     }))
     const firstStep = stepList[0]
-    this.getRankList(firstStep.value)
+    this.getRankDetail(firstStep.value)
     this.setData({
       rankType,
       stepList,
       ruleList: rule
     })
   },
-  async getRankList(id) {
+  async getRankDetail(id) {
     const par = {
       type,
-      period_id: id
+      cat_type_id,
+      period_id:id
     }
     this.$showLoading()
-    const result = await api.getRankList(par)
+    const result = await api.getRankDetail(par)
     this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    const {current_data, info, list} = data
-    filterList = list
+    // const {current_data, info, list} = data
+    filterList = data
     const timeTitle = this.data.stepList.find((i) => {
       return i.value == id
     })
     this.setData({
       timeTitle,
-      current_data,
-      info,
+      // current_data,
+      // info,
       list: filterList
     })
   },

@@ -29,40 +29,33 @@ Page({
     if (!options.tabIndex || !options.rankItemIndex) { return this.$showToast('非法进入！') }
     tabIndex = options.tabIndex
     rankItemIndex = options.rankItemIndex
-    // 是否还有下一级
-    // if (isFirstStep) this.setData({isFirstStep})
-    // if(rankTitle) wx.setNavigationBarTitle({title: rankTitle })
-    // if(tabIndex){}
-    //
     this.$showLoading()
     const stepResult = await this.$getPreload(fetch)
-    console.log(stepResult)
     this.$hideLoading()
     console.log(stepResult)
     const stepList = stepResult.map((i) => Object.assign({}, {
-      text: i.period_name,
+      text: i.name,
       value: i.id
     }))
     const firstStep = stepList[0]
-    this.getStatisicsList(firstStep.id)
+    this.getStatisicsList(0)
     this.setData({timeTitle: firstStep.text, stepList})
   },
   async getStatisicsList(id) {
     let par = {
-      search_content: rankItemIndex,
-      search_range: Number(tabIndex) + 1,
+      tag: rankItemIndex,
+      type: Number(tabIndex) + 1,
       period_id: id
     }
     this.$showLoading()
-    const result = await api.getStatisics(par)
+    const result = await api.getRankList(par)
     this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    const { title, total, list, unit} = data
+    const {total, list, unit} = data
     const fullProgressNum = list[0].value
     this.setData({
       statisticsList: list,
-      title,
       total,
       fullProgressNum,
       unit
