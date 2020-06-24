@@ -45,7 +45,7 @@ const formatDate = (time) => {
 };
 //2020-05-18 14:32:57 ==>  2020-5-30 00:00  参数2020-05-18 14:32:57
 const formatDate2 = (time) => {
-  let time_ = new Date(time);
+  let time_ = new Date(time.replace(/-/g, "/"));
   const year = time_.getFullYear();
   const month = time_.getMonth() + 1;
   const day = time_.getDate();
@@ -57,7 +57,7 @@ const formatDate2 = (time) => {
 };
 // 2020-05-18 14:32:57 ==> 05.19  参数2020-05-18 14:32:57
 const getMouthDay = (time) => {
-  let date = new Date(time);
+  let date = new Date(time.replace(/-/g, "/"));
   let seperator1 = ".";
   let month = date.getMonth() + 1;
   let strDate = date.getDate();

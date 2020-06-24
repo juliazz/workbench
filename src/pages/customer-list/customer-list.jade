@@ -14,13 +14,13 @@ w-page(
             view.center(slot="center" centerWidth="500")
               view.flex-align-center
                 text.customer-name 客户姓名：{{item.client_name}}
-                w-icon(type="effective" size="effective" ) 
+                w-icon(type="{{item.is_valid?'effective':'Invalid'}}" size="effective" ) 
               text.customer-tel 联系电话：{{item.client_mobile}}
               text.invite-name 邀请人：{{item.share_name}}
               text.belong-name 归属员工：{{item.top_name}}
             view.right(slot="right")
               view.call
-                w-icon(type="phone" size="large" bindtap='makePhoneCall' data-phone-number='{{item.mobile}}') 
+                w-icon(type="phone" size="large" bindtap='makePhoneCall' data-phone-number='{{item.client_mobile}}') 
               view.service()
                 button(
                   open-type="contact"

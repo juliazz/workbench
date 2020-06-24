@@ -43,7 +43,7 @@ Page({
     this.setData({
       personDetailList: totalData,
       type,
-      amount:data.amount
+      amount: data.amount
     })
     console.log('personDetailList======', this.data.personDetailList)
   },

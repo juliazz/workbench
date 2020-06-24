@@ -66,18 +66,22 @@ Component({
     }]
   },
   lifetimes: {
-    attached: function () { },
+    attached: function () {  this.$showLoading()},
     moved: function () { },
     detached: function () { }
   },
   attached: function () { },
   ready: function() { },
   pageLifetimes: {
-    show: function () { },
+    show: function () {
+    },
     hide: function () { },
     resize: function () { }
   },
   methods: {
+    bindImgLoad:function(){
+      this.$hideLoading()
+    },
     popupShow: function(eve) {
       const { popupType } = eve.currentTarget.dataset
       console.log(popupType)

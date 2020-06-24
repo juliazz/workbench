@@ -2,10 +2,7 @@ import api from '../../api/index.js'
 
 const fetch = async (options) => {
   try {
-    const par = {
-      activity_id: 1
-    }
-    return await api.brandList(par)
+    return await api.brandList()
   } catch (err) {
     return {}
   }

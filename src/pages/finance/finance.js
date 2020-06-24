@@ -87,7 +87,7 @@ Page({
     totalData = totalData.concat(personDetailList)
     this.setData({personDetailList: totalData})
   },
-  
+
   onChange: function(eve) {
     const {index} = eve.detail
     this.setData({

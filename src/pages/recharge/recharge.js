@@ -28,7 +28,7 @@ Page({
     this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    const {timeStamp, nonceStr, signType,paySign } = data
+    const {timeStamp, nonceStr, signType, paySign } = data
     const par = {
       timeStamp: timeStamp + '',
       nonceStr: nonceStr,

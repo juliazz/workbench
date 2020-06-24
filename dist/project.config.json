@@ -3,10 +3,27 @@
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
+		"enhance": true,
 		"postcss": true,
+		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
-		"uglifyFileName": false
+		"coverView": true,
+		"nodeModules": false,
+		"autoAudits": true,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"uglifyFileName": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.10.1",
@@ -34,10 +51,6 @@
 			"list": []
 		},
 		"game": {
-			"list": []
-		},
-		"gamePlugin": {
-			"current": -1,
 			"list": []
 		},
 		"miniprogram": {
@@ -91,13 +104,6 @@
 					"pathName": "pages/short-message-mange/short-message-mange",
 					"query": "",
 					"scene": ""
-				},
-				{
-					"id": -1,
-					"name": "pages/finance/finance",
-					"pathName": "pages/finance/finance",
-					"query": "",
-					"scene": null
 				}
 			]
 		}

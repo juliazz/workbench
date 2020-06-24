@@ -1,6 +1,7 @@
 import ruleList from './rule'
 import api from '../../api/index.js'
 import util from '../../utils/utils'
+
 let cat_type_id
 const fetch = () => {
   try {
@@ -28,7 +29,7 @@ Page({
    */
   onLoad: async function(options) {
     const {rankType, ruleId } = options
-    cat_type_id= options.cat_type_id
+    cat_type_id = options.cat_type_id
     const rule = ruleList[Number(ruleId) - 1]
     switch (Number(ruleId)) {
     case 1:
@@ -45,9 +46,7 @@ Page({
       type = 'zone'
       break;
     }
-    this.$showLoading()
     const stepResult = await this.$getPreload(fetch)
-    this.$hideLoading()
     const stepList = stepResult.map((i) => Object.assign({}, {
       text: i.name,
       value: i.id,
@@ -66,38 +65,46 @@ Page({
     const par = {
       type,
       cat_type_id,
-      period_id:id
+      period_id: id
     }
     this.$showLoading()
     const result = await api.getRankDetail(par)
-    this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    // const {current_data, info, list} = data
-    filterList = data
+    const {total_point, per_point,total_reward} = data
+    filterList = data.data
+    // 查找标题
     const timeTitle = this.data.stepList.find((i) => {
       return i.value == id
     })
     this.setData({
       timeTitle,
-      // current_data,
-      // info,
+      total_point,
+      per_point,
+      total_reward,
       list: filterList
     })
+  
+  },
+  bindImgLoad(){
+    this.$hideLoading()
   },
   timeChangeEventer(eve) {
     const index = eve.detail
-    this.getRankList(index)
+    this.getRankDetail(index)
   },
+
   filterBySearch(eve) {
-    console.log(eve)
     const keyWord = eve.detail
     console.log(keyWord)
     let filterRes = filterList.filter((v) => {
-      if (v.name.indexOf(keyWord) > -1 || v.brand.indexOf(keyWord) > -1) {
+      if (v.name.indexOf(keyWord) > -1 || v.cat_name.indexOf(keyWord) > -1) {
         return v
       }
     })
+    if(!keyWord){
+      filterRes= filterList
+    }
     this.setData({list: filterRes})
   },
   popupShow: function(eve) {
@@ -144,20 +151,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
 
   }
 })

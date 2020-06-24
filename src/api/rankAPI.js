@@ -10,5 +10,5 @@ const getRankDetail = async (params = {}) => request.post({
 });
 
 export default {
-  getRankDetail  
+  getRankDetail
 };

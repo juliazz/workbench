@@ -12,7 +12,7 @@ page{
     .header{
         .top-title{
             display: flex;
-            padding: 10rpx 100rpx 50rpx;
+            padding: 10rpx 100rpx 10rpx;
             justify-content: space-between;
             align-items: center;
             background-color: $pc;
@@ -27,10 +27,9 @@ page{
             margin-top: 10rpx;
             position: relative;
             .van-dropdown-menu{
-                
                 .van-dropdown-menu__item{
                     color: #ffbe97;
-                    padding-left: 135rpx;
+                    // padding-left: 135rpx;
                     justify-content: flex-start;
                 }
             }
@@ -39,29 +38,26 @@ page{
                 &-1{
                     position: absolute;
                     width: 100vw;
-                    height: 130rpx;
                     box-sizing: border-box;
                     border-bottom: 2rpx solid $g3c;
-                    padding: 0 30rpx 30rpx;
                     font-size: 28rpx;
                     .step{
                         position: absolute;
                         left: 30rpx;
-                        // width: 70vw;
                         top: 32rpx;
                     }
                     .time{
                         position: absolute;
-                        top: 70rpx;
-                        // right: 30rpx;
+                        top: 30rpx;
+                        right: 30rpx;
 
                     }
                 }
                 &-2{
-                    padding-right: 30rpx;
+                    padding-right: 10rpx;
+                    margin-top: -10rpx;
                     @include flex-just-between;
                     align-items: center;
-                    margin-top: 30rpx;
                     .search-input,.rule-title{
                         @include flex-align-center;
                     }
@@ -93,8 +89,7 @@ page{
         }
     }
     .content{
-        
-        margin-top: 20rpx;
+        margin-top: 10rpx;
         background-color: #fff;
         .content-title{
             font-size: 30rpx;
@@ -120,8 +115,8 @@ page{
                 @include flex-align-center;
             }
             .avator{
-                background-color: red;
                 border-radius: 50%;
+                overflow: hidden;
                 image{
                     height: 90rpx;
                     width: 90rpx;
@@ -135,9 +130,9 @@ page{
             }
             .main-info,.income{
                 @include flex-dire-column;
+                height: 110rpx;
             }
             .income{
-                height: 130rpx;
                 justify-content: flex-start;
                 align-items: center;
                 .view-num{
@@ -160,13 +155,13 @@ page{
                 transition: height 0.5s;
                 .num-box-in{
                     display: flex;
-                    justify-content: space-between;
+                    justify-content: flex-start;
                     flex-wrap: wrap;
                     padding: 30rpx 50rpx;
                 }
                 .num-item{
                     margin-bottom: 20rpx;
-                    width: 140rpx;
+                    width: 162rpx;
                     text-align: center;
                     color: $b3c;
                     @include flex-dire-column;

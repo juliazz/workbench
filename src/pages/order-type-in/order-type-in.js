@@ -3,7 +3,7 @@ const timeNow = new Date()
 import api from '../../api/index.js'
 import fileHelper from '../../utils/fileHelper.js'
 import rules from './helper';
-
+let level ;
 const {upLoadFile} = fileHelper
 let userListRes = []; // 完整的签单人列表 未分类
 let photoFileList = []; // 后台返回的接口照片id
@@ -39,10 +39,6 @@ Page({
       {
         text: '部门',
         desc: '请选择部门'
-      },
-      {
-        text: '员工',
-        desc: '请选择员工'
       }
     ],
     calendarConfig: {
@@ -66,12 +62,11 @@ Page({
     if (rights.type == 0) {
       this.setData({
         'order.sign': {
-          name: rights,
+          name: rights.name,
           id: rights.id
         }
       })
     } else if (rights.type == 1) {
-      console.log('rights', rights)
       this.getSignUserList() // 获取签单人列表
     }
     // 获取带单人列表
@@ -100,37 +95,22 @@ Page({
     const result = await api.getTopUserList()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    console.log('data.user_list=====', data.user_list)
-    this.setData({arrayOne: data[0].user_list})
+    console.log('data.user_list=====', )
+    this.setData({arrayOne: data[0].child})
   },
-  //   =========     签单人选择  ============
+  //   =========     带单人选择  ============
   getLeaderUserList: async function() {
-    // 临时  模拟获取到的一维数组
-    // let { multiArraySecond} = this.data
-    // const result = await api.getUserList({})
-    // const { msg, data, status } = result;
-    // if (status != '200') return this.$showToast(msg);
-    // userListRes = data // 将完整数据存起来
-    // const arr1 = userListRes.map((i) => {
-    //   return {
-    //     name: i.name,
-    //     id: i.id
-    //   }
-    // })
-    // multiArraySecond[0] = arr1
-    // // 默认选择第一项
-    // const arrayOne = this.findArr2List(arr1[0].id)
-    // this.setData({arrayOne})
     const result = await api.getServiceUserList()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    const {level, list} = data
-    userListRes = list // 将完整数据存起来
-    if (level == 3) {
+    level = 2
+    userListRes = data.list // 将完整数据存起来
+    // if (level == 3) {
       // 带单人数据  模拟此处获取  后面替换 *****getStepList ---》 getCurrentStepList 顺序不能换
       this.getStepList() // 获取每个步骤列表
       this.getCurrentStepList() // 获取当前步骤列表
-    }
+    // }
+    
   },
   findArr2List(index) {
     const arr2 = userListRes.filter((i) => {
@@ -166,24 +146,40 @@ Page({
       let res4;
       //  遍历品牌
       console.log(i)
+      if(!i.child){return}
       i.child.map((v) => {
         console.log(v)
+        if(level ==1&&!v.child){return }
         // 遍历部门
-        v.child.map((x) => {
+        v.child.map((x) => { 
+          if(level ==2){return }
           // 遍历员工
           // res4 = x.user_arr.map((z) => {
           //   res4 = {name: z.name, id: z.id, parent_id: z.parent_id }
           //   Step4List.push(res4)
           // })
-          res3 = {name: x.name, id: x.id, parent_id: x.parent_id }
+          res3 = {name: x.name, id: x.id, parent_id: x.pid }
           Step3List.push(res3)
         })
-        res2 = {name: v.name, id: v.id, parent_id: v.parent_id}
+        res2 = {name: v.name, id: v.id, parent_id: v.pid}
         Step2List.push(res2)
       })
       return {name: i.name, id: i.id}
     })
-    stepList.push(Step1List, Step2List, Step3List)
+    const {steps} = this.data
+    if(level ==3){
+      stepList.push(Step1List, Step2List, Step3List)
+    }else if(level==2){
+      this.setData({
+        steps:steps.slice(0,2)
+      })
+      stepList.push(Step1List, Step2List)
+    }else {
+      this.setData({
+        steps:steps.slice(0,1)
+      })
+      stepList.push(Step1List)
+    }
     this.setData({stepList})
   },
   getCurrentStepList(id) {
@@ -209,12 +205,13 @@ Page({
       name: currentStepList[index].name,
       id: currentStepList[index].id
     }
+    console.log('steps',steps)
     steps[active].desc = obj.name
     this.setData({
       activeIndex: index,
       steps
     })
-    if (active == 3) {
+    if (active == level-1) {
       setTimeout(() => {
         this.setData({
           'order.guide': obj,
@@ -228,14 +225,14 @@ Page({
     }
     setTimeout(() => {
       this.setData({
-        active: ++this.data.active % 4
+        active: ++this.data.active % level
       });
       this.getCurrentStepList(id)
     }, 500)
   },
   closeGuidePop() {
     const {active} = this.data
-    if (active != 3) return this.$showToast('未选中到人')
+    if (active != level-1) return this.$showToast('未选中到人')
   },
   //  ===================================================
   bindblur(event) {
@@ -271,11 +268,11 @@ Page({
   bindsubmit(event) {
     const { value } = event.detail;
     const {order } = this.data
-    console.log(value)
     let options = Object.assign({...value,
-      sign: 9, // 写死
+      sign: order.sign.id || '',
       brand: order.brand.brandId,
-      guide: order.guide.id || '',
+      // guide: order.guide.id || '', //写死9
+      guide: 9, //写死9
       cert: photoFileList,
       hx_code: order.hx_code || ''
     })
@@ -297,13 +294,13 @@ Page({
         remark: value.remark
       }
       this.orderBrandIn(par);
-
       // 清除订单信息
       wx.setStorageSync('brandInfo', '')
     });
   },
   async orderBrandIn(options) {
     const res = await api.submitOrder(options)
+
   },
   popupShow: function(eve) {
     const { popupType } = eve.currentTarget.dataset
@@ -353,20 +350,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
 
   }
 })

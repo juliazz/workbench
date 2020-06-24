@@ -54,8 +54,8 @@ Page({
     this.getRankInfo()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    // const activeId = data[0].activity_id
-    const activeId = 1
+    const activeId = data[0].activity_id
+    // const activeId = 1
     await storangeMange.setActivityId(activeId)
     // await storangeMange.setActivityId(1)
     // 默认选中第一个活动
@@ -90,11 +90,11 @@ Page({
   // 根据活动id查活动数据
   async getActivityData(activeId) {
     this.$showLoading()
+    await storangeMange.setActivityId(activeId)
     const result = await api.getActivityInfo({activity_id: activeId})
     this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    await storangeMange.setActivityId(activeId)
     let {info, period, rights, fund, poster, live_qrcode, activity_reg_qrcode, view_shop} = data
     info.start_date = util.getMouthDay(info.start_date)
     info.end_date = util.getMouthDay(info.end_date)
@@ -140,6 +140,7 @@ Page({
   // 点击确认后请求对应活动数据
   sureChangeActive: function() {
     const { activeId } = this.data
+    console.log('activeId=======',activeId)
     this.getActivityData(activeId)
     this.setData({popupType: ''})
   },

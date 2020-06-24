@@ -20,20 +20,20 @@ w-page(
               text.change 活动切换
         view.price-box
           view.price-item
-            w-currency(value="{{fund.reward}}" class="oderPrize")
-            text 奖励总额
+            w-currency(value="{{fund.reward}}" class="orderPrize")
+            text.prize-title 奖励总额
           view.price-item
-            w-currency(value="{{fund.recharge}}" class="oderPrize")
-            text 充值余额
+            w-currency(value="{{fund.recharge}}" class="orderPrize")
+            text.prize-title 充值余额
           view.price-item
-            w-currency(value="{{fund.punish}}" class="oderPrize")
-            text 扣罚金额
+            w-currency(value="{{fund.punish}}" class="orderPrize")
+            text.prize-title 扣罚金额
           view.price-item
-            w-currency(value="{{fund.recharge}}" class="oderPrize")
-            text 已提取金额
-        view.can-.flex-just-between
+            w-currency(value="{{fund.recharge}}" class="orderPrize")
+            text.prize-title 已提取金额
+        view.can-extract.flex-just-between
             text 可提取金额(元)
-            w-currency(value="{{fund.reward}}" class="oderPrize")
+            w-currency(value="{{fund.reward}}" class="orderPrize")
       view.section.section-1
         view.action-list
           view.action-item(bindtap="popupShow" data-popup-type="choosePoster")
@@ -57,30 +57,30 @@ w-page(
           view.action-item(bindtap="$routeLink" data-path="material-stock")
             image(src="../../assets/image/icon/material.png" mode="widthFix")
             text 活动素材库
-          view.action-item(bindtap="$routeLink"  data-path="short-message-mange")
-            image(src="../../assets/image/icon/small-message.png" mode="widthFix")
-            text 短信管理
+          //- view.action-item(bindtap="$routeLink"  data-path="short-message-mange")
+          //-   image(src="../../assets/image/icon/small-message.png" mode="widthFix")
+          //-   text 短信管理
           view.action-item(bindtap="$routeLink"  data-path="num-export")
             image(src="../../assets/image/icon/export.png" mode="widthFix")
             text 数据导出
-      view.section.section-live-manger
-        view.activity-title
-          image.flag(src='../../assets/image/icon/live-manger.png')
-          text 直播管理
-        view.action-list
-          view.action-item(bindtap="popupShow" data-popup-type="choosePoster")
-            image(src="../../assets/image/icon/pro-manger.png" mode="widthFix")
-            text 直播商品管理
-          view.action-item(bindtap="popupShow" data-popup-type="shopping")
-            image(src="../../assets/image/icon/live-config.png" mode="widthFix")
-            text 直播间配置
-          view.action-item( bindtap="popupShow" data-popup-type="groupCode" )
-            image(src="../../assets/image/icon/key-word.png" mode="widthFix")
-            text 敏感词管理
-          view.action-item(bindtap="popupShow" data-popup-type="register")
-            image(src="../../assets/image/icon/material-manger.png" mode="widthFix")
-            text 互动素材管理
-      view.section.section-acti-manger
+      //- view.section.section-live-manger
+      //-   view.activity-title
+      //-     image.flag(src='../../assets/image/icon/live-manger.png')
+      //-     text 直播管理
+      //-   view.action-list
+      //-     view.action-item(bindtap="popupShow" data-popup-type="choosePoster")
+      //-       image(src="../../assets/image/icon/pro-manger.png" mode="widthFix")
+      //-       text 直播商品管理
+      //-     view.action-item(bindtap="popupShow" data-popup-type="shopping")
+      //-       image(src="../../assets/image/icon/live-config.png" mode="widthFix")
+      //-       text 直播间配置
+      //-     view.action-item( bindtap="popupShow" data-popup-type="groupCode" )
+      //-       image(src="../../assets/image/icon/key-word.png" mode="widthFix")
+      //-       text 敏感词管理
+      //-     view.action-item(bindtap="popupShow" data-popup-type="register")
+      //-       image(src="../../assets/image/icon/material-manger.png" mode="widthFix")
+      //-       text 互动素材管理
+      //- view.section.section-acti-manger
         view.activity-title.flex-align-center
           image.flag(src='../../assets/image/icon/activitymanger.png')
           text 活动管理
@@ -98,12 +98,9 @@ w-page(
         view.activity-title
           image.flag(src='../../assets/image/icon/flag.png')
           text 当前活动阶段
-        //- view.active-stage.bor-bottom 当前活动: {{period.activity_name}}
         view.active-stage.bor-bottom 活动阶段: {{period.name}}
         view.active-time.bor-bottom 阶段期限: {{period.start_datetime}} - {{period.end_datetime}}
         view.active-left-time.bor-bottom
-          //- view(wx:if="{{activeEndTime==0}}")
-          //-   text.end 已结束
           view()
             text 阶段结束倒计时:
             text.time {{activeEndTime.days}}

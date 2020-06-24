@@ -19,7 +19,8 @@ const rules = {
     validator: (value) => {
       return value.length >= 14
     },
-    message: '地址内容至少14字符'
+    message: '地址内容至少14字符',
+    typeMessage: '地址内容至少14字符'
   },
   brand: {
     type: 'String',

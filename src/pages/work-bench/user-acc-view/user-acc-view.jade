@@ -36,30 +36,6 @@ view(class="components-user-acc-view")
             text.num.font-theme-grey +{{item.count}}
             text {{item.point_count?item.point_count:0}}{{item.unit}}
             text {{item.name}}
-          //- view.coinItem
-          //-   text.num.font-theme-grey +25
-          //-   text 50人
-          //-   text 分享
-          //- view.coinItem
-          //-   text.num.font-theme-grey +990
-          //-   text 5人
-          //-   text 报名
-          //- view.coinItem
-          //-   text.num.font-theme-grey +90
-          //-   text 9张
-          //-   text 购卡
-          //- view.coinItem
-          //-   text.num.font-theme-grey +67
-          //-   text 50个
-          //-   text 订单
-          //- view.coinItem
-          //-   text.num.font-theme-grey +6666
-          //-   text 50人
-          //-   text 进入直播
-          //- view.coinItem
-            text.num.font-theme-grey +243
-            text 50个
-            text 直播订单
         //- 品牌PK秀
         view.title-2
           view.left {{name}}PK秀
@@ -73,7 +49,7 @@ view(class="components-user-acc-view")
             view.PKView
               view.left.imageBox(class!="{{type!=1?'square':''}}")
                 w-icon(class='crown' type='crown' size='xlarge' wx:if!="{{item.b_user_info.point>item.u_user_info.point}}")
-                image(src="{{item.b_user_info.avatar}}" )
+                image(src="{{item.b_user_info.avatar}}"  bindload="bindImgLoad")
                 text.name {{item.b_user_info.name}}
                 text.score {{item.b_user_info.point}}分
               view.center.flex-align-center

@@ -105,6 +105,9 @@
 
             }
         }
+        .material-item:last-child{
+            border-bottom: none;
+        }
     }
     .add-material{
         position: fixed;

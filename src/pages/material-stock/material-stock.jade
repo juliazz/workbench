@@ -8,13 +8,13 @@ w-page(
     van-tabs.van-tabs(active="{{ activeTabIndex }}" bind:change="onTabChange" color="{{$themColor}}" )
       van-tab.vantab(
         wx:for="{{ tabs }}"
-        wx:key="*this"
+        wx:key="index"
         wx:for-index="tabIndex"
         title="{{item }}"
       )
     vant-cell(title="我的素材({{tabs.length}})" is-link value="点击查看" link-type="navigateTo" url="/pages/my-material/my-material")
     view.material-list.wx()
-      view.material-item(wx:for="{{personDetailList}}" wx:key="id")
+      view.material-item(wx:for="{{personDetailList}}" wx:key="index")
         view.header.flex-just-between
           view.left.flex-just-start
             view.avator

@@ -47,7 +47,7 @@ Page({
     if (status != '200') return this.$showToast(msg);
     totalData = totalData.concat(data.data)
     totalPage = data.last_page
-    this.setData({list: totalData, amount: data.amount?data.amount:''})
+    this.setData({list: totalData, amount: data.amount ? data.amount : ''})
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

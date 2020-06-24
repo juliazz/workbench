@@ -85,7 +85,7 @@ w-page(
               bindblur="bindblur"
               maxlength="30"
           )
-          view.arr-box
+          view.arr-box(wx:if="{{arrayOne.length}}")
             text.right-arrow()
             picker(
               data-type="sign"

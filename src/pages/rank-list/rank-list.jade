@@ -9,15 +9,12 @@ w-page(
       image(src="../../assets/image/icon/cup.png")
     view.top-info
       view.section.section-1
-        text.step 活动阶段:
         text.time {{timeTitle.start_datetime}} - {{timeTitle.end_datetime}}
       van-dropdown-menu.van-dropdown-menu(active-color="#ffbe97" )
         van-dropdown-item(value="{{ stepValue }}"  options="{{ stepList }}" title="{{timeTitle.text}}" bind:change="timeChangeEventer" )
       view.section.section-2
         view.search-input
           van-search(custom-class="custom-class" value="{{searchValue}}" placeholder="员工姓名或品牌名称" use-right-icon-slot="{{false}}" bind:search="filterBySearch")
-          //- vant-button( color="{{$themColor}}" size="small" custom-class="search-btn")
-          //-   text 搜索
         view.rule-title(bindtap="popupShow" data-popup-type="rewordRule" )
           text 奖励规则
           w-icon(type="question" size="normal")
@@ -25,64 +22,36 @@ w-page(
     view.line.content-title()
       view.item
         text.prizeTitle 奖金总额
-        text.prize {{info.reward}}元
+        text.prize {{total_reward}}元
       view.item
         text.prizeTitle 有效金币总数
-        text.prize {{info.point}}币
+        text.prize {{total_point}}币
       view.item
         text.prizeTitle 当前金币价值
-        text.prize {{info.point_worth}}/币
+        text.prize {{per_point}}/币
     scroll-view(scroll-y="true" style="height: 60vh")
-      view.person-list(wx:for="{{list}}" wx:key="index" wx:for-index="personIndex")
+      view.person-list(wx:for="{{list}}" wx:key="personIndex" wx:for-index="personIndex")
         view.line
           view.rank
-            text {{item.id}}
+            text {{personIndex+1}}
           view.avator
-            w-image(url='{{item.avatar}}') 
+            w-image(url='{{item.avatar}}' bindload="bindImgLoad") 
           view.main-info
             text.name {{item.name}}
-            text {{item.brand}}
+            text {{item.cat_name}}
             text 金币：{{item.point}}
           view.income
-            text 预计收入：{{item.income}}
+            text 预计收入：{{item.reward_total}}
             view.view-num(bindtap="collapseEventer" data-index="{{personIndex}}")
               text() 查看数据
               w-icon(type="down-blue" size="smaller" class!="down-blue {{personIndex==expandIndex?'active':''}}" )
         view.num-box( class="{{personIndex==expandIndex?'show':''}}")
           view.num-box-in
-            view.num-item(wx:for="{{item.detail}}" wx:key="itemIndex" wx:for-index="key" wx:for-item="detailItem")
-              view(wx:if="{{key=='point_view'}}")
-                text {{detailItem.number}}人
-                text 新客浏览
-                text {{detailItem.point}}币
-              view(wx:if="{{key=='point_fisson'}}")
-                text {{detailItem.number}}人
-                text 裂变客户
-                text {{detailItem.point}}币
-              view(wx:if="{{key=='point_share'}}")
-                text {{detailItem.number}}次
-                text 分享
-                text {{detailItem.point}}币
-              view(wx:if="{{key=='point_sign'}}")
-                text {{detailItem.number}}户
-                text 报名
-                text {{detailItem.point}}币
-              view(wx:if="{{key=='point_buy_card'}}")
-                text {{detailItem.number}}户
-                text 售卡
-                text {{detailItem.point}}币
-              view(wx:if="{{key=='point_order'}}")
-                text {{detailItem.number}}户
-                text 订单
-                text {{detailItem.point}}币
-              view(wx:if="{{key=='point_live'}}")
-                text {{detailItem.number}}人
-                text 进直播间
-                text {{detailItem.point}}币
-              view(wx:if="{{key=='point_live_order'}}")
-                text {{detailItem.number}}人
-                text 直播订单
-                text {{detailItem.point}}币
+            view.num-item(wx:for="{{item.my_record}}" wx:key="itemIndex" wx:for-index="key" wx:for-item="detailItem")
+              text {{detailItem.count}}人
+              text {{detailItem.name}}
+              text {{detailItem.point_count}}{{detailItem.unit}}
+             
   view(slot="footer" class="footer")
 //-奖励规则弹窗
 w-popup-module(

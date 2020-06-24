@@ -2,8 +2,8 @@
 @import '../../assets/style/index';
 // 头像
 .avator{
-    height: 70rpx;
-    width: 70rpx;
+    min-height: 70rpx;
+    min-height: 70rpx;
     border-radius: 50%;
 }
 
@@ -25,7 +25,7 @@
     .header{
         overflow: visible;
         margin-top: -100rpx;
-        padding: 130rpx 20rpx 0rpx;
+        padding: 130rpx 20rpx 20rpx;
         font-size: 26rpx;
         background-color: #fff;
         .title-info{
@@ -34,9 +34,8 @@
                 width: 580rpx;
                 @include flex-align-center;
                 .avator{
-                    height: 120rpx;
-                    width: 120rpx;
                     min-width: 100rpx;
+                    min-height: 100rpx;
                     border-radius: 50%;
                     overflow: hidden;
                 }
@@ -72,7 +71,26 @@
             text{
                 margin-top: 10rpx;
             }
-            .prize{font-size: 38rpx;text-align: center;}
+            .price-item{
+                padding: 0 5rpx;
+                // border-right: 2rpx solid $g3c;
+            }
+            .orderPrize{
+                text-align: center;
+                font-size: 36rpx;
+            }
+            .prize-title{color: $b3c;}
+        }
+        .can-extract{
+            padding-top: 15rpx;
+            margin-top: 5rpx;
+            border-top: 2rpx solid $g3c;
+            align-items: center;
+            .orderPrize{
+                color: red;
+                font-size: 50rpx;
+                font-weight: blod;
+            }
         }
     }
     .content{
