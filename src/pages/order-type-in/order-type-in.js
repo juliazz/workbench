@@ -3,7 +3,8 @@ const timeNow = new Date()
 import api from '../../api/index.js'
 import fileHelper from '../../utils/fileHelper.js'
 import rules from './helper';
-let level ;
+
+let level;
 const {upLoadFile} = fileHelper
 let userListRes = []; // 完整的签单人列表 未分类
 let photoFileList = []; // 后台返回的接口照片id
@@ -95,7 +96,7 @@ Page({
     const result = await api.getTopUserList()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    console.log('data.user_list=====', )
+    console.log('data.user_list=====',)
     this.setData({arrayOne: data[0].child})
   },
   //   =========     带单人选择  ============
@@ -103,14 +104,13 @@ Page({
     const result = await api.getServiceUserList()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    level = 2
+    level = data.level
     userListRes = data.list // 将完整数据存起来
     // if (level == 3) {
-      // 带单人数据  模拟此处获取  后面替换 *****getStepList ---》 getCurrentStepList 顺序不能换
-      this.getStepList() // 获取每个步骤列表
-      this.getCurrentStepList() // 获取当前步骤列表
+    // 带单人数据  模拟此处获取  后面替换 *****getStepList ---》 getCurrentStepList 顺序不能换
+    this.getStepList() // 获取每个步骤列表
+    this.getCurrentStepList() // 获取当前步骤列表
     // }
-    
   },
   findArr2List(index) {
     const arr2 = userListRes.filter((i) => {
@@ -145,14 +145,15 @@ Page({
       let res3;
       let res4;
       //  遍历品牌
+      console.log('level========', level)
       console.log(i)
-      if(!i.child){return}
+      if (!i.child) { return }
       i.child.map((v) => {
         console.log(v)
-        if(level ==1&&!v.child){return }
+        if (level == 1 && !v.child) { return }
         // 遍历部门
-        v.child.map((x) => { 
-          if(level ==2){return }
+        v.child.map((x) => {
+          if (level == 2) { return }
           // 遍历员工
           // res4 = x.user_arr.map((z) => {
           //   res4 = {name: z.name, id: z.id, parent_id: z.parent_id }
@@ -167,16 +168,16 @@ Page({
       return {name: i.name, id: i.id}
     })
     const {steps} = this.data
-    if(level ==3){
+    if (level == 3) {
       stepList.push(Step1List, Step2List, Step3List)
-    }else if(level==2){
+    } else if (level == 2) {
       this.setData({
-        steps:steps.slice(0,2)
+        steps: steps.slice(0, 2)
       })
       stepList.push(Step1List, Step2List)
-    }else {
+    } else {
       this.setData({
-        steps:steps.slice(0,1)
+        steps: steps.slice(0, 1)
       })
       stepList.push(Step1List)
     }
@@ -205,13 +206,13 @@ Page({
       name: currentStepList[index].name,
       id: currentStepList[index].id
     }
-    console.log('steps',steps)
+    console.log('steps', steps)
     steps[active].desc = obj.name
     this.setData({
       activeIndex: index,
       steps
     })
-    if (active == level-1) {
+    if (active == level - 1) {
       setTimeout(() => {
         this.setData({
           'order.guide': obj,
@@ -232,7 +233,7 @@ Page({
   },
   closeGuidePop() {
     const {active} = this.data
-    if (active != level-1) return this.$showToast('未选中到人')
+    if (active != level - 1) return this.$showToast('未选中到人')
   },
   //  ===================================================
   bindblur(event) {
@@ -271,8 +272,8 @@ Page({
     let options = Object.assign({...value,
       sign: order.sign.id || '',
       brand: order.brand.brandId,
-      // guide: order.guide.id || '', //写死9
-      guide: 9, //写死9
+      guide: order.guide.id || '', // 写死9
+      // guide: 9, // 写死9
       cert: photoFileList,
       hx_code: order.hx_code || ''
     })
@@ -299,8 +300,13 @@ Page({
     });
   },
   async orderBrandIn(options) {
-    const res = await api.submitOrder(options)
-
+    const result = await api.submitOrder(options)
+    const { msg, data, status } = result
+    if (status != '200') return this.$showToast(msg);
+    this.$showToast('录单成功！');
+    setTimeout(() => {
+      this.$navigateBack()
+    }, 1500)
   },
   popupShow: function(eve) {
     const { popupType } = eve.currentTarget.dataset

@@ -45,12 +45,13 @@ Page({
     console.log('work-bench---------------onLoad')
     user_id = await storangeMange.getUserId()
     console.log(user_id)
-    // if (!user_id) { this.$routeTo('webview') }
+    if (!user_id) { this.$routeTo('un-register') }
     // 在判断有没有授权过
-    const userInfo = await storangeMange.getUserInfo()
+    // const userInfo = await storangeMange.getUserInfo()
     // if(!userInfo){this.setData({popupType:'getUserInfo'})}
     this.$showLoading()
     const result = await this.$getPreload(fetch, {user_id, auth: true})
+    this.$hideLoading()
     this.getRankInfo()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
@@ -61,7 +62,6 @@ Page({
     // 默认选中第一个活动
     this.getActivityData(activeId)
     this.setData({activeList: data, activeId, showPage: true})
-    this.$hideLoading()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -81,7 +81,7 @@ Page({
     console.log(data)
     console.log('!data.forward', !data.forward)
     if (!data.forward) {
-      this.$routeTo('widthdraw')
+      this.$routeTo('un-register')
       return
     }
     //  是否是主办方
@@ -116,8 +116,23 @@ Page({
       view_shop
     })
   },
+  toMiniAPP() {
+    wx.navigateToMiniProgram({
+      appId: '',
+      path: 'page/index/index?id=123',
+      extraData: {
+        foo: 'bar'
+      },
+      envVersion: 'develop',
+      success(res) {
+        // 打开成功
+      }
+    })
+  },
   async getRankInfo() {
+    this.$showLoading()
     const result = await api.getRankInfo()
+    this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
     // const {list, rule} = data
@@ -140,7 +155,7 @@ Page({
   // 点击确认后请求对应活动数据
   sureChangeActive: function() {
     const { activeId } = this.data
-    console.log('activeId=======',activeId)
+    console.log('activeId=======', activeId)
     this.getActivityData(activeId)
     this.setData({popupType: ''})
   },

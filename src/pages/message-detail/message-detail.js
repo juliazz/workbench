@@ -33,12 +33,8 @@ Page({
     this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    let data_ = data.list.map((i) => {
-      return Object.assign(i, {time: util.formatDate2(i.time)})
-    })
-    console.log(data_)
     this.setData({
-      messageList: data_
+      messageList: data.list
     })
   },
   async changeRead(id) {
@@ -49,7 +45,10 @@ Page({
     const result = await api.editpk({id, action})
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    this.getMessageDetail()
+    setTimeout(() => {
+      this.$navigateBack()
+    }, 1500)
+    // this.getMessageDetail()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

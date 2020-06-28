@@ -8,22 +8,22 @@ const fetch = async (options) => {
 }
 
 Page({
-  $route: 'pages/short-message-material/short-message-material',
+  $route: 'pages/index/index',
   /**
    * 页面的初始数据
    */
   data: {
-    title: 'short-message-material'
+    title: 'index'
   },
   onPreLoad: fetch,
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    // this.$wLoading.show()
+    this.$wLoading.show()
     const result = await this.$getPreload(fetch, options)
     console.log(result)
-    // this.$wLoading.hide()
+    this.$wLoading.hide()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

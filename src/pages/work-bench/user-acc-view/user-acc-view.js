@@ -12,6 +12,12 @@ Component({
         name: '个人'
       }
     },
+    identity: {
+      type: Number,
+      value: {
+        name: 1
+      }
+    },
     expandState: { // 展开状态
       type: Boolean,
       value: false
@@ -66,7 +72,9 @@ Component({
     }]
   },
   lifetimes: {
-    attached: function () {  this.$showLoading()},
+    attached: function () {
+      // this.$showLoading()
+    },
     moved: function () { },
     detached: function () { }
   },
@@ -79,8 +87,8 @@ Component({
     resize: function () { }
   },
   methods: {
-    bindImgLoad:function(){
-      this.$hideLoading()
+    bindImgLoad: function() {
+      // this.$hideLoading()
     },
     popupShow: function(eve) {
       const { popupType } = eve.currentTarget.dataset

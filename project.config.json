@@ -4,14 +4,20 @@
 		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
+		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
-		"uglifyFileName": false
+		"autoAudits": false,
+		"coverView": true,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"uglifyFileName": false,
+		"useCompilerModule": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.10.1",
 	"appid": "wx5d9cfc80017e0c29",
-	"projectname": "miniapp-base-code",
+	"projectname": "miniapp-workbench-code",
 	"miniprogramRoot": "app/",
 	"scripts": {
 		"beforeCompile": "..\\bin\\beforeCompile.sh",

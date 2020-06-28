@@ -19,37 +19,7 @@ Page({
     popupShow: false,
     email: '',
     allChecked: false,
-    result: [],
-    list: [
-      {
-        title: '报名客户明细',
-        type: 'order'
-      },
-      {
-        title: '现金券客户明细',
-        type: 'money'
-      },
-      {
-        title: '爆款秒杀订单明细',
-        type: 'order'
-      },
-      {
-        title: '签单明细',
-        type: 'order'
-      },
-      {
-        title: '账户收支明细',
-        type: 'order'
-      },
-      {
-        title: '积分排名明细',
-        type: 'order'
-      },
-      {
-        title: '奖金池兑换',
-        type: 'order'
-      }
-    ]
+    result: []
   },
   onPreLoad: fetch,
   /**
@@ -72,8 +42,6 @@ Page({
   },
   onChangeAll(event) {
     const {detail} = event
-    console.log(event)
-    console.log(detail)
     // 当all选择时
     if (detail) {
       this.setData({

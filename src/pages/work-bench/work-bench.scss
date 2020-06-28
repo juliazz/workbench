@@ -1,12 +1,5 @@
 
 @import '../../assets/style/index';
-// 头像
-.avator{
-    min-height: 70rpx;
-    min-height: 70rpx;
-    border-radius: 50%;
-}
-
 .pages-work-bench {
     height: 90vh;
     width: 100vw;
@@ -14,11 +7,6 @@
     // top: 0;
     // position: fixed;
     overflow: visible;
-    canvas{
-        height: 75px;
-        width: 75px;
-        z-index: 1;
-    }
     .content{
         padding: 20rpx 30rpx;
     }
@@ -34,8 +22,10 @@
                 width: 580rpx;
                 @include flex-align-center;
                 .avator{
-                    min-width: 100rpx;
-                    min-height: 100rpx;
+                    min-width: 110rpx;
+                    width: 110rpx;
+                    height: 110rpx;
+                    min-height: 110rpx;
                     border-radius: 50%;
                     overflow: hidden;
                 }

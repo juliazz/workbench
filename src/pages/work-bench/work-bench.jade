@@ -8,7 +8,7 @@ w-page(
         view.title-info
           view.left
             view.avator()
-              open-data.avator(type="userAvatarUrl" )
+              open-data(type="userAvatarUrl" )
             view.activity-info
               view()
                 tex.name {{rights[0].name}} 
@@ -17,7 +17,7 @@ w-page(
                 text {{info.start_date}}-{{info.end_date}} {{info.name}}
           view.right(bindtap="popupShow" data-popup-type="changeActive")
             vant-button( type="info" icon='exchange' size="small" round)
-              text.change 活动切换
+              text.change 切换活动
         view.price-box
           view.price-item
             w-currency(value="{{fund.reward}}" class="orderPrize")
@@ -63,10 +63,12 @@ w-page(
           view.action-item(bindtap="$routeLink"  data-path="num-export")
             image(src="../../assets/image/icon/export.png" mode="widthFix")
             text 数据导出
-      //- view.section.section-live-manger
-      //-   view.activity-title
-      //-     image.flag(src='../../assets/image/icon/live-manger.png')
-      //-     text 直播管理
+      view.section.section-live-manger
+        view.activity-title(
+          bindtap="toMiniAPP"
+        )
+          image.flag(src='../../assets/image/icon/live-manger.png')
+          text 主办方管理
       //-   view.action-list
       //-     view.action-item(bindtap="popupShow" data-popup-type="choosePoster")
       //-       image(src="../../assets/image/icon/pro-manger.png" mode="widthFix")
@@ -114,6 +116,7 @@ w-page(
       //- 个人区域
       user-acc-view(
         type="{{1}}"
+        identity="0"
         name="个人"
         expandState="{{false}}"
         viewData="{{person}}"
@@ -230,7 +233,7 @@ w-popup(
           )
             swiper-item
               image(
-                data-url="{{item}}"
+                data-url="{{item.image}}"
                 bindtouchstart='timestart'
                 bindtouchend='timeend'
                 mode = "aspectFill"

@@ -71,7 +71,7 @@ Page({
     const result = await api.getRankDetail(par)
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    const {total_point, per_point,total_reward} = data
+    const {total_point, per_point, total_reward} = data
     filterList = data.data
     // 查找标题
     const timeTitle = this.data.stepList.find((i) => {
@@ -84,9 +84,8 @@ Page({
       total_reward,
       list: filterList
     })
-  
   },
-  bindImgLoad(){
+  bindImgLoad() {
     this.$hideLoading()
   },
   timeChangeEventer(eve) {
@@ -102,8 +101,8 @@ Page({
         return v
       }
     })
-    if(!keyWord){
-      filterRes= filterList
+    if (!keyWord) {
+      filterRes = filterList
     }
     this.setData({list: filterRes})
   },

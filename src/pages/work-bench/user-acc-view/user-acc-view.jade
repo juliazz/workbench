@@ -39,7 +39,7 @@ view(class="components-user-acc-view")
         //- 品牌PK秀
         view.title-2
           view.left {{name}}PK秀
-          view.right(wx:if="{{can_pk}}" bindtap="$routeLink"  data-path="launch-pk?pkType={{name}}")
+          view.right(wx:if="{{can_pk}}" bindtap="$routeLink"  data-path="launch-pk?pkType={{name}}&identity={{identity}}")
             text.action 发起PK
             //- view.arrow
         view.section-content.userPK(class="{{expandState?'active':''}}")

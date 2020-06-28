@@ -42,6 +42,7 @@ export default {
     })
   },
   async onShow() {
+    console.log('000000000000000=========')
     /**
      * switch tab
      */
@@ -156,6 +157,7 @@ export default {
     // 使手机发生较短时间的振动
     // wx.vibrateShort()
     const routes = getCurrentPages();
+    console.log(routes)
     let [route, query] = path.split('?')
     if (query) {
       query = query.replace(/\//g, '%2F')
@@ -166,16 +168,14 @@ export default {
       path = `${route}/${route}`
       if (query) path = `${path}?${query}`
     }
-
     if (type[0] !== '$') {
       type = `$${type}`;
     }
-
     if (routeHooks.indexOf(type) === -1) {
       throw new Error(`not allowed type ${type}`);
     }
-
     path = normalizeUrl(path);
+    console.log('path==========', path)
     preload.set(path);
 
     // 页面深度高于10

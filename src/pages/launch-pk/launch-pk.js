@@ -53,7 +53,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function (options) {
-    const {pkType } = options
+    const {pkType, identity } = options
     console.log(options, 'options=========')
     console.log(pkType, 'pktype=========')
     this.$showLoading()
@@ -62,7 +62,7 @@ Page({
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
     const {pk_period, pk_project, cat_user_list, level} = data // level  数据深度
-    identity = '0' // 0 是个人 1是部门  就两种情况
+    // identity = '0' // 0 是个人 1是部门  就两种情况
     this.setData({
       pkCellTitle: `pk${pkType}:`, // 根据对象进来cell文案
       'endChoiceValue.name': `选择${pkType}`, // input框占位文案
