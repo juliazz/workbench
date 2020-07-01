@@ -8,11 +8,12 @@ w-page(
     van-tabs.van-tabs(active="{{ activeTabIndex }}" bind:change="onChange" color="{{$themColor}}" )
       van-tab.vantab(
         wx:for="{{ tabs }}"
+        wx:if!="{{tabIndex==0&&is_charge||tabIndex==1}}"
         wx:key="*this"
         wx:for-index="tabIndex"
         title="{{item }}排行榜"
       )
-    view(wx:if="{{activeTabIndex==0}}")
+    view(wx:if!="{{activeTabIndex==0&&is_charge}}")
       view.income-List
         view.income-item.income-item-1
           view.title 直播签单收入
@@ -88,7 +89,7 @@ w-page(
               text 查看明细
               text.arr-box
                 text.right-arrow(bindtap="$routeLink" data-path="order-brand")
-    view(wx:if="{{activeTabIndex==1}}")
+    view(wx:if!="{{activeTabIndex==1||!is_charge}}")
       view.section-List.person(class="{{personDetailShow?'nopadding':''}}")
         view.section-1.section(wx:if!="{{!personDetailShow}}")
           view.title

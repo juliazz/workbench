@@ -76,8 +76,8 @@ w-popup-module(
     view.list-box
       scroll-view.list(scroll-y="true" style="height: 40vh")
         view.line(wx:for="{{stepList}}" wx:key="index" bindtap="onChange" data-index="{{index}}" data-name="{{item.name}}" data-type="step")  
-          tetx {{item.name}}
-          vant-icon(name="checked" color="#2955FF" wx:if="{{activeIndex.step==index}}")
+          text {{item.name}}
+          vant-icon(name="checked" color="#2955FF" custom-class="icon" wx:if="{{activeIndex.step==index}}")
 //- pk项目
 w-popup-module(
   class="w-popup pop-pkList"

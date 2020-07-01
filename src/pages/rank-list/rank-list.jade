@@ -8,10 +8,10 @@ w-page(
       view.title {{rankType}}排行榜
       image(src="../../assets/image/icon/cup.png")
     view.top-info
-      view.section.section-1
-        text.time {{timeTitle.start_datetime}} - {{timeTitle.end_datetime}}
-      van-dropdown-menu.van-dropdown-menu(active-color="#ffbe97" )
-        van-dropdown-item(value="{{ stepValue }}"  options="{{ stepList }}" title="{{timeTitle.text}}" bind:change="timeChangeEventer" )
+      //- view.section.section-1
+      //-   text.time {{timeTitle.start_datetime}} - {{timeTitle.end_datetime}}
+      //- van-dropdown-menu.van-dropdown-menu(active-color="#ffbe97" )
+      //-   van-dropdown-item(value="{{ stepValue }}"  options="{{ stepList }}" title="{{timeTitle.text}}" bind:change="timeChangeEventer" )
       view.section.section-2
         view.search-input
           van-search(custom-class="custom-class" value="{{searchValue}}" placeholder="员工姓名或品牌名称" use-right-icon-slot="{{false}}" bind:search="filterBySearch")
@@ -29,13 +29,13 @@ w-page(
       view.item
         text.prizeTitle 当前金币价值
         text.prize {{per_point}}/币
-    scroll-view(scroll-y="true" style="height: 60vh")
+    scroll-view(scroll-y="true" style="height: 68vh")
       view.person-list(wx:for="{{list}}" wx:key="personIndex" wx:for-index="personIndex")
         view.line
           view.rank
             text {{personIndex+1}}
           view.avator
-            w-image(url='{{item.avatar}}' bindload="bindImgLoad") 
+            w-image(url='{{item.avatar}}') 
           view.main-info
             text.name {{item.name}}
             text {{item.cat_name}}

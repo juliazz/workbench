@@ -47,8 +47,8 @@ Page({
     this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    const { brand, personal} = data
-    this.setData({brand, personal})
+    const { brand, personal, is_charge} = data
+    this.setData({brand, personal, is_charge})
   },
   // 个人查看详情
   showPersonDetail: function() {
@@ -95,7 +95,7 @@ Page({
     })
   },
   toWidthDraw() {
-    this.$routeTo(`widthdraw?value=${this.data.brand.money}`)
+    this.$routeTo(`widthdraw?value=${this.data.personal.money}`)
   },
   toRecharge() {
     this.$routeTo('recharge')

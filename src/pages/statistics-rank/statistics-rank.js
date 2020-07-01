@@ -44,7 +44,7 @@ Page({
   async getStatisicsList(id) {
     let par = {
       tag: rankItemIndex,
-      type: Number(tabIndex) + 1,
+      type: Number(tabIndex),
       period_id: id
     }
     this.$showLoading()
@@ -53,7 +53,7 @@ Page({
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
     const {total, list, unit} = data
-    const fullProgressNum = list[0].value
+    const fullProgressNum = list[0].count
     this.setData({
       statisticsList: list,
       total,

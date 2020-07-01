@@ -14,7 +14,10 @@
                         image{
                             height: 100rpx;
                             width: 100rpx;
+                            border-radius: 50%;
+                            overflow: hidden;
                         }
+                        margin-right: 20rpx;
                     }
                     .material-info{
                         .material-name{

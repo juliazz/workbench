@@ -6,7 +6,7 @@ w-page(
   view(slot="header" class="header")
   view(slot="content" class="content")
     view.title.flex-just-between()
-      text 描述不能少于20个字哦
+      text 描述不能少于3个字哦
       text.example 案例
     w-textarea(
       class="w-textarea"
@@ -22,6 +22,8 @@ w-page(
         text 上传多张图片或一个视频
       view.upload-image(wx:if="{{videoList.length==0}}")
         van-uploader(
+          multiple="{{true}}"
+          max-count="{{maxImgCount}}"
           file-list="{{ imageList }}" bind:after-read="afterRead"
           bind:before-read="beforeRead" use-before-read="{{true}}" 
           disabled="{{imageList.length == 9}}" name="image" accept="image" 
@@ -29,7 +31,7 @@ w-page(
         )
       view.upload-video(wx:if="{{imageList.length==0}}")
         van-uploader(
-           bind:before-read="beforeRead" use-before-read="{{true}}"
+          bind:before-read="beforeRead" use-before-read="{{true}}"
          file-list="{{ videoList }}" bind:after-read="afterRead" name="video" 
          disabled="{{videoList.length == 1}}" accept="video" preview-image="preview-image"
           bind:delete="delete"

@@ -137,13 +137,13 @@ w-page(
       )
       //- 战区
       user-acc-view(
+        wx:if="{{zone}}"
         type="{{4}}"
         name="战区"
         expandState="{{false}}}"
         viewData="{{zone}}"
       )
   view(slot="footer" class="footer")
-
 //- 选择活动弹窗
 w-popup-module(
   class="w-popup pop-changeActive"
@@ -257,7 +257,7 @@ w-popup-module(
   headTitle="活动注册码"
 )
   view(slot="content" class="content")
-    view.tips1 逛店二维码
+    view.tips1 二维码
     image(
       src="{{activeCode}}"
     )

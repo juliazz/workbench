@@ -5,14 +5,18 @@ w-page(
 )
   view(slot="header" class="header")
   view(slot="content" class="content")
-    view.message-list
-      view.message-item(wx:for="{{messageList}}" wx:key="index" bindtap="$routeLink" data-path="message-detail?id={{item.id}}&isRead={{item.status}}")
-        view.volume-box.flex-align-center
-          vant-icon(name="volume" size="30px" color="#fff")
-        view.main-info
-          text.mess-title {{item.title}}
-          text.tips {{item.des}}
-        view.mess-time-num()
-          text.time {{item.time}}
-          text.num(wx:if="{{item.status}}") 未读
+    view(wx:if="{{messageList}}")
+      view.message-list(wx:if="{{messageList.length}}")
+        view.message-item(wx:for="{{messageList}}" wx:key="index" bindtap="$routeLink" data-path="message-detail?id={{item.id}}&isRead={{item.status}}")
+          view.volume-box.flex-align-center
+            vant-icon(name="volume" size="30px" color="#fff")
+          view.main-info
+            text.mess-title {{item.title}}
+            text.tips {{item.des}}
+          view.mess-time-num()
+            text.time {{item.time}}
+            text.num(wx:if="{{!item.status}}") 未读
+      view.kong(wx:else)
+        image(src="../../assets/image/kong.png")
+        view 数据为空！
   view(slot="footer" class="footer")

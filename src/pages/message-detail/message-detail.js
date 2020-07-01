@@ -21,9 +21,10 @@ Page({
    */
   onLoad: async function(options) {
     const id = options.id ? options.id : null
-    const isRead = options.isRead ? options.isRead : null
+    const isRead = !Number(options.isRead) //
+    console.log(isRead, 'isRead=========')
     this.getMessageDetail()
-    if (!isRead) {
+    if (isRead) {
       this.changeRead(id)
     }
   },
@@ -32,9 +33,11 @@ Page({
     const result = await this.$getPreload(fetch, options)
     this.$hideLoading()
     const { msg, data, status } = result;
+    const {list} = data
     if (status != '200') return this.$showToast(msg);
+    if (list.length) { this.$showToast('暂无未读消息！'); }
     this.setData({
-      messageList: data.list
+      messageList: list
     })
   },
   async changeRead(id) {
@@ -45,6 +48,7 @@ Page({
     const result = await api.editpk({id, action})
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
+    this.$showToast('操作成功！')
     setTimeout(() => {
       this.$navigateBack()
     }, 1500)

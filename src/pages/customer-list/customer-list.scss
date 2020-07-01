@@ -5,8 +5,13 @@
         min-height: 100vh;
         background-color: $g3c;
         overflow-y: scroll;
+        .kong{
+            image{
+                margin: 2vh 0;
+            }
+            text-align: center;
+        }
         .title{
-            // line-height: 80rpx;
             background-color: $g3c;
             color: $b3c;
             margin-top: 30rpx;
@@ -28,7 +33,6 @@
             }
             .components-item-box-lcr{
                 padding: 30rpx 20rpx;
-               
             }
             .left{
                 image{
@@ -65,7 +69,6 @@
                         margin-bottom: 7rpx;
                     }
                 }
-
                 .button{
                     background-color: transparent;
                     border: none;
@@ -78,10 +81,8 @@
                         padding: 0;
                         border: none;
                     }
-                    
                 }
             }
-
         }
     }
 }

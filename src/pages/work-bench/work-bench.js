@@ -19,7 +19,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    showPage: true,
+    showPage: false,
     popupType: '',
     postCurrent: 0,
     liveCurrent: 0,
@@ -41,18 +41,25 @@ Page({
    */
   onLoad: async function(options) {
     // 一进来先判断有没有注册过
-    await this.isRegister()
+    const register = await this.isRegister()
+    // forward 是否有进入小程序的权限 is_host  是否是主办方
+    const {forward, is_host} = register
+    if (!forward) {
+      this.$redirectTo('un-register')
+      return
+    }
+    this.setData({is_host, showPage: true})
+    //  是否是主办方
     console.log('work-bench---------------onLoad')
     user_id = await storangeMange.getUserId()
     console.log(user_id)
-    if (!user_id) { this.$routeTo('un-register') }
-    // 在判断有没有授权过
+    if (!user_id) { this.$redirectTo('un-register') }
+    // 再判断有没有授权过
     // const userInfo = await storangeMange.getUserInfo()
     // if(!userInfo){this.setData({popupType:'getUserInfo'})}
     this.$showLoading()
     const result = await this.$getPreload(fetch, {user_id, auth: true})
     this.$hideLoading()
-    this.getRankInfo()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
     const activeId = data[0].activity_id
@@ -61,7 +68,13 @@ Page({
     // await storangeMange.setActivityId(1)
     // 默认选中第一个活动
     this.getActivityData(activeId)
-    this.setData({activeList: data, activeId, showPage: true})
+    this.setData({activeList: data, activeId})
+  },
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {
+    this.getRankInfo()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -69,23 +82,16 @@ Page({
   onReady: function() {
   },
   async isRegister() {
-    const loginStatus = await storangeMange.getLoginStatus()
+    let loginStatus = await storangeMange.getLoginStatus()
     console.log('loginStatus======', loginStatus)
     if (loginStatus) {
-      return
+      return loginStatus
     }
     const register = await api.getUserResiInfo()
     const { msg, data, status } = register;
     if (status != '200') return this.$showToast(msg);
-    // 是否有进入小程序的权限
-    console.log(data)
-    console.log('!data.forward', !data.forward)
-    if (!data.forward) {
-      this.$routeTo('un-register')
-      return
-    }
-    //  是否是主办方
     storangeMange.setLoginStatus(data)
+    return data
   },
   // 根据活动id查活动数据
   async getActivityData(activeId) {
@@ -256,7 +262,6 @@ Page({
     }
     this.scanCode(par)
   },
-
   openScan() {
     wx.scanCode({
       onlyFromCamera: true,
@@ -271,8 +276,9 @@ Page({
       }
     })
   },
-  // 获取马信息
+  // 获取码信息
   async scanCode(result) {
+    console.log(result)
     const getResult = await api.checkOffCode(result)
     const { msg, data, status } = getResult;
     if (status != '200') return this.$showToast(msg);
@@ -281,14 +287,11 @@ Page({
     this.setData({
       popupType: ''
     })
-    this.$routeTo('order-type-in?type=bar')
+    if(result.type=='order'){
+      this.$routeTo('order-type-in?type=bar')
+    }
   },
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
 
-  },
   /**
    * 生命周期函数--监听页面隐藏
    */

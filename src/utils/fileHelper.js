@@ -1,20 +1,25 @@
 import {storageManage} from './index'
 
-const upLoadFile = async (path) => {
+const upLoadFile = async (path, type = 'image') => {
   const token = await storageManage.getAccessToken()
-  console.log(path, token)
+  console.log(path, token, type)
   return new Promise((resolve, reject) => {
     wx.uploadFile({
       url: 'https://api.fmcd.feimi0513.xyz/api/upload',
       filePath: path,
       header: {'x-feimi-token': token},
       name: 'file',
+      formData: {
+        type
+      },
       success(res) {
+        console.log(res)
         if (res.errMsg == 'uploadFile:ok') {
           resolve(res.data)
         }
       },
       fail: err => {
+        console.log(err)
         reject(err);
       }
     });

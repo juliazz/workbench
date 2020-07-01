@@ -12,6 +12,7 @@ Page({
    */
   data: {
     recomReason: '',
+    maxImgCount: 9, // 图片数量限制
     imageList: [],
     videoList: []
   },
@@ -31,13 +32,21 @@ Page({
   // 图片读取上传后
   async afterRead(event) {
     const { file, name } = event.detail;
+    console.log(name)
     isUpLoading = true
-    console.log(file)
     this.setData({isUpLoading})
+    if (file instanceof Array) {
+      file.map(async(i) => {
+        await this.changeReadLoadAfterData(i, name)
+      })
+      return
+    }
+    await this.changeReadLoadAfterData(file, name,)
+  },
+  async changeReadLoadAfterData(file, name) {
     const res = await upLoadFile(file.path, name)
     let result = JSON.parse(res)
     const { msg, data, status } = result
-    console.log(msg, data, status)
     if (status != '200') return this.$showToast(msg);
     const listName = `${name}List`
     const list = this.data[listName];
@@ -59,11 +68,8 @@ Page({
   // 确认发布
   async comfirmUpLoad() {
     const {recomReason} = this.data
-    if (recomReason.length < 20) { return this.$showToast('请输入不少于20字描述'); }
-    const par = {
-      resource_ids: photoFileList,
-      content: this.data.recomReason
-    }
+    console.log(recomReason.length)
+    if (recomReason.length < 3) { return this.$showToast('请输入不少于3字描述'); }
     const result = await api.submitMaterial({
       resource_ids: photoFileList,
       content: this.data.recomReason

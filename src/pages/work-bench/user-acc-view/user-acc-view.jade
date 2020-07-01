@@ -1,189 +1,110 @@
 
 view(class="components-user-acc-view")
-    view.section.section-collpase.section-pk
-        view.pk-title()
-          image(wx:if="{{type==1}}" src='../../../assets/image/icon/people.png')
-          image.part( wx:elif="{{type==2}}" src='../../../assets/image/icon/diamond.png')
-          image.brand(wx:elif="{{type==3}}" src='../../../assets/image/icon/team.png')
-          image.regin(wx:elif="{{type==4}}" src='../../../assets/image/icon/region.png')
-          text {{viewData.title}}
-        view.title-1
-          view.left 
-            text.name {{viewData.name}}
-            text 金币排名:{{rank_info.my_rank}}
-          view.right
-            text.action(bindtap="$routeLink" data-path="rank-list?rankType={{name}}&ruleId={{type}}&cat_type_id={{cat_type_id}}") 查看排行
-        view.item-box.flex-just-between
-          view.left
-            text.coin {{rank_info.point_count}} 币
-            text 金币总额
-            text.step-tips 品牌考核阶段
-          view.center
-            text.red-word {{rank_info.sumArray.reward_total}} 元
-            text 预计收益
-            text.step-tips 任务完成可奖励
-          view.right
-            text {{rank_info.sumArray.punishment_total}} 币
-            text 预计罚款
-            text.step-tips 未完成考核任务
-        view.title-2
-          view.left 金币获取信息
-          view.right(bindtap="popupShow" data-popup-type="goldCoin")
-            text.action 金币规则
-        //- 品牌金币
-        view.section-content.myCoin.flex-just-start
-          view.coinItem(wx:for="{{record_info}}" wx:key="tag" )
-            text.num.font-theme-grey +{{item.count}}
-            text {{item.point_count?item.point_count:0}}{{item.unit}}
-            text {{item.name}}
-        //- 品牌PK秀
-        view.title-2
-          view.left {{name}}PK秀
-          view.right(wx:if="{{can_pk}}" bindtap="$routeLink"  data-path="launch-pk?pkType={{name}}&identity={{identity}}")
-            text.action 发起PK
-            //- view.arrow
-        view.section-content.userPK(class="{{expandState?'active':''}}")
-          view.PKItem(wx:for="{{pk_list}}" wx:key="id")
-            view.PKProject {{item.pk_type}}
-            view.PKStage {{item.period_info.name}}
-            view.PKView
-              view.left.imageBox(class!="{{type!=1?'square':''}}")
-                w-icon(class='crown' type='crown' size='xlarge' wx:if!="{{item.b_user_info.point>item.u_user_info.point}}")
-                image(src="{{item.b_user_info.avatar}}"  bindload="bindImgLoad")
-                text.name {{item.b_user_info.name}}
-                text.score {{item.b_user_info.point}}分
-              view.center.flex-align-center
-                w-icon.vs( type='vs' size='vs')
-              view.right.imageBox(class!="{{type!=1?'square':''}}")
-                w-icon(class='crown' type='crown' size='xlarge' wx:if!="{{item.b_user_info.point<item.u_user_info.point}}")
-                image(src="{{item.u_user_info.avatar}}" )
-                text.name {{item.u_user_info.name}}
-                text.score {{item.u_user_info.point}}分
-        view.view-more(bindtap="viewMore" data-index='0' wx:if!="{{!expandState}}")
-          text 展示更多
-        //- 我的任务
-        view.title-2
-          view.left {{name}}任务
-        view.section-content.myJob
-          swiper.swiper(
-            indicator-dots
-            indicator-active-color="#0f8eef"
-          )
-            block(
-            )
-              swiper-item
-                view.progress.flex-align-center(wx:for="{{period_swiper1}}" wx:key="id" wx:for-item="swiperItem")
-                  view.left 
-                    text {{swiperItem.name}}
-                    text.blue ({{swiperItem.have_finish_count}}
-                    text /{{swiperItem.times}})
-                  van-progress.van-progress(
-                    percentage="{{swiperItem.have_finish_count*100/swiperItem.times}}" stroke-width="5"
-                    color="{{$themColor}}"
-                  )
-            block(
-              wx:if="{{period_swiper2.length}}"
-            )
-              swiper-item()
-                view.progress.flex-align-center(wx:for="{{period_swiper2}}" wx:key="id" wx:for-item="swiperItem")
-                  view.left 
-                    text {{swiperItem.name}}
-                    text.blue ({{swiperItem.have_finish_count}}
-                    text /{{swiperItem.times}})
-                  van-progress.van-progress(
-                    percentage="{{swiperItem.have_finish_count*100/swiperItem.times}}" stroke-width="5"
-                    color="{{$themColor}}"
-                  )
-               
+	view.section.section-collpase.section-pk
+		view.pk-title()
+			image(wx:if="{{type==1}}" src='../../../assets/image/icon/people.png')
+			image.part( wx:elif="{{type==2}}" src='../../../assets/image/icon/diamond.png')
+			image.brand(wx:elif="{{type==3}}" src='../../../assets/image/icon/team.png')
+			image.regin(wx:elif="{{type==4}}" src='../../../assets/image/icon/region.png')
+			text {{viewData.title}}
+		view.title-1
+			view.left
+				text.name {{viewData.name}}
+				text 金币排名:{{rank_info.my_rank}}
+			view.right
+				text.action(bindtap="$routeLink" data-path="rank-list?rankType={{name}}&ruleId={{type}}&cat_type_id={{cat_type_id}}") 查看排行
+		view.item-box.flex-just-between
+			view.left
+				text.coin {{rank_info.point_count}} 币
+				text 金币总额
+				text.step-tips 品牌考核阶段
+			view.center
+				text.red-word {{rank_info.sumArray.reward_total}} 元
+				text 预计收益
+				text.step-tips 任务完成可奖励
+			view.right
+				text {{rank_info.sumArray.punishment_total}} 币
+				text 预计罚款
+				text.step-tips 未完成考核任务
+		view.title-2
+			view.left 金币获取信息
+			view.right(bindtap="popupShow" data-popup-type="goldCoin")
+				text.action 金币规则
+		//- 金币获取信息
+		view.section-content.myCoin.flex-just-start
+			view.coinItem(wx:for="{{record_info}}" wx:key="tag" )
+				text.num.font-theme-grey +{{item.point_count?item.point_count:0}}
+				text {{item.count}}{{item.unit}}
+				text {{item.name}}
+		//- 品牌PK秀
+		view.title-2(wx:if="{{pk_list.length}}" )
+			view.left {{name}}PK秀
+			view.right(wx:if="{{can_pk}}" bindtap="$routeLink"  data-path="launch-pk?pkType={{name}}&identity={{identity}}")
+				text.action 发起PK
+		//- view.arrow
+		view.section-content.userPK(wx:if="{{pk_list.length}}" class="{{expandState?'active':''}}")
+			view.PKItem(wx:for="{{pk_list}}" wx:key="id")
+				view.PKProject {{item.pk_type}}
+				view.PKStage {{item.period_info.name}}
+				view.PKView
+					view.left.imageBox(class!="{{type!=1?'square':''}}")
+						w-icon(class='crown' type='crown' size='xlarge' wx:if!="{{item.b_user_info.point>item.u_user_info.point}}")
+						image(src="{{item.b_user_info.avatar}}"  bindload="bindImgLoad")
+						text.name {{item.b_user_info.name}}
+						text.score {{item.b_user_info.point}}分
+					view.center.flex-align-center
+						w-icon.vs( type='vs' size='vs')
+					view.right.imageBox(class!="{{type!=1?'square':''}}")
+						w-icon(class='crown' type='crown' size='xlarge' wx:if!="{{item.b_user_info.point<item.u_user_info.point}}")
+						image(src="{{item.u_user_info.avatar}}" )
+						text.name {{item.u_user_info.name}}
+						text.score {{item.u_user_info.point}}分
+		view.view-more(bindtap="viewMore" data-index='0' wx:if!="{{!expandState&&pk_list.length}}")
+			text 展示更多
+		//- 我的任务
+		view.title-2()
+			view.left {{name}}任务
+		view.section-content.myJob
+			swiper.swiper(
+				indicator-dots
+				indicator-active-color="#0f8eef"
+			)
+				block(
+				)
+					swiper-item
+						view.progress.flex-align-center(wx:for="{{period_swiper1}}" wx:key="id" wx:for-item="swiperItem")
+							view.left
+								text {{swiperItem.name}}
+								text.blue ({{swiperItem.have_finish_count}}
+								text /{{swiperItem.times}})
+							van-progress.van-progress(
+								percentage="{{swiperItem.have_finish_count*100/swiperItem.times}}" stroke-width="5"
+								color="{{$themColor}}"
+							)
+				block(
+					wx:if="{{period_swiper2.length}}"
+				)
+					swiper-item()
+						view.progress.flex-align-center(wx:for="{{period_swiper2}}" wx:key="id" wx:for-item="swiperItem")
+							view.left
+								text {{swiperItem.name}}
+								text.blue ({{swiperItem.have_finish_count}}
+								text /{{swiperItem.times}})
+							van-progress.van-progress(
+								percentage="{{swiperItem.have_finish_count*100/swiperItem.times}}" stroke-width="5"
+								color="{{$themColor}}"
+							)
 //- 金币规则弹窗
 w-popup-module(
-  class="w-popup pop-gold-coin-rule"
-  show="{{popupType=='goldCoin'}}"
-  type="center"
-  closeIcon="true"
-  closeBottom="true"
-  headTitle="金币规则"
+	class="w-popup pop-gold-coin-rule"
+	show="{{popupType=='goldCoin'}}"
+	type="center"
+	closeIcon="true"
+	closeBottom="true"
+	headTitle="金币规则"
 )
-  view(slot="content" class="content")
-    scroll-view(scroll-y="true" style="height: 60vh")
-      view.line(wx:for="{{coinRule}}" wx:key="index")
-        view.main-line(wx:for="{{item.mainLine}}" wx:key="mainIndex" wx:for-item="mainItem") {{mainItem}}
-        text.sub-title(wx:for="{{item.subLine}}"  wx:key="subIndex" wx:for-item="subItem") {{subItem}}
-//- 奖励弹窗
-w-popup(
-  class="w-popup reword"
-  show="{{popupType=='reword'}}"
-  type="center"
-  upClose="true"
-)
-  view(slot="content" class="content")
-    view.top
-      view.item
-        text 奖金总额
-        text 3000元
-      view.item
-        text 有效金币总数
-        text 3000币
-      view.item
-        text 当前金币价值
-        text 0.15 / 币
-    view.center
-      view.pic
-        image.avator(
-          src=""
-        )
-      view.main-info
-        text 某品牌
-      view.prize
-        text 金币: 30000
-        text 预计收入: 4500
-    view.bottom
-      w-coin-card()
-//- 罚款弹窗
-w-popup(
-  class="w-popup fine"
-  show="{{popupType=='fine'}}"
-  type="center"
-  upClose="true"
-)
-  view(slot="content" class="content")
-    view.top
-      view.pic
-        image.avator(
-          src=""
-        )
-      view.main-info
-        text 某品牌
-      view.prize
-        text 预计罚款:
-        w-currency(value="100" class="prize")
-    view.line
-      view.left
-        view.view-num
-          text 新客户浏览： 
-          text.blue 2 
-          text /20 
-          view.state 未完成
-      view.right
-        text 预计罚款:
-        w-currency(value="100" class="prize")
-    view.line
-      view.left
-        view.view-num
-          text 新客户浏览： 
-          text.blue 2 
-          text /20 
-          view.state 未完成
-      view.right
-        text 预计罚款:
-        w-currency(value="100" class="prize")
-    view.line
-      view.left
-        view.view-num
-          text 新客户浏览： 
-          text.blue 2 
-          text /20 
-          view.state 未完成
-      view.right
-        text 预计罚款:
-        w-currency(value="100" class="prize")
+	view(slot="content" class="content")
+		scroll-view(scroll-y="true" style="height: 60vh")
+			view.line(wx:for="{{coinRule}}" wx:key="index")
+				view.main-line(wx:for="{{item.mainLine}}" wx:key="mainIndex" wx:for-item="mainItem") {{mainItem}}
+				text.sub-title(wx:for="{{item.subLine}}"  wx:key="subIndex" wx:for-item="subItem") {{subItem}}

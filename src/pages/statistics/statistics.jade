@@ -13,7 +13,7 @@ w-page(
       )
         view.rank-list
           view.rank-item(
-            class!="{{activeTabIndex==tabIndex&&activeRankItemIndex==index?'active':''}}"
+            class!="{{activeTabIndex==item.id&&activeRankItemIndex==index?'active':''}}"
             wx:for="{{menu_list[tabIndex].menu}}" wx:key="index" wx:for-item="rankItem"
             bindtap="rankItemClick" data-rank-name="{{rankItem.value}}" data-rank-index="{{index}}" data-rank-id="{{rankItem.tag}}")
             text {{rankItem.value}} 

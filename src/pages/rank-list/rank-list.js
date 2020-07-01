@@ -69,6 +69,7 @@ Page({
     }
     this.$showLoading()
     const result = await api.getRankDetail(par)
+    this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
     const {total_point, per_point, total_reward} = data
@@ -84,9 +85,6 @@ Page({
       total_reward,
       list: filterList
     })
-  },
-  bindImgLoad() {
-    this.$hideLoading()
   },
   timeChangeEventer(eve) {
     const index = eve.detail

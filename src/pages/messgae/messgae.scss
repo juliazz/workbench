@@ -2,6 +2,12 @@
 @import '../../assets/style/index';
 .pages-messgae {
     .content{
+        .kong{
+            image{
+                margin: 2vh 0;
+            }
+            text-align: center;
+        }
         .message-list{
             font-size: 28rpx;
             .message-item{

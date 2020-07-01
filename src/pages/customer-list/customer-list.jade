@@ -5,8 +5,8 @@ w-page(
   view(slot="header" class="header")
   view(slot="content" class="content")
     view.title {{customerType}}
-    view.customer-list
-      view.item-box(wx:for="{{customerList}}" wx:key="index")
+    view.customer-list(wx:if="{{customerList}}")
+      view.item-box(wx:for="{{customerList}}" wx:key="index" wx:if="{{customerList.length}}")
         view.w-item-box()
           w-item-box
             view.left(slot="left")
@@ -30,4 +30,7 @@ w-page(
                   w-icon(type="chat" size="large")
           view.bottom()
             text.time 裂变时间：{{item.created_at}}
+      view.kong(wx:if!="{{!customerList.length}}")
+        image(src="../../assets/image/kong.png")
+        view 数据为空！
   view(slot="footer" class="footer")

@@ -9,8 +9,8 @@ w-page(
       van-dropdown-item(value="{{ stepValue }}" options="{{ stepList }}" title="时间切换" bind:change="timeChangeEventer")
     view.time-title() {{timeTitle}}
     view.num-title
-      text 总售卡
-      text 1000人
+      text 总数
+      text {{total}}{{unit}}
     view.rank-list
       view.rank-item(wx:for="{{statisticsList}}" wx:key="index")
         view.reword-card(wx:if="{{index==0}}")
@@ -22,7 +22,7 @@ w-page(
         view.reword-card(wx:else)
           text {{index+1}}
         view.avator()
-          image(src="")
+          image(src="{{item.avatar}}")
         view.progress-box
           view.main-info
             view.left
@@ -31,11 +31,11 @@ w-page(
             van-progress(
               percentage="100" stroke-width="10" show-pivot="{{false}}" color="#FF7E00"
             )
-            text {{item.value}}{{unit}}
+            text {{item.count}}{{unit}}
           view.progress(wx:else)
             van-progress(
-              percentage="{{item.value*10000/fullProgressNum}}" stroke-width="10" show-pivot="{{false}}" color="#FF7E00"
+              percentage="{{item.count*100/fullProgressNum}}" stroke-width="10" show-pivot="{{false}}" color="#FF7E00"
             )
-            text {{item.value}}{{unit}}
+            text {{item.count}}{{unit}}
         //- van-cell(title="{{listItem}}" wx:for="{{item.list}}" bindtap="selectEvent" data-Index="{{index}}" wx:for-item="listItem" wx:key="listIndex")
   view(slot="footer" class="footer")

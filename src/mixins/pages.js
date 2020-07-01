@@ -42,7 +42,6 @@ export default {
     })
   },
   async onShow() {
-    console.log('000000000000000=========')
     /**
      * switch tab
      */
@@ -157,7 +156,6 @@ export default {
     // 使手机发生较短时间的振动
     // wx.vibrateShort()
     const routes = getCurrentPages();
-    console.log(routes)
     let [route, query] = path.split('?')
     if (query) {
       query = query.replace(/\//g, '%2F')

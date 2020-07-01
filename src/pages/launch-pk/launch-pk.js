@@ -53,7 +53,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function (options) {
-    const {pkType, identity } = options
+    const {pkType } = options
+    identity = options.identity
     console.log(options, 'options=========')
     console.log(pkType, 'pktype=========')
     this.$showLoading()
@@ -68,8 +69,7 @@ Page({
       'endChoiceValue.name': `选择${pkType}`, // input框占位文案
       stepList: pk_period || [],
       projectList: pk_project || [],
-      pickerLevel: level,
-      identity // 进来时的身份  假设是品牌
+      pickerLevel: level
     })
     if (level == '2') {
       this.getUserListThree(cat_user_list)
@@ -289,14 +289,6 @@ Page({
     const {stepValue, projectValue, areaValue, endChoiceValue, pkPrice} = this.data
     // check Input
     console.log(stepValue, projectValue, areaValue, endChoiceValue, pkPrice)
-    // let parArr = []
-    // parArr.push(stepValue, projectValue, areaValue, endChoiceValue)
-    // console.log(parArr)
-    // let isfull = parArr.every((i) => {
-    //   return i.name
-    // }) && pkPrice
-    // console.log(isfull)
-    // if (!isfull) { return this.$showToast('请填写完整信息！') }
     const par = {
       bid: endChoiceValue.id,
       period_id: stepValue.id,
@@ -304,6 +296,7 @@ Page({
       type: identity,
       amount: pkPrice
     }
+    console.log(par)
     for (let key in par) {
       console.log(par[key])
       if (!par[key]) {
@@ -322,6 +315,7 @@ Page({
     this.setData({
       popupType: ''
     })
+    this.$navigateBack()
   },
   priceInputEventer(e) {
     this.setData({pkPrice: e.detail})

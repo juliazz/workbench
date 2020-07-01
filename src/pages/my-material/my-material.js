@@ -19,15 +19,22 @@ Page({
     wattingList: [{}],
     failLitst: [{}, {}, {}]
   },
-  onPreLoad: fetch,
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
+    console.log('---------------onLoad-------------')
     this.$showLoading()
     const result = await this.getMaterialList()
     console.log(result)
     this.$hideLoading()
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {
+    console.log('-------------onShow---------------')
   },
   async getMaterialList() {
     if (currentPage > totalPage) return this.$showToast('没有更多数据啦！');
@@ -71,12 +78,6 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-  },
 
   /**
    * 生命周期函数--监听页面隐藏
