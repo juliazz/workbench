@@ -1,5 +1,5 @@
 import api from '../../api/index.js'
-import util from '../../utils/utils'
+import storangeMange from '../../utils/storage-manage';
 
 const fetch = async () => {
   try {
@@ -14,12 +14,31 @@ Page({
    * 页面的初始数据
    */
   data: {
+    stateList: [
+      {
+        status: -1,
+        text: '已取消'
+      }, {
+        status: 0,
+        text: '待审核'
+      }, {
+        status: 1,
+        text: '已接收'
+      }, {
+        status: 2,
+        text: '已拒绝'
+      }]
   },
   onPreLoad: fetch,
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
+    //
+    let user_id = await storangeMange.getUserId()
+    this.setData({
+      user_id
+    })
     const id = options.id ? options.id : null
     const isRead = !Number(options.isRead) //
     console.log(isRead, 'isRead=========')
@@ -35,7 +54,7 @@ Page({
     const { msg, data, status } = result;
     const {list} = data
     if (status != '200') return this.$showToast(msg);
-    if (list.length) { this.$showToast('暂无未读消息！'); }
+    if (!list.length) { this.$showToast('暂无未读消息！'); }
     this.setData({
       messageList: list
     })

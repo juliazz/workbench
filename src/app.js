@@ -7,7 +7,7 @@ import api from './api/index'
 
 App({
   async onLaunch() {
-    await tokenManage.get()
+    // await tokenManage.get()
     const getSystemInfo = wx.getSystemInfoSync();
     console.log('getSystemInfo===', getSystemInfo);
   },
@@ -21,7 +21,7 @@ App({
     } catch (error) {
       logger.warn('session_key 已经失效');
       if (storageManage.getAccessToken()) {
-        await tokenManage.clear();
+        // await tokenManage.clear();
         // await tokenManage.get()
       }
     }

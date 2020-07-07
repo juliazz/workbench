@@ -48,8 +48,9 @@ Page({
       this.$redirectTo('un-register')
       return
     }
+   
     this.setData({is_host, showPage: true})
-    //  是否是主办方
+     //  是否是主办方
     console.log('work-bench---------------onLoad')
     user_id = await storangeMange.getUserId()
     console.log(user_id)
@@ -62,19 +63,19 @@ Page({
     this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    const activeId = data[0].activity_id
-    // const activeId = 1
-    await storangeMange.setActivityId(activeId)
-    // await storangeMange.setActivityId(1)
     // 默认选中第一个活动
+    const activeId = data[0].activity_id
+    await storangeMange.setActivityId(activeId)
     this.getActivityData(activeId)
+    console.log('getActivityData=========')
+    this.getRankInfo()
     this.setData({activeList: data, activeId})
   },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.getRankInfo()
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -109,6 +110,11 @@ Page({
     this.showTimeDown(period.end_time * 1000 - period.current_time * 1000)
     // 成员注册码、
     const activeCode = await this.getBase64ImageUrl(activity_reg_qrcode)
+    // rights = rights.find((i) => {
+    //   console.log(i, activeId)
+    //   return i.id == activeId
+    // })
+    // console.log('rights==========', rights)
     // 用户等级 及等级信息（订单录入）
     getApp().globalData.orderInType = rights
     this.setData({
@@ -163,6 +169,7 @@ Page({
     const { activeId } = this.data
     console.log('activeId=======', activeId)
     this.getActivityData(activeId)
+    this.getRankInfo()
     this.setData({popupType: ''})
   },
   // 倒计时
@@ -284,12 +291,14 @@ Page({
     if (status != '200') return this.$showToast(msg);
     app.globalData.scanRes = data
     console.log('app.globalData.scanRes', app.globalData.scanRes)
+    if (result.type == 'order') {
+      this.$routeTo('order-type-in?type=bar')
+    } else {
+      this.$showToast('扫码成功！');
+    }
     this.setData({
       popupType: ''
     })
-    if(result.type=='order'){
-      this.$routeTo('order-type-in?type=bar')
-    }
   },
 
   /**

@@ -14,7 +14,7 @@ w-page(
               placeholder="请输入姓名"
               value="{{order.othername}}"
               data-type="othername"
-              bindblur="bindblur"
+              bindinput="bindblur"
               maxlength="30"
           )
         w-field(class="field" prop="othertel" label="客户电话:")
@@ -25,7 +25,7 @@ w-page(
               placeholder="请输入电话"
               value="{{order.othertel}}"
               data-type="othertel"
-              bindblur="bindblur"
+              bindinput="bindblur"
               maxlength="30"
           )
         w-field(class="field" prop="otheradress" label="客户地址:")
@@ -35,7 +35,7 @@ w-page(
               placeholder="请输入客户地址"
               value="{{order.otheradress}}"
               data-type="otheradress"
-              bindblur="bindblur"
+              bindinput="bindblur"
               maxlength="30"
           )
         w-field(class="field" prop="brand" label="订单品牌:")
@@ -45,7 +45,7 @@ w-page(
               placeholder="请选择订单品牌"
               value="{{order.brand.brandName}}"
               data-type="brand"
-              bindblur="bindblur"
+              bindinput="bindblur"
               maxlength="30"
           )
           view.arr-box(bindtap="$routeLink" data-path="order-brand")
@@ -58,7 +58,7 @@ w-page(
               disabled ="{{true}}"
               value="{{order.date}}"
               data-type="date"
-              bindblur="bindblur"
+              bindinput="bindblur"
               maxlength="30"
           )
           //- view.arr-box(bindtap="popupShow" data-popup-type="datePicker")
@@ -71,7 +71,7 @@ w-page(
               placeholder="请输入订单金额"
               value="{{order.price}}"
               data-type="price"
-              bindblur="bindblur"
+              bindinput="bindblur"
               maxlength="30"
           )
         w-field(class="field" prop="sign" label="签单人:")
@@ -82,7 +82,7 @@ w-page(
               placeholder="请选择签单人"
               value="{{order.sign.name}}"
               data-type="sign"
-              bindblur="bindblur"
+              bindinput="bindblur"
               maxlength="30"
           )
           view.arr-box(wx:if="{{arrayOne.length}}")
@@ -103,7 +103,7 @@ w-page(
               placeholder="请选择带单人"
               value="{{order.guide.name}}"
               data-type="guide"
-              bindblur="bindblur"
+              bindinput="bindblur"
               maxlength="30"
           )
           view.arr-box(bindtap="popupShow" data-popup-type="guide")
@@ -115,13 +115,17 @@ w-page(
               placeholder="请填写备注"
               value="{{order.remark}}"
               data-type="remark"
-              bindblur="bindblur"
+              bindinput="bindblur"
               maxlength="30"
           )
         view.upload
           view.tips 上传凭证：
           van-uploader(
+            multiple="{{true}}"
+            max-count="{{maxImgCount}}"
+            name="image" accept="image" 
             bind:before-read="beforeRead" use-before-read="{{true}}"
+            bind:delete="delete"
             file-list="{{ fileList }}" bind:after-read="afterRead"
             preview-image
           )

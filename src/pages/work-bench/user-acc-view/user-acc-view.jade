@@ -19,11 +19,11 @@ view(class="components-user-acc-view")
 				text 金币总额
 				text.step-tips 品牌考核阶段
 			view.center
-				text.red-word {{rank_info.sumArray.reward_total}} 元
+				text.red-word {{rank_info.sumArray.reward_total?rank_info.sumArray.reward_total:0}} 元
 				text 预计收益
 				text.step-tips 任务完成可奖励
 			view.right
-				text {{rank_info.sumArray.punishment_total}} 币
+				text {{rank_info.sumArray.punishment_total?rank_info.sumArray.punishment_total:0}} 币
 				text 预计罚款
 				text.step-tips 未完成考核任务
 		view.title-2
@@ -37,7 +37,7 @@ view(class="components-user-acc-view")
 				text {{item.count}}{{item.unit}}
 				text {{item.name}}
 		//- 品牌PK秀
-		view.title-2(wx:if="{{pk_list.length}}" )
+		view.title-2()
 			view.left {{name}}PK秀
 			view.right(wx:if="{{can_pk}}" bindtap="$routeLink"  data-path="launch-pk?pkType={{name}}&identity={{identity}}")
 				text.action 发起PK

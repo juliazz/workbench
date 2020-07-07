@@ -18,15 +18,15 @@ Page({
    * 页面的初始数据
    */
   data: {
+    maxImgCount: 9, // 图片数量限制
     order: {
       date: `${timeNow.getFullYear()}-${timeNow.getMonth() + 1}-${timeNow.getDate()}`,
       guide: {}
     },
     fileList: [
     ], // 上传文件列表
-    arrayOne: [],
-    indexOne: 0,
-    multiArraySecond: [], // 模拟取到的完整签单人列表
+    arrayOne: [], // 签单人列表
+    indexOne: 0, // 签单人选中序列
     active: 0, // 步骤条进度 第几步
     steps: [ // 步骤条步骤
       {
@@ -56,7 +56,7 @@ Page({
    */
   onLoad: async function(options) {
     console.log('options======', options)
-    const rights = getApp().globalData.orderInType[0]
+    const rights = getApp().globalData.orderInType
     console.log('rights', rights)
     // 获取签单人列表
     // 0 代表当前员工  1代表身份是主管
@@ -82,7 +82,6 @@ Page({
       })
     }
   },
-
   /**
    * 生命周期函数--监听页面显示
    */
@@ -93,15 +92,18 @@ Page({
     })
   },
   async getSignUserList() {
+    this.$showLoading()
     const result = await api.getTopUserList()
+    this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    console.log('data.user_list=====',)
     this.setData({arrayOne: data[0].child})
   },
   //   =========     带单人选择  ============
   getLeaderUserList: async function() {
+    this.$showLoading()
     const result = await api.getServiceUserList()
+    this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
     level = data.level
@@ -137,7 +139,7 @@ Page({
     let Step1List;
     let Step2List = [];
     let Step3List = [];
-    let Step4List = []; // 品牌列表
+    let Step4List = [];
     // 遍历第四层 获取四个层级列表
     //    遍历战区
     Step1List = userListRes.map((i) => {
@@ -185,6 +187,7 @@ Page({
   },
   getCurrentStepList(id) {
     const { active, stepList} = this.data // 第几步 ,所有步骤的列表
+    console.log(active, stepList)
     let currentStepList = stepList[active] // 当前步骤所有品牌列表
     let currentStepChoiceList = [] // 根据上一步选择id寻找相同的parent_id的子项列表
     switch (active) {
@@ -233,9 +236,10 @@ Page({
   },
   closeGuidePop() {
     const {active} = this.data
-    if (active != level - 1) return this.$showToast('未选中到人')
+    if (active != level - 1) {
+      return this.$showToast('未选中到人')
+    }
   },
-  //  ===================================================
   bindblur(event) {
     const { type } = event.currentTarget.dataset;
     const { value } = event.detail;
@@ -255,7 +259,14 @@ Page({
     isUpLoading = true
     this.setData({isUpLoading})
     // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+    file.map(async(i) => {
+      await this.changeReadLoadAfterData(i)
+    })
+  },
+  async changeReadLoadAfterData(file) {
+    this.$showLoading()
     const res = await upLoadFile(file.path)
+    this.$hideLoading()
     let result = JSON.parse(res)
     const { msg, data, status } = result
     if (status != '200') return this.$showToast(msg);
@@ -266,6 +277,15 @@ Page({
     isUpLoading = false
     this.setData({ fileList });
   },
+  // 图片删除
+  delete(event) {
+    const { index} = event.detail;
+    const {fileList} = this.data;
+    fileList.splice(index, 1);
+    photoFileList.splice(index, 1)
+    console.log(photoFileList, 'photoFileList=========delete后==')
+    this.setData({ fileList });
+  },
   bindsubmit(event) {
     const { value } = event.detail;
     const {order } = this.data
@@ -273,11 +293,9 @@ Page({
       sign: order.sign.id || '',
       brand: order.brand.brandId,
       guide: order.guide.id || '', // 写死9
-      // guide: 9, // 写死9
       cert: photoFileList,
       hx_code: order.hx_code || ''
     })
-    console.log(options)
     const component = this.selectComponent('#field-group');
     component.validateEventer(rules, options, async valid => {
       if (!valid) return this.$showToast('请完善订单信息');
@@ -300,9 +318,12 @@ Page({
     });
   },
   async orderBrandIn(options) {
+    this.$showLoading()
     const result = await api.submitOrder(options)
+    this.$hideLoading()
     const { msg, data, status } = result
     if (status != '200') return this.$showToast(msg);
+    photoFileList = []
     this.$showToast('录单成功！');
     setTimeout(() => {
       this.$navigateBack()
@@ -312,7 +333,10 @@ Page({
     const { popupType } = eve.currentTarget.dataset
     // 如果是扫码进来的带单人不可选
     if (isFrombar && popupType == 'guide') return
-    if (popupType == 'guide') this.getCurrentStepList()
+    if (popupType == 'guide') {
+      this.setData({active: 0})
+      this.getCurrentStepList()
+    }
     this.setData({
       popupType
     })

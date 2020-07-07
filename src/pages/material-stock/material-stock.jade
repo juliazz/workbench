@@ -12,7 +12,7 @@ w-page(
         wx:for-index="tabIndex"
         title="{{item }}"
       )
-    vant-cell(title="我的素材({{tabs.length}})" is-link value="点击查看" link-type="navigateTo" url="/pages/my-material/my-material")
+    vant-cell(title="我的素材" is-link value="点击查看" link-type="navigateTo" url="/pages/my-material/my-material")
     view.material-list.wx()
       view.material-item(wx:for="{{personDetailList}}" wx:key="index")
         view.header.flex-just-between

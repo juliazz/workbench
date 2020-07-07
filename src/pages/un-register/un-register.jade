@@ -5,5 +5,20 @@ w-page(
 )
   view(slot="header" class="header")
   view(slot="content" class="content")
-    image(src='../../assets/image/unRegister.jpg' mode="widthFix")
+    view.func-list
+      view.func-item.flex-align-center
+        text.title 门店管理
+        image(src='../../assets/image/inc1.png')
+      view.func-item.flex-align-center
+        text.title 店员管理
+        image(src='../../assets/image/inc2.png')
+      view.func-item.flex-align-center
+        text.title 订单统计
+        image(src='../../assets/image/inc3.png')
+      view.func-item.flex-align-center(
+        bindtap="toMiniAPP"
+      )
+        text.title 创建活动
+        image(src='../../assets/image/inc4.png')
+        
   view(slot="footer" class="footer")

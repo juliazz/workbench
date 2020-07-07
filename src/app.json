@@ -1,5 +1,6 @@
 {
 	"pages": [
+		"pages/un-register/un-register",
 		"pages/work-bench/work-bench",
 		"pages/order-type-in/order-type-in",
 		"pages/order-brand/order-brand",
@@ -17,12 +18,10 @@
 		"pages/statistics-rank/statistics-rank",
 		"pages/add-material/add-material",
 		"pages/customer-list/customer-list",
-		"pages/un-register/un-register",
 		"pages/income-detail/income-detail",
 		"pages/account-detail/account-detail",
 		"pages/challenge/challenge",
 		"pages/recharge/recharge",
-		"pages/webview/webview",
 		"pages/login/login"
 	],
 	"window": {
@@ -83,5 +82,8 @@
 		"scope.userLocation": {
 			"desc": "您的位置信息将用于匹配专卖店地址。"
 		}
-	}
+	},
+	"navigateToMiniProgramAppIdList": [
+		"wxe27a30ee512b1ab0"
+	  ]
 }

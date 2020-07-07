@@ -10,7 +10,7 @@ const rules = {
     type: 'Number',
     require: true,
     validator: utils.isPhone,
-    typeMessage: '请输入正确的手机号',
+    typeMessage: '请输入正确的手机号码',
     message: '请输入正确的手机号'
   },
   otheradress: {

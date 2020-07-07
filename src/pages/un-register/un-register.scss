@@ -5,12 +5,26 @@
         position: fixed;
         left: 0;
         top: 0;
-        height: 100vh;
-        background-color:#0f57e4;
-        overflow-y: scroll;;
-    }
-    image{
-        // height: 100vh;
+        padding: 30rpx;
         width: 100vw;
+        height: 100vh;
+        box-sizing: border-box;
+        background-color:$g3c;
+        // overflow-y: scroll;
+    }
+    .func-list{
+        // width: 100%;
+    }
+    .func-item{
+        background-color: #fff;
+        padding: 40rpx 0;
+        
+        border: 2rpx solid $g1c;
+        margin-bottom: 30rpx;
+        justify-content: space-around;
+        image{
+            width: 134rpx;
+            height: 110rpx;
+        }
     }
 }

@@ -11,8 +11,8 @@ w-page(
               open-data(type="userAvatarUrl" )
             view.activity-info
               view()
-                tex.name {{rights[0].name}} 
-                text {{rights[0].position}}
+                tex.name {{rights.name}} 
+                text {{rights.position}}
               view.title
                 text {{info.start_date}}-{{info.end_date}} {{info.name}}
           view.right(bindtap="popupShow" data-popup-type="changeActive")
@@ -51,51 +51,21 @@ w-page(
           view.action-item(bindtap="popupShow" data-popup-type="verification" )
             image(src="../../assets/image/icon/scan-code.png" mode="widthFix")
             text 核销扫码
-          view.action-item(bindtap="$routeLink"  data-path="order-type-in")
+          view.action-item(wx:if="{{rights.type==1||rights.type==0}}" bindtap="$routeLink"  data-path="order-type-in")
             image(src="../../assets/image/icon/order-brand-in.png" mode="widthFix")
             text 订单录入
           view.action-item(bindtap="$routeLink" data-path="material-stock")
             image(src="../../assets/image/icon/material.png" mode="widthFix")
             text 活动素材库
-          //- view.action-item(bindtap="$routeLink"  data-path="short-message-mange")
-          //-   image(src="../../assets/image/icon/small-message.png" mode="widthFix")
-          //-   text 短信管理
           view.action-item(bindtap="$routeLink"  data-path="num-export")
             image(src="../../assets/image/icon/export.png" mode="widthFix")
             text 数据导出
-      view.section.section-live-manger
+      view.section.section-live-manger(wx:if="{{is_host}}")
         view.activity-title(
           bindtap="toMiniAPP"
         )
           image.flag(src='../../assets/image/icon/live-manger.png')
           text 主办方管理
-      //-   view.action-list
-      //-     view.action-item(bindtap="popupShow" data-popup-type="choosePoster")
-      //-       image(src="../../assets/image/icon/pro-manger.png" mode="widthFix")
-      //-       text 直播商品管理
-      //-     view.action-item(bindtap="popupShow" data-popup-type="shopping")
-      //-       image(src="../../assets/image/icon/live-config.png" mode="widthFix")
-      //-       text 直播间配置
-      //-     view.action-item( bindtap="popupShow" data-popup-type="groupCode" )
-      //-       image(src="../../assets/image/icon/key-word.png" mode="widthFix")
-      //-       text 敏感词管理
-      //-     view.action-item(bindtap="popupShow" data-popup-type="register")
-      //-       image(src="../../assets/image/icon/material-manger.png" mode="widthFix")
-      //-       text 互动素材管理
-      //- view.section.section-acti-manger
-        view.activity-title.flex-align-center
-          image.flag(src='../../assets/image/icon/activitymanger.png')
-          text 活动管理
-        view.action-list
-          view.action-item(bindtap="popupShow" data-popup-type="choosePoster")
-            image(src="../../assets/image/icon/pro-manger.png" mode="widthFix")
-            text 发布活动
-          view.action-item(bindtap="popupShow" data-popup-type="shopping")
-            image(src="../../assets/image/icon/live-config.png" mode="widthFix")
-            text 审核管理
-          view.action-item( bindtap="popupShow" data-popup-type="groupCode" )
-            image(src="../../assets/image/icon/group-code.png" mode="widthFix")
-            text 群二维码
       view.section.section-2
         view.activity-title
           image.flag(src='../../assets/image/icon/flag.png')

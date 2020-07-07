@@ -1,8 +1,11 @@
 
 view(class="components-item-box-lcr")
-    view.left()
-        slot(name="left")
-    view.center(style="width:{{centerWidth}}rpx")
-        slot(name="center")
-    view.right()
-        slot(name="right")
+    view.top
+        view.left()
+            slot(name="left")
+        view.center(style="width:{{centerWidth}}rpx")
+            slot(name="center")
+        view.right()
+            slot(name="right")
+    view.bottom
+        slot(name="bottom")

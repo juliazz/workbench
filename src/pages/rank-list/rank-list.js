@@ -92,7 +92,7 @@ Page({
   },
 
   filterBySearch(eve) {
-    const keyWord = eve.detail
+    const keyWord = eve.detail.value
     console.log(keyWord)
     let filterRes = filterList.filter((v) => {
       if (v.name.indexOf(keyWord) > -1 || v.cat_name.indexOf(keyWord) > -1) {

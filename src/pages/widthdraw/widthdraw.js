@@ -19,7 +19,7 @@ Page({
   },
   bindinput(event) {
     const { value } = event.detail;
-    this.setData({ rechargeNum: +value });
+    this.setData({ rechargeNum: value });
   },
   async nextEventer() {
     this.$showLoading()

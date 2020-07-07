@@ -1,10 +1,14 @@
 
 @import '../../assets/style/index';
 .pages-message-detail {
+    
     .message-detail-list{
         padding: 30rpx;
+        min-height: 100vh;
+        background-color: $g3c;
         .item-box{
             margin-bottom: 30rpx;
+            border-radius:10px;
         }
         .components-item-box-lcr{
             border-radius: 10rpx;
@@ -21,17 +25,29 @@
                 overflow: hidden;
             }
         }
-        .center{
-            
+        .line-price{
+            text{
+                display: inline;
+            }
+        }
+        .price{
+            font-size: 30rpx;
+            color: #E03280;
+        }
+        .bottom-time{
+            padding-top: 15rpx;
+            margin-top: 10rpx;
+            border-top: 2rpx solid $g3c;
         }
         .right{
             min-width: 120rpx;
             justify-content: space-between;
             align-self: stretch;
             .detail-btn{
-                height: 60rpx;
-                width: 130rpx;
-                margin-bottom: 20rpx;
+                // height: 60rpx;
+                // width: 130rpx;
+                font-size: 24rpx;
+                margin-bottom: 15rpx;
             }
             .status{
                 color: red;

@@ -44,7 +44,9 @@ Page({
     await this.changeReadLoadAfterData(file, name,)
   },
   async changeReadLoadAfterData(file, name) {
+    this.$showLoading()
     const res = await upLoadFile(file.path, name)
+    this.$hideLoading()
     let result = JSON.parse(res)
     const { msg, data, status } = result
     if (status != '200') return this.$showToast(msg);
@@ -70,14 +72,17 @@ Page({
     const {recomReason} = this.data
     console.log(recomReason.length)
     if (recomReason.length < 3) { return this.$showToast('请输入不少于3字描述'); }
+    this.$showLoading()
     const result = await api.submitMaterial({
       resource_ids: photoFileList,
       content: this.data.recomReason
     })
+    this.$hideLoading()
     const { msg, data, status } = result
     console.log(msg, data, status)
     if (status != '200') return this.$showToast(msg);
     this.$showToast('上传成功，请等待审核！')
+    photoFileList = []
     setTimeout(() => {
       this.$navigateBack()
     }, 1500)

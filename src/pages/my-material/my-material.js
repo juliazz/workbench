@@ -23,18 +23,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    console.log('---------------onLoad-------------')
+    console.log('=============onLoad=================')
     this.$showLoading()
     const result = await this.getMaterialList()
-    console.log(result)
     this.$hideLoading()
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
-    console.log('-------------onShow---------------')
+  onShow: async function() {
+    console.log('=============onShow=================')
   },
   async getMaterialList() {
     if (currentPage > totalPage) return this.$showToast('没有更多数据啦！');
@@ -48,7 +47,6 @@ Page({
     this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    console.log(data)
     const {status_list, last_page, per_page} = data
     totalPage = last_page
     const myMaterialList = data.data.map((i) => {
@@ -60,6 +58,7 @@ Page({
       myMaterialList: totalData,
       status_list
     })
+    console.log(this.data.myMaterialList)
   },
   changeEventer(event) {
     totalData = []
@@ -90,7 +89,8 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
+    currentPage = 1
+    totalData = [];
   },
   /**
    * 页面上拉触底事件的处理函数

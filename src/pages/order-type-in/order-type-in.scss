@@ -49,11 +49,14 @@
         .upload{
             font-size: 26rpx;
             padding: 30rpx 20rpx;
+            overflow: hidden;
             .tips{
                 margin-bottom: 30rpx;
             }
             van-uploader{
-                margin-left: 70rpx;
+                // padding-left: 60rpx;
+                // width: 100%;
+                // box-sizing: border-box;
             }
         }
         .button{

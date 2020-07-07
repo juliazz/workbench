@@ -14,7 +14,7 @@ w-page(
       //-   van-dropdown-item(value="{{ stepValue }}"  options="{{ stepList }}" title="{{timeTitle.text}}" bind:change="timeChangeEventer" )
       view.section.section-2
         view.search-input
-          van-search(custom-class="custom-class" value="{{searchValue}}" placeholder="员工姓名或品牌名称" use-right-icon-slot="{{false}}" bind:search="filterBySearch")
+          van-search(custom-class="custom-class" value="{{searchValue}}" placeholder="员工姓名或品牌名称" use-right-icon-slot="{{false}}" bind:clear="filterBySearch" bind:blur="filterBySearch")
         view.rule-title(bindtap="popupShow" data-popup-type="rewordRule" )
           text 奖励规则
           w-icon(type="question" size="normal")
@@ -51,7 +51,6 @@ w-page(
               text {{detailItem.count}}人
               text {{detailItem.name}}
               text {{detailItem.point_count}}{{detailItem.unit}}
-             
   view(slot="footer" class="footer")
 //-奖励规则弹窗
 w-popup-module(
