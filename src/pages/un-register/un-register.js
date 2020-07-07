@@ -1,5 +1,9 @@
 import request from '../../utils/request';
 import config from '../../config';
+import api from '../../api/index.js'
+import {
+  storageManage
+} from '../../utils/index'
 Page({
   $route: 'pages/un-register/un-register',
   /**
@@ -12,7 +16,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: async function(options) {
     // 一进来先判断有没有注册过
     const register = await this.isRegister()
      // forward 是否有进入小程序的权限 is_host  是否是主办方
@@ -49,7 +53,7 @@ Page({
 
   },
   async isRegister() {
-    // let loginStatus = await storangeMange.getLoginStatus()
+    // let loginStatus = await storageManage.getLoginStatus()
     // console.log('loginStatus======', loginStatus)
     // if (loginStatus) {
     //   return loginStatus
@@ -57,7 +61,7 @@ Page({
     const register = await api.getUserResiInfo()
     const { msg, data, status } = register;
     if (status != '200') return this.$showToast(msg);
-    storangeMange.setLoginStatus(data)
+    storageManage.setLoginStatus(data)
     return data
   },
   toMiniAPP() {
