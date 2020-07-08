@@ -203,11 +203,11 @@ w-popup(
           )
             swiper-item
               image(
-                data-url="{{item.image}}"
+                data-url="{{item}}"
                 bindtouchstart='timestart'
                 bindtouchend='timeend'
                 mode = "aspectFill"
-                src="{{item.image}}"
+                src="{{item}}"
               )
       view.tips() 长按图片发送至朋友圈或保存至相册
       view.smallPoster

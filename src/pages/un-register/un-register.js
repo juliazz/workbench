@@ -2,8 +2,10 @@ import request from '../../utils/request';
 import config from '../../config';
 import api from '../../api/index.js'
 import {
-  storageManage
+  storageManage,
+  tokenManage
 } from '../../utils/index'
+
 Page({
   $route: 'pages/un-register/un-register',
   /**
@@ -12,23 +14,13 @@ Page({
   data: {
     title: 'un-register'
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function(options) {
-    // 一进来先判断有没有注册过
-    const register = await this.isRegister()
-     // forward 是否有进入小程序的权限 is_host  是否是主办方
-     const {forward, is_host} = register
-     if (!forward) {
-       this.$redirectTo('un-register')
-       return
-     }
-    this.isHasUserId()
-
+  onLoad: function(options) {
   },
-  async isHasUserId(){
+
+  async isHasUserId() {
     wx.showLoading({
       title: '加载中'
     })
@@ -39,6 +31,7 @@ Page({
       url: `sso/login?app_id=${config.storeid}&code=${code}`,
       auth: true
     });
+    wx.hideLoading()
     console.log(result)
     const { data, status } = result
     if (status != 200) {
@@ -48,16 +41,20 @@ Page({
     const { token, user_info } = data;
     const { user_id} = user_info
     await storageManage.setUserId(user_id);
-    await this.set(token);
-    return user_id
-
+    await tokenManage.set(token);
+    if (!user_id) {
+      this.$redirectTo('un-register2')
+    }
+    // 一进来先判断有没有注册过
+    const register = await this.isRegister()
+    // forward 是否有进入小程序的权限 is_host  是否是主办方
+    const {forward, is_host} = register
+    if (!forward) {
+      this.$redirectTo('un-register2')
+    }
+    this.$switchTab('work-bench')
   },
   async isRegister() {
-    // let loginStatus = await storageManage.getLoginStatus()
-    // console.log('loginStatus======', loginStatus)
-    // if (loginStatus) {
-    //   return loginStatus
-    // }
     const register = await api.getUserResiInfo()
     const { msg, data, status } = register;
     if (status != '200') return this.$showToast(msg);
@@ -116,13 +113,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
 
   }
 })

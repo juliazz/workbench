@@ -20,5 +20,8 @@ w-page(
       )
         text.title 创建活动
         image(src='../../assets/image/inc4.png')
+    view.btns
+      vant-button( type="default" plain custom-class="account-btn" color="#3E5193" bind:click="isHasUserId" )
+        text 账号管理
         
   view(slot="footer" class="footer")

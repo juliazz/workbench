@@ -2,7 +2,6 @@ import api from '../../api/index.js'
 import util from '../../utils/utils'
 import fileHelper from '../../utils/fileHelper.js'
 import storangeMange from '../../utils/storage-manage';
-
 const {base64src} = fileHelper
 const app = getApp()
 const fetch = async (options) => {
@@ -40,21 +39,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function(options) {
-    // 一进来先判断有没有注册过
-    const register = await this.isRegister()
-    // forward 是否有进入小程序的权限 is_host  是否是主办方
-    const {forward, is_host} = register
-    if (!forward) {
-      this.$redirectTo('un-register')
-      return
-    }
-   
-    this.setData({is_host, showPage: true})
-     //  是否是主办方
-    console.log('work-bench---------------onLoad')
-    user_id = await storangeMange.getUserId()
-    console.log(user_id)
-    if (!user_id) { this.$redirectTo('un-register') }
+    // this.setData({is_host, showPage: true})
+    this.setData({showPage: true})
     // 再判断有没有授权过
     // const userInfo = await storangeMange.getUserInfo()
     // if(!userInfo){this.setData({popupType:'getUserInfo'})}
@@ -82,18 +68,7 @@ Page({
    */
   onReady: function() {
   },
-  async isRegister() {
-    let loginStatus = await storangeMange.getLoginStatus()
-    console.log('loginStatus======', loginStatus)
-    if (loginStatus) {
-      return loginStatus
-    }
-    const register = await api.getUserResiInfo()
-    const { msg, data, status } = register;
-    if (status != '200') return this.$showToast(msg);
-    storangeMange.setLoginStatus(data)
-    return data
-  },
+
   // 根据活动id查活动数据
   async getActivityData(activeId) {
     this.$showLoading()
@@ -237,6 +212,7 @@ Page({
   },
   savePhoto(url) {
     let times = this.data.timeend - this.data.timestart;
+    console.log(url)
     if (times > 1000) {
       wx.downloadFile({
         url,

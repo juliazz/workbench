@@ -8,7 +8,14 @@ w-page(
     van-tabs.van-tabs(active="{{ activeTabIndex }}" bind:change="onChange" color="{{$themColor}}" )
       van-tab.vantab(
         wx:for="{{ tabs }}"
-        wx:if!="{{tabIndex==0&&is_charge||tabIndex==1}}"
+        wx:if="{{is_charge}}"
+        wx:key="*this"
+        wx:for-index="tabIndex"
+        title="{{item }}排行榜"
+      )
+      van-tab.vantab(
+        wx:for="{{tabs1}}"
+        wx:if!="{{!is_charge}}"
         wx:key="*this"
         wx:for-index="tabIndex"
         title="{{item }}排行榜"
@@ -17,7 +24,7 @@ w-page(
       view.income-List
         view.income-item.income-item-1
           view.title 直播签单收入
-          w-currency(value="{{brand.live_order_amount}}" class="oderPrize")
+          w-currency(value="{{brand.live_order_amount?brand.live_order_amount:0}}" class="oderPrize")
           vant-button( type="default"  round="{{true}}"
           custom-class="income-detail-btn" color="#fff" 
           data-path='income-detail?type=live'
@@ -26,14 +33,14 @@ w-page(
             text 查看明细
         view.income-item.income-item-2
           view.title 线上订单收入
-          w-currency(value="{{brand.order_amount}}" class="oderPrize")
+          w-currency(value="{{brand.order_amount?brand.order_amount:0}}" class="oderPrize")
           vant-button( type="default" round custom-class="income-detail-btn" color="#fff"
           data-path='income-detail?type=onlineOrder'
           bind:click="$routeLink" )
             text 查看明细
         view.income-item.income-item-3
           view.title 线上报名收入
-          w-currency(value="{{brand.sign_count}}" class="oderPrize")
+          w-currency(value="{{brand.sign_count?brand.sign_count:0}}" class="oderPrize")
           vant-button( type="default" round custom-class="income-detail-btn" color="#fff"
           data-path='income-detail?type=onlineSign'
           bind:click="$routeLink" )

@@ -1,0 +1,18 @@
+
+w-loading(id="w-loading")
+w-page(
+  class="w-page pages-un-register2"
+)
+  view(slot="header" class="header")
+  view(slot="content" class="content")
+    image(src='../../assets/image/unreg2.png')
+    view 您还不是我们的员工，请联系客服开通权限
+    view.service()
+      button(
+        open-type="contact"
+        bindcontact="sendContact"
+        class="button"
+      )
+        text 联系客服
+                 
+  view(slot="footer" class="footer")

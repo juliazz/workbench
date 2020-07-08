@@ -15,8 +15,16 @@ Page({
    * 页面的初始数据
    */
   data: {
+    activeTabIndex: 0,
+    tabs: ['系统通知', '客户留言']
   },
   onPreLoad: fetch,
+  onChange: function(eve) {
+    const {index} = eve.detail
+    this.setData({
+      activeTabIndex: index
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

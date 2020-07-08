@@ -42,51 +42,70 @@
 		"game": {
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
 			"current": 2,
-			"list": [{
-				"id": -1,
-				"name": "工作台",
-				"pathName": "pages/work-bench/work-bench",
-				"query": "",
-				"scene": ""
-			}, {
-				"id": -1,
-				"name": "订单录入",
-				"pathName": "pages/order-type-in/order-type-in",
-				"query": "",
-				"scene": ""
-			}, {
-				"id": -1,
-				"name": "排行榜",
-				"pathName": "pages/rank-list/rank-list",
-				"query": "rankType=个人",
-				"scene": ""
-			}, {
-				"id": -1,
-				"name": "发起PK",
-				"pathName": "pages/launch-pk/launch-pk",
-				"query": "rankType=个人",
-				"scene": ""
-			}, {
-				"id": -1,
-				"name": "统计",
-				"pathName": "pages/statistics/statistics",
-				"query": "id=1&customerType=浏览",
-				"scene": ""
-			}, {
-				"id": -1,
-				"name": "素材库",
-				"pathName": "pages/material-stock/material-stock",
-				"query": "",
-				"scene": ""
-			}, {
-				"id": -1,
-				"name": "短信管理",
-				"pathName": "pages/short-message-mange/short-message-mange",
-				"query": "",
-				"scene": ""
-			}]
+			"list": [
+				{
+					"id": -1,
+					"name": "工作台",
+					"pathName": "pages/work-bench/work-bench",
+					"query": "",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "订单录入",
+					"pathName": "pages/order-type-in/order-type-in",
+					"query": "",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "排行榜",
+					"pathName": "pages/rank-list/rank-list",
+					"query": "rankType=个人",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "发起PK",
+					"pathName": "pages/launch-pk/launch-pk",
+					"query": "rankType=个人",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "统计",
+					"pathName": "pages/statistics/statistics",
+					"query": "id=1&customerType=浏览",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "素材库",
+					"pathName": "pages/material-stock/material-stock",
+					"query": "",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "短信管理",
+					"pathName": "pages/short-message-mange/short-message-mange",
+					"query": "",
+					"scene": ""
+				},
+				{
+					"id": -1,
+					"name": "pages/messgae/messgae",
+					"pathName": "pages/messgae/messgae",
+					"query": "",
+					"scene": null
+				}
+			]
 		}
 	}
 }

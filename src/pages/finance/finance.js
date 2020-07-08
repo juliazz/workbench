@@ -21,6 +21,7 @@ Page({
     personDetailShow: false,
     popupType: '',
     tabs: ['品牌财务', '个人财务'],
+    tabs1: [ '个人财务'],
     explainRule: [{
       title: '1.推广费用余额',
       content: ' 阅读红包、浏览红包、金币兑换指出等费用由所有品牌平摊'

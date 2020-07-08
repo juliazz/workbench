@@ -1,0 +1,29 @@
+
+@import '../../assets/style/index';
+.pages-un-register2 {
+    
+   .content{
+    background:rgba(248,248,248,1);
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    box-sizing: border-box;
+    padding:10vh 5vh 3vh;
+    color: $b4c;
+    image{
+        height: 440rpx;
+        width: 444rpx;
+    }
+    .service{
+        margin-top: 50rpx;
+        button{
+            margin: 0 auto;
+            border-radius: 45rpx;
+            color: #fff;
+            width: 240rpx;
+            background-color: $pc;
+        }
+    }
+      
+   }
+}

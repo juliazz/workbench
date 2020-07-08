@@ -22,7 +22,8 @@
 		"pages/account-detail/account-detail",
 		"pages/challenge/challenge",
 		"pages/recharge/recharge",
-		"pages/login/login"
+		"pages/login/login",
+		"pages/un-register2/un-register2"
 	],
 	"window": {
 		"navigationStyle": "default",
@@ -85,5 +86,5 @@
 	},
 	"navigateToMiniProgramAppIdList": [
 		"wxe27a30ee512b1ab0"
-	  ]
+	]
 }

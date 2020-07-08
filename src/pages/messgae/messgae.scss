@@ -3,6 +3,9 @@
 .pages-messgae {
     .content{
         padding-bottom: 110rpx;
+        min-height: 100vh;
+        box-sizing: border-box;
+        background-color: $g3c;
         .kong{
             image{
                 margin: 2vh 0;
@@ -11,8 +14,12 @@
         }
         .message-list{
             font-size: 28rpx;
+            padding: 30rpx;
             .message-item{
+                background-color: #fff;
+                box-shadow:0px 2px 3px 0px rgba(0,0,0,0.08);
                 @include flex-just-between;
+                border-radius: 6px;
                 border-bottom: 2rpx solid $g3c;
                 padding: 30rpx 40rpx;
                 .volume-box{
@@ -21,6 +28,17 @@
                     justify-content: center;
                     border-radius: 15rpx;
                     background-color: red;
+                    image{
+                        height: 90rpx;
+                        width: 90rpx;
+                    }
+                }
+                .avator{
+                    background-color: #fff;
+                    image{
+                        border-radius: 50%;
+                        overflow: hidden;
+                    }
                 }
                 .main-info{
                     width: 400rpx;
@@ -42,6 +60,7 @@
                     }
                 }
             }
+            
         }
     }
 }

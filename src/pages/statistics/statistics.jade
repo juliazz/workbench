@@ -32,11 +32,11 @@ w-page(
             van-grid(column-num="4"  square wx:if!="{{activeNumViewTab==0&&isPageReady}}")
               van-grid-item(use-slot wx:for="{{ brand_rank }}"  wx:key="gridIndex")
                 view.grid-item()
-                  text.num {{item.value}}
+                  text.num {{item.value?item.value:0}}
                   text.text {{item.name}}
             van-grid(column-num="4"  square wx:if!="{{activeNumViewTab==1&&isPageReady}}")
               van-grid-item(use-slot wx:for="{{ host_rank }}" wx:key="gridIndex")
                 view.grid-item()
-                  text.num {{item.value}}
+                  text.num {{item.value?item.value:0}}
                   text.text {{item.name}}
   view(slot="footer" class="footer")
