@@ -29,6 +29,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function() {
+    this.messageMailList()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -50,6 +51,15 @@ Page({
     this.setData({
       messageList: data_
     })
+  },
+  async messageMailList(){
+    const result = await api.messageMailList()
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    this.setData({
+      mailList:data
+    })
+
   },
 
   /**

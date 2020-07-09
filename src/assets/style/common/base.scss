@@ -22,6 +22,10 @@
     display: flex;
     flex-direction: column;
 }
+@mixin flex-just-end{
+    display: flex;
+    justify-content: flex-end;
+}
 @mixin flex-just-start{
     display: flex;
     justify-content: flex-start;
@@ -29,6 +33,10 @@
 .flex-just-start{
     display: flex;
     justify-content: flex-start;
+}
+.flex-just-center{
+    display: flex;
+    justify-content:center;
 }
 .flex-just-end{
     display: flex;

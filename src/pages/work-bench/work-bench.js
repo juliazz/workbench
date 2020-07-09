@@ -2,6 +2,7 @@ import api from '../../api/index.js'
 import util from '../../utils/utils'
 import fileHelper from '../../utils/fileHelper.js'
 import storangeMange from '../../utils/storage-manage';
+
 const {base64src} = fileHelper
 const app = getApp()
 const fetch = async (options) => {

@@ -1,0 +1,24 @@
+
+w-loading(id="w-loading")
+w-page(
+  class="w-page pages-chat"
+)
+  view(slot="header" class="header")
+  view(slot="content" class="content")
+    view.message-list()
+      view.message-item.left(wx:for="{{msgList}}" wx:key="id" wx:if!="{{!item.is_self}}")
+        view.avator
+          image(src="{{item.avatar}}")
+        view.mess-box
+          text {{item.content}}
+      view.message-item.right(wx:for="{{msgList}}" wx:key="id" wx:if="{{item.is_self}}")
+        view.avator
+          image(src="{{item.avatar}}")
+        view.mess-box
+          text {{item.content}}
+    view.flex-just-between(class="input-section" )
+      input(class='input_input' value="{{inputMessage}}" focus="true" placeholder="请输入内容" bindfocus='focus' bindblur='blur'  bindconfirm="sendClick")
+      //- input(class='input_input' value="{{inputMessage}}" focus="true" placeholder="请输入内容" bindinput='bindInputMsg' bindblur="onHideInput" confirm-type="send" bindconfirm="sendTextMsg")
+      //- vant-button( type="default"  wx:if="{{showSend}}" custom-class="send-btn" color="#0f8eef" bind:click="" )
+      //-   text 发送
+  view(slot="footer" class="footer")

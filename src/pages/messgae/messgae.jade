@@ -26,8 +26,8 @@ w-page(
             image(src="../../assets/image/kong.png")
             view 数据为空！
         view(wx:if="{{activeTabIndex==1}}")
-          view.message-list(wx:if="{{messageList.length}}")
-            view.message-item.guest(wx:for="{{messageList}}" wx:key="index" bindtap="$routeLink" data-path="message-detail?id={{item.id}}&isRead={{item.status}}")
+          view.message-list(wx:if="{{mailList.length}}")
+            view.message-item.guest(wx:for="{{mailList}}" wx:key="index" bindtap="$routeLink" data-path="message-detail?id={{item.id}}&isRead={{item.status}}")
               view.volume-box.avator.flex-align-center
                 w-image(url='{{item.avatar}}') 
               view.main-info

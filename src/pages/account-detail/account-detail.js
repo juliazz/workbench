@@ -105,7 +105,6 @@ Page({
    */
   onUnload: function() {
     currentPage = 1;
-    console.log('onUnloadonUnloadonUnload=======,currentPage', currentPage)
     totalData = [];
   },
 

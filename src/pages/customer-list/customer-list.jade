@@ -21,16 +21,45 @@ w-page(
             view.right(slot="right")
               view.call
                 w-icon(type="phone" size="large" bindtap='makePhoneCall' data-phone-number='{{item.client_mobile}}') 
-              view.service()
-                button(
-                  open-type="contact"
-                  bindcontact="sendContact"
-                  class="button"
-                )
-                  w-icon(type="chat" size="large")
+              view.service(bindtap="$routeLink" data-path="chat?clientId={{item.user_id}}&customerName={{item.client_name}}")
+                w-icon(type="chat" size="large")
+              //- view.service(bindtap="popupShow" data-client-id="{{index}}" data-popup-type="message")
+                //- button(
+                //-   open-type="contact"
+                //-   bindcontact="sendContact"
+                //-   class="button"
+                //- )
           view.outer-bottom()
             text.time 裂变时间：{{item.created_at}}
       view.kong(wx:if!="{{!customerList.length}}")
         image(src="../../assets/image/kong.png")
         view 数据为空！
   view(slot="footer" class="footer")
+//- 核销扫码弹窗
+w-popup-module(
+  class="w-popup pop-send-message"
+  show="{{popupType=='message'}}"
+  type="center"
+  closeIcon="true"
+  closeBottom="true"
+  headTitle=""
+)
+  view(slot="content" class="content")
+    view.box
+      view.title-input 发布留言
+      view.area-input.flex-just-center
+        w-textarea(
+          class="textarea"
+          placeholder-style="color:#919191;"
+          placeholder-class="placeholder"
+          maxlength="70"
+          bindinput="bindinput"
+          placeholder="请输入你想说的话吧"
+        )
+      view.btn
+        vant-button( 
+          type="default"  
+          custom-class="issue-btn" color="{{$themColor}}" 
+          bind:click="comfirmSend" 
+        )
+          text 确定发布

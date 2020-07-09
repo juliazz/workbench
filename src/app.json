@@ -23,7 +23,8 @@
 		"pages/challenge/challenge",
 		"pages/recharge/recharge",
 		"pages/login/login",
-		"pages/un-register2/un-register2"
+		"pages/un-register2/un-register2",
+		"pages/chat/chat"
 	],
 	"window": {
 		"navigationStyle": "default",

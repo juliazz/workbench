@@ -2,7 +2,8 @@
 {
   "navigationBarTitleText": "",
   "usingComponents": {
-    "w-item-box":"../../components/item-box-lcr/item-box-lcr"
+    "w-item-box":"../../components/item-box-lcr/item-box-lcr",
+    "w-textarea": "../../components/textarea/index"
   }
 }
   

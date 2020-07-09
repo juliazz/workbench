@@ -18,10 +18,11 @@ Page({
    */
   data: {
     activeTabIndex: 0,
+    showPage: false,
     personDetailShow: false,
     popupType: '',
     tabs: ['品牌财务', '个人财务'],
-    tabs1: [ '个人财务'],
+    tabs1: ['个人财务'],
     explainRule: [{
       title: '1.推广费用余额',
       content: ' 阅读红包、浏览红包、金币兑换指出等费用由所有品牌平摊'
@@ -49,11 +50,13 @@ Page({
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
     const { brand, personal, is_charge} = data
-    this.setData({brand, personal, is_charge})
+    this.setData({brand, personal, is_charge, showPage: true})
   },
   // 个人查看详情
   showPersonDetail: function() {
     this.setData({personDetailShow: true})
+    totalData=[]
+    personIndex=1
     this.getPersonalFinaceDetail()
     this.getPersonalFundInfo()
   },

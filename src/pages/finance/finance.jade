@@ -5,7 +5,7 @@ w-page(
 )
   view(slot="header" class="header")
   view(slot="content" class="content")
-    van-tabs.van-tabs(active="{{ activeTabIndex }}" bind:change="onChange" color="{{$themColor}}" )
+    van-tabs.van-tabs(wx:if="{{showPage}}" active="{{ activeTabIndex }}" bind:change="onChange" color="{{$themColor}}" )
       van-tab.vantab(
         wx:for="{{ tabs }}"
         wx:if="{{is_charge}}"
@@ -144,9 +144,7 @@ w-page(
                 view.title {{item.des}}
                 view.time {{item.time}}
               view.right
-                text {{item.changes}}
-            
-              
+                text {{item.money}}
   view(slot="footer" class="footer")
 w-popup-module(
   class="w-popup pop-explain"

@@ -86,3 +86,23 @@
         }
     }
 }
+.pop-send-message{
+    .box{
+        padding: 30rpx;
+        .title-input{
+            text-align: center;
+            line-height: 100rpx;
+        }
+        .area-input{
+            margin-bottom: 30rpx;
+            .textarea{
+                width: 90%;
+            }
+            
+        }
+        .btn{
+            text-align: center;
+        }
+    }
+
+}

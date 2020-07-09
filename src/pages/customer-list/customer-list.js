@@ -13,7 +13,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    customerList: null
+    customerList: null,
+    popupType: ''
   },
   /**
    * 生命周期函数--监听页面加载h
@@ -65,6 +66,32 @@ Page({
   },
   sendContact(e) {
     console.log('e', e);
+  },
+  popupShow: function(eve) {
+    const { popupType, clientId } = eve.currentTarget.dataset
+    this.setData({
+      popupType,
+      receiveId: clientId
+    })
+  },
+  bindinput(e) {
+    const {value } = e.detail
+    if (!value.length) { return this.$showToast('留言不能为空！'); }
+    this.setData({
+      message: value
+    })
+  },
+  async comfirmSend() {
+    const {message, receiveId} = this.data
+    const result = await api.clientSendMail({content: message, receiveId})
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    this.$showToast('发送成功');
+    setTimeout(() => {
+      this.setData({
+        popupType: ''
+      })
+    }, 1500)
   },
 
   /**

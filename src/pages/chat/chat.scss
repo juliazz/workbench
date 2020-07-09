@@ -1,0 +1,73 @@
+
+@import '../../assets/style/index';
+.pages-chat {
+    .content{
+        position: relative;
+        height: 100vh;
+        .message-list{
+            padding: 50rpx 20rpx;
+           .message-item{
+               align-items: center;
+               padding: 10rpx;
+               @include flex-just-start;
+               .avator{
+                   image{
+                    height: 70rpx;
+                    width: 70rpx;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    background-color: red;
+                   }
+               }
+                .mess-box{
+                position: relative;
+                padding: 15rpx;
+                border-radius: 7rpx;
+                margin: 0 30rpx;
+                }
+            } 
+            .left{
+                .mess-box{
+                    background-color: #dddddd;
+                    &:after{content:'';position:absolute;right:100%;top:0px;width:11px;height:11px;border-width:0;border-style:solid;border-color:transparent;border-bottom-width:9px;border-bottom-color:currentColor;border-radius:0 0 0 68px;color:#dddddd;}
+                }
+            }
+            .right{
+                flex-direction: row-reverse;
+                // @include flex-just-start;
+                .mess-box{
+                    background-color:$pc;
+                    color: #fff;
+                    position: relative;
+                    padding: 15rpx;
+                    &:after{content:'';position:absolute;left:100%;bottom:0px;width:11px;height:19px;border-width:0;border-style:solid;border-color:transparent;border-top-width:9px;border-top-color:currentColor;border-radius:0 68px 0 0;color:$pc;}
+                }
+            }
+
+           
+        }
+        .input-section{
+            padding: 3rpx 15rpx;
+            align-items: center;
+            position: absolute;
+            left: 0;
+            box-sizing: border-box;
+            width: 100%;
+            bottom: 0rpx;
+            background-color: $g3c;
+            input{
+                height: 65rpx;
+                line-height: 65rpx;
+                padding-left: 20rpx;
+                // border: 2rpx solid $g3c;
+                background-color: #fff;
+                box-sizing: border-box;
+                width: 100%;
+            }
+            .send-btn{
+                height: 65rpx;
+                line-height: 65rpx;
+            }
+        }
+    }
+}

@@ -100,9 +100,9 @@
 				},
 				{
 					"id": -1,
-					"name": "pages/messgae/messgae",
-					"pathName": "pages/messgae/messgae",
-					"query": "",
+					"name": "pages/chat/chat",
+					"pathName": "pages/chat/chat",
+					"query": "clientId=1&customerName=bear",
 					"scene": null
 				}
 			]
