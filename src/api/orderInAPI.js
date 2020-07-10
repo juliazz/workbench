@@ -27,9 +27,15 @@ const submitOrder = async(params = {}) => request.post({
   data: params,
   url: 'kpi/submitOrder'
 })
+// 手工录单列表
+const submitOrderList = async(params = {}) => request.post({
+  data: params,
+  url: 'kpi/submitOrderList'
+})
 export default {
   getTopUserList,
   submitOrder,
+  submitOrderList,
   getServiceUserList,
   brandList
 };

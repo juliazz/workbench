@@ -27,14 +27,17 @@ w-page(
             view 数据为空！
         view(wx:if="{{activeTabIndex==1}}")
           view.message-list(wx:if="{{mailList.length}}")
-            view.message-item.guest(wx:for="{{mailList}}" wx:key="index" bindtap="$routeLink" data-path="message-detail?id={{item.id}}&isRead={{item.status}}")
+            view.message-item.guest(wx:for="{{mailList}}" wx:key="index" bindtap="$routeLink" data-path="chat?clientId={{item.receive_id}}&customerName={{item.name}}")
               view.volume-box.avator.flex-align-center
                 w-image(url='{{item.avatar}}') 
               view.main-info
-                text.mess-title {{item.title}}
-                text.tips {{item.des}}
+                text.mess-title {{item.name}}
+                text.tips {{item.content}}
               view.mess-time-num()
                 text.time {{item.time}}
+              view.num(wx:if="{{item.num}}")
+                text {{item.num}}
+                
           view.kong(wx:else)
             image(src="../../assets/image/kong.png")
             view 数据为空！

@@ -10,6 +10,7 @@
     }
     .content{
         font-size: 28rpx;
+
         .section-content{
             padding-bottom: 100rpx;
         }
@@ -67,6 +68,83 @@
                  color: #fff;
                  border-radius: 15rpx;
              }
+        }
+        .vantab2{
+            .order-list{
+                font-weight: 400;
+                font-size: 26rpx;
+                border-top: 5rpx solid $g3c;
+                .line{
+                    @include flex-just-between;
+                    align-items: center;
+                    padding: 30rpx;
+                    border-bottom: 2rpx solid $g3c;
+                    
+                }
+                .rank{
+                    @include flex-align-center;
+                }
+                .main-info{
+                    width: 450rpx;
+                    .name{
+                        font-weight: 500;
+                    }
+                }
+                .main-info,.income{
+                    @include flex-dire-column;
+                    height: 75rpx;
+                }
+                .income{
+                    justify-content: flex-start;
+                    align-items: center;
+                    .view-num{
+                        @include flex-align-center;
+                        color: #0A7FEA;
+                        margin-top: 30rpx;
+                        .down-blue{
+                            margin-left:30rpx;
+                        }
+                    }
+                    .active{
+                        transform: rotate(180deg);
+                    }
+    
+                }
+                .num-box{
+                    max-height: 0;
+                    overflow: hidden;
+                    box-sizing: border-box;
+                    transition: max-height 0.5s;
+                    .num-box-in{
+                        padding: 30rpx 40rpx;
+                       text {
+                           display: block;
+                       }
+                    }
+                    .num-item{
+                        text {
+                            width: 160rpx;
+                            white-space : nowrap;
+                        }
+                        .image-box{
+                            margin-left: 20rpx;
+                            flex-wrap: wrap;
+                            .image{
+                                background: red;
+                                height: 170rpx;
+                                width: 170rpx;
+                                margin-right: 15rpx;
+                                margin-bottom: 15rpx;
+                            }
+                        }
+                    }
+                    border-bottom: 10rpx solid $g3c;
+                }
+                .show{
+                    max-height: 926rpx;
+                }
+    
+            }
         }
        
     }

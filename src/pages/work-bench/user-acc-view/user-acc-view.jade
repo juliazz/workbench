@@ -48,17 +48,17 @@ view(class="components-user-acc-view")
 				view.PKStage {{item.period_info.name}}
 				view.PKView
 					view.left.imageBox(class!="{{type!=1?'square':''}}")
-						w-icon(class='crown' type='crown' size='xlarge' wx:if!="{{item.b_user_info.point>item.u_user_info.point}}")
-						image(src="{{item.b_user_info.avatar}}"  bindload="bindImgLoad")
-						text.name {{item.b_user_info.name}}
-						text.score {{item.b_user_info.point}}分
+						w-icon(class='crown' type='crown' size='xlarge' wx:if!="{{item.u_user_info.point>item.b_user_info.point}}")
+						image(src="{{item.u_user_info.avatar}}"  bindload="bindImgLoad")
+						text.name {{item.u_user_info.name}}
+						text.score {{item.u_user_info.point}}分
 					view.center.flex-align-center
 						w-icon.vs( type='vs' size='vs')
 					view.right.imageBox(class!="{{type!=1?'square':''}}")
-						w-icon(class='crown' type='crown' size='xlarge' wx:if!="{{item.b_user_info.point<item.u_user_info.point}}")
-						image(src="{{item.u_user_info.avatar}}" )
-						text.name {{item.u_user_info.name}}
-						text.score {{item.u_user_info.point}}分
+						w-icon(class='crown' type='crown' size='xlarge' wx:if!="{{item.u_user_info.point<item.b_user_info.point}}")
+						image(src="{{item.b_user_info.avatar}}" )
+						text.name {{item.b_user_info.name}}
+						text.score {{item.b_user_info.point}}分
 		view.view-more(bindtap="viewMore" data-index='0' wx:if!="{{!expandState&&pk_list.length}}")
 			text 展示更多
 		//- 我的任务

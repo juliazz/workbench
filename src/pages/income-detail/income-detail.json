@@ -2,7 +2,6 @@
 {
   "navigationBarTitleText": "收入明细",
   "usingComponents": {
-    "van-search":"../../miniprogram_npm/vant-weapp/search/index",
     "w-item-box":"../../components/item-box-lcr/item-box-lcr"
   }
 }

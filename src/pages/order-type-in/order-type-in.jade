@@ -3,142 +3,185 @@ w-page(
   class="w-page pages-order-type-in"
 )
   view(slot="header" class="header")
-    view.title 客户信息
-  form(slot="content" class="content" bindsubmit="bindsubmit" report-submit="true")
-    w-field-group(id="field-group")
-      view(class="section-content")
-        w-field(class="field" prop="othername" label="客户姓名:")
-          w-input(
-              class="w-input"
-              name="othername"
-              placeholder="请输入姓名"
-              value="{{order.othername}}"
-              data-type="othername"
-              bindinput="bindblur"
-              maxlength="30"
+  view(slot="content" class="content")
+    van-tabs.van-tabs(active="{{ activeTabIndex }}" bind:change="onChange" color="{{$themColor}}" )
+      van-tab.vantab1(
+        title="订单录入"
+      )
+        form(bindsubmit="bindsubmit" report-submit="true")
+          w-field-group(id="field-group")
+            view(class="section-content")
+              w-field(class="field" prop="othername" label="客户姓名:")
+                w-input(
+                    class="w-input"
+                    name="othername"
+                    placeholder="请输入姓名"
+                    value="{{order.othername}}"
+                    data-type="othername"
+                    bindinput="bindblur"
+                    maxlength="30"
+                )
+              w-field(class="field" prop="othertel" label="客户电话:")
+                w-input(
+                    class="w-input"
+                    type="number"
+                    name="othertel"
+                    placeholder="请输入电话"
+                    value="{{order.othertel}}"
+                    data-type="othertel"
+                    bindinput="bindblur"
+                    maxlength="30"
+                )
+              w-field(class="field" prop="otheradress" label="客户地址:")
+                w-input(
+                    class="w-input"
+                    name="otheradress"
+                    placeholder="请输入客户地址"
+                    value="{{order.otheradress}}"
+                    data-type="otheradress"
+                    bindinput="bindblur"
+                    maxlength="30"
+                )
+              w-field(class="field" prop="brand" label="订单品牌:")
+                w-input(
+                    class="w-input"
+                    name="brand"
+                    placeholder="请选择订单品牌"
+                    value="{{order.brand.brandName}}"
+                    data-type="brand"
+                    bindinput="bindblur"
+                    maxlength="30"
+                )
+                view.arr-box(bindtap="$routeLink" data-path="order-brand")
+                  text.right-arrow
+              w-field(class="field" prop="date" label="订单日期:")
+                w-input(
+                    class="w-input"
+                    name="date"
+                    placeholder=""
+                    disabled ="{{true}}"
+                    value="{{order.date}}"
+                    data-type="date"
+                    bindinput="bindblur"
+                    maxlength="30"
+                )
+                //- view.arr-box(bindtap="popupShow" data-popup-type="datePicker")
+                //-   text.right-arrow
+              w-field(class="field" prop="price" label="订单金额:")
+                w-input(
+                    class="w-input"
+                    name="price"
+                    type="digit"
+                    placeholder="请输入订单金额"
+                    value="{{order.price}}"
+                    data-type="price"
+                    bindinput="bindblur"
+                    maxlength="30"
+                )
+              w-field(class="field" prop="sign" label="签单人:")
+                w-input(
+                    class="w-input"
+                    name="sign"
+                    disabled
+                    placeholder="请选择签单人"
+                    value="{{order.sign.name}}"
+                    data-type="sign"
+                    bindinput="bindblur"
+                    maxlength="30"
+                )
+                view.arr-box(wx:if="{{arrayOne.length}}")
+                  text.right-arrow()
+                  picker(
+                    data-type="sign"
+                    bindchange="bindPickerChange"
+                    value="{{indexOne}}" 
+                    range-key="name"
+                    range="{{arrayOne}}"
+                  )
+                    view.picker  占位
+              w-field(class="field" prop="guide" label="带单人:")
+                w-input(
+                    class="w-input"
+                    name="guide"
+                    disabled
+                    placeholder="请选择带单人"
+                    value="{{order.guide.name}}"
+                    data-type="guide"
+                    bindinput="bindblur"
+                    maxlength="30"
+                )
+                view.arr-box(bindtap="popupShow" data-popup-type="guide")
+                  text.right-arrow
+              w-field(class="field" prop="remark" label="备注:")
+                w-input(
+                    class="w-input"
+                    name="remark"
+                    placeholder="请填写备注"
+                    value="{{order.remark}}"
+                    data-type="remark"
+                    bindinput="bindblur"
+                    maxlength="30"
+                )
+              view.upload
+                view.tips 上传凭证：
+                van-uploader(
+                  multiple="{{true}}"
+                  max-count="{{maxImgCount}}"
+                  name="image" accept="image" 
+                  bind:before-read="beforeRead" use-before-read="{{true}}"
+                  bind:delete="delete"
+                  file-list="{{ fileList }}" bind:after-read="afterRead"
+                  preview-image
+                )
+              view(class="button")
+                button(form-type="submit")
+                    text 提交
+      van-tab.vantab2(
+        title="查看订单"
+      )
+        van-search(
+          value="{{ orderDateRange }}"
+          placeholder="输入用户姓名搜索"
+          use-action-slot
+          data-popup-type="datePicker"
+          bind:clear="filterBySearch" bind:blur="filterBySearch"
+        )
+          view.flex-align-center(
+            slot="action" bind:tap="popupShow" data-popup-type="datePicker"
           )
-        w-field(class="field" prop="othertel" label="客户电话:")
-          w-input(
-              class="w-input"
-              type="number"
-              name="othertel"
-              placeholder="请输入电话"
-              value="{{order.othertel}}"
-              data-type="othertel"
-              bindinput="bindblur"
-              maxlength="30"
-          )
-        w-field(class="field" prop="otheradress" label="客户地址:")
-          w-input(
-              class="w-input"
-              name="otheradress"
-              placeholder="请输入客户地址"
-              value="{{order.otheradress}}"
-              data-type="otheradress"
-              bindinput="bindblur"
-              maxlength="30"
-          )
-        w-field(class="field" prop="brand" label="订单品牌:")
-          w-input(
-              class="w-input"
-              name="brand"
-              placeholder="请选择订单品牌"
-              value="{{order.brand.brandName}}"
-              data-type="brand"
-              bindinput="bindblur"
-              maxlength="30"
-          )
-          view.arr-box(bindtap="$routeLink" data-path="order-brand")
-            text.right-arrow
-        w-field(class="field" prop="date" label="订单日期:")
-          w-input(
-              class="w-input"
-              name="date"
-              placeholder=" "
-              disabled ="{{true}}"
-              value="{{order.date}}"
-              data-type="date"
-              bindinput="bindblur"
-              maxlength="30"
-          )
-          //- view.arr-box(bindtap="popupShow" data-popup-type="datePicker")
-          //-   text.right-arrow
-        w-field(class="field" prop="price" label="订单金额:")
-          w-input(
-              class="w-input"
-              name="price"
-              type="digit"
-              placeholder="请输入订单金额"
-              value="{{order.price}}"
-              data-type="price"
-              bindinput="bindblur"
-              maxlength="30"
-          )
-        w-field(class="field" prop="sign" label="签单人:")
-          w-input(
-              class="w-input"
-              name="sign"
-              disabled
-              placeholder="请选择签单人"
-              value="{{order.sign.name}}"
-              data-type="sign"
-              bindinput="bindblur"
-              maxlength="30"
-          )
-          view.arr-box(wx:if="{{arrayOne.length}}")
-            text.right-arrow()
-            picker(
-              data-type="sign"
-              bindchange="bindPickerChange"
-              value="{{indexOne}}" 
-              range-key="name"
-              range="{{arrayOne}}"
-            )
-              view.picker  占位
-        w-field(class="field" prop="guide" label="带单人:")
-          w-input(
-              class="w-input"
-              name="guide"
-              disabled
-              placeholder="请选择带单人"
-              value="{{order.guide.name}}"
-              data-type="guide"
-              bindinput="bindblur"
-              maxlength="30"
-          )
-          view.arr-box(bindtap="popupShow" data-popup-type="guide")
-            text.right-arrow
-        w-field(class="field" prop="remark" label="备注:")
-          w-input(
-              class="w-input"
-              name="remark"
-              placeholder="请填写备注"
-              value="{{order.remark}}"
-              data-type="remark"
-              bindinput="bindblur"
-              maxlength="30"
-          )
-        view.upload
-          view.tips 上传凭证：
-          van-uploader(
-            multiple="{{true}}"
-            max-count="{{maxImgCount}}"
-            name="image" accept="image" 
-            bind:before-read="beforeRead" use-before-read="{{true}}"
-            bind:delete="delete"
-            file-list="{{ fileList }}" bind:after-read="afterRead"
-            preview-image
-          )
-        view(class="button")
-          button(form-type="submit")
-              text 提交
+            vant-icon(name="calender-o" size="24px")
+        view.order-list(wx:for="{{orderList}}" wx:key="orderIndex" wx:for-index="orderIndex")
+          view.line
+            view.rank
+              text {{orderIndex+1}}
+            view.main-info
+              text.name 客户姓名: {{item.client_name}}
+              text 联系电话：{{item.client_phone}}
+            view.income
+              view.view-num(bindtap="collapseEventer" data-index="{{orderIndex}}")
+                text() 查看详情
+                w-icon(type="down-blue" size="smaller" class!="down-blue {{orderIndex==expandIndex?'active':''}}" )
+          view.num-box( class="{{personIndex==expandIndex?'show':''}}")
+            view.num-box-in
+              text 客户地址：{{item.client_address}}
+              text 订单品牌：{{item.brand_name}}
+              text 订单日期：{{item.add_time}}
+              text 订单金额：{{item.amount}}
+              text 签单人：{{item.service_name}}
+              text 带单人：{{item.top_name}}
+              text 备注：{{item.service_name}}
+              view.num-item.flex-just-start()
+                text 凭证：
+                view.image-box.flex-just-start
+                  w-image.image(url="{{imageItem}}" wx:for="{{item.cert}}" wx:key="itemIndex"  wx:for-item="imageItem")
+              text 录单人:{{item.option_name}}
+        
   view(slot="footer" class="footer")
 //- 日历弹窗
 van-calendar(
+  type="range"
   show="{{popupType=='datePicker'}}" color="#2955FF"
-  min-date="{{calendarConfig.minDate}}"
   poppable="{{calendarConfig.poppable}}"
-  default-date="{{calendarConfig.nowDate}}"
   row-height="50"
   round="{{calendarConfig.round}}"
    bind:close="onClose" bind:confirm="onConfirm"

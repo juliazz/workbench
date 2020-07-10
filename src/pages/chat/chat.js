@@ -2,6 +2,7 @@ import api from '../../api/index.js'
 import {
   storageManage
 } from '../../utils/index'
+
 let currentPage = 1;// 个人页数
 const fetch = async () => {
   try {
@@ -10,7 +11,7 @@ const fetch = async () => {
     return {}
   }
 }
-let receive_id,avatar;
+let receive_id; let avatar;
 let msgList = []
 
 Page({
@@ -32,27 +33,26 @@ Page({
     })
     receive_id = clientId
     this.getMessageList()
-   let  userInfo= await storageManage.getUserInfo()
-    if(!userInfo){
+    let userInfo = await storageManage.getUserInfo()
+    if (!userInfo) {
       const result = await this.$getPreload(fetch, options)
       const { msg, data, status } = result;
       if (status != '200') return this.$showToast(msg);
-      avatar=data.avatar
+      avatar = data.avatar
       await storageManage.setUserInfo(data)
-    }else{
-      avatar=userInfo.avatar
+    } else {
+      avatar = userInfo.avatar
     }
-   
   },
-  async getMessageList(){
-    const par={
+  async getMessageList() {
+    const par = {
       receive_id,
-      page:currentPage,
+      page: currentPage
     }
     const result = await api.messageMailInfo({...par})
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    if(!result.data.length){ return this.$showToast('没有更多数据啦！');}
+    if (!result.data.length) { return this.$showToast('没有更多数据啦！'); }
     msgList = msgList.concat(result.data)
     this.setData({msgList})
   },
@@ -65,9 +65,9 @@ Page({
     const result = await api.clientSendMail({content: value, receive_id})
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-     msgList.push({
+    msgList.push({
       avatar,
-      is_self:1,
+      is_self: 1,
       content: value
     })
     const inputMessage = '';
@@ -118,7 +118,6 @@ Page({
    */
   onReachBottom: function() {
     currentPage++
-
     this.getMessageList()
   }
 })

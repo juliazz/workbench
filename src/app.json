@@ -72,6 +72,7 @@
 		"vant-cell": "./miniprogram_npm/vant-weapp/cell/index",
 		"vant-cell-group": "./miniprogram_npm/vant-weapp/cell-group/index",
 		"vant-field": "./miniprogram_npm/vant-weapp/field/index",
+		"van-search": "./miniprogram_npm/vant-weapp/search/index",
 		"van-grid": "./miniprogram_npm/vant-weapp/grid/index",
 		"van-grid-item": "./miniprogram_npm/vant-weapp/grid-item/index",
 		"van-action-sheet": "./miniprogram_npm/vant-weapp/action-sheet/index"

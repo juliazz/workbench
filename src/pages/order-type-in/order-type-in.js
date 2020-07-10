@@ -4,6 +4,8 @@ import api from '../../api/index.js'
 import fileHelper from '../../utils/fileHelper.js'
 import rules from './helper';
 
+let currentPage=1;
+let totalData = [];
 let level;
 const {upLoadFile} = fileHelper
 let userListRes = []; // 完整的签单人列表 未分类
@@ -12,19 +14,22 @@ let isUpLoading = false; // 图片是否上传中
 let isFrombar = false; // 是否通过条码进来
 let brandId; let brandName;
 const app = getApp()
+
 Page({
   $route: 'pages/order-type-in/order-type-in',
   /**
    * 页面的初始数据
    */
   data: {
+    expandIndex: null, // 查看数据展开的index
+    activeTabIndex:0,
+    orderDateRange:'',//选择的时间
     maxImgCount: 9, // 图片数量限制
     order: {
       date: `${timeNow.getFullYear()}-${timeNow.getMonth() + 1}-${timeNow.getDate()}`,
       guide: {}
     },
-    fileList: [
-    ], // 上传文件列表
+    fileList: [], // 上传文件列表
     arrayOne: [], // 签单人列表
     indexOne: 0, // 签单人选中序列
     active: 0, // 步骤条进度 第几步
@@ -81,6 +86,8 @@ Page({
         'order.hx_code': app.globalData.scanRes.code_info.hx_code
       })
     }
+
+   this.getOrderList()
   },
   /**
    * 生命周期函数--监听页面显示
@@ -89,6 +96,12 @@ Page({
     const brandInfo = wx.getStorageSync('brandInfo') || {}
     this.setData({
       'order.brand': brandInfo
+    })
+  },
+  onChange: function(eve) {
+    const {index} = eve.detail
+    this.setData({
+      activeTabIndex: index
     })
   },
   async getSignUserList() {
@@ -347,6 +360,7 @@ Page({
     })
   },
   formatDate(date) {
+    console.log(date)
     date = new Date(date);
     console.log(date.getFullYear())
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -355,12 +369,52 @@ Page({
     this.setData({ popupType: '' });
   },
   onConfirm(event) {
-    console.log(event.detail)
+    const [start, end] = event.detail;
+    console.log(start,end)
     this.setData({
       popupType: '',
-      ['order.date']: this.formatDate(event.detail)
+      orderDateRange: `${this.formatDate(start)} - ${this.formatDate(end)}`
     });
   },
+  // 订单打开折叠
+  collapseEventer(eve) {
+    const {expandIndex} = this.data
+    let {index} = eve.currentTarget.dataset
+    index = expandIndex == index ? null : index
+    this.setData({
+      expandIndex: index
+    })
+  },
+  // ============================订单列表=========================
+  async getOrderList() {
+    const par = {
+      page: currentPage
+    }
+    console.log(par)
+    const result = await api.submitOrderList({...par})
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    // const orderList = data.data.map((i) => {
+    //   i.time = util.myTime(i.time)
+    //   return i
+    // })
+    totalData = totalData.concat(data)
+    this.setData({orderList: totalData})
+  },
+  // filterBySearch(eve) {
+  //   const keyWord = eve.detail.value
+  //   console.log(keyWord)
+  //   let filterRes = filterList.filter((v) => {
+  //     if (v.name.indexOf(keyWord) > -1 || v.cat_name.indexOf(keyWord) > -1) {
+  //       return v
+  //     }
+  //   })
+  //   if (!keyWord) {
+  //     filterRes = filterList
+  //   }
+  //   this.setData({list: filterRes})
+  // },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -380,6 +434,16 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
+
+  },
+   /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function() {
+    const { activeTabIndex} = this.data
+    if(activeTabIndex){return}
+    currentPage++
+    this.getOrderList()
 
   }
 })

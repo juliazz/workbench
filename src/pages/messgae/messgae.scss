@@ -16,6 +16,7 @@
             font-size: 28rpx;
             padding: 30rpx;
             .message-item{
+                position: relative;
                 background-color: #fff;
                 box-shadow:0px 2px 3px 0px rgba(0,0,0,0.08);
                 @include flex-just-between;
@@ -59,6 +60,19 @@
                         border-radius: 17rpx;
                     }
                 }
+               .num{
+                   position: absolute;
+                   left: -13rpx;
+                   top: -13rpx;
+                   background: red;
+                   padding: 5rpx;
+                   text-align: center;
+                   color: #fff;
+                   min-width: 26rpx;
+                   min-height: 26rpx;
+                   border-radius: 17rpx;
+                   font-size: 22rpx;
+               }
             }
             
         }

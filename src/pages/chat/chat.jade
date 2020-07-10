@@ -17,7 +17,7 @@ w-page(
         view.mess-box
           text {{item.content}}
     view.flex-just-between(class="input-section" )
-      input(class='input_input' value="{{inputMessage}}" focus="true" placeholder="请输入内容" bindfocus='focus' bindblur='blur'  bindconfirm="sendClick")
+      input(class='input_input' value="{{inputMessage}}" focus="true" placeholder="请输入内容"   bindconfirm="sendClick")
       //- input(class='input_input' value="{{inputMessage}}" focus="true" placeholder="请输入内容" bindinput='bindInputMsg' bindblur="onHideInput" confirm-type="send" bindconfirm="sendTextMsg")
       //- vant-button( type="default"  wx:if="{{showSend}}" custom-class="send-btn" color="#0f8eef" bind:click="" )
       //-   text 发送

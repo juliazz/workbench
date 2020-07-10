@@ -55,8 +55,8 @@ Page({
   // 个人查看详情
   showPersonDetail: function() {
     this.setData({personDetailShow: true})
-    totalData=[]
-    personIndex=1
+    totalData = []
+    personIndex = 1
     this.getPersonalFinaceDetail()
     this.getPersonalFundInfo()
   },
@@ -133,7 +133,8 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
+    totalData = []
+    personIndex = 1
   },
   /**
    * 页面上拉触底事件的处理函数

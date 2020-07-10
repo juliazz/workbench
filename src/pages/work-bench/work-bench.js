@@ -54,15 +54,13 @@ Page({
     const activeId = data[0].activity_id
     await storangeMange.setActivityId(activeId)
     this.getActivityData(activeId)
-    console.log('getActivityData=========')
-    this.getRankInfo()
     this.setData({activeList: data, activeId})
   },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    this.getRankInfo()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

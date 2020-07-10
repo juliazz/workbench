@@ -8,7 +8,6 @@ const fetch = async () => {
     return {}
   }
 }
-
 Page({
   $route: 'pages/messgae/messgae',
   /**
@@ -29,7 +28,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function() {
-    this.messageMailList()
+    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -37,7 +36,6 @@ Page({
   onReady: function() {
 
   },
-
   /**
    * 生命周期函数--监听页面显示
    */
@@ -51,15 +49,15 @@ Page({
     this.setData({
       messageList: data_
     })
+    this.messageMailList()
   },
-  async messageMailList(){
+  async messageMailList() {
     const result = await api.messageMailList()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
     this.setData({
-      mailList:data
+      mailList: data
     })
-
   },
 
   /**
@@ -81,12 +79,7 @@ Page({
    */
   onPullDownRefresh: function() {
 
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
   }
+
+ 
 })
