@@ -123,14 +123,13 @@
                     }
                     .num-item{
                         text {
-                            width: 160rpx;
+                            width: 70rpx;
                             white-space : nowrap;
                         }
                         .image-box{
                             margin-left: 20rpx;
                             flex-wrap: wrap;
                             .image{
-                                background: red;
                                 height: 170rpx;
                                 width: 170rpx;
                                 margin-right: 15rpx;
@@ -163,5 +162,47 @@
             font-size: 30rpx;
         }
         padding-bottom: 30rpx;
+    }
+}
+.pop-pkList{
+    .content{
+        .title{
+            @include flex-just-between;
+            padding:20rpx 30rpx;
+            .cancel{
+                color: $b3c;
+            }
+            .comfirm{
+                color: $lpc;
+            }
+            .center{
+                font-size: 30rpx;
+            }
+        }
+        .list-box{
+            .value-class{
+                position: absolute;
+                right: 60rpx;
+            }
+            .title-class{
+                flex:4;
+                text-align: center;
+            }
+            .list{
+                .line{
+                    text-align: center;
+                    line-height: 80rpx;
+                    position: relative;
+                    border-bottom: 2rpx solid $g3c;
+                }
+                .icon{
+                    margin-left: 30rpx;
+                    // position: absolute;
+                    // top: 3rpx;
+                    // right: 60rpx;
+                }
+                
+            }
+        }
     }
 }

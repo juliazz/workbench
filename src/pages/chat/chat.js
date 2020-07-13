@@ -52,7 +52,7 @@ Page({
     const result = await api.messageMailInfo({...par})
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    if (!result.data.length) { return this.$showToast('没有更多数据啦！'); }
+    if (!data) { return this.$showToast('没有更多数据啦！'); }
     msgList = msgList.concat(result.data)
     this.setData({msgList})
   },

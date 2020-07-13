@@ -4,15 +4,14 @@ import api from '../../api/index.js'
 import fileHelper from '../../utils/fileHelper.js'
 import rules from './helper';
 
-let currentPage=1;
+let currentPage = 1;
 let totalData = [];
-let level;
+let level,startTime,endTime,searchName; //搜索开始时间  搜索结束时间  搜索姓名
 const {upLoadFile} = fileHelper
 let userListRes = []; // 完整的签单人列表 未分类
 let photoFileList = []; // 后台返回的接口照片id
 let isUpLoading = false; // 图片是否上传中
 let isFrombar = false; // 是否通过条码进来
-let brandId; let brandName;
 const app = getApp()
 
 Page({
@@ -22,8 +21,12 @@ Page({
    */
   data: {
     expandIndex: null, // 查看数据展开的index
-    activeTabIndex:0,
-    orderDateRange:'',//选择的时间
+    activeTabIndex: 0,
+    orderDateRange: '', // 选择的时间
+    defaultDateRange:[new Date(timeNow.getFullYear(), timeNow.getMonth()+1, timeNow.getDate()-1).getTime(),
+      new Date(timeNow.getFullYear(), timeNow.getMonth()+1,timeNow.getDate()+1).getTime()],//默认选择时间
+    minDate: new Date(timeNow.getFullYear(), timeNow.getMonth()-1, 1).getTime(),
+    maxDate: new Date(timeNow.getFullYear(), timeNow.getMonth()+1, 31).getTime(),
     maxImgCount: 9, // 图片数量限制
     order: {
       date: `${timeNow.getFullYear()}-${timeNow.getMonth() + 1}-${timeNow.getDate()}`,
@@ -86,8 +89,7 @@ Page({
         'order.hx_code': app.globalData.scanRes.code_info.hx_code
       })
     }
-
-   this.getOrderList()
+    
   },
   /**
    * 生命周期函数--监听页面显示
@@ -103,6 +105,13 @@ Page({
     this.setData({
       activeTabIndex: index
     })
+    if(index==1){
+      totalData=[]
+      currentPage=1
+      startTime=endTime=searchName=''
+      this.getOrderList()
+    } 
+
   },
   async getSignUserList() {
     this.$showLoading()
@@ -229,6 +238,7 @@ Page({
       steps
     })
     if (active == level - 1) {
+      this.getuserbycatid(obj.id)
       setTimeout(() => {
         this.setData({
           'order.guide': obj,
@@ -247,6 +257,13 @@ Page({
       this.getCurrentStepList(id)
     }, 500)
   },
+  // 带单人最后一层
+  async getuserbycatid(id) {
+    const result = await api.getUserListByCatId({cat_id: id})
+    const { msg, data, status } = result;
+    if (status != '200') return this.$showToast(msg);
+    this.setData({guideEndList: data})
+  },
   closeGuidePop() {
     const {active} = this.data
     if (active != level - 1) {
@@ -257,7 +274,6 @@ Page({
     const { type } = event.currentTarget.dataset;
     const { value } = event.detail;
     this.setData({ [`order.${type}`]: value || '' });
-    console.log('event', value, this.data.order);
   },
   // 上传前验证上一张是否上传完毕
   beforeRead(event) {
@@ -302,10 +318,11 @@ Page({
   bindsubmit(event) {
     const { value } = event.detail;
     const {order } = this.data
+    const guide = order.guideend? order.guideend.id:order.guide.id
     let options = Object.assign({...value,
       sign: order.sign.id || '',
       brand: order.brand.brandId,
-      guide: order.guide.id || '', // 写死9
+      guide: guide || '', // 写死9
       cert: photoFileList,
       hx_code: order.hx_code || ''
     })
@@ -326,8 +343,7 @@ Page({
         remark: value.remark
       }
       this.orderBrandIn(par);
-      // 清除订单信息
-      wx.setStorageSync('brandInfo', '')
+     
     });
   },
   async orderBrandIn(options) {
@@ -336,6 +352,9 @@ Page({
     this.$hideLoading()
     const { msg, data, status } = result
     if (status != '200') return this.$showToast(msg);
+     // 清除订单信息
+    wx.setStorageSync('brandInfo', '')
+    this.setData({order:{},fileList:[]})
     photoFileList = []
     this.$showToast('录单成功！');
     setTimeout(() => {
@@ -360,21 +379,38 @@ Page({
     })
   },
   formatDate(date) {
-    console.log(date)
     date = new Date(date);
-    console.log(date.getFullYear())
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
   },
   onClose() {
     this.setData({ popupType: '' });
   },
+  onGuideEndChange(eve) {
+    const { index } = eve.currentTarget.dataset
+    this.setData({guideLeaderIndex:index})
+  },
+  // 带单人确定
+  onGuideConfirm(){
+    this.onClose()
+    const {guideLeaderIndex} =this.data
+    const obj= this.data.guideEndList[guideLeaderIndex]
+    this.setData({
+      ['order.guideend']:obj
+    })
+  },
   onConfirm(event) {
-    const [start, end] = event.detail;
-    console.log(start,end)
+    let [start, end] = event.detail;
+    startTime = this.formatDate(start)
+    endTime=this.formatDate(end)
     this.setData({
       popupType: '',
-      orderDateRange: `${this.formatDate(start)} - ${this.formatDate(end)}`
+      orderDateRange: `${startTime} - ${endTime}`
     });
+    //上次筛选条件数据清零
+    currentPage=1
+    totalData=[]
+    searchName=''
+    this.getOrderList()
   },
   // 订单打开折叠
   collapseEventer(eve) {
@@ -385,65 +421,60 @@ Page({
       expandIndex: index
     })
   },
-  // ============================订单列表=========================
+  // ============================ 订单列表 =========================
   async getOrderList() {
     const par = {
-      page: currentPage
+      page: currentPage,
+      start_time :startTime||'',
+      end_time:endTime||'',
+      client_name:searchName||''
     }
-    console.log(par)
+    this.$showLoading()
     const result = await api.submitOrderList({...par})
+    this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    // const orderList = data.data.map((i) => {
-    //   i.time = util.myTime(i.time)
-    //   return i
-    // })
+    if(!data.length){return this.$showToast('没有更多数据啦！');}
     totalData = totalData.concat(data)
     this.setData({orderList: totalData})
   },
-  // filterBySearch(eve) {
-  //   const keyWord = eve.detail.value
-  //   console.log(keyWord)
-  //   let filterRes = filterList.filter((v) => {
-  //     if (v.name.indexOf(keyWord) > -1 || v.cat_name.indexOf(keyWord) > -1) {
-  //       return v
-  //     }
-  //   })
-  //   if (!keyWord) {
-  //     filterRes = filterList
-  //   }
-  //   this.setData({list: filterRes})
-  // },
-
+  //
+  getAllOrderList(eve){
+    console.log(eve)
+    const {value} =eve.detail
+    startTime=''
+    endTime=''
+    searchName=value
+    currentPage=1
+    totalData=[]
+    this.getOrderList()
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
 
   },
-
-
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function() {
 
   },
-
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
+    
   },
-   /**
+  /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
     const { activeTabIndex} = this.data
-    if(activeTabIndex){return}
+    if (activeTabIndex==0) { return }
+    console.log('onReachBottomactiveTabIndex',activeTabIndex)
     currentPage++
     this.getOrderList()
-
   }
 })

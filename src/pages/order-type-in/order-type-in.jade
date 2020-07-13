@@ -99,18 +99,27 @@ w-page(
                     range="{{arrayOne}}"
                   )
                     view.picker  占位
-              w-field(class="field" prop="guide" label="带单人:")
+              w-field(class="field" prop="guide" label="带单人上级:")
+                w-input(
+                    class="w-input"
+                    name="guide"
+                    disabled
+                    placeholder="请选择带单人所属部门"
+                    value="{{order.guide.name}}"
+                    maxlength="30"
+                )
+                view.arr-box(bindtap="popupShow" data-popup-type="guide")
+                  text.right-arrow
+              w-field(class="field" wx:if="{{guideEndList.length}}" prop="guide" label="带单人:")
                 w-input(
                     class="w-input"
                     name="guide"
                     disabled
                     placeholder="请选择带单人"
-                    value="{{order.guide.name}}"
-                    data-type="guide"
-                    bindinput="bindblur"
+                    value="{{order.guideend.name}}"
                     maxlength="30"
                 )
-                view.arr-box(bindtap="popupShow" data-popup-type="guide")
+                view.arr-box(bindtap="popupShow" data-popup-type="guideend")
                   text.right-arrow
               w-field(class="field" prop="remark" label="备注:")
                 w-input(
@@ -144,7 +153,7 @@ w-page(
           placeholder="输入用户姓名搜索"
           use-action-slot
           data-popup-type="datePicker"
-          bind:clear="filterBySearch" bind:blur="filterBySearch"
+          bind:blur="getAllOrderList"
         )
           view.flex-align-center(
             slot="action" bind:tap="popupShow" data-popup-type="datePicker"
@@ -161,11 +170,11 @@ w-page(
               view.view-num(bindtap="collapseEventer" data-index="{{orderIndex}}")
                 text() 查看详情
                 w-icon(type="down-blue" size="smaller" class!="down-blue {{orderIndex==expandIndex?'active':''}}" )
-          view.num-box( class="{{personIndex==expandIndex?'show':''}}")
+          view.num-box( class="{{orderIndex==expandIndex?'show':''}}")
             view.num-box-in
-              text 客户地址：{{item.client_address}}
-              text 订单品牌：{{item.brand_name}}
-              text 订单日期：{{item.add_time}}
+              text 客户地址：{{item.client_address}} 
+              text 订单品牌：{{item.brand_name}} 
+              text 订单日期：{{item.add_time}} 
               text 订单金额：{{item.amount}}
               text 签单人：{{item.service_name}}
               text 带单人：{{item.top_name}}
@@ -180,13 +189,16 @@ w-page(
 //- 日历弹窗
 van-calendar(
   type="range"
+  min-date="{{ minDate }}"
+  max-date="{{ maxDate }}"
+  default-date="{{defaultDateRange}}"
   show="{{popupType=='datePicker'}}" color="#2955FF"
   poppable="{{calendarConfig.poppable}}"
   row-height="50"
   round="{{calendarConfig.round}}"
    bind:close="onClose" bind:confirm="onConfirm"
   )
-  //- 带单人弹窗
+  //- 带单人弹窗上级
 w-popup-module(
   class="w-popup guide"
   show="{{popupType=='guide'}}"
@@ -194,10 +206,9 @@ w-popup-module(
   closeIcon="{{false}}"
   closeBottom="true"
   bindcallback="closeGuidePop"
-  headTitle=""
 )
   view(slot="content" class="content")
-    view.title 带单人
+    view.title 带单人所属部门
     van-steps(steps="{{ steps }}" active="{{ active }}" active-color="{{$themColor}}")
     view.step-list
       vant-cell(
@@ -209,6 +220,25 @@ w-popup-module(
           name="success"  slot="right-icon" 
           class="custom-icon" color="{{$themColor}}" 
         )
-        
+//-带单人
+w-popup-module(
+  class="w-popup pop-pkList"
+  show="{{popupType=='guideend'}}"
+  type="bottom"
+  radius="{{false}}"
+  closeIcon="{{false}}"
+  closeBottom="true"
+  headTitle=""
+)
+  view(slot="content" class="content")
+    view.title
+      text.cancel(bindtap="onClose" data-type="step") 取消
+      text.center 带单人
+      text.comfirm(bindtap="onGuideConfirm" data-type="step") 确认
+    view.list-box
+      scroll-view.list(scroll-y="true" style="height: 40vh")
+        view.line(wx:for="{{guideEndList}}" wx:key="index" bindtap="onGuideEndChange" data-index="{{index}}" data-name="{{item.name}}")  
+          text {{item.name}}
+          vant-icon(name="checked" color="#2955FF" custom-class="icon" wx:if="{{guideLeaderIndex==index}}")        
     
     
