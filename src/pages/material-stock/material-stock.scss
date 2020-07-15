@@ -111,10 +111,11 @@
         .material-item:last-child{
             border-bottom: none;
         }
+        padding-bottom: 120rpx;
     }
     .add-material{
         position: fixed;
-        bottom: 100rpx;
+        bottom: 60rpx;
         left: 50vw;
         margin-left: -125rpx;
         .add-box{

@@ -71,9 +71,11 @@
         }
         .vantab2{
             .order-list{
+                border-top: 5rpx solid $g3c;
                 font-weight: 400;
                 font-size: 26rpx;
-                border-top: 5rpx solid $g3c;
+                .order-item{
+                }
                 .line{
                     @include flex-just-between;
                     align-items: center;

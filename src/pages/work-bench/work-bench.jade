@@ -18,6 +18,7 @@ w-page(
           view.right(bindtap="popupShow" data-popup-type="changeActive")
             vant-button( type="info" icon='exchange' size="small" round)
               text.change 切换活动
+        
         view.price-box
           view.price-item
             w-currency(value="{{fund.reward}}" class="orderPrize")
@@ -36,13 +37,13 @@ w-page(
             w-currency(value="{{fund.reward}}" class="orderPrize")
       view.section.section-1
         view.action-list
-          view.action-item(bindtap="popupShow" data-popup-type="choosePoster")
+          view.action-item(bindtap="popupShow" data-popup-type="canvasDomPoster" data-data-type="poster")
             image(src="../../assets/image/icon/wall-photo.png" mode="widthFix")
             text 推广海报
           view.action-item(bindtap="popupShow" data-popup-type="shopping")
             image(src="../../assets/image/icon/shopping.png" mode="widthFix")
             text 接待逛店
-          view.action-item( bindtap="popupShow" data-popup-type="liveInvite" )
+          view.action-item( bindtap="popupShow" data-popup-type="canvasDomPoster" data-data-type="live")
             image(src="../../assets/image/icon/live-invite.png" mode="widthFix")
             text 直播邀请
           view.action-item(bindtap="popupShow" data-popup-type="register")
@@ -113,6 +114,11 @@ w-page(
         expandState="{{false}}}"
         viewData="{{zone}}"
       )
+      view(style="width:500rpx;height:700rpx;" class='canvas-box')
+        canvas(
+          type="2d"  style="width:100%;height:100%;"
+          id="canvasDomPoster"
+        )
   view(slot="footer" class="footer")
 //- 选择活动弹窗
 w-popup-module(
@@ -135,7 +141,7 @@ w-popup-module(
 //- 选择海报弹窗
 w-popup(
   class="w-popup popChoosePoster"
-  show="{{popupType=='choosePoster'}}"
+  show="{{popupType=='canvasDomPoster'}}"
   type="center"
   name="choosePoster"
   centerBg="#RRGGBB"
@@ -148,25 +154,23 @@ w-popup(
           current="{{postCurrent}}"
         )
           block(
-            wx:for="{{poster}}"
-            wx:key="index"
           )
-            swiper-item
+            swiper-item(
+            )
               image(
                 bindtouchstart='timestart'
                 bindtouchend='timeend'
-                data-url="{{item}}"
                 mode="aspectFill"
-                src="{{item}}"
+                src="{{posterDrawUrl}}"
               )
       view.tips() 长按图片发送至朋友圈或保存至相册
       view.smallPoster
         scroll-view(scroll-x="true" style="width: 100%")
           view.smallPosterList
             view.album(
-              wx:for="{{poster}}"
+              wx:for="{{smallPosterList}}"
               wx:key="index")
-              image(src="{{item}}" bindtap="choosePost" data-index="{{index}}" data-type="postCurrent")
+              image(src="{{item.poster}}" bindtap="choosePost" data-item="{{item}}" data-type="canvasDomPoster")
 //- 接待逛店弹窗
 w-popup-module(
   class="w-popup pop-shopping"
@@ -182,41 +186,41 @@ w-popup-module(
       src="{{view_shop}}"
     )
     view.tips2 客户微信扫一扫,完成逛店
-//- 直播邀请弹窗
-w-popup(
-  class="w-popup popChoosePoster"
-  show="{{popupType=='liveInvite'}}"
-  type="center"
-  name="liveInvite"
-  centerBg="#RRGGBB"
-  closeIcon="true"
-)
-  view(slot="content" class="content")
-    view.content-in
-      view.bigPoster
-        swiper.swiper(
-          current="{{liveCurrent}}"
-        )
-          block(
-            wx:for="{{live_qrcode}}"
-            wx:key="index"
-          )
-            swiper-item
-              image(
-                data-url="{{item}}"
-                bindtouchstart='timestart'
-                bindtouchend='timeend'
-                mode = "aspectFill"
-                src="{{item}}"
-              )
-      view.tips() 长按图片发送至朋友圈或保存至相册
-      view.smallPoster
-        scroll-view(scroll-x="true" style="width: 100%")
-          view.smallPosterList
-            view.album(
-              wx:for="{{live_qrcode}}"
-              wx:key="index")
-              image(src="{{item.image}}" bindtap="choosePost" data-index="{{index}}" data-type="liveCurrent")
+//- //- 直播邀请弹窗
+//- w-popup(
+//-   class="w-popup popChoosePoster"
+//-   show="{{popupType=='canvasDomLive'}}"
+//-   type="center"
+//-   name="canvasDomLive"
+//-   centerBg="#RRGGBB"
+//-   closeIcon="true"
+//- )
+//-   view(slot="content" class="content")
+//-     view.content-in
+//-       view.bigPoster
+//-         swiper.swiper(
+//-           current="{{liveCurrent}}"
+//-         )
+//-           block(
+//-             wx:for="{{live_qrcode}}"
+//-             wx:key="index"
+//-           )
+//-             swiper-item
+//-                 canvas(
+//-                   type="2d"  style="width:100%;height:100%;"
+//-                   id="canvasDomLive"
+//-                   data-type="canvasDomLive"
+//-                   bindtouchstart='timestart'
+//-                   bindtouchend='timeend'
+//-                 )
+//-         view.tips() 长按图片发送至朋友圈或保存至相册777
+//-         view.smallPoster
+//-           scroll-view(scroll-x="true" style="width: 100%")
+//-             view.smallPosterList
+//-               view.album(
+//-                 wx:for="{{live_qrcode}}"
+//-                 wx:key="index")
+//-                 image(src="{{item.poster}}" bindtap="choosePost" data-item="{{item}}" data-type="canvasDomLive")
 //- 注册码弹窗
 w-popup-module(
   class="w-popup pop-shopping"

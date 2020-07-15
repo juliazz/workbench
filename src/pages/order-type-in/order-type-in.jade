@@ -159,32 +159,32 @@ w-page(
             slot="action" bind:tap="popupShow" data-popup-type="datePicker"
           )
             vant-icon(name="calender-o" size="24px")
-        view.order-list(wx:for="{{orderList}}" wx:key="orderIndex" wx:for-index="orderIndex")
-          view.line
-            view.rank
-              text {{orderIndex+1}}
-            view.main-info
-              text.name 客户姓名: {{item.client_name}}
-              text 联系电话：{{item.client_phone}}
-            view.income
-              view.view-num(bindtap="collapseEventer" data-index="{{orderIndex}}")
-                text() 查看详情
-                w-icon(type="down-blue" size="smaller" class!="down-blue {{orderIndex==expandIndex?'active':''}}" )
-          view.num-box( class="{{orderIndex==expandIndex?'show':''}}")
-            view.num-box-in
-              text 客户地址：{{item.client_address}} 
-              text 订单品牌：{{item.brand_name}} 
-              text 订单日期：{{item.add_time}} 
-              text 订单金额：{{item.amount}}
-              text 签单人：{{item.service_name}}
-              text 带单人：{{item.top_name}}
-              text 备注：{{item.service_name}}
-              view.num-item.flex-just-start()
-                text 凭证：
-                view.image-box.flex-just-start
-                  w-image.image(url="{{imageItem}}" wx:for="{{item.cert}}" wx:key="itemIndex"  wx:for-item="imageItem")
-              text 录单人:{{item.option_name}}
-        
+        view.order-list()
+          view.order-item(wx:for="{{orderList}}" wx:key="orderIndex" wx:for-index="orderIndex")
+            view.line
+              view.rank
+                text {{orderIndex+1}}
+              view.main-info
+                text.name 客户姓名: {{item.client_name}}
+                text 联系电话：{{item.client_phone}}
+              view.income
+                view.view-num(bindtap="collapseEventer" data-index="{{orderIndex}}")
+                  text() 查看详情
+                  w-icon(type="down-blue" size="smaller" class!="down-blue {{orderIndex==expandIndex?'active':''}}" )
+            view.num-box( class="{{orderIndex==expandIndex?'show':''}}")
+              view.num-box-in
+                text 客户地址：{{item.client_address}} 
+                text 订单品牌：{{item.brand_name}} 
+                text 订单日期：{{item.add_time}} 
+                text 订单金额：{{item.amount}}
+                text 签单人：{{item.service_name}}
+                text 带单人：{{item.top_name}}
+                text 备注：{{item.service_name}}
+                view.num-item.flex-just-start()
+                  text 凭证：
+                  view.image-box.flex-just-start
+                    w-image.image(url="{{imageItem}}" wx:for="{{item.cert}}" wx:key="itemIndex"  wx:for-item="imageItem")
+                text 录单人:{{item.option_name}}
   view(slot="footer" class="footer")
 //- 日历弹窗
 van-calendar(

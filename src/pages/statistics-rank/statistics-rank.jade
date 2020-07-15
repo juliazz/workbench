@@ -31,11 +31,11 @@ w-page(
             van-progress(
               percentage="100" stroke-width="10" show-pivot="{{false}}" color="#FF7E00"
             )
-            text {{item.count}}{{unit}}
+            text {{item.count?item.count:0}}{{unit}}
           view.progress(wx:else)
             van-progress(
               percentage="{{item.count*100/fullProgressNum}}" stroke-width="10" show-pivot="{{false}}" color="#FF7E00"
             )
-            text {{item.count}}{{unit}}
+            text {{item.count?item.count:0}}{{unit}}
         //- van-cell(title="{{listItem}}" wx:for="{{item.list}}" bindtap="selectEvent" data-Index="{{index}}" wx:for-item="listItem" wx:key="listIndex")
   view(slot="footer" class="footer")

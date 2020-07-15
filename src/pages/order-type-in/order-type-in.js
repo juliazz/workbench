@@ -6,7 +6,7 @@ import rules from './helper';
 
 let currentPage = 1;
 let totalData = [];
-let level,startTime,endTime,searchName; //搜索开始时间  搜索结束时间  搜索姓名
+let level; let startTime; let endTime; let searchName; // 搜索开始时间  搜索结束时间  搜索姓名
 const {upLoadFile} = fileHelper
 let userListRes = []; // 完整的签单人列表 未分类
 let photoFileList = []; // 后台返回的接口照片id
@@ -23,10 +23,10 @@ Page({
     expandIndex: null, // 查看数据展开的index
     activeTabIndex: 0,
     orderDateRange: '', // 选择的时间
-    defaultDateRange:[new Date(timeNow.getFullYear(), timeNow.getMonth()+1, timeNow.getDate()-1).getTime(),
-      new Date(timeNow.getFullYear(), timeNow.getMonth()+1,timeNow.getDate()+1).getTime()],//默认选择时间
-    minDate: new Date(timeNow.getFullYear(), timeNow.getMonth()-1, 1).getTime(),
-    maxDate: new Date(timeNow.getFullYear(), timeNow.getMonth()+1, 31).getTime(),
+    defaultDateRange: [new Date(timeNow.getFullYear(), timeNow.getMonth() + 1, timeNow.getDate() - 1).getTime(),
+      new Date(timeNow.getFullYear(), timeNow.getMonth() + 1, timeNow.getDate() + 1).getTime()], // 默认选择时间
+    minDate: new Date(timeNow.getFullYear(), timeNow.getMonth() - 1, 1).getTime(),
+    maxDate: new Date(timeNow.getFullYear(), timeNow.getMonth() + 1, 31).getTime(),
     maxImgCount: 9, // 图片数量限制
     order: {
       date: `${timeNow.getFullYear()}-${timeNow.getMonth() + 1}-${timeNow.getDate()}`,
@@ -89,7 +89,6 @@ Page({
         'order.hx_code': app.globalData.scanRes.code_info.hx_code
       })
     }
-    
   },
   /**
    * 生命周期函数--监听页面显示
@@ -105,13 +104,12 @@ Page({
     this.setData({
       activeTabIndex: index
     })
-    if(index==1){
-      totalData=[]
-      currentPage=1
-      startTime=endTime=searchName=''
+    if (index == 1) {
+      totalData = []
+      currentPage = 1
+      startTime = endTime = searchName = ''
       this.getOrderList()
-    } 
-
+    }
   },
   async getSignUserList() {
     this.$showLoading()
@@ -318,7 +316,7 @@ Page({
   bindsubmit(event) {
     const { value } = event.detail;
     const {order } = this.data
-    const guide = order.guideend? order.guideend.id:order.guide.id
+    const guide = order.guideend ? order.guideend.id : order.guide.id
     let options = Object.assign({...value,
       sign: order.sign.id || '',
       brand: order.brand.brandId,
@@ -343,7 +341,6 @@ Page({
         remark: value.remark
       }
       this.orderBrandIn(par);
-     
     });
   },
   async orderBrandIn(options) {
@@ -352,9 +349,9 @@ Page({
     this.$hideLoading()
     const { msg, data, status } = result
     if (status != '200') return this.$showToast(msg);
-     // 清除订单信息
+    // 清除订单信息
     wx.setStorageSync('brandInfo', '')
-    this.setData({order:{},fileList:[]})
+    this.setData({order: {}, fileList: []})
     photoFileList = []
     this.$showToast('录单成功！');
     setTimeout(() => {
@@ -387,29 +384,29 @@ Page({
   },
   onGuideEndChange(eve) {
     const { index } = eve.currentTarget.dataset
-    this.setData({guideLeaderIndex:index})
+    this.setData({guideLeaderIndex: index})
   },
   // 带单人确定
-  onGuideConfirm(){
+  onGuideConfirm() {
     this.onClose()
-    const {guideLeaderIndex} =this.data
-    const obj= this.data.guideEndList[guideLeaderIndex]
+    const {guideLeaderIndex} = this.data
+    const obj = this.data.guideEndList[guideLeaderIndex]
     this.setData({
-      ['order.guideend']:obj
+      ['order.guideend']: obj
     })
   },
   onConfirm(event) {
     let [start, end] = event.detail;
     startTime = this.formatDate(start)
-    endTime=this.formatDate(end)
+    endTime = this.formatDate(end)
     this.setData({
       popupType: '',
       orderDateRange: `${startTime} - ${endTime}`
     });
-    //上次筛选条件数据清零
-    currentPage=1
-    totalData=[]
-    searchName=''
+    // 上次筛选条件数据清零
+    currentPage = 1
+    totalData = []
+    searchName = ''
     this.getOrderList()
   },
   // 订单打开折叠
@@ -425,28 +422,28 @@ Page({
   async getOrderList() {
     const par = {
       page: currentPage,
-      start_time :startTime||'',
-      end_time:endTime||'',
-      client_name:searchName||''
+      start_time: startTime || '',
+      end_time: endTime || '',
+      client_name: searchName || ''
     }
     this.$showLoading()
     const result = await api.submitOrderList({...par})
     this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    if(!data.length){return this.$showToast('没有更多数据啦！');}
+    if (!data.length) { return this.$showToast('没有更多数据啦！'); }
     totalData = totalData.concat(data)
     this.setData({orderList: totalData})
   },
   //
-  getAllOrderList(eve){
+  getAllOrderList(eve) {
     console.log(eve)
-    const {value} =eve.detail
-    startTime=''
-    endTime=''
-    searchName=value
-    currentPage=1
-    totalData=[]
+    const {value} = eve.detail
+    startTime = ''
+    endTime = ''
+    searchName = value
+    currentPage = 1
+    totalData = []
     this.getOrderList()
   },
   /**
@@ -465,15 +462,15 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-    
+
   },
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
     const { activeTabIndex} = this.data
-    if (activeTabIndex==0) { return }
-    console.log('onReachBottomactiveTabIndex',activeTabIndex)
+    if (activeTabIndex == 0) { return }
+    console.log('onReachBottomactiveTabIndex', activeTabIndex)
     currentPage++
     this.getOrderList()
   }

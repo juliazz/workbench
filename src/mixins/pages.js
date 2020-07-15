@@ -175,10 +175,8 @@ export default {
     path = normalizeUrl(path);
     console.log('path==========', path)
     preload.set(path);
-
     // 页面深度高于10
     if (routes.length >= 10 && type != '$switchTab') type = '$redirectTo';
-
     _debounce(() => {
       wx[type]({
         url: path

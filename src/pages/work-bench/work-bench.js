@@ -13,6 +13,8 @@ const fetch = async (options) => {
   }
 }
 let Timer; let user_id;
+let domList = [];
+const dpr = wx.getSystemInfoSync().pixelRatio // 获取设备的像素比，未来整体画布根据像素比扩大
 Page({
   $route: 'pages/work-bench/work-bench',
   /**
@@ -33,7 +35,21 @@ Page({
     }
     ], // 展开状态数组
     userAreaData: { // 个人区域数据
-    }
+    },
+
+    // 数据区，从服务端拿到的数据
+    // 设置区，针对部件的数据设置
+    qrcodeDiam: 80, // 小程序码直径
+    infoSpace: 13, // 底部信息的间距
+    saveImageWidth: 500, // 保存的图像宽度
+    bottomInfoHeight: 0, // 底部信息区高度
+    // 缓冲区，无需手动设定
+    canvasWidth: 0, // 画布宽
+    canvasHeight: 0, // 画布高
+    canvasDom: null, // 画布dom对象
+    canvas: null, // 画布的节点
+    ctx: null, // 画布的上下文
+    posterHeight: 0 // 海报高
   },
   onPreLoad: fetch,
   /**
@@ -67,7 +83,88 @@ Page({
    */
   onReady: function() {
   },
+  // 查询节点信息，并准备绘制图像
+  drawContent() {
+    return new Promise((reslove)=>{
+      const query = wx.createSelectorQuery() // 创建一个dom元素节点查询器
+      query.select(`#canvasDomPoster`) // 选择我们的canvas节点
+        .fields({ // 需要获取的节点相关信息
+          node: true, // 是否返回节点对应的 Node 实例
+          size: true // 是否返回节点尺寸（width height）
+        }).exec((res) => { // 执行针对这个节点的所有请求，exec((res) => {alpiny})  这里是一个回调函数
+          const dom = res[0] // 因为页面只存在一个画布，所以我们要的dom数据就是 res数组的第一个元素
+          const canvas = dom.node // canvas就是我们要操作的画布节点
+          const ctx = canvas.getContext('2d') // 以2d模式，获取一个画布节点的上下文对象
+          this.setData({
+            canvasDom: dom, // 把canvas的dom对象放到全局
+            canvas, // 把canvas的节点放到全局
+            ctx // 把canvas 2d的上下文放到全局
+          })
+          reslove()
+        })
+    })
+  },
+  // 计算画布尺寸
+  computeCanvasSize(imgWidth, imgHeight) {
+    const that = this
+    return new Promise(((resolve) => {
+      let canvasWidth = 250 // 获取画布宽度(canvasDom宽度)
+      let canvasHeight = canvasWidth * (imgHeight / imgWidth) // 计算海报高度
+      that.setData({
+        canvasWidth, // 设置画布容器宽
+        canvasHeight // 设置画布容器高
+      }, () => { // 设置成功后再返回
+        console.log(dpr,'dpr')
+        that.data.canvas.width = that.data.canvasWidth * dpr// 设置画布宽
+        that.data.canvas.height = canvasHeight * dpr // 设置画布高
+        that.data.ctx.scale(dpr, dpr) // 根据像素比放大
+        resolve()
+      })
+    }))
+  },
+  // 绘制画面
+  drawing(listItem) {
+    wx.showLoading({title: '海报生成中'}) // 显示loading
+    const that = this;
+    that.drawPoster(listItem) 
+    // 绘制海报
+      .then(async () => { // 这里用同步阻塞一下，因为需要先拿到海报的高度计算整体画布的高度
+        await that.drawQrcode(listItem) // 绘制小程序码
+        await this.canvasToTempFilePath()
+        wx.hideLoading() // 隐藏loading
+      })
+  },
+  // 绘制海报
+  drawPoster(listItem) {
+    return new Promise(((resolve) => {
+      let poster = this.data.canvas.createImage(); // 创建一个图片对象
+      poster.src = listItem.poster // 图片对象地址赋值
+      poster.onload = () => {
+        const {canvasWidth,canvasHeight} = this.data
+        this.data.ctx.drawImage(poster, 0, 0, poster.width, poster.height, 0, 0, canvasWidth, canvasHeight);
+        resolve()
+      }
+    }))
+  },
+  // 绘制小程序码
+  drawQrcode(listItem) {
+    return new Promise((reslove) => {
+      const {infoSpace,canvasHeight} = this.data
+      let diam = this.data.qrcodeDiam // 小程序码直径
+      let qrcode = this.data.canvas.createImage(); // 创建一个图片对象
+      qrcode.src = listItem.qrcode // 图片对象地址赋值
+      qrcode.onload = () => {
+        let x = 15 // 左上角相对X轴的距离：画布宽 - 间隔 - 直径
+        let y = canvasHeight - 50 - diam // 左上角相对Y轴的距离 ：画布高 - 间隔 - 直径 + 微调
+        this.data.ctx.drawImage(qrcode, 0, 0, qrcode.width, qrcode.height, x, y, diam, diam) // 详见 drawImage 用法
+        // 提示语（距左：间距 ）（距下：总高 - 间距 ）
+        this.data.ctx.fillText(`我是${this.data.rights.name}邀请您参加活动~`, infoSpace, canvasHeight - infoSpace-20);
+        this.data.ctx.restore();
 
+        reslove()
+      }
+    })
+  },
   // 根据活动id查活动数据
   async getActivityData(activeId) {
     this.$showLoading()
@@ -84,11 +181,6 @@ Page({
     this.showTimeDown(period.end_time * 1000 - period.current_time * 1000)
     // 成员注册码、
     const activeCode = await this.getBase64ImageUrl(activity_reg_qrcode)
-    // rights = rights.find((i) => {
-    //   console.log(i, activeId)
-    //   return i.id == activeId
-    // })
-    // console.log('rights==========', rights)
     // 用户等级 及等级信息（订单录入）
     getApp().globalData.orderInType = rights
     this.setData({
@@ -97,10 +189,18 @@ Page({
       fund,
       rights,
       poster,
+      smallPosterList:poster,
       live_qrcode,
       activeCode,
       view_shop
     })
+    setTimeout(async()=>{
+      await this.drawContent() //初始化画布上下文 
+      await this.computeCanvasSize(750,1080) //计算画布大小
+    },3000)
+    // poster.map(async(file)=>{
+    //   console.log('createNewImg前',file)
+    // })
   },
   toMiniAPP() {
     wx.navigateToMiniProgram({
@@ -121,8 +221,6 @@ Page({
     this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    // const {list, rule} = data
-    // const {apartment, brand, person, zone} = list
     // app.globalData.coinRule = rule
     this.setData({
       person: data[0],
@@ -170,26 +268,40 @@ Page({
   },
 
   popupShow: function(eve) {
-    const { popupType } = eve.currentTarget.dataset
-    if (popupType == 'choosePoster' || popupType == 'liveInvite') { this.getTabBar().hideTabBar(); }
+    const { popupType,dataType } = eve.currentTarget.dataset
+    if (popupType == 'canvasDomPoster') { 
+      this.getTabBar().hideTabBar();
+      if(dataType=='poster'){
+        setTimeout(async ()=>{
+          this.drawing(this.data.poster[0]) // 开始绘图
+          },1000)
+        this.setData({
+          smallPosterList:this.data.poster
+        })
+      }else{
+        setTimeout(async ()=>{
+          this.drawing(this.data.live_qrcode[0]) // 开始绘图
+          },1000)
+        this.setData({
+          smallPosterList:this.data.live_qrcode
+        })
+      }
+     }
     this.setData({
       popupType
     })
   },
   closePopup: function(eve) {
     const { popupType } = eve.currentTarget.dataset
-    if (popupType == ('choosePoster' || 'liveInvite')) { this.getTabBar().showTabBar(); console.log('showTabBarshowTabBar') }
+    if (popupType == ('canvasDomPoster')) { this.getTabBar().showTabBar(); }
     this.setData({
       popupType: ''
     })
   },
   // 选择海报 或 直播邀请
   choosePost(eve) {
-    const {index, type} = eve.currentTarget.dataset
-    console.log(index, type)
-    this.setData({
-      [`${type}`]: index
-    })
+    const {item, type} = eve.currentTarget.dataset
+    this.drawing(item)
   },
   // 点击开始的时间
   timestart: function(e) {
@@ -197,40 +309,50 @@ Page({
   },
   // 点击结束的时间
   timeend: function(e) {
-    const {url} = e.currentTarget.dataset
     this.setData({ timeend: e.timeStamp });
-    this.savePhoto(url)
+    this.saveImageToPhotosAlbum()
+  },
+  canvasToTempFilePath() {
+    const {canvasWidth,canvasHeight} =this.data
+    return new Promise((reslove) => {
+      wx.canvasToTempFilePath({
+        fileType: 'jpg',
+        x: 0,
+        y: 0,
+        width: canvasWidth,
+        height: canvasHeight,
+        destWidth: canvasWidth*dpr,
+        destHeight: canvasHeight*dpr,
+        canvas: this.data.canvasDom.node, // 使用2D 需要传递的参数
+        success: async (res) => {
+          console.log(res)
+          this.setData({
+            posterDrawUrl:res.tempFilePath
+          })
+          reslove()
+        },
+        fail:(err)=>{
+          console.log(err)
+        }
+      })
+    })
+  },
+  async saveImageToPhotosAlbum(path){
+    const { posterDrawUrl} = this.data
+    const { errMsg } = await wx.$saveImageToPhotosAlbum({
+      filePath: posterDrawUrl
+    })
+    if (errMsg == 'saveImageToPhotosAlbum:ok') {
+      this.$showToast('图片已保存至本地')
+    }
   },
   // 把base64转换成图片
   async getBase64ImageUrl(data) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       base64src(data, (res) => {
         resolve(res)
       })
     })
-  },
-  savePhoto(url) {
-    let times = this.data.timeend - this.data.timestart;
-    console.log(url)
-    if (times > 1000) {
-      wx.downloadFile({
-        url,
-        success: async(res) => {
-          this.setData({
-            tempFilePath: res.tempFilePath
-          })
-          const { errMsg } = await wx.$saveImageToPhotosAlbum({
-            filePath: res.tempFilePath
-          })
-          if (errMsg == 'saveImageToPhotosAlbum:ok') {
-            this.$showToast('图片已保存至本地')
-          }
-        },
-        fail: (params) => {
-          console.log(params)
-        }
-      });
-    }
   },
   // 核销码输入
   bindblur(e) {
@@ -275,7 +397,6 @@ Page({
       popupType: ''
     })
   },
-
   /**
    * 生命周期函数--监听页面隐藏
    */

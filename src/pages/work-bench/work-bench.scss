@@ -8,6 +8,7 @@
     // position: fixed;
     overflow: visible;
     .content{
+        position: relative;
         padding: 20rpx 30rpx;
     }
     .header{
@@ -209,7 +210,11 @@
             }
 
         }
-       
+    }
+    .canvas-box{
+        position: absolute;
+        left: -500px;
+        top: 0;
     }
 
 }
@@ -279,18 +284,26 @@
             @include flex-align-center;
             justify-content: center;
             .swiper{
-                width: 500rpx;
-                height: 675rpx;
+                width: 239px;
+                height: 360px;
+                position: relative;
                 image{
                     height: 100%;
                     width: 100%;
                 }
+                // canvas{
+                //     position: absolute;
+                //     left: 0;
+                //     top: -1000px;
+                // }
+                
             }
         }
         .tips{
             text-align: center;
             line-height: 100rpx;
             color: #fff;
+            margin-top: 1.5vh;
             font-size: 28rpx;
         }
         .smallPoster{
