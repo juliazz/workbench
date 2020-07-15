@@ -36,7 +36,6 @@ Page({
     ], // 展开状态数组
     userAreaData: { // 个人区域数据
     },
-
     // 数据区，从服务端拿到的数据
     // 设置区，针对部件的数据设置
     qrcodeDiam: 80, // 小程序码直径
@@ -106,18 +105,17 @@ Page({
   },
   // 计算画布尺寸
   computeCanvasSize(imgWidth, imgHeight) {
-    const that = this
     return new Promise(((resolve) => {
       let canvasWidth = 250 // 获取画布宽度(canvasDom宽度)
       let canvasHeight = canvasWidth * (imgHeight / imgWidth) // 计算海报高度
-      that.setData({
+      this.setData({
         canvasWidth, // 设置画布容器宽
         canvasHeight // 设置画布容器高
       }, () => { // 设置成功后再返回
         console.log(dpr,'dpr')
-        that.data.canvas.width = that.data.canvasWidth * dpr// 设置画布宽
-        that.data.canvas.height = canvasHeight * dpr // 设置画布高
-        that.data.ctx.scale(dpr, dpr) // 根据像素比放大
+        this.data.canvas.width = canvasWidth * dpr// 设置画布宽
+        this.data.canvas.height = canvasHeight * dpr // 设置画布高
+        this.data.ctx.scale(dpr, dpr) // 根据像素比放大
         resolve()
       })
     }))
@@ -125,11 +123,10 @@ Page({
   // 绘制画面
   drawing(listItem) {
     wx.showLoading({title: '海报生成中'}) // 显示loading
-    const that = this;
-    that.drawPoster(listItem) 
+    this.drawPoster(listItem) 
     // 绘制海报
       .then(async () => { // 这里用同步阻塞一下，因为需要先拿到海报的高度计算整体画布的高度
-        await that.drawQrcode(listItem) // 绘制小程序码
+        await this.drawQrcode(listItem) // 绘制小程序码
         await this.canvasToTempFilePath()
         wx.hideLoading() // 隐藏loading
       })
@@ -149,17 +146,17 @@ Page({
   // 绘制小程序码
   drawQrcode(listItem) {
     return new Promise((reslove) => {
-      const {infoSpace,canvasHeight} = this.data
+      const {infoSpace,canvasHeight,rights,ctx} = this.data
       let diam = this.data.qrcodeDiam // 小程序码直径
       let qrcode = this.data.canvas.createImage(); // 创建一个图片对象
       qrcode.src = listItem.qrcode // 图片对象地址赋值
       qrcode.onload = () => {
         let x = 15 // 左上角相对X轴的距离：画布宽 - 间隔 - 直径
         let y = canvasHeight - 50 - diam // 左上角相对Y轴的距离 ：画布高 - 间隔 - 直径 + 微调
-        this.data.ctx.drawImage(qrcode, 0, 0, qrcode.width, qrcode.height, x, y, diam, diam) // 详见 drawImage 用法
+        ctx.drawImage(qrcode, 0, 0, qrcode.width, qrcode.height, x, y, diam, diam) // 详见 drawImage 用法
         // 提示语（距左：间距 ）（距下：总高 - 间距 ）
-        this.data.ctx.fillText(`我是${this.data.rights.name}邀请您参加活动~`, infoSpace, canvasHeight - infoSpace-20);
-        this.data.ctx.restore();
+        ctx.fillText(`我是${rights.name}邀请您参加活动~`, infoSpace, canvasHeight - infoSpace-20);
+        ctx.restore();
 
         reslove()
       }
