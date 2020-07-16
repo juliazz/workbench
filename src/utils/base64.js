@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-bitwise */
 /* eslint-disable no-let */
+// 对编码的字符串转化base64  密码转换成base64
 const Base64 = {
   // private property
   _keyStr: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',

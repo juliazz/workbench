@@ -18,7 +18,6 @@ w-page(
           view.right(bindtap="popupShow" data-popup-type="changeActive")
             vant-button( type="info" icon='exchange' size="small" round)
               text.change 切换活动
-        
         view.price-box
           view.price-item
             w-currency(value="{{fund.reward}}" class="orderPrize")
@@ -34,7 +33,7 @@ w-page(
             text.prize-title 已提取金额
         view.can-extract.flex-just-between
             text 可提取金额(元)
-            w-currency(value="{{fund.reward}}" class="orderPrize")
+            w-currency(value="{{fund.money}}" class="orderPrize")
       view.section.section-1
         view.action-list
           view.action-item(bindtap="popupShow" data-popup-type="canvasDomPoster" data-data-type="poster")

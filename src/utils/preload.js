@@ -11,7 +11,6 @@ const preload = {
   },
   set(key) {
     const { route, query } = parseUrl(key);
-    console.log(route,query,'{{{{{{{{{{{')
     const fn = _fns[route];
     if (isFunction(fn)) {
       logger.debug(`Preload route: ${key}`);

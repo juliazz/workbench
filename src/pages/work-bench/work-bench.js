@@ -13,7 +13,6 @@ const fetch = async (options) => {
   }
 }
 let Timer; let user_id;
-let domList = [];
 const dpr = wx.getSystemInfoSync().pixelRatio // 获取设备的像素比，未来整体画布根据像素比扩大
 Page({
   $route: 'pages/work-bench/work-bench',
@@ -84,9 +83,9 @@ Page({
   },
   // 查询节点信息，并准备绘制图像
   drawContent() {
-    return new Promise((reslove)=>{
+    return new Promise((reslove) => {
       const query = wx.createSelectorQuery() // 创建一个dom元素节点查询器
-      query.select(`#canvasDomPoster`) // 选择我们的canvas节点
+      query.select('#canvasDomPoster') // 选择我们的canvas节点
         .fields({ // 需要获取的节点相关信息
           node: true, // 是否返回节点对应的 Node 实例
           size: true // 是否返回节点尺寸（width height）
@@ -112,7 +111,7 @@ Page({
         canvasWidth, // 设置画布容器宽
         canvasHeight // 设置画布容器高
       }, () => { // 设置成功后再返回
-        console.log(dpr,'dpr')
+        console.log(dpr, 'dpr')
         this.data.canvas.width = canvasWidth * dpr// 设置画布宽
         this.data.canvas.height = canvasHeight * dpr // 设置画布高
         this.data.ctx.scale(dpr, dpr) // 根据像素比放大
@@ -123,7 +122,7 @@ Page({
   // 绘制画面
   drawing(listItem) {
     wx.showLoading({title: '海报生成中'}) // 显示loading
-    this.drawPoster(listItem) 
+    this.drawPoster(listItem)
     // 绘制海报
       .then(async () => { // 这里用同步阻塞一下，因为需要先拿到海报的高度计算整体画布的高度
         await this.drawQrcode(listItem) // 绘制小程序码
@@ -137,27 +136,27 @@ Page({
       let poster = this.data.canvas.createImage(); // 创建一个图片对象
       poster.src = listItem.poster // 图片对象地址赋值
       poster.onload = () => {
-        const {canvasWidth,canvasHeight} = this.data
+        const {canvasWidth, canvasHeight} = this.data
         this.data.ctx.drawImage(poster, 0, 0, poster.width, poster.height, 0, 0, canvasWidth, canvasHeight);
         resolve()
       }
     }))
   },
-  // 绘制小程序码
+  // 绘制小程序码&文字
   drawQrcode(listItem) {
     return new Promise((reslove) => {
-      const {infoSpace,canvasHeight,rights,ctx} = this.data
+      const {infoSpace, canvasHeight, rights, ctx} = this.data
       let diam = this.data.qrcodeDiam // 小程序码直径
       let qrcode = this.data.canvas.createImage(); // 创建一个图片对象
       qrcode.src = listItem.qrcode // 图片对象地址赋值
       qrcode.onload = () => {
-        let x = 15 // 左上角相对X轴的距离：画布宽 - 间隔 - 直径
-        let y = canvasHeight - 50 - diam // 左上角相对Y轴的距离 ：画布高 - 间隔 - 直径 + 微调
+        let x = 20 // 左上角相对X轴的距离：画布宽 - 间隔 - 直径
+        let y = canvasHeight - 30 - diam // 左上角相对Y轴的距离 ：画布高 - 间隔 - 直径 + 微调
         ctx.drawImage(qrcode, 0, 0, qrcode.width, qrcode.height, x, y, diam, diam) // 详见 drawImage 用法
         // 提示语（距左：间距 ）（距下：总高 - 间距 ）
-        ctx.fillText(`我是${rights.name}邀请您参加活动~`, infoSpace, canvasHeight - infoSpace-20);
+        this.data.ctx.fillStyle = "#ffffff";           // 设置文字颜色
+        ctx.fillText(`我是${rights.name}邀请您参加活动~`, infoSpace, canvasHeight - infoSpace);
         ctx.restore();
-
         reslove()
       }
     })
@@ -186,18 +185,16 @@ Page({
       fund,
       rights,
       poster,
-      smallPosterList:poster,
+      smallPosterList: poster,
       live_qrcode,
       activeCode,
       view_shop
     })
-    setTimeout(async()=>{
-      await this.drawContent() //初始化画布上下文 
-      await this.computeCanvasSize(750,1080) //计算画布大小
-    },3000)
-    // poster.map(async(file)=>{
-    //   console.log('createNewImg前',file)
-    // })
+    wx.setStorageSync('accountMoney', fund.money);
+    setTimeout(async() => {
+      await this.drawContent() // 初始化画布上下文
+      await this.computeCanvasSize(750, 1080) // 计算画布大小
+    }, 1000)
   },
   toMiniAPP() {
     wx.navigateToMiniProgram({
@@ -265,25 +262,25 @@ Page({
   },
 
   popupShow: function(eve) {
-    const { popupType,dataType } = eve.currentTarget.dataset
-    if (popupType == 'canvasDomPoster') { 
+    const { popupType, dataType } = eve.currentTarget.dataset
+    if (popupType == 'canvasDomPoster') {
       this.getTabBar().hideTabBar();
-      if(dataType=='poster'){
-        setTimeout(async ()=>{
+      if (dataType == 'poster') {
+        setTimeout(async () => {
           this.drawing(this.data.poster[0]) // 开始绘图
-          },1000)
+        }, 1000)
         this.setData({
-          smallPosterList:this.data.poster
+          smallPosterList: this.data.poster
         })
-      }else{
-        setTimeout(async ()=>{
+      } else {
+        setTimeout(async () => {
           this.drawing(this.data.live_qrcode[0]) // 开始绘图
-          },1000)
+        }, 1000)
         this.setData({
-          smallPosterList:this.data.live_qrcode
+          smallPosterList: this.data.live_qrcode
         })
       }
-     }
+    }
     this.setData({
       popupType
     })
@@ -307,10 +304,13 @@ Page({
   // 点击结束的时间
   timeend: function(e) {
     this.setData({ timeend: e.timeStamp });
-    this.saveImageToPhotosAlbum()
+    let times = this.data.timeend - this.data.timestart;
+    if (times > 1000) {
+      this.saveImageToPhotosAlbum()
+    }
   },
   canvasToTempFilePath() {
-    const {canvasWidth,canvasHeight} =this.data
+    const {canvasWidth, canvasHeight} = this.data
     return new Promise((reslove) => {
       wx.canvasToTempFilePath({
         fileType: 'jpg',
@@ -318,23 +318,23 @@ Page({
         y: 0,
         width: canvasWidth,
         height: canvasHeight,
-        destWidth: canvasWidth*dpr,
-        destHeight: canvasHeight*dpr,
+        destWidth: canvasWidth * dpr,
+        destHeight: canvasHeight * dpr,
         canvas: this.data.canvasDom.node, // 使用2D 需要传递的参数
         success: async (res) => {
           console.log(res)
           this.setData({
-            posterDrawUrl:res.tempFilePath
+            posterDrawUrl: res.tempFilePath
           })
           reslove()
         },
-        fail:(err)=>{
+        fail: (err) => {
           console.log(err)
         }
       })
     })
   },
-  async saveImageToPhotosAlbum(path){
+  async saveImageToPhotosAlbum(path) {
     const { posterDrawUrl} = this.data
     const { errMsg } = await wx.$saveImageToPhotosAlbum({
       filePath: posterDrawUrl

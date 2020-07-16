@@ -1,6 +1,7 @@
 import api from '../../api/index.js'
 
-let identity // 身份 0是个人 1是部门
+let identity; // 身份 0是个人 1是部门
+let accountMoney; // 账户余额
 let userListRes = [] // 完整的员工列表
 const fetch = async (options) => {
   try {
@@ -62,7 +63,8 @@ Page({
     this.$hideLoading()
     const { msg, data, status } = result;
     if (status != '200') return this.$showToast(msg);
-    const {pk_period, pk_project, cat_user_list, level} = data // level  数据深度
+    const {pk_period, pk_project, cat_user_list, level} = data // level 数据深度
+    accountMoney = wx.getStorageSync('accountMoney') || ''
     // identity = '0' // 0 是个人 1是部门  就两种情况
     this.setData({
       pkCellTitle: `pk${pkType}:`, // 根据对象进来cell文案
@@ -318,6 +320,9 @@ Page({
     this.$navigateBack()
   },
   priceInputEventer(e) {
+    if( e.detail>accountMoney){
+      return this.$showToast('挑战金额不能大于账户余额！');
+    }
     this.setData({pkPrice: e.detail})
   },
   popupShow: function(eve) {
