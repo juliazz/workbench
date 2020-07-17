@@ -63,7 +63,7 @@ export default Component({
     },
     clickCloseBackdrop () {
       const { closeOnClickBackdrop, name} = this.data
-      // if (name == 'choosePoster' || name == 'liveInvite') { this.getTabBar().showTabBar(); }
+      if (name == 'canvasPoster' || name == 'canvasLive') { this.getTabBar().showTabBar(); }
       if (!closeOnClickBackdrop) return
       this.setData({ show: false })
     }

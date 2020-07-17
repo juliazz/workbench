@@ -320,7 +320,7 @@ Page({
     this.$navigateBack()
   },
   priceInputEventer(e) {
-    if( e.detail>accountMoney){
+    if (e.detail > accountMoney) {
       return this.$showToast('挑战金额不能大于账户余额！');
     }
     this.setData({pkPrice: e.detail})

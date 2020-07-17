@@ -25,7 +25,7 @@ const upLoadFile = async (path, type = 'image') => {
     });
   })
 }
-//把base64转换成图片
+// 把base64转换成图片
 const fsm = wx.getFileSystemManager();
 const FILE_BASE_NAME = 'tmp_base64src'; // 自定义文件名
 const base64src = (base64data, cb) => {
